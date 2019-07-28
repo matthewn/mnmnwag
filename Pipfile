@@ -9,6 +9,7 @@ verify_ssl = true
 wagtail = "<2.6,>=2.5"
 Django = "<2.3,>=2.2"
 mysqlclient = "*"
+django-dbbackup = "*"
 
 [requires]
 python_version = "3.6"

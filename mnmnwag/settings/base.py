@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'dbbackup',
+
     'mnmnwag',
 ]
 
@@ -165,3 +167,10 @@ WAGTAIL_SITE_NAME = "mnmnwag"
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://example.com'
+
+
+# django-dbbackup
+
+DBBACKUP_FILENAME_TEMPLATE = 'mnmnwag-{datetime}.sql'
+DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DBBACKUP_STORAGE_OPTIONS = {'location': os.path.join(BASE_DIR, 'private', 'db')}
