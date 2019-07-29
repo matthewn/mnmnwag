@@ -91,6 +91,10 @@ class BlogIndex(Page):
     max_count = 1
     subpage_types = ['LegacyPost', 'ModernPost']
 
+    def posts(self):
+        posts = self.get_children().specific().live().order_by('-last_published_at')
+        return posts
+
 
 # ···························································
 # MISC PAGE(S)

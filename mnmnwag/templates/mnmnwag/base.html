@@ -1,0 +1,59 @@
+{# {% load compress  #}
+{% load static wagtailuserbar %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>
+            {% spaceless %}
+            {% block title %}{% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}{% endblock %}
+            {% block title_suffix %} | UC Berkeley Student Experience and Diversity {% endblock %}
+            {% endspaceless %}
+        </title>
+        <meta name="description" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        {# <link rel="shortcut icon" href="{% static 'img/script_cal.ico' %}" type="image/vnd.microsoft.icon" /> #}
+
+        {# Global stylesheets #}
+        {# {% compress css %} #}
+        {#   <link rel="stylesheet" type="text/x-scss" href="{% static 'sass/base.scss' %}"> #}
+        {# {% endcompress %} #}
+
+        {% block extra_css %}
+            {# Override this in templates to add extra stylesheets #}
+        {% endblock %}
+    </head>
+
+    <body class="{% block body_class %}{% endblock %}">
+        {% wagtailuserbar 'bottom-left' %}
+
+        {% include "mnmnwag/site_header.html" %}
+
+        {% block content %}{% endblock %}
+
+        <div id="backtotop">↑</div>
+
+        {% include "mnmnwag/site_footer.html" %}
+
+        {# Global javascript #}
+        {# <script #}
+        {#     src="https://code.jquery.com/jquery-3.4.1.min.js" #}
+        {#     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" #}
+        {#     crossorigin="anonymous"></script> #}
+        {# {% compress js %} #}
+            {# <script src="{% static 'js/credits.js' %}"></script> #}
+        {# {% endcompress %} #}
+        {# <script async src="https://www.googletagmanager.com/gtag/js?id=UA-54995806-2"></script> #}
+        {# <script> #}
+        {#     window.dataLayer = window.dataLayer || []; #}
+        {#     function gtag(){dataLayer.push(arguments);} #}
+        {#     gtag('js', new Date()); #}
+        {#     gtag('config', 'UA-54995806-2'); #}
+        {# </script> #}
+        {% block extra_js %}
+            {# Override this in templates to add extra javascript #}
+        {% endblock %}
+    </body>
+</html>
