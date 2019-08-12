@@ -11,6 +11,7 @@ from wagtail.admin.edit_handlers import (
     StreamFieldPanel
 )
 from wagtail.images.blocks import ImageChooserBlock
+from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 
 from modelcluster.fields import ParentalKey
 
@@ -74,14 +75,24 @@ class ModernPost(Page):
 # ···························································
 
 
-class BlogIndex(Page):
+class BlogIndex(RoutablePageMixin, Page):
     max_count = 1
     subpage_types = ['LegacyPost', 'ModernPost']
 
-    def posts(self):
-        posts = self.get_children().specific().live().order_by('-last_published_at')
-        return posts
+    def get_posts(self):
+        return Page.objects.descendant_of(self).live().order_by('-last_published_at')
 
+    @route(r'^$')
+    def posts_all(self, request):
+        self.posts = self.get_posts()
+        return self.serve(request)
+
+    @route(r'^tag/(?P<tag>[-\w]+)/$')
+    def posts_by_tag(self, request, tag, *args, **kwargs):
+        self.posts = self.get_posts().specific()
+        # TODO: FIX THIS!!!!!!!! DOES NOT WORK!!!!!!!
+        self.posts = self.posts.filter(tags__slug=tag)
+        return self.serve(request, *args, **kwargs)
 
 # ···························································
 # MISC PAGE(S)
