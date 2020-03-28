@@ -1,7 +1,8 @@
 from django.db import models
 
 from modelcluster.contrib.taggit import ClusterTaggableManager
-from taggit.models import Tag, TaggedItemBase, GenericTaggedItemBase
+from taggit.models import TaggedItemBase
+# from taggit.models import Tag, TaggedItemBase, GenericTaggedItemBase
 
 from wagtail.core import blocks
 from wagtail.core.models import Page
@@ -21,17 +22,9 @@ from modelcluster.fields import ParentalKey
 # ···························································
 
 
-class LegacyPostTag(TaggedItemBase):
+class PostTag(TaggedItemBase):
     content_object = ParentalKey(
-        'LegacyPost',
-        on_delete=models.CASCADE,
-        related_name='tagged_items'
-    )
-
-
-class ModernPostTag(TaggedItemBase):
-    content_object = ParentalKey(
-        'ModernPost',
+        Page,
         on_delete=models.CASCADE,
         related_name='tagged_items'
     )
@@ -43,8 +36,10 @@ class ModernPostTag(TaggedItemBase):
 
 
 class LegacyPost(Page):
+    # TODO: this needs to become a plain (long) text field; we are not
+    #       going to want Draftail messing with this shit
     body = RichTextField()
-    tags = ClusterTaggableManager(through=LegacyPostTag, blank=True)
+    tags = ClusterTaggableManager(through=PostTag, blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel('body', classname="full"),
@@ -59,7 +54,7 @@ class ModernPost(Page):
         ('image', ImageChooserBlock()),
         ('raw_HTML', blocks.RawHTMLBlock(required=False)),
     ])
-    tags = ClusterTaggableManager(through=ModernPostTag, blank=True)
+    tags = ClusterTaggableManager(through=PostTag, blank=True)
 
     content_panels = Page.content_panels + [
         StreamFieldPanel('body'),
