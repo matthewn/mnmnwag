@@ -1,7 +1,7 @@
 from django.db import models
 
 from modelcluster.contrib.taggit import ClusterTaggableManager
-from taggit.models import TaggedItemBase
+from taggit.models import Tag, TaggedItemBase, GenericTaggedItemBase
 
 from wagtail.core import blocks
 from wagtail.core.models import Page
@@ -59,7 +59,6 @@ class ModernPost(Page):
         ('image', ImageChooserBlock()),
         ('raw_HTML', blocks.RawHTMLBlock(required=False)),
     ])
-
     tags = ClusterTaggableManager(through=ModernPostTag, blank=True)
 
     content_panels = Page.content_panels + [
