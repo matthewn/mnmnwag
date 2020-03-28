@@ -89,7 +89,7 @@ class BlogIndex(RoutablePageMixin, Page):
         self.posts = self.get_posts().filter(id__in=tagged_ids)
         return self.serve(request, *args, **kwargs)
 
-    @route(r'(?P<year>\d\d\d\d)\/?(?P<month>[0-1][0-9])?\/?(?P<day>[0-3][0-9])?/$')
+    @route(r'(?P<year>20\d\d)\/?(?P<month>[0-1][0-9])?\/?(?P<day>[0-3][0-9])?/$')
     def posts_by_date(self, request, year, month='', day='', *args, **kwargs):
         if day:
             start_date = dt.datetime(int(year), int(month), int(day))
