@@ -13,6 +13,7 @@ django-dbbackup = "*"
 django-debugtools = "*"
 django-extensions = "*"
 werkzeug = "*"
+python-dateutil = "*"
 
 [requires]
 python_version = "3.6"

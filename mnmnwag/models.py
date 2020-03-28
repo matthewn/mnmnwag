@@ -2,7 +2,6 @@ from django.db import models
 
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import TaggedItemBase
-# from taggit.models import Tag, TaggedItemBase, GenericTaggedItemBase
 
 from wagtail.core import blocks
 from wagtail.core.models import Page
@@ -15,6 +14,8 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 
 from modelcluster.fields import ParentalKey
+
+import datetime as dt
 
 
 # ···························································
@@ -83,15 +84,28 @@ class BlogIndex(RoutablePageMixin, Page):
 
     @route(r'^tag/(?P<tag>[-\w]+)/$')
     def posts_by_tag(self, request, tag, *args, **kwargs):
-        # self.posts = Page.objects.descendant_of(self).live().order_by('-last_published_at').filter(tags__slug=tag)
         post_tags = PostTag.objects.filter(tag__slug=tag)
         tagged_ids = [tag.content_object_id for tag in post_tags]
-        self.posts = Page.objects.descendant_of(self).live().order_by('-last_published_at').filter(id__in=tagged_ids)
+        self.posts = self.get_posts().filter(id__in=tagged_ids)
         return self.serve(request, *args, **kwargs)
 
-    # add another route for posts by date
-    # @route
-
+    @route(r'(?P<year>\d\d\d\d)\/?(?P<month>[0-1][0-9])?\/?(?P<day>[0-3][0-9])?/$')
+    def posts_by_date(self, request, year, month='', day='', *args, **kwargs):
+        if day:
+            start_date = dt.datetime(int(year), int(month), int(day))
+            end_date = start_date + dt.timedelta(days=1)
+        elif month:
+            start_date = dt.datetime(int(year), int(month), 1)
+            start_month = start_date.month
+            start_year = start_date.year
+            end_month = 1 if start_date.month == 12 else start_month + 1
+            end_year = start_year + 1 if start_date.month == 12 else start_year
+            end_date = dt.datetime(end_year, end_month, 1)
+        else:
+            start_date = dt.datetime(int(year), 1, 1)
+            end_date = dt.datetime(int(year) + 1, 1, 1)
+        self.posts = self.get_posts().filter(first_published_at__gt=start_date).filter(first_published_at__lt=end_date)
+        return self.serve(request, *args, **kwargs)
 
 # ···························································
 # MISC PAGE(S)
