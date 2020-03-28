@@ -11,6 +11,8 @@ Django = "<2.3,>=2.2"
 mysqlclient = "*"
 django-dbbackup = "*"
 django-debugtools = "*"
+django-extensions = "*"
+werkzeug = "*"
 
 [requires]
 python_version = "3.6"
