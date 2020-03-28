@@ -83,10 +83,15 @@ class BlogIndex(RoutablePageMixin, Page):
 
     @route(r'^tag/(?P<tag>[-\w]+)/$')
     def posts_by_tag(self, request, tag, *args, **kwargs):
-        self.posts = self.get_posts().specific()
-        # TODO: FIX THIS!!!!!!!! DOES NOT WORK!!!!!!!
-        self.posts = self.posts.filter(tags__slug=tag)
+        # self.posts = Page.objects.descendant_of(self).live().order_by('-last_published_at').filter(tags__slug=tag)
+        post_tags = PostTag.objects.filter(tag__slug=tag)
+        tagged_ids = [tag.content_object_id for tag in post_tags]
+        self.posts = Page.objects.descendant_of(self).live().order_by('-last_published_at').filter(id__in=tagged_ids)
         return self.serve(request, *args, **kwargs)
+
+    # add another route for posts by date
+    # @route
+
 
 # ···························································
 # MISC PAGE(S)
