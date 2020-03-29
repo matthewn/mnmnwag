@@ -24,7 +24,6 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Application definition
 
 INSTALLED_APPS = [
-    'home',
     'search',
 
     'wagtail.contrib.forms',
@@ -50,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'compressor',
     'dbbackup',
     'debugtools',
     'django_extensions',
@@ -148,6 +148,7 @@ USE_TZ = True
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
 ]
 
 STATICFILES_DIRS = [
@@ -175,8 +176,21 @@ WAGTAIL_SITE_NAME = "mnmnwag"
 BASE_URL = 'http://example.com'
 
 
+# django-compressor
+
+COMPRESS_ENABLED = False
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+)
+
+
 # django-dbbackup
 
 DBBACKUP_FILENAME_TEMPLATE = 'mnmnwag-{datetime}.sql'
 DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
 DBBACKUP_STORAGE_OPTIONS = {'location': os.path.join(BASE_DIR, 'private', 'db')}
+
+
+# django-libsass
+
+LIBSASS_OUTPUT_STYLE = 'compressed'

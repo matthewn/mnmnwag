@@ -1,0 +1,22 @@
+#backtotop {
+  opacity: 0;
+  transition: visibility 1s, opacity 1s;
+  visibility: hidden;
+  &.visible {
+    @include media(mobile) {
+      bottom: 0;
+      padding: 5px 10px;
+      right: 0;
+    }
+    bottom: 2rem;
+    color: blue;
+    cursor: pointer;
+    font-size: 2.5rem;
+    opacity: 1;
+    padding: 20px;
+    position: fixed;
+    right: 2rem;
+    transition: visibility 1s, opacity 1s;
+    visibility: visible;
+  }
+}

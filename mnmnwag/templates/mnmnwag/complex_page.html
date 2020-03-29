@@ -1,19 +1,18 @@
-{% extends "sed_main/base.html" %}
+{% extends "mnmnwag/base.html" %}
 
-{% load typefixes %}
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 
 {% load wagtailcore_tags %}
 
-{% block body_class %}template-basicpage {% endblock %}
+{% block body_class %}template-complexpage {% endblock %}
 
 {% block content %}
 
     <h2>{{ page.title }}</h2>
 
     <div class="page-body">
-        {{ page.body|richtext|typefixes }}
+        {% include_block page.body %}
     </div>
 
 {% endblock %}
