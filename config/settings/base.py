@@ -70,7 +70,7 @@ MIDDLEWARE = [
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
 
-ROOT_URLCONF = 'mnmnwag.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
@@ -93,7 +93,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'mnmnwag.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database

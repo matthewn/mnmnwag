@@ -123,5 +123,3 @@ class ComplexPage(Page):
     content_panels = Page.content_panels + [
         StreamFieldPanel('body'),
     ]
-
-    subpage_types = []
