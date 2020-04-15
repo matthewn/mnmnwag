@@ -1,9 +1,20 @@
 @import 'vars';
+@import 'colors';
 @import 'mixins';
 @import 'attrs';
 
 @import 'layout';
-// fartasdfasdf
 
 // @import 'hamburger';
 @import 'back_to_top';
+
+body {
+  transition: all .3s;
+}
+
+a, a:link, a:visited {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}

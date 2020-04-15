@@ -1,9 +1,68 @@
 body {
-  color: silver;
-}
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 
-#main {
-  background: $bg-blue;
-  color: silver;
-  line-height: 1;
+  .constrainer {
+    border: 3px dotted blue;
+    height: 100%;
+    margin: 0 auto;
+    max-width: $site-max-width;
+  }
+
+  > header {
+    border: 2px solid green;
+    font-size: 2rem;
+    height: 6rem;
+    margin-top: $margin-page-top-bottom;
+    .constrainer {
+      padding: $standard-padding;
+    }
+  }
+
+  #content {
+    @include media(desktop) {
+      display: flex;
+      flex-direction: column;
+    }
+    flex-grow: 1;
+
+    .constrainer {
+      @include media(desktop) {
+        align-items: stretch;
+        display: flex;
+        flex-direction: row-reverse;
+        flex-grow: 1;
+        width: 100%;
+      }
+      border: 2px solid purple;
+
+      > * {
+        padding: $standard-padding;
+      }
+
+      > main {
+        @include media(desktop) {
+          max-width: $content-max-width;
+          width: 100%;
+        }
+        border: 2px solid red;
+      }
+
+      > aside {
+        @include media(desktop) {
+          flex-grow: 1;
+        }
+        border: 2px solid aqua;
+      }
+    }
+  }
+
+  > footer {
+    border: 2px solid green;
+    margin-bottom: $margin-page-top-bottom;
+    .constrainer {
+      padding: $standard-padding;
+    }
+  }
 }

@@ -178,7 +178,7 @@ BASE_URL = 'http://example.com'
 
 # django-compressor
 
-COMPRESS_ENABLED = False
+COMPRESS_ENABLED = True
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),
 )
