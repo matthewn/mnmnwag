@@ -1,0 +1,12 @@
+{% extends "mnmnwag/base.html" %}
+
+{% block title_suffix %}{% endblock %}
+{% block body_class %}template-legacypost{% endblock %}
+
+{% block content %}
+
+    {% with page as post %}
+        {% include "mnmnwag/blog_post.html" %}
+    {% endwith %}
+
+{% endblock %}

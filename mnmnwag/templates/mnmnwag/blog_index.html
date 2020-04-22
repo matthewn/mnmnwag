@@ -1,7 +1,7 @@
 {% extends "mnmnwag/base.html" %}
 
-{% load capture_tags %}
-{% load wagtailcore_tags %}
+{# {% load capture_tags %} #}
+{# {% load wagtailcore_tags %} #}
 {# {% load compress %} #}
 {# {% load static %} #}
 {# {% load typefixes %} #}
@@ -14,52 +14,12 @@
 
     <div id="blog-index">
 
-        <h2 class="page-title">{{ page.title }}</h2>
+        {% if page.index_title %}
+            <h2 class="page-title">{{ page.index_title }}</h2>
+        {% endif %}
 
         {% for post in page.posts %}
-
-            <article class="blog-post">
-                <header>
-                    <a href="{% pageurl post %}">
-                        {{ post.title }}
-                    </a>
-                </header>
-
-                <main>
-                    {% with post.specific.body as body %}
-                        {% if post.content_type.model == 'legacypost' %}
-
-                            {{ body|richtext|truncatewords_html:150 }}
-                            {% ifnotequal body|richtext|truncatewords_html:150|length body|richtext|truncatewords_html:151|length %}
-                                <a class="read-more" href="{% pageurl post %}">read more…</a>
-                            {% endifnotequal %}
-
-                        {% elif post.content_type.model == 'modernpost' %}
-
-                            {% capture as body1 %}{% include_block body|truncatewords_html:150 %}{% endcapture %}
-                            {% capture as body2 silent %}{% include_block body|truncatewords_html:151 %}{% endcapture %}
-                            {% ifnotequal body1 body2 %}
-                                <a class="read-more" href="{% pageurl post %}">read more…</a>
-                            {% endifnotequal %}
-
-                        {% endif %}
-                    {% endwith %}
-                </main>
-
-                <footer>
-                    <div class="post-date">
-                        posted {{ post.specific.first_published_at|date:"j F Y" }}
-                        at {{ post.specific.first_published_at|date:"g:i a" }}
-                    </div>
-                    <div class="post-tags">
-                        filed under
-                        {% for tag in post.specific.tagged_items.all %}
-                            #{{ tag.tag.name }}
-                        {% endfor %}
-                </footer>
-
-            </article>
-
+            {% include "mnmnwag/blog_post.html" %}
         {% endfor %}
 
     </div>

@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.db import models
 
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -87,23 +88,30 @@ class BlogIndex(RoutablePageMixin, Page):
         post_tags = PostTag.objects.filter(tag__slug=tag)
         tagged_ids = [tag.content_object_id for tag in post_tags]
         self.posts = self.get_posts().filter(id__in=tagged_ids)
+        self.index_title = f'Posts tagged #{tag}'
         return self.serve(request, *args, **kwargs)
 
     @route(r'(?P<year>20\d\d)\/?(?P<month>[0-1][0-9])?\/?(?P<day>[0-3][0-9])?/$')
     def posts_by_date(self, request, year, month='', day='', *args, **kwargs):
         if day:
             start_date = dt.datetime(int(year), int(month), int(day))
+            display_day = int(day)
+            display_month = start_date.strftime("%B")
             end_date = start_date + dt.timedelta(days=1)
+            self.index_title = f'Posts from {display_day} {display_month} {year}'
         elif month:
             start_date = dt.datetime(int(year), int(month), 1)
             start_month = start_date.month
+            display_month = start_date.strftime("%B")
             start_year = start_date.year
             end_month = 1 if start_date.month == 12 else start_month + 1
             end_year = start_year + 1 if start_date.month == 12 else start_year
             end_date = dt.datetime(end_year, end_month, 1)
+            self.index_title = f'Posts from {display_month} {start_year}'
         else:
             start_date = dt.datetime(int(year), 1, 1)
             end_date = dt.datetime(int(year) + 1, 1, 1)
+            self.index_title = f'Posts from {year}'
         self.posts = self.get_posts().filter(first_published_at__gt=start_date).filter(first_published_at__lt=end_date)
         return self.serve(request, *args, **kwargs)
 
