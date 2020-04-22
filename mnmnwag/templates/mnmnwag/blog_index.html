@@ -31,7 +31,7 @@
 
                             {{ body|richtext|truncatewords_html:150 }}
                             {% ifnotequal body|richtext|truncatewords_html:150|length body|richtext|truncatewords_html:151|length %}
-                                <a href="{% pageurl post %}">read more…</a>
+                                <a class="read-more" href="{% pageurl post %}">read more…</a>
                             {% endifnotequal %}
 
                         {% elif post.content_type.model == 'modernpost' %}
@@ -39,7 +39,7 @@
                             {% capture as body1 %}{% include_block body|truncatewords_html:150 %}{% endcapture %}
                             {% capture as body2 silent %}{% include_block body|truncatewords_html:151 %}{% endcapture %}
                             {% ifnotequal body1 body2 %}
-                                <a href="{% pageurl post %}">read more…</a>
+                                <a class="read-more" href="{% pageurl post %}">read more…</a>
                             {% endifnotequal %}
 
                         {% endif %}
