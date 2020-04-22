@@ -5,11 +5,11 @@
 @import 'attrs';
 
 @import 'layout';
-
-// @import 'hamburger';
 @import 'back_to_top';
+// @import 'hamburger';
 
 @import 'blog_index';
+@import 'blog_post';
 
 body {
   transition: all .3s;

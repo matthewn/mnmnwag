@@ -1,0 +1,31 @@
+.blog-post {
+  margin: 4rem 0;
+
+  > * {
+    margin-bottom: 1.5rem;
+  }
+
+  header {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+  }
+
+  main {
+    p,
+    ul,
+    ol {
+      margin-bottom: 1rem;
+    }
+
+    .read-more {
+      font-variant: small-caps;
+    }
+  }
+
+  footer {
+    font-style: italic;
+    > div {
+      margin-bottom: .25rem;
+    }
+  }
+}
