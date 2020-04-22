@@ -4,7 +4,7 @@ body {
   min-height: 100vh;
 
   .constrainer {
-    border: 3px dotted blue;
+    border: 3px dotted pink;
     height: 100%;
     margin: 0 auto;
     max-width: $site-max-width;
@@ -35,7 +35,6 @@ body {
         flex-grow: 1;
         width: 100%;
       }
-      border: 2px solid purple;
 
       > * {
         padding: $standard-padding;
@@ -47,6 +46,12 @@ body {
           width: 100%;
         }
         border: 2px solid red;
+
+        p,
+        ul,
+        ol {
+          line-height: 1.6;
+        }
       }
 
       > aside {

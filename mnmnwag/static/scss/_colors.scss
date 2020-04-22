@@ -2,12 +2,13 @@
 
 $aqua: #0df;
 $bg-black: #000;
+$blizzard-blue: #b8f3ff;
 $dark-blue: #181f41;
 $dark-green: #040;
 $link-blue: #00f;
 $green: #0f0;
 $hay: #b9baa3;
-$mint: #44adb8;
+$ming: #246a73;
 $offwhite: #fffff8;
 $brown: #333138;
 $prince: #573b64;
@@ -20,10 +21,12 @@ body.theme-light {
   > header {
     color: #000;
   }
-  #content > aside { background-color: $hay; }
-  #content > main { color: $brown; }
-  a, a:link, a:visited {
-    color: $link-blue;
+  #content > .constrainer {
+    > aside { background-color: $hay; }
+    > main { color: $brown; }
+    a, a:link, a:visited {
+      color: $link-blue;
+    }
   }
 }
 
@@ -31,28 +34,32 @@ body.theme-dark {
   background-color: $bg-black;
   color: silver;
   > header { background-color: $dark-blue; }
-  #content > aside { background-color: DarkSlateGray; }
-  #content > main {
-    background-color: $dark-blue;
-    color: silver;
+  #content > .constrainer {
+    > aside { background-color: $ming; }
+    > main {
+      background-color: $dark-blue;
+      color: silver;
+    }
+    a, a:link, a:visited {
+      color: $blizzard-blue;
+    }
+    > footer { background-color: $dark-blue; }
   }
-  a, a:link, a:visited {
-    color: $link-blue;
-  }
-  > footer { background-color: $dark-blue; }
 }
 
 body.theme-retro {
   background-color: #000;
   color: $green;
   > header { background-color: $bg-black; }
-  #content > aside { background-color: $dark-green; }
-  #content > main { color: $green; }
-  a, a:link {
-    color: $aqua;
-  }
-  a:visited {
-    color: $yellow;
+  #content > .constrainer {
+    > aside { background-color: $dark-green; }
+    > main { color: $green; }
+    a, a:link {
+      color: $aqua;
+    }
+    a:visited {
+      color: $yellow;
+    }
   }
 }
 
