@@ -30,6 +30,10 @@
                 {% endifnotequal %}
 
             {% endif %}
+
+            {% if page.content_type.model != 'blogindex' %}
+                COMMENTS GO HERE
+            {% endif %}
         {% endwith %}
     </main>
 

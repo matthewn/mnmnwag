@@ -4,19 +4,23 @@ body {
   min-height: 100vh;
 
   .constrainer {
-    border: 3px dotted pink;
     height: 100%;
     margin: 0 auto;
     max-width: $site-max-width;
   }
 
   > header {
-    border: 2px solid green;
     font-size: 2rem;
     height: 6rem;
     margin-top: $margin-page-top-bottom;
     .constrainer {
       padding: $standard-padding;
+    }
+  }
+
+  > nav {
+    .constrainer {
+      padding: $short-standard-padding;
     }
   }
 
@@ -45,7 +49,6 @@ body {
           max-width: $content-max-width;
           width: 100%;
         }
-        border: 2px solid red;
 
         p,
         ul,
@@ -58,13 +61,11 @@ body {
         @include media(desktop) {
           flex-grow: 1;
         }
-        border: 2px solid aqua;
       }
     }
   }
 
   > footer {
-    border: 2px solid green;
     margin-bottom: $margin-page-top-bottom;
     .constrainer {
       padding: $standard-padding;
