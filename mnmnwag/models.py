@@ -78,16 +78,24 @@ class BlogIndex(RoutablePageMixin, Page):
     def get_posts(self):
         return Page.objects.descendant_of(self).live().order_by('-last_published_at')
 
+    def paginate_posts(self, request, posts):
+        paginator = Paginator(posts, 2)
+        page_number = request.GET.get('page') if request.GET.get('page') else 1
+        return paginator.get_page(page_number)
+
     @route(r'^$')
     def posts_all(self, request):
-        self.posts = self.get_posts()
+        self.posts = self.paginate_posts(request, self.get_posts())
         return self.serve(request)
 
     @route(r'^tag/(?P<tag>[-\w]+)/$')
     def posts_by_tag(self, request, tag, *args, **kwargs):
         post_tags = PostTag.objects.filter(tag__slug=tag)
         tagged_ids = [tag.content_object_id for tag in post_tags]
-        self.posts = self.get_posts().filter(id__in=tagged_ids)
+        self.posts = self.paginate_posts(
+            request,
+            self.get_posts().filter(id__in=tagged_ids),
+        )
         self.index_title = f'Posts tagged #{tag}'
         return self.serve(request, *args, **kwargs)
 
@@ -112,8 +120,12 @@ class BlogIndex(RoutablePageMixin, Page):
             start_date = dt.datetime(int(year), 1, 1)
             end_date = dt.datetime(int(year) + 1, 1, 1)
             self.index_title = f'Posts from {year}'
-        self.posts = self.get_posts().filter(first_published_at__gt=start_date).filter(first_published_at__lt=end_date)
+        self.posts = self.paginate_posts(
+            request,
+            self.get_posts().filter(first_published_at__gt=start_date).filter(first_published_at__lt=end_date),
+        )
         return self.serve(request, *args, **kwargs)
+
 
 # ···························································
 # MISC PAGE(S)
