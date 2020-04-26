@@ -1,3 +1,4 @@
+{% load navigation_tags %}
 {% load wagtailuserbar %}
 <!DOCTYPE html>
 <html>
@@ -13,11 +14,17 @@
             </div>
         </header>
 
-        <nav>
+        <section id="navbar">
             <div class="constrainer">
-                <div>shit goes here</div>
+                <div id="page-message">{{ page.page_message }}</div>
+                <nav aria-label="primary site navigation">
+                    <ul role="menubar">
+                        {% get_site_root as site_root %}
+                        {% top_menu parent=site_root calling_page=self %}
+                    </ul>
+                </nav>
             </div>
-        </nav>
+        </section>
 
         <section id="content">
             <div class="constrainer">

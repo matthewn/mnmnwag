@@ -14,11 +14,19 @@ body {
     height: 6rem;
     margin-top: $margin-page-top-bottom;
     .constrainer {
-      padding: $standard-padding;
+      padding: $short-standard-padding;
+    }
+    #site-header {
+      align-items: baseline;
+      display: flex;
+      justify-content: space-between;
+    }
+    #site-logo {
+      font-size: 4rem;
     }
   }
 
-  > nav {
+  > #navbar {
     .constrainer {
       padding: $short-standard-padding;
     }

@@ -27,7 +27,7 @@ body.theme-light {
     border-bottom: 2px solid $manatee;
     color: #000;
   }
-  > nav > .constrainer {
+  > #navbar > .constrainer {
     border-bottom: 2px solid $manatee;
     border-left: 2px solid $manatee;
     border-right: 2px solid $manatee;
@@ -51,7 +51,7 @@ body.theme-dark {
     background-color: $dark-blue;
     border-bottom: 2px solid $ming;
   }
-  > nav > .constrainer {
+  > #navbar > .constrainer {
     border-bottom: 2px solid $ming;
     border-left: 2px solid $ming;
     border-right: 2px solid $ming;
@@ -78,7 +78,7 @@ body.theme-retro {
     background-color: $bg-black;
     border-bottom: 2px solid $green;
   }
-  > nav > .constrainer {
+  > #navbar > .constrainer {
     border-bottom: 2px solid $green;
     border-left: 2px solid $green;
     border-right: 2px solid $green;
