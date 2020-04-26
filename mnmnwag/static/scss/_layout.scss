@@ -130,6 +130,26 @@ body {
         @include media(desktop) {
           flex-grow: 1;
         }
+        font-family: $mono-font-stack;
+        font-size: 1.1rem;
+        > * {
+          margin-bottom: 3rem;
+        }
+        details {
+          summary h4 {
+            cursor: pointer;
+            display: inline-block;
+            text-transform: uppercase;
+          }
+          ul {
+            font-variant: small-caps;
+            margin-top: .75rem;
+            text-transform: lowercase;
+            .current {
+              font-weight: $semibold;
+            }
+          }
+        }
       }
     }
   }
