@@ -36,3 +36,9 @@
     text-decoration: none;
   }
 }
+
+@mixin mobile-full-width {
+  @include media(mobile) {
+    width: 100%;
+  }
+}

@@ -1,5 +1,6 @@
 // font stack
 $font-stack: luxi sans, dejavu sans, bitstream vera sans, lucida grande, verdana, helvetica, arial, sans-serif;
+$mono-font-stack: monospace;
 
 // font weights
 // $light:     300;
@@ -12,4 +13,8 @@ $site-max-width: 1200px;
 
 $standard-padding: 2.5rem 4rem 3rem 2.5rem;
 $short-standard-padding: .5rem 4rem .5rem 2.5rem;
+
+$standard-padding-mobile: 2.5rem 1rem 3rem;
+$short-standard-padding-mobile: 1rem 1rem 1rem;
+
 $margin-page-top-bottom: 2rem;

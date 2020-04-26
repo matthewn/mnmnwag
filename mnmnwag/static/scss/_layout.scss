@@ -10,37 +10,78 @@ body {
   }
 
   > header {
+    @include media(desktop) {
+      height: 6rem;
+      margin-top: $margin-page-top-bottom;
+    }
+    @include media(mobile) {
+      padding-bottom: 1rem;
+      text-align: center;
+    }
     font-size: 2rem;
-    height: 6rem;
-    margin-top: $margin-page-top-bottom;
     .constrainer {
+      @include media(mobile) {
+        padding: $short-standard-padding-mobile;
+      }
       padding: $short-standard-padding;
     }
+    a:hover { text-decoration: none; }
     #site-header {
+      @include media(mobile) {
+        flex-direction: column;
+      }
       align-items: baseline;
       display: flex;
       justify-content: space-between;
     }
     #site-logo {
+      @include mobile-full-width;
       font-size: 4rem;
+    }
+    #site-name {
+      @include mobile-full-width;
+      font-family: $mono-font-stack;
+      letter-spacing: .1em;
     }
   }
 
   > #navbar {
     .constrainer {
+      @include media(mobile) {
+        flex-direction: column-reverse;
+        padding: $short-standard-padding-mobile;
+        text-align: center;
+      }
       align-items: baseline;
       display: flex;
       justify-content: space-between;
       padding: $short-standard-padding;
     }
+    a:hover { text-decoration: none; }
+    #page-message {
+      @include mobile-full-width;
+    }
     nav {
-      .menuitem.active {
+      @include media(mobile) {
+        margin-bottom: 1rem;
+        width: 100%;
+      }
+      font-family: $mono-font-stack;
+      font-size: 1.1rem;
+      min-width: 360px;
+      ul {
+        display: flex;
+        justify-content: space-between;
+      }
+      li.active {
         font-weight: $semibold;
         ::after {
-          content: ' <';
+          content: '<';
+          margin-left: .25rem;
         }
         ::before {
-          content: '> ';
+          content: '>';
+          margin-right: .25rem;
         }
       }
     }
@@ -56,13 +97,17 @@ body {
     .constrainer {
       @include media(desktop) {
         align-items: stretch;
-        display: flex;
         flex-direction: row-reverse;
         flex-grow: 1;
         width: 100%;
       }
+      display: flex;
+      flex-direction: column-reverse;
 
       > * {
+        @include media(mobile) {
+          padding: $standard-padding-mobile;
+        }
         padding: $standard-padding;
       }
 
@@ -90,6 +135,9 @@ body {
   > footer {
     margin-bottom: $margin-page-top-bottom;
     .constrainer {
+      @include media(mobile) {
+        padding: $standard-padding-mobile;
+      }
       padding: $standard-padding;
     }
   }
