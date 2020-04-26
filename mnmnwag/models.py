@@ -79,9 +79,30 @@ class BlogIndex(RoutablePageMixin, Page):
         return Page.objects.descendant_of(self).live().order_by('-last_published_at')
 
     def paginate_posts(self, request, posts):
-        paginator = Paginator(posts, 2)
-        page_number = request.GET.get('page') if request.GET.get('page') else 1
+        paginator = self.truncate_paginator(Paginator(posts, 4))
+        page_number = request.GET.get('page')
         return paginator.get_page(page_number)
+
+    def truncate_paginator(self, paginator):
+        """
+        Provide a truncated (if necessary) page list by adding a
+        display_range property to the provided paginator.
+        """
+        if len(paginator.page_range) > 10:
+            display_range = [1, 2]
+            display_range += ['...']
+
+            start = 2
+            end = paginator.num_pages - 1
+            length = 7
+            display_range += [start + x * (end - start) // (length - 1) for x in range(length)][1:-1]
+
+            display_range += ['...']
+            display_range += [paginator.num_pages - 1, paginator.num_pages]
+        else:
+            display_range = paginator.page_range
+        paginator.display_range = display_range
+        return paginator
 
     @route(r'^$')
     def posts_all(self, request):

@@ -1,0 +1,37 @@
+{% load is_numeric %}
+
+<section class="pagination">
+    <ul class="pager">
+        <li class="pager-prev">
+            {% if page.posts.has_previous %}
+                <a href="?&page={{ page.posts.previous_page_number }}">
+                    <span class="arrow">&lt;</span>
+                    <span class="word">Previous</span>
+                </a>
+            {% endif %}
+        </li>
+
+        <div class="pager-pages">
+        {% for page_num in page.posts.paginator.display_range %}
+            <li class="pager-item{% if page_num == page.posts.number %} active{% endif %}">
+                {% if page_num|is_numeric %}
+                    <a href="?&page={{ page_num }}">
+                {% endif %}
+                &nbsp;&nbsp;{{ page_num }}&nbsp;&nbsp;
+                {% if page_num|is_numeric %}
+                    </a>
+                {% endif %}
+            </li>
+        {% endfor %}
+        </div>
+
+        <li class="pager-next">
+            {% if page.posts.has_next %}
+                <a href="?&page={{ page.posts.next_page_number }}">
+                    <span class="word">Next</span>
+                    <span class="arrow">&gt;</span>
+                </a>
+            {% endif %}
+        </li>
+    </ul>
+</section>

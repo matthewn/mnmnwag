@@ -1,0 +1,62 @@
+ul.pager {
+  display: table;
+  font-size: .94rem;
+  font-weight: normal;
+  list-style: none;
+  margin: 3rem 0 4rem;
+  width: 100%;
+  .pager-prev,
+  .pager-pages,
+  .pager-next {
+    display: table-cell;
+  }
+  .pager-pages {
+    @include media(mobile) {
+      width: 100%;
+    }
+    text-align: center;
+  }
+  .pager-item {
+    display: inline-block;
+    text-align: center;
+  }
+  .pager-prev,
+  .pager-item,
+  .pager-next {
+    height: 35px;
+    line-height: 35px;
+    margin: 0 .85rem;
+    min-width: 35px;
+    padding: 0;
+    &:hover {
+      font-weight: $semibold;
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+  .pager-prev,
+  .pager-next {
+    width: 120px;
+    .arrow {
+      font-size: 2rem;
+      vertical-align: middle;
+    }
+    .word {
+      @include media(mobile) {
+        display: none;
+      }
+    }
+  }
+  .pager-prev {
+    .arrow { margin-right: .5rem; }
+  }
+  .pager-next {
+    text-align: right;
+    .arrow { margin-left: .5rem; }
+  }
+  .pager-item.active {
+    border: 1px solid #000;
+    border-radius: 50%;
+  }
+}

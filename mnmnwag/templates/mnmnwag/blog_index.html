@@ -22,6 +22,10 @@
             {% include "mnmnwag/blog_post.html" %}
         {% endfor %}
 
+        {% if page.posts.paginator %}
+            {% include "mnmnwag/site_pager.html" %}
+        {% endif %}
+
     </div>
 
 {% endblock %}
