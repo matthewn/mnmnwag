@@ -48,6 +48,11 @@ class LegacyPost(Page):
         FieldPanel('tags'),
     ]
 
+    subpage_types = []
+
+    def page_message(self):
+        return self.get_parent().specific.page_message
+
 
 class ModernPost(Page):
     body = StreamField([
@@ -65,6 +70,9 @@ class ModernPost(Page):
 
     subpage_types = []
 
+    def page_message(self):
+        return self.get_parent().specific.page_message
+
 
 # ···························································
 # INDEX(ES)
@@ -72,8 +80,13 @@ class ModernPost(Page):
 
 
 class BlogIndex(RoutablePageMixin, Page):
+    page_message = RichTextField()
     max_count = 1
     subpage_types = ['LegacyPost', 'ModernPost']
+
+    content_panels = Page.content_panels + [
+        FieldPanel('page_message'),
+    ]
 
     def get_posts(self):
         return Page.objects.descendant_of(self).live().order_by('-last_published_at')
@@ -160,7 +173,9 @@ class ComplexPage(Page):
         ('image', ImageChooserBlock()),
         ('raw_HTML', blocks.RawHTMLBlock(required=False)),
     ])
+    page_message = RichTextField()
 
     content_panels = Page.content_panels + [
+        FieldPanel('page_message'),
         StreamFieldPanel('body'),
     ]

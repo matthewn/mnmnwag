@@ -28,7 +28,21 @@ body {
 
   > #navbar {
     .constrainer {
+      align-items: baseline;
+      display: flex;
+      justify-content: space-between;
       padding: $short-standard-padding;
+    }
+    nav {
+      .menuitem.active {
+        font-weight: $semibold;
+        ::after {
+          content: ' <';
+        }
+        ::before {
+          content: '> ';
+        }
+      }
     }
   }
 
