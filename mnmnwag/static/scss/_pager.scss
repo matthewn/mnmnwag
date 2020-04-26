@@ -17,8 +17,13 @@ ul.pager {
     text-align: center;
   }
   .pager-item {
+    border-radius: 50%;
     display: inline-block;
     text-align: center;
+    &.active,
+    &:hover {
+      border: 1px solid;
+    }
   }
   .pager-prev,
   .pager-item,
@@ -28,24 +33,20 @@ ul.pager {
     margin: 0 .85rem;
     min-width: 35px;
     padding: 0;
-    &:hover {
+    a:hover {
       font-weight: $semibold;
-      a {
-        text-decoration: none;
-      }
+      text-decoration: none;
     }
   }
   .pager-prev,
   .pager-next {
     width: 120px;
+    a:hover {
+      font-weight: bold;
+    }
     .arrow {
       font-size: 2rem;
       vertical-align: middle;
-    }
-    .word {
-      @include media(mobile) {
-        display: none;
-      }
     }
   }
   .pager-prev {
@@ -54,9 +55,5 @@ ul.pager {
   .pager-next {
     text-align: right;
     .arrow { margin-left: .5rem; }
-  }
-  .pager-item.active {
-    border: 1px solid #000;
-    border-radius: 50%;
   }
 }

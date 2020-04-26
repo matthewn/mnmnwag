@@ -1,60 +1,89 @@
-// thanks to coolors.co
+// colors as defined by coolors.co
 
-$aqua: #0df;
-$bg-black: #000;
-$blizzard-blue: #b8f3ff;
-$dark-blue: #181f41;
-$dark-green: #040;
-$link-blue: #00f;
+$white: #fffff8;  // "baby powder"
+$black: #000807;  // "rich black (FOGRA 39)"
+$red: #e71d36;    // "rose madder"
+$blue: #0000d9;   // "medium blue"
 $green: #0f0;
-$hay: #b9baa3;
-$mint: #44adb8;
-$ming: #246a73;
-$baby-powder: #fffff8;
-$brown: #333138;
-$prince: #573b64;
-$teal: #44adb8;
-$yellow: #ad0;
-$sage: #bcb382;
+$brown: #333138;  // "jet"
+
+$prince: #573b64; // "english violet"
+
+// light theme specific
 $gainsboro: #dddfdd;
 $manatee: #a2a3bb;
 
+// dark theme specific
+$blizzard-blue: #b8f3ff;
+$dark-cyan: #368f8b;
+$dark-blue: #181f41;  // "space cadet"
+$ming: #246a73;
+
+// retro theme specific
+$aqua: #0df;          // "sky blue (crayola)"
+$dark-green: #040;    // "lincoln green"
+$sheen-green: #ad0;
 
 body.theme-light {
-  background-color: $baby-powder;
+  background-color: $white;
   color: $brown;
+  a { color: $brown; }
+  a:hover { color: $blue; }
   > header {
     border-bottom: 2px solid $manatee;
-    color: #000;
+    color: $black;
   }
   > #navbar > .constrainer {
     border-bottom: 2px solid $manatee;
     border-left: 2px solid $manatee;
     border-right: 2px solid $manatee;
+    nav {
+      .active a {
+        color: $blue;
+      }
+    }
   }
   #content > .constrainer {
     > aside { background-color: $gainsboro; }
     > main { color: $brown; }
     a, a:link, a:visited {
-      color: $link-blue;
+      color: $blue;
     }
   }
   > footer {
     border-top: 2px solid $manatee;
   }
+
+  ul.pager .pager-item {
+    &.active {
+      border-color: $black;
+    }
+    &:hover {
+      border-color: $red;
+    }
+  }
 }
 
 body.theme-dark {
-  background-color: $bg-black;
+  background-color: $black;
   color: silver;
+  a { color: silver; }
+  a:hover { color: $blizzard-blue; }
   > header {
     background-color: $dark-blue;
     border-bottom: 2px solid $ming;
+    a { color: silver; }
+    a:hover { color: $blizzard-blue; }
   }
   > #navbar > .constrainer {
     border-bottom: 2px solid $ming;
     border-left: 2px solid $ming;
     border-right: 2px solid $ming;
+    nav {
+      .active a {
+        color: $blizzard-blue;
+      }
+    }
   }
   #content > .constrainer {
     > aside { background-color: $ming; }
@@ -69,19 +98,36 @@ body.theme-dark {
   > footer {
     border-top: 2px solid $ming;
   }
+
+  ul.pager .pager-item {
+    &.active {
+      border-color: $ming;
+    }
+    &:hover {
+      border-color: $dark-cyan;
+    }
+  }
 }
 
 body.theme-retro {
-  background-color: #000;
+  background-color: $black;
   color: $green;
+  a { color: $aqua; }
+  a:hover { color: $sheen-green; }
   > header {
-    background-color: $bg-black;
+    background-color: $black;
     border-bottom: 2px solid $green;
   }
   > #navbar > .constrainer {
     border-bottom: 2px solid $green;
     border-left: 2px solid $green;
     border-right: 2px solid $green;
+    color: $aqua;
+    nav {
+      .active a {
+        color: $sheen-green;
+      }
+    }
   }
   #content > .constrainer {
     > aside { background-color: $dark-green; }
@@ -90,7 +136,7 @@ body.theme-retro {
       color: $aqua;
     }
     a:visited {
-      color: $yellow;
+      color: $sheen-green;
     }
   }
   > footer {

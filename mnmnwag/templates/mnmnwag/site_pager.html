@@ -4,9 +4,8 @@
     <ul class="pager">
         <li class="pager-prev">
             {% if page.posts.has_previous %}
-                <a href="?&page={{ page.posts.previous_page_number }}">
+                <a title="previous page" href="?&page={{ page.posts.previous_page_number }}">
                     <span class="arrow">&lt;</span>
-                    <span class="word">Previous</span>
                 </a>
             {% endif %}
         </li>
@@ -27,8 +26,7 @@
 
         <li class="pager-next">
             {% if page.posts.has_next %}
-                <a href="?&page={{ page.posts.next_page_number }}">
-                    <span class="word">Next</span>
+                <a class="next page" href="?&page={{ page.posts.next_page_number }}">
                     <span class="arrow">&gt;</span>
                 </a>
             {% endif %}

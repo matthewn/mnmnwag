@@ -1,5 +1,8 @@
 #blog-index {
-  > * {
+  > article {
     margin-bottom: 3rem;
+  }
+  section.pagination {
+    margin: 6rem 0 0;
   }
 }
