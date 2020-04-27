@@ -1,0 +1,87 @@
+@font-face {
+  font-family: 'Alegreya';
+  font-style: italic;
+  font-weight: 400;
+  src: url('/static/fonts/alegreya/Alegreya-Italic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Alegreya';
+  font-style: italic;
+  font-weight: 500;
+  src: url('/static/fonts/alegreya/Alegreya-MediumItalic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Alegreya';
+  font-style: italic;
+  font-weight: 700;
+  src: url('/static/fonts/alegreya/Alegreya-BoldItalic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Alegreya';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/static/fonts/alegreya/Alegreya-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Alegreya';
+  font-style: normal;
+  font-weight: 500;
+  src: url('/static/fonts/alegreya/Alegreya-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Alegreya';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/static/fonts/alegreya/Alegreya-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Nanum Gothic Coding';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/static/fonts/nanum_gothic_coding/NanumGothicCoding-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Nanum Gothic Coding';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/static/fonts/nanum_gothic_coding/NanumGothicCoding-Bold.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: 'Raleway';
+  font-style: italic;
+  font-weight: 400;
+  src: url('/static/fonts/raleway/Raleway-Italic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Raleway';
+  font-style: italic;
+  font-weight: 600;
+  src: url('/static/fonts/raleway/Raleway-SemiBoldItalic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Raleway';
+  font-style: italic;
+  font-weight: 700;
+  src: url('/static/fonts/raleway/Raleway-BoldItalic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/static/fonts/raleway/Raleway-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 600;
+  src: url('/static/fonts/raleway/Raleway-SemiBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/static/fonts/raleway/Raleway-Bold.ttf') format('truetype');
+}

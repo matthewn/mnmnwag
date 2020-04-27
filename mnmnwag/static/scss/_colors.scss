@@ -2,7 +2,7 @@
 
 $white: #fffff8;  // "baby powder"
 $black: #000807;  // "rich black (FOGRA 39)"
-$red: #e71d36;    // "rose madder"
+$red: #a34054;    // "amaranth purple"
 $blue: #0000d9;   // "medium blue"
 $green: #0f0;
 $brown: #333138;  // "jet"
@@ -55,6 +55,7 @@ body.theme-light {
   }
 
   ul.pager .pager-item {
+    border-color: $white;
     &.active {
       border-color: $black;
     }
@@ -100,6 +101,7 @@ body.theme-dark {
   }
 
   ul.pager .pager-item {
+    border-color: $dark-blue;
     &.active {
       border-color: $ming;
     }
@@ -141,6 +143,16 @@ body.theme-retro {
   }
   > footer {
     border-top: 2px solid $green;
+  }
+
+  ul.pager .pager-item {
+    border-color: $black;
+    &.active {
+      border-color: $green;
+    }
+    &:hover {
+      border-color: $sheen-green;
+    }
   }
 }
 

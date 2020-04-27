@@ -1,7 +1,77 @@
-h2 {
+// font stacks
+$sans-stack: Raleway, sans-serif;
+$serif-stack: Alegreya, serif;
+$mono-stack: 'Nanum Gothic Coding', monospace;
+
+// font weights
+$medium: 500;     // Alegreya uses this
+$semibold: 600;   // Raleway uses this
+
+h2, .h2 {
   font-size: 1.5rem;
 }
 
-h3 {
+h3, .h3 {
   font-size: 1.35rem;
+}
+
+h4, .h4 {
+  font-size: 1.2rem;
+}
+
+// MAIN LAYOUT FROM _layouts.scss DUPLICATED (mostly) HERE
+body {
+  font-family: $serif-stack;
+
+  > header {
+    font-family: $sans-stack;
+    font-size: 2rem;
+    #site-logo {
+      font-family: $mono-stack;
+      font-size: 4rem;
+      letter-spacing: -.12em;
+    }
+    #site-name {
+      letter-spacing: .1em;
+    }
+  }
+
+  #navbar {
+    font-family: $sans-stack;
+    nav {
+      font-size: 1.1rem;
+      li.active {
+        font-weight: $semibold;
+      }
+    }
+  }
+
+  #content {
+    .constrainer > aside {
+      font-family: $sans-stack;
+      details {
+        ul {
+          font-variant: small-caps;
+          text-transform: lowercase;
+          .current {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+
+    .constrainer > main {
+      p,
+      ul,
+      ol {
+        font-size: 1.25rem;
+        line-height: 1.6;
+      }
+
+      header,
+      footer {
+        font-family: $sans-stack;
+      }
+    }
+  }
 }

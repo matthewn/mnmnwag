@@ -11,13 +11,12 @@ body {
 
   > header {
     @include media(desktop) {
-      margin-top: $margin-page-top-bottom;
+      padding-top: 1rem;
     }
     @include media(mobile) {
       padding-bottom: 1rem;
       text-align: center;
     }
-    font-size: 2rem;
     .constrainer {
       @include media(mobile) {
         padding: $short-standard-padding-mobile;
@@ -35,16 +34,15 @@ body {
     }
     #site-logo {
       @include mobile-full-width;
-      font-size: 4rem;
     }
     #site-name {
       @include mobile-full-width;
-      font-family: $mono-font-stack;
-      letter-spacing: .1em;
+      position: relative;
+      top: 5px;  // MAGIC NUMBER!
     }
   }
 
-  > #navbar {
+  #navbar {
     .constrainer {
       @include media(mobile) {
         flex-direction: column-reverse;
@@ -67,15 +65,12 @@ body {
         margin-bottom: 1rem;
         width: 100%;
       }
-      font-family: $mono-font-stack;
-      font-size: 1.1rem;
-      min-width: 360px;
+      min-width: 322px;  // MAGIC NUMBER!
       ul {
         display: flex;
         justify-content: space-between;
       }
       li.active {
-        font-weight: $semibold;
         ::after {
           content: '<';
           margin-left: .25rem;
@@ -118,20 +113,12 @@ body {
           width: 100%;
         }
         padding-bottom: 1rem;
-
-        p,
-        ul,
-        ol {
-          line-height: 1.6;
-        }
       }
 
       > aside {
         @include media(desktop) {
           flex-grow: 1;
         }
-        font-family: $mono-font-stack;
-        font-size: 1.1rem;
         > * {
           margin-bottom: 3rem;
         }
@@ -142,12 +129,7 @@ body {
             text-transform: uppercase;
           }
           ul {
-            font-variant: small-caps;
             margin-top: .75rem;
-            text-transform: lowercase;
-            .current {
-              font-weight: $semibold;
-            }
           }
         }
       }
@@ -155,7 +137,6 @@ body {
   }
 
   > footer {
-    margin-bottom: $margin-page-top-bottom;
     .constrainer {
       @include media(mobile) {
         padding: $standard-padding-mobile;

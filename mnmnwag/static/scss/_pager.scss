@@ -1,40 +1,31 @@
 ul.pager {
-  display: table;
+  align-items: stretch;
+  display: flex;
+  font-family: $mono-stack;
   font-size: .94rem;
   font-weight: normal;
   list-style: none;
   margin: 3rem 0 4rem;
   width: 100%;
-  .pager-prev,
-  .pager-pages,
-  .pager-next {
-    display: table-cell;
-  }
   .pager-pages {
     @include media(mobile) {
       width: 100%;
     }
-    text-align: center;
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
   }
   .pager-item {
+    border: 1px solid;
     border-radius: 50%;
-    display: inline-block;
-    text-align: center;
-    &.active,
-    &:hover {
-      border: 1px solid;
-    }
   }
   .pager-prev,
   .pager-item,
   .pager-next {
-    height: 35px;
-    line-height: 35px;
-    margin: 0 .85rem;
-    min-width: 35px;
+    line-height: 30px;
+    margin: 0 .5rem;
     padding: 0;
     a:hover {
-      font-weight: $semibold;
       text-decoration: none;
     }
   }
