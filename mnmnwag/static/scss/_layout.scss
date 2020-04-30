@@ -146,6 +146,7 @@ body {
   }
 
   > footer {
+    text-align: center;
     .constrainer {
       @include media(mobile) {
         padding: $std-padding-mobile;

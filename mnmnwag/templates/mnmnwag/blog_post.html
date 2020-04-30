@@ -1,13 +1,14 @@
 {% load capture_tags %}
+{% load typefixes %}
 {% load wagtailcore_tags %}
 
 <article class="blog-post">
     <header>
         <a href="{% pageurl post %}">
             {% if page.content_type.model == 'blogindex' %}
-                <h3 class="post-title">{{ post.title }}</h3>
+                <h3 class="post-title">{{ post.title|typefixes }}</h3>
             {% else %}
-                <h2 class="post-title">{{ post.title }}</h2>
+                <h2 class="post-title">{{ post.title|typefixes }}</h2>
             {% endif %}
         </a>
     </header>
@@ -16,22 +17,22 @@
         {% with post.specific.body as body %}
             {% if page.content_type.model == 'blogindex' %}
                 {% if post.content_type.model == 'legacypost' %}
-                    {{ body|richtext|truncatewords_html:150 }}
-                    {% ifnotequal body|richtext|truncatewords_html:150|length body|richtext|truncatewords_html:151|length %}
+                    {{ body|richtext|typefixes|truncatewords_html:150 }}
+                    {% ifnotequal body|richtext|typefixes|truncatewords_html:150|length body|richtext|typefixes|truncatewords_html:151|length %}
                         <a class="read-more" href="{% pageurl post %}">read more…</a>
                     {% endifnotequal %}
                 {% elif post.content_type.model == 'modernpost' %}
-                    {% capture as body1 %}{% include_block body|truncatewords_html:150 %}{% endcapture %}
-                    {% capture as body2 silent %}{% include_block body|truncatewords_html:151 %}{% endcapture %}
+                    {% capture as body1 %}{% include_block body|typefixes|truncatewords_html:150 %}{% endcapture %}
+                    {% capture as body2 silent %}{% include_block body|typefixes|truncatewords_html:151 %}{% endcapture %}
                     {% ifnotequal body1 body2 %}
                         <a class="read-more" href="{% pageurl post %}">read more…</a>
                     {% endifnotequal %}
                 {% endif %}
             {% else %}
                 {% if post.content_type.model == 'legacypost' %}
-                    {{ body|richtext }}
+                    {{ body|richtext|typefixes }}
                 {% elif post.content_type.model == 'modernpost' %}
-                    {% include_block body %}
+                    {% include_block body|typefixes %}
                 {% endif %}
                 <h3>COMMENTS GO HERE</h3>
             {% endif %}

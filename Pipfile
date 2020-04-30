@@ -17,6 +17,7 @@ python-dateutil = "*"
 django-compressor = "*"
 django-libsass = "*"
 django-capture-tag = "*"
+django-typogrify = "*"
 
 [requires]
 python_version = "3.6"

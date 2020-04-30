@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'dbbackup',
     'debugtools',
     'django_extensions',
+    'typogrify',
 
     'mnmnwag',
 ]

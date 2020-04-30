@@ -7,17 +7,17 @@ $blue: #0000d9;   // "medium blue"
 $green: #0f0;
 $brown: #333138;  // "jet"
 
-$prince: #573b64; // "english violet"
-
 // light theme specific
 $gainsboro: #dddfdd;
 $manatee: #a2a3bb;
+$purple: #551a8b;
 
 // dark theme specific
 $blizzard-blue: #b8f3ff;
 $dark-cyan: #368f8b;
 $dark-blue: #181f41;  // "space cadet"
 $ming: #246a73;
+$pewter-blue: #81aeb9;
 
 // retro theme specific
 $aqua: #0df;          // "sky blue (crayola)"
@@ -46,12 +46,13 @@ body.theme-light {
   #content > .constrainer {
     > aside { background-color: $gainsboro; }
     > main { color: $brown; }
-    a, a:link, a:visited {
-      color: $blue;
-    }
+    a, a:link { color: $blue; }
+    a:visited { color: $purple; }
   }
   > footer {
     border-top: 2px solid $manatee;
+    a, a:link { color: $blue; }
+    a:visited { color: $purple; }
   }
 
   ul.pager .pager-item {
@@ -93,12 +94,13 @@ body.theme-dark {
       background-color: $dark-blue;
       color: silver;
     }
-    a, a:link, a:visited {
-      color: $blizzard-blue;
-    }
+    a, a:link { color: $blizzard-blue; }
+    a:visited { color: $pewter-blue; }
   }
   > footer {
     border-top: 2px solid $ming;
+    a, a:link { color: $blizzard-blue; }
+    a:visited { color: $pewter-blue; }
   }
 
   ul.pager .pager-item {
@@ -135,15 +137,13 @@ body.theme-retro {
   #content > .constrainer {
     > aside { background-color: $dark-green; }
     > main { color: $green; }
-    a, a:link {
-      color: $aqua;
-    }
-    a:visited {
-      color: $sheen-green;
-    }
+    a, a:link { color: $aqua; }
+    a:visited { color: $sheen-green; }
   }
   > footer {
     border-top: 2px solid $green;
+    a, a:link { color: $aqua; }
+    a:visited { color: $sheen-green; }
   }
 
   ul.pager .pager-item {
@@ -156,4 +156,3 @@ body.theme-retro {
     }
   }
 }
-
