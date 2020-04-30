@@ -1,3 +1,9 @@
+$std-padding: 2.5rem 2.5rem 3rem 2.5rem;
+$std-padding-short: .8rem 2.5rem .8rem 2.5rem;
+
+$std-padding-mobile: 2.5rem 1rem 3rem;
+$std-padding-mobile-short: 1rem;
+
 body {
   display: flex;
   flex-direction: column;
@@ -19,9 +25,9 @@ body {
     }
     .constrainer {
       @include media(mobile) {
-        padding: $short-standard-padding-mobile;
+        padding: $std-padding-mobile-short;
       }
-      padding: $short-standard-padding;
+      padding: $std-padding-short;
     }
     a:hover { text-decoration: none; }
     #site-header {
@@ -46,13 +52,13 @@ body {
     .constrainer {
       @include media(mobile) {
         flex-direction: column-reverse;
-        padding: $short-standard-padding-mobile;
+        padding: $std-padding-mobile-short;
         text-align: center;
       }
       align-items: baseline;
       display: flex;
       justify-content: space-between;
-      padding: $short-standard-padding;
+      padding: $std-padding-short;
     }
     a:hover {
       text-decoration: none;
@@ -102,17 +108,20 @@ body {
 
       > * {
         @include media(mobile) {
-          padding: $standard-padding-mobile;
+          padding: $std-padding-mobile;
         }
-        padding: $standard-padding;
+        padding: $std-padding;
       }
 
       > main {
-        @include media(desktop) {
-          max-width: $content-max-width;
-          width: 100%;
-        }
+        flex-grow: 1;
         padding-bottom: 1rem;
+        &.blog {
+          @include media(desktop) {
+            max-width: $content-max-width;
+            width: 100%;
+          }
+        }
       }
 
       > aside {
@@ -139,9 +148,9 @@ body {
   > footer {
     .constrainer {
       @include media(mobile) {
-        padding: $standard-padding-mobile;
+        padding: $std-padding-mobile;
       }
-      padding: $standard-padding;
+      padding: $std-padding;
     }
   }
 }

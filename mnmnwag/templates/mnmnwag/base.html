@@ -29,12 +29,18 @@
 
         <section id="content">
             <div class="constrainer">
-                <aside>
-                    {% include "mnmnwag/sidebar_theme.html" %}
-                    <div class="foo"> another thing </div>
-                </aside>
+                {% if page.content_type.model != 'complexpage' %}
+                    <aside>
+                        {% include "mnmnwag/sidebar_theme.html" %}
+                        <div class="foo"> another thing </div>
+                    </aside>
+                {% endif %}
 
-                <main>
+                {% if page.content_type.model == 'complexpage' %}
+                    <main>
+                {% else %}
+                    <main class="blog">
+                {% endif %}
                     {% block content %}{% endblock %}
                 </main>
 
