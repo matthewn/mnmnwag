@@ -127,6 +127,7 @@ body {
       > aside {
         @include media(desktop) {
           flex-grow: 1;
+          min-width: 215px;
         }
         > * {
           margin-bottom: 3rem;

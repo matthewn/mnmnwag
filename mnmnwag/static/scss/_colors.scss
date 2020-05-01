@@ -14,10 +14,10 @@ $purple: #551a8b;
 
 // dark theme specific
 $blizzard-blue: #b8f3ff;
-$dark-cyan: #368f8b;
 $dark-blue: #181f41;  // "space cadet"
+$dark-cyan: #368f8b;
+$light-blue: #93c5d0;
 $ming: #246a73;
-$pewter-blue: #81aeb9;
 
 // retro theme specific
 $aqua: #0df;          // "sky blue (crayola)"
@@ -95,12 +95,12 @@ body.theme-dark {
       color: silver;
     }
     a, a:link { color: $blizzard-blue; }
-    a:visited { color: $pewter-blue; }
+    a:visited { color: $light-blue; }
   }
   > footer {
     border-top: 2px solid $ming;
     a, a:link { color: $blizzard-blue; }
-    a:visited { color: $pewter-blue; }
+    a:visited { color: $light-blue; }
   }
 
   ul.pager .pager-item {

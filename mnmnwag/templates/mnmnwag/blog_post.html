@@ -4,13 +4,13 @@
 
 <article class="blog-post">
     <header>
-        <a href="{% pageurl post %}">
-            {% if page.content_type.model == 'blogindex' %}
+        {% if page.content_type.model == 'blogindex' %}
+            <a href="{% pageurl post %}">
                 <h3 class="post-title">{{ post.title|typefixes }}</h3>
-            {% else %}
-                <h2 class="post-title">{{ post.title|typefixes }}</h2>
-            {% endif %}
-        </a>
+            </a>
+        {% else %}
+            <h2 class="post-title">{{ post.title|typefixes }}</h2>
+        {% endif %}
     </header>
 
     <main>

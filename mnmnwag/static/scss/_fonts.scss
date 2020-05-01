@@ -8,7 +8,8 @@ $medium: 500;     // Alegreya uses this
 $semibold: 600;   // Raleway uses this
 
 h2, .h2 {
-  font-size: 1.5rem;
+  font-family: $sans-stack;
+  font-size: 1.6rem;
 }
 
 h3, .h3 {
@@ -38,6 +39,9 @@ body {
 
   #navbar {
     font-family: $sans-stack;
+    #page-message {
+      font-weight: $semibold;
+    }
     nav {
       font-size: 1.1rem;
       li.active {
@@ -73,5 +77,9 @@ body {
         font-family: $sans-stack;
       }
     }
+  }
+
+  > footer {
+    font-family: $sans-stack;
   }
 }
