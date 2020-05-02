@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
@@ -53,8 +54,12 @@ INSTALLED_APPS = [
     'compressor',
     'dbbackup',
     'debugtools',
+    'django_comments_xtd',  # 1 (do not reorder)
+    'django_comments',      # 2 (do not reorder)
     'django_extensions',
     'typogrify',
+    'vendor.wagtailcomments_xtd',
+    'wagtailfontawesome',
 
     'mnmnwag',
 ]
@@ -176,6 +181,10 @@ WAGTAIL_SITE_NAME = "mnmnwag"
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://example.com'
+
+
+# django-comments-xtd
+COMMENTS_APP = 'django_comments_xtd'
 
 
 # django-compressor

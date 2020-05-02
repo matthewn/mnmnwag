@@ -18,6 +18,8 @@ django-compressor = "*"
 django-libsass = "*"
 django-capture-tag = "*"
 django-typogrify = "*"
+django-comments-xtd = "*"
+wagtailcomments-xtd = {git = "https://github.com/arttobe/wagtailcomments_xtd.git"}
 
 [requires]
 python_version = "3.6"
