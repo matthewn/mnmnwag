@@ -2,15 +2,16 @@
 
 $white: #fffff8;  // "baby powder"
 $black: #000807;  // "rich black (FOGRA 39)"
-$red: #a34054;    // "amaranth purple"
-$blue: #0000d9;   // "medium blue"
-$green: #0f0;
-$brown: #333138;  // "jet"
 
 // light theme specific
+$french-lilac: #8d6b94;
 $gainsboro: #dddfdd;
+$jet: #333138;  // "jet"
+$light-yellow: #ffffe0;
 $manatee: #a2a3bb;
 $purple: #551a8b;
+$red: #a34054;    // "amaranth purple"
+$star-command-blue: #0e79b2;
 
 // dark theme specific
 $blizzard-blue: #b8f3ff;
@@ -22,13 +23,15 @@ $ming: #246a73;
 // retro theme specific
 $aqua: #0df;          // "sky blue (crayola)"
 $dark-green: #040;    // "lincoln green"
+$green: #0f0;
 $sheen-green: #ad0;
+
 
 body.theme-light {
   background-color: $white;
-  color: $brown;
-  a { color: $brown; }
-  a:hover { color: $blue; }
+  color: $jet;
+  a { color: $jet; }
+  a:hover { color: $star-command-blue; }
   > header {
     border-bottom: 2px solid $manatee;
     color: $black;
@@ -39,20 +42,20 @@ body.theme-light {
     border-right: 2px solid $manatee;
     nav {
       .active a {
-        color: $blue;
+        color: $star-command-blue;
       }
     }
   }
   #content > .constrainer {
-    > aside { background-color: $gainsboro; }
-    > main { color: $brown; }
-    a, a:link { color: $blue; }
-    a:visited { color: $purple; }
+    > aside { background-color: $light-yellow; }
+    > main { color: $jet; }
+    a, a:link { color: $star-command-blue; }
+    a:visited { color: $french-lilac; }
   }
   > footer {
     border-top: 2px solid $manatee;
-    a, a:link { color: $blue; }
-    a:visited { color: $purple; }
+    a, a:link { color: $star-command-blue; }
+    a:visited { color: $french-lilac; }
   }
 
   ul.pager .pager-item {
