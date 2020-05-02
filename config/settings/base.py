@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'wagtail.admin',
     'wagtail.core',
     'wagtail.contrib.routable_page',
+    'wagtail.contrib.styleguide',
 
     'modelcluster',
     'taggit',
@@ -185,6 +186,7 @@ BASE_URL = 'http://example.com'
 
 # django-comments-xtd
 COMMENTS_APP = 'django_comments_xtd'
+COMMENTS_XTD_MAX_THREAD_LEVEL = 8
 
 
 # django-compressor
@@ -205,3 +207,6 @@ DBBACKUP_STORAGE_OPTIONS = {'location': os.path.join(BASE_DIR, 'private', 'db')}
 # django-libsass
 
 LIBSASS_OUTPUT_STYLE = 'compressed'
+
+
+SITE_ID = 1

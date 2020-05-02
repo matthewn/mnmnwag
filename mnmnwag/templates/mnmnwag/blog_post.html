@@ -1,4 +1,5 @@
 {% load capture_tags %}
+{% load comments %}
 {% load typefixes %}
 {% load wagtailcore_tags %}
 
@@ -34,23 +35,44 @@
                 {% elif post.content_type.model == 'modernpost' %}
                     {% include_block body|typefixes %}
                 {% endif %}
-                <h3>COMMENTS GO HERE</h3>
             {% endif %}
         {% endwith %}
     </main>
 
     <footer>
-        <div class="post-date">
-            posted {{ post.specific.first_published_at|date:"j F Y" }}
-            at {{ post.specific.first_published_at|date:"g:i a" }}
-        </div>
-        <div class="post-tags">
-            filed under
-            {% for tag in post.specific.tagged_items.all %}
-                <a href="/blog/tag/{{ tag.tag.slug }}">
-                    #{{ tag.tag.name }}
-                </a>
-            {% endfor %}
+        <section class="post-info">
+            <div class="post-date">
+                posted {{ post.specific.first_published_at|date:"j F Y" }}
+                at {{ post.specific.first_published_at|date:"g:i a" }}
+            </div>
+            <div class="post-tags">
+                filed under
+                {% for tag in post.specific.tagged_items.all %}
+                    <a href="/blog/tag/{{ tag.tag.slug }}">
+                        #{{ tag.tag.name }}
+                    </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% if page.content_type.model != 'blogindex' %}
+            <section class="comments">
+                <h3>Comments</h3>
+                {% get_comment_count for post as comment_count %}
+                {% if comment_count %}
+                    <div class="comments-count">
+                        {{ comment_count }} comment{{ comment_count|pluralize }}
+                        ha{{ comment_count|pluralize:"s,ve" }} been posted.
+                    </div>
+                    <div class="comments-list">
+                        {% render_comment_list for post %}
+                    </div>
+                {% endif %}
+                <div class="comment-form">
+                    <h4>Leave a comment! It's easy! No account required.</h4>
+                    {% render_comment_form for post %}
+                </div>
+            </section>
+        {% endif %}
     </footer>
 
 </article>

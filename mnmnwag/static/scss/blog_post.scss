@@ -10,15 +10,19 @@
       margin-bottom: 1rem;
     }
 
-    .read-more {
-      font-variant: small-caps;
-    }
   }
 
   footer {
-    font-style: italic;
-    > div {
-      margin-bottom: .25rem;
+    .post-info {
+      > div {
+        margin-bottom: .25rem;
+      }
+    }
+    .comments {
+      margin-top: 2rem;
+      > * {
+        margin-bottom: 1.25rem;
+      }
     }
   }
 }
