@@ -30,11 +30,13 @@ $sheen-green: #ad0;
 body.theme-light {
   background-color: $white;
   color: $jet;
-  a { color: $jet; }
-  a:hover { color: $star-command-blue; }
+  a, a:link { color: $star-command-blue; }
+  a:visited { color: $french-lilac; }
   > header {
     border-bottom: 2px solid $manatee;
     color: $black;
+    a, a:link, a:visited { color: $jet; }
+    a:hover { color: $star-command-blue; }
   }
   > #navbar > .constrainer {
     border-bottom: 2px solid $manatee;
@@ -49,13 +51,9 @@ body.theme-light {
   #content > .constrainer {
     > aside { background-color: $light-yellow; }
     > main { color: $jet; }
-    a, a:link { color: $star-command-blue; }
-    a:visited { color: $french-lilac; }
   }
   > footer {
     border-top: 2px solid $manatee;
-    a, a:link { color: $star-command-blue; }
-    a:visited { color: $french-lilac; }
   }
 
   ul.pager .pager-item {
@@ -73,12 +71,12 @@ body.theme-light {
 body.theme-dark {
   background-color: $black;
   color: silver;
-  a { color: silver; }
-  a:hover { color: $blizzard-blue; }
+  a, a:link { color: $blizzard-blue; }
+  a:visited { color: $light-blue; }
   > header {
     background-color: $dark-blue;
     border-bottom: 2px solid $ming;
-    a { color: silver; }
+    a, a:link, a:visited { color: silver; }
     a:hover { color: $blizzard-blue; }
   }
   > #navbar > .constrainer {
@@ -97,13 +95,9 @@ body.theme-dark {
       background-color: $dark-blue;
       color: silver;
     }
-    a, a:link { color: $blizzard-blue; }
-    a:visited { color: $light-blue; }
   }
   > footer {
     border-top: 2px solid $ming;
-    a, a:link { color: $blizzard-blue; }
-    a:visited { color: $light-blue; }
   }
 
   ul.pager .pager-item {
@@ -120,11 +114,13 @@ body.theme-dark {
 body.theme-retro {
   background-color: $black;
   color: $green;
-  a { color: $aqua; }
-  a:hover { color: $sheen-green; }
+  a, a:link { color: $aqua; }
+  a:visited { color: $sheen-green; }
   > header {
     background-color: $black;
     border-bottom: 2px solid $green;
+    a, a:link, a:visited { color: $aqua; }
+    a:hover { color: $sheen-green; }
   }
   > #navbar > .constrainer {
     border-bottom: 2px solid $green;
@@ -140,13 +136,9 @@ body.theme-retro {
   #content > .constrainer {
     > aside { background-color: $dark-green; }
     > main { color: $green; }
-    a, a:link { color: $aqua; }
-    a:visited { color: $sheen-green; }
   }
   > footer {
     border-top: 2px solid $green;
-    a, a:link { color: $aqua; }
-    a:visited { color: $sheen-green; }
   }
 
   ul.pager .pager-item {
