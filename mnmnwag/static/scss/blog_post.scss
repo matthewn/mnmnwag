@@ -18,28 +18,5 @@
         margin-bottom: .25rem;
       }
     }
-    .comments {
-      margin-top: 2rem;
-      > * {
-        margin-bottom: 1.25rem;
-      }
-      .comments-tree {
-        > .comment-container {
-          margin-bottom: 1rem;
-        }
-      }
-      .comment-container {
-        display: flex;
-        .gravatar {
-          margin-right: 1rem;
-          min-width: 48px;
-        }
-      }
-      .comment-content {
-        > .comment-container {
-          margin-top: 1.25rem;
-        }
-      }
-    }
   }
 }
