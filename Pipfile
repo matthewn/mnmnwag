@@ -20,6 +20,7 @@ django-capture-tag = "*"
 django-typogrify = "*"
 django-comments-xtd = "*"
 wagtailcomments-xtd = {git = "https://github.com/arttobe/wagtailcomments_xtd.git"}
+django-debug-toolbar = "*"
 
 [requires]
 python_version = "3.6"

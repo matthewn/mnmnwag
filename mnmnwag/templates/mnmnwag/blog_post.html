@@ -1,5 +1,6 @@
 {% load capture_tags %}
 {% load comments %}
+{% load comments_xtd %}
 {% load typefixes %}
 {% load wagtailcore_tags %}
 
@@ -63,8 +64,8 @@
                         {{ comment_count }} comment{{ comment_count|pluralize }}
                         ha{{ comment_count|pluralize:"s,ve" }} been posted.
                     </div>
-                    <div class="comments-list">
-                        {% render_comment_list for post %}
+                    <div class="comments-tree">
+                        {% render_xtdcomment_tree for post %}
                     </div>
                 {% endif %}
                 <div class="comment-form">

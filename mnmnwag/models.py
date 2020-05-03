@@ -37,7 +37,18 @@ class PostTag(TaggedItemBase):
 # ···························································
 
 
-class LegacyPost(Page):
+class BlogPost(models.Model):
+    def get_absolute_url(self):
+        return self.full_url
+
+    def page_message(self):
+        return self.get_parent().specific.page_message
+
+    class Meta:
+        abstract = True
+
+
+class LegacyPost(Page, BlogPost):
     # TODO: this needs to become a plain (long) text field; we are not
     #       going to want Draftail messing with this shit
     body = RichTextField()
@@ -50,11 +61,8 @@ class LegacyPost(Page):
 
     subpage_types = []
 
-    def page_message(self):
-        return self.get_parent().specific.page_message
 
-
-class ModernPost(Page):
+class ModernPost(Page, BlogPost):
     body = StreamField([
         ('heading', blocks.CharBlock(classname="full title")),
         ('paragraph', blocks.RichTextBlock()),
@@ -69,9 +77,6 @@ class ModernPost(Page):
     ]
 
     subpage_types = []
-
-    def page_message(self):
-        return self.get_parent().specific.page_message
 
 
 # ···························································

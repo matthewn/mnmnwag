@@ -51,9 +51,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'mnmnwag',
+
     'capture_tag',
     'compressor',
     'dbbackup',
+    'debug_toolbar',
     'debugtools',
     'django_comments_xtd',  # 1 (do not reorder)
     'django_comments',      # 2 (do not reorder)
@@ -61,8 +64,6 @@ INSTALLED_APPS = [
     'typogrify',
     'vendor.wagtailcomments_xtd',
     'wagtailfontawesome',
-
-    'mnmnwag',
 ]
 
 MIDDLEWARE = [
@@ -73,6 +74,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 
     'wagtail.core.middleware.SiteMiddleware',
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
@@ -141,7 +144,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Los_Angeles'
 
 USE_I18N = True
 
@@ -202,6 +205,12 @@ COMPRESS_PRECOMPILERS = (
 DBBACKUP_FILENAME_TEMPLATE = 'mnmnwag-{datetime}.sql'
 DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
 DBBACKUP_STORAGE_OPTIONS = {'location': os.path.join(BASE_DIR, 'private', 'db')}
+
+
+# django-debug-toolbar
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 
 
 # django-libsass
