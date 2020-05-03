@@ -17,9 +17,10 @@
                         {{ item.comment.name }}
                     {% if item.comment.url %}</a>{% endif %}
                 </b> had this to say on
-                {{ item.comment.submit_date|date:"j F Y" }}
-                at {{ item.comment.submit_date|date:"g:i a" }}:
-                <a class="permalink" title="permalink" href="{% get_comment_permalink item.comment %}">¶</a>
+                <a class="permalink" title="permalink for this comment" href="{% get_comment_permalink item.comment %}">
+                    {{ item.comment.submit_date|date:"j F Y" }}
+                    at {{ item.comment.submit_date|date:"g:i a" }}
+                </a>...
                 {# <span> #}
                 {#     {% if not item.comment.is_removed %} #}
                 {#         {% if perms.comments.can_moderate %} #}
