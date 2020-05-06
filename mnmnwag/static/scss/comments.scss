@@ -21,3 +21,23 @@
     }
   }
 }
+
+.comment-form {
+
+  form {
+    fieldset { border: none; }
+    input[type='text'],
+    textarea {
+      font-size: 1.15rem;
+      max-width: 500px;
+      width: 100%;
+    }
+    textarea {
+      height: 6rem;
+    }
+    .row {
+      margin-top: 1rem;
+    }
+  }
+
+}
