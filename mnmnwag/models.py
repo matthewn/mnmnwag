@@ -1,6 +1,7 @@
 from django.core.paginator import Paginator
 from django.db import models
 
+from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 
@@ -14,7 +15,8 @@ from wagtail.admin.edit_handlers import (
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 
-from modelcluster.fields import ParentalKey
+from django_comments.moderation import CommentModerator
+from django_comments_xtd.moderation import moderator
 
 import datetime as dt
 
@@ -39,6 +41,10 @@ class PostTag(TaggedItemBase):
 
 class BlogPost(models.Model):
     def get_absolute_url(self):
+        """
+        Returns an absolute URL for the page.
+        (Required by django_comments_xtd.)
+        """
         return self.full_url
 
     def page_message(self):
@@ -184,3 +190,20 @@ class ComplexPage(Page):
         FieldPanel('page_message'),
         StreamFieldPanel('body'),
     ]
+
+
+# ···························································
+# COMMENT MODERATOR CLASS & REGISTRATION
+# ···························································
+
+# move to apps. py?
+class BlogPostModerator(CommentModerator):
+    email_notification = True
+
+    def moderate(self, comment, content_object, request):
+        # moderate all messages
+        return True
+
+
+moderator.register(LegacyPost, BlogPostModerator)
+moderator.register(ModernPost, BlogPostModerator)

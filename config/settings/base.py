@@ -187,9 +187,13 @@ WAGTAIL_SITE_NAME = "mnmnwag"
 BASE_URL = 'http://example.com'
 
 
-# django-comments-xtd
+# django-comments(-xtd)
 COMMENTS_APP = 'django_comments_xtd'
+COMMENTS_XTD_CONFIRM_EMAIL = False
 COMMENTS_XTD_MAX_THREAD_LEVEL = 8
+MANAGERS = (('M N', 'matthewn@mahnamahna.net'),)
+# COMMENTS_XTD_SALT = 'zVHJEuPVWauJbk3ANXrDiSFW4pD2ZrKQkDcV9FT7nwm4yLO1l90vQy'
+# COMMENTS_XTD_FROM_EMAIL = 'bot@mahnamahna.net'
 
 
 # django-compressor
