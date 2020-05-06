@@ -1,4 +1,5 @@
 {% load navigation_tags %}
+{% load typefixes %}
 {% load wagtailcore_tags %}
 {% load wagtailuserbar %}
 <!DOCTYPE html>
@@ -17,7 +18,7 @@
 
         <section id="navbar">
             <div class="constrainer">
-                <div id="page-message">{{ page.page_message|richtext }}</div>
+                <div id="page-message">{{ page.page_message|richtext|typefixes }}</div>
                 <nav aria-label="primary site navigation">
                     <ul role="menubar">
                         {% get_site_root as site_root %}
