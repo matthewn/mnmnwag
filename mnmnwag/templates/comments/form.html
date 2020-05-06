@@ -44,16 +44,16 @@
         </div>
 
         <div class="row">
-            <div class="custom-control custom-checkbox">
+            <div class="checkbox">
                 {{ form.followup }}
-                <label for="id_followup{% if cid %}_{{ cid }}{% endif %}" class="custom-control-label">&nbsp;{{ form.followup.label }}</label>
+                <label for="id_followup{% if cid %}_{{ cid }}{% endif %}">&nbsp;{{ form.followup.label }}</label>
             </div>
         </div>
     </fieldset>
 
     <div class="row">
         <div>
-            <input type="submit" name="post" value="post">
+            <input type="submit" name="post" value="submit">
             {# <input type="submit" name="preview" value="{% trans 'preview' %}" class="btn btn-secondary" /> #}
         </div>
     </div>

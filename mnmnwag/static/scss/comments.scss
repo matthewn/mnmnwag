@@ -4,6 +4,7 @@
     margin-bottom: 1.25rem;
   }
   .comments-tree {
+    margin-bottom: 2rem;
     > .comment-container {
       margin-bottom: 1rem;
     }
@@ -23,21 +24,27 @@
 }
 
 .comment-form {
-
   form {
     fieldset { border: none; }
+    input[type='submit'] {
+      border: none;
+      padding: .5rem 1rem;
+    }
+    input[type='text'] {
+      margin-top: .25rem;
+    }
     input[type='text'],
     textarea {
-      font-size: 1.15rem;
+      border: none;
       max-width: 500px;
+      padding: .25rem .5rem;
       width: 100%;
     }
     textarea {
-      height: 6rem;
+      height: 8rem;
     }
     .row {
       margin-top: 1rem;
     }
   }
-
 }

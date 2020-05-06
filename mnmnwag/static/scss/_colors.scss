@@ -2,6 +2,7 @@
 
 $white: #fffff8;  // "baby powder"
 $black: #000807;  // "rich black (FOGRA 39)"
+$dark-grey: #333;
 
 // light theme specific
 $french-lilac: #8d6b94;
@@ -65,6 +66,11 @@ body.theme-light {
       border-color: $red;
     }
   }
+
+  input[type='submit'] {
+    background-color: $jet;
+    color: $white;
+  }
   .wagtail-userbar__item a { color: #aaa; }
 }
 
@@ -109,6 +115,17 @@ body.theme-dark {
       border-color: $dark-cyan;
     }
   }
+
+  input[type='text'],
+  textarea {
+    background-color: $dark-grey;
+    color: silver;
+    &::placeholder { color: silver; }
+  }
+  input[type='submit'] {
+    background-color: $ming;
+    color: $white;
+  }
 }
 
 body.theme-retro {
@@ -149,5 +166,16 @@ body.theme-retro {
     &:hover {
       border-color: $sheen-green;
     }
+  }
+
+  input[type='text'],
+  textarea {
+    background-color: $dark-grey;
+    color: $sheen-green;
+    &::placeholder { color: $sheen-green; }
+  }
+  input[type='submit'] {
+    background-color: $dark-green;
+    color: $sheen-green;
   }
 }

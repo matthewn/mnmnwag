@@ -32,6 +32,29 @@ h4, .h4 {
   font-variant: small-caps;
 }
 
+.comment-form {
+  form {
+    label {
+      font-size: .75rem;
+      font-weight: $semibold;
+      text-transform: uppercase;
+    }
+    input[type='submit'] {
+      font-size: 1rem;
+    }
+    input[type='text'],
+    textarea {
+      font-family: $sans-stack;
+      font-size: 1.15rem;
+    }
+    .checkbox label {
+      font-size: .85rem;
+      font-weight: normal;
+      text-transform: none;
+    }
+  }
+}
+
 
 // MAIN LAYOUT FROM _layouts.scss DUPLICATED (mostly) HERE
 body {
