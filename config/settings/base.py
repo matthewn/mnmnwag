@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'capture_tag',
     'compressor',
     'dbbackup',
-    'debug_toolbar',
+    # 'debug_toolbar',
     'debugtools',
     'django_comments_xtd',  # 1 (do not reorder)
     'django_comments',      # 2 (do not reorder)
@@ -75,7 +75,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
 
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 
     'wagtail.core.middleware.SiteMiddleware',
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
