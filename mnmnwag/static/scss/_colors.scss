@@ -43,10 +43,9 @@ body.theme-light {
     border-bottom: 2px solid $manatee;
     border-left: 2px solid $manatee;
     border-right: 2px solid $manatee;
+    a:visited { color: $french-lilac; }
     nav {
-      .active a {
-        color: $star-command-blue;
-      }
+      a:visited { color: $star-command-blue; }
     }
   }
   #content > .constrainer {
@@ -94,9 +93,7 @@ body.theme-dark {
     border-left: 2px solid $ming;
     border-right: 2px solid $ming;
     nav {
-      .active a {
-        color: $blizzard-blue;
-      }
+      a:visited { color: $blizzard-blue; }
     }
   }
   #content > .constrainer {
@@ -149,9 +146,7 @@ body.theme-retro {
     border-right: 2px solid $green;
     color: $aqua;
     nav {
-      .active a {
-        color: $sheen-green;
-      }
+      a:visited { color: $aqua; }
     }
   }
   #content > .constrainer {
