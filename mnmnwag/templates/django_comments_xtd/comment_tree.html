@@ -53,7 +53,7 @@
                 {% endif %}
                 {% if item.comment.allow_thread and not item.comment.is_removed %}
                     {% if allow_feedback %}&nbsp;&nbsp;<span class="text-muted">&bull;</span>&nbsp;&nbsp;{% endif %}
-                    <div><a class="reply-form-container" href="{{ item.comment.get_reply_url }}" up-target="&.reply-form-container">reply</a></div>
+                    <div><a class="reply-form-container" href="{{ item.comment.get_reply_url }}" up-target="&.reply-form-container" up-history="false">reply</a></div>
                 {% endif %}
             {% endif %}
         </main>
