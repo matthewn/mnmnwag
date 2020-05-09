@@ -7,7 +7,7 @@
 <article class="blog-post">
     <header>
         {% if page.content_type.model == 'blogindex' %}
-            <a href="{% pageurl post %}">
+            <a href="{% pageurl post %}" up-target="#header, #content" up-transition="cross-fade">
                 <h3 class="post-title">{{ post.title|typefixes }}</h3>
             </a>
         {% else %}
@@ -21,13 +21,13 @@
                 {% if post.content_type.model == 'legacypost' %}
                     {{ body|richtext|typefixes|truncatewords_html:150 }}
                     {% ifnotequal body|richtext|typefixes|truncatewords_html:150|length body|richtext|typefixes|truncatewords_html:151|length %}
-                        <a class="read-more" href="{% pageurl post %}">read more…</a>
+                        <a class="read-more" href="{% pageurl post %}" up-target="#header, #content" up-transition="cross-fade">read more…</a>
                     {% endifnotequal %}
                 {% elif post.content_type.model == 'modernpost' %}
                     {% capture as body1 %}{% include_block body|typefixes|truncatewords_html:150 %}{% endcapture %}
                     {% capture as body2 silent %}{% include_block body|typefixes|truncatewords_html:151 %}{% endcapture %}
                     {% ifnotequal body1 body2 %}
-                        <a class="read-more" href="{% pageurl post %}">read more…</a>
+                        <a class="read-more" href="{% pageurl post %}" up-target="#header, #content" up-transition="cross-fade">read more…</a>
                     {% endifnotequal %}
                 {% endif %}
             {% else %}
@@ -49,7 +49,7 @@
             <div class="post-tags">
                 filed under
                 {% for tag in post.specific.tagged_items.all %}
-                    <a href="/blog/tag/{{ tag.tag.slug }}">
+                    <a href="/blog/tag/{{ tag.tag.slug }}" up-target="#header, #content" up-transition="cross-fade">
                         #{{ tag.tag.name }}
                     </a>
                 {% endfor %}

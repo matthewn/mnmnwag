@@ -8,7 +8,7 @@
                 {% top_menu_children parent=menuitem %}
                 {# Used to display child menu items #}
         {% else %}
-            <a href="{% pageurl menuitem %}" role="menuitem">{{ menuitem.seo_title }}</a>
+            <a href="{% pageurl menuitem %}" role="menuitem" up-target="#navbar, #content" up-transition="cross-fade">{{ menuitem.seo_title }}</a>
         {% endif %}
     </li>
 {% endfor %}

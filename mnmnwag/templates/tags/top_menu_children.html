@@ -2,6 +2,6 @@
 
 <ul class="dropdown-menu" role="menu">
   {% for child in menuitems_children %}
-    <li><a href="{% pageurl child %}" role="menuitem">{{ child.title }}</a></li>
+    <li><a href="{% pageurl child %}" role="menuitem" up-target="#navbar, #content" up-transition="cross-fade">{{ child.title }}</a></li>
   {% endfor %}
 </ul>
