@@ -40,6 +40,7 @@
         {% endif %}
 
         <div class="row{% if 'comment' in form.errors %} has-danger{% endif %}">
+            <label for="id_comment">{{ form.comment.label }}</label>
             <div>{{ form.comment }}</div>
         </div>
 
