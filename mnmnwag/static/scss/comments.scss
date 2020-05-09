@@ -17,8 +17,8 @@
     }
   }
   .comment-content {
-    > .comment-container {
-      margin-top: 1.25rem;
+    > main > * {
+      margin-top: .45rem;
     }
   }
 }
