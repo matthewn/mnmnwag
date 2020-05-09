@@ -43,6 +43,12 @@
     textarea {
       height: 8rem;
     }
+    .has-danger,
+    .has-error {
+      input {
+        border: 2px solid $red;
+      }
+    }
     .row {
       margin-top: 1rem;
     }
