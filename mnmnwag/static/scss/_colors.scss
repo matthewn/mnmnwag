@@ -67,6 +67,10 @@ body.theme-light {
     }
   }
 
+  input[type='text'],
+  textarea {
+    border: 1px dashed $jet !important;
+  }
   input[type='submit'] {
     background-color: $jet;
     color: $white;
