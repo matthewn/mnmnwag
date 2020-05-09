@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load comments %}
 
-<form method="POST" action="{% comment_form_target %}">
+<form method="POST" action="{% comment_form_target %}" up-target=".comment-form-container" up-history="false" up-transition="cross-fade">
     {% csrf_token %}
     <fieldset>
         <input type="hidden" name="next" value="{% url 'comments-xtd-sent' %}"/>
