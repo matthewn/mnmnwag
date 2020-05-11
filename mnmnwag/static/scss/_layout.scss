@@ -60,7 +60,7 @@ body {
       justify-content: space-between;
       padding: $std-padding-short;
     }
-    a:hover {
+    .active a:hover {
       text-decoration: none;
     }
     #page-message {
