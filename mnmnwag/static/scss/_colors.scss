@@ -31,8 +31,7 @@ $sheen-green: #ad0;
 body.theme-light {
   background-color: $white;
   color: $jet;
-  a, a:link { color: $star-command-blue; }
-  a:visited { color: $french-lilac; }
+  a, a:link, a:visited { color: $star-command-blue; }
   > header {
     border-bottom: 2px solid $manatee;
     color: $black;
@@ -43,10 +42,6 @@ body.theme-light {
     border-bottom: 2px solid $manatee;
     border-left: 2px solid $manatee;
     border-right: 2px solid $manatee;
-    a:visited { color: $french-lilac; }
-    nav {
-      a:visited { color: $star-command-blue; }
-    }
   }
   #content > .constrainer {
     > aside { background-color: $light-yellow; }
@@ -80,8 +75,7 @@ body.theme-light {
 body.theme-dark {
   background-color: $black;
   color: silver;
-  a, a:link { color: $blizzard-blue; }
-  a:visited { color: $light-blue; }
+  a, a:link, a:visited { color: $blizzard-blue; }
   > header {
     background-color: $dark-blue;
     border-bottom: 2px solid $ming;
@@ -92,9 +86,6 @@ body.theme-dark {
     border-bottom: 2px solid $ming;
     border-left: 2px solid $ming;
     border-right: 2px solid $ming;
-    nav {
-      a:visited { color: $blizzard-blue; }
-    }
   }
   #content > .constrainer {
     > aside { background-color: $ming; }
@@ -132,8 +123,7 @@ body.theme-dark {
 body.theme-retro {
   background-color: $black;
   color: $green;
-  a, a:link { color: $aqua; }
-  a:visited { color: $sheen-green; }
+  a, a:link, a:visited { color: $aqua; }
   > header {
     background-color: $black;
     border-bottom: 2px solid $green;
@@ -145,9 +135,6 @@ body.theme-retro {
     border-left: 2px solid $green;
     border-right: 2px solid $green;
     color: $aqua;
-    nav {
-      a:visited { color: $aqua; }
-    }
   }
   #content > .constrainer {
     > aside { background-color: $dark-green; }
