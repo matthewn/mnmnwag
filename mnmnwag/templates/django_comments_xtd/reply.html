@@ -7,7 +7,7 @@
 
 {% block content %}
 <h3>Reply to comment</h3>
-<div class="comment-form-container reply-form-container">
+<div class="comment-form-container reply-form-container c{{comment.id}}">
     {% include "comments/form.html" %}
 </div>
 {% endblock %}
