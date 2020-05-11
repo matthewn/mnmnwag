@@ -127,6 +127,7 @@ body.theme-retro {
   background-color: $black;
   color: $green;
   a, a:link, a:visited { color: $aqua; }
+  a:hover { color: $sheen-green; }
   > header {
     background-color: $black;
     border-bottom: 2px solid $green;
@@ -137,7 +138,11 @@ body.theme-retro {
     border-bottom: 2px solid $green;
     border-left: 2px solid $green;
     border-right: 2px solid $green;
-    color: $aqua;
+    color: $sheen-green;
+    nav {
+      a, a:link, a:visited { color: $aqua; }
+      a:hover { color: $sheen-green; }
+    }
   }
   #content > .constrainer {
     > aside { background-color: $dark-green; }
