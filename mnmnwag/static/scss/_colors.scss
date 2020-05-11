@@ -5,20 +5,16 @@ $black: #000807;  // "rich black (FOGRA 39)"
 $dark-grey: #333;
 
 // light theme specific
-$french-lilac: #8d6b94;
-$gainsboro: #dddfdd;
-$jet: #333138;  // "jet"
-$light-yellow: #ffffe0;
+$azure: azure;
+$jet: #333138;
 $manatee: #a2a3bb;
-$purple: #551a8b;
-$red: #a34054;    // "amaranth purple"
+$red: #a34054;        // "amaranth purple"
 $star-command-blue: #0e79b2;
 
 // dark theme specific
 $blizzard-blue: #b8f3ff;
 $dark-blue: #181f41;  // "space cadet"
 $dark-cyan: #368f8b;
-$light-blue: #93c5d0;
 $ming: #246a73;
 
 // retro theme specific
@@ -26,6 +22,13 @@ $aqua: #0df;          // "sky blue (crayola)"
 $dark-green: #040;    // "lincoln green"
 $green: #0f0;
 $sheen-green: #ad0;
+
+// unused
+$french-lilac: #8d6b94;
+$gainsboro: #dddfdd;
+$light-blue: #93c5d0;
+$light-yellow: #ffffe0;
+$purple: #551a8b;
 
 
 body.theme-light {
@@ -44,7 +47,7 @@ body.theme-light {
     border-right: 2px solid $manatee;
   }
   #content > .constrainer {
-    > aside { background-color: $light-yellow; }
+    > aside { background-color: $azure; }
     > main { color: $jet; }
   }
   > footer {
