@@ -1,26 +1,36 @@
 // !!! depends on functions defined in cookies.js !!!
 
-const body = document.getElementsByTagName('body')[0];
+const body = function() { return document.getElementsByTagName('body')[0]; };
 const links = '#theme-picker li a';
 const prefix = 'theme-';
 
 
 // on page load, enable cookied theme (if it exists)
 document.addEventListener('DOMContentLoaded', function() {
-    if (getCookie('themeClass')) setTheme(getCookie('themeClass'));
+    if (getCookie('themeClass').length > 0) setTheme(getCookie('themeClass'));
+    else markCurrentTheme();
+});
+
+
+// on return to page via back button, enable cookied theme (if it exists)
+//
+// NOTE TO SELF: up:history:restored is marked as 'experimental' --
+// this bit could thus require refactoring at some point in the future
+up.on('up:history:restored', function() {
+    if (getCookie('themeClass').length > 0) setTheme(getCookie('themeClass'));
     else markCurrentTheme();
 });
 
 
 // use unpoly to attach event listeners to theme picker links
-// (both on page load & after subsequent AJAX calls)
+// (both on initial page load (if links are there) & after subsequent AJAX calls)
 up.compiler(links, function(link) {
     link.addEventListener('click', changeTheme);
-})
+});
 
 
 const getTheme = function() {
-    for (let className of body.classList.values()) {
+    for (let className of body().classList.values()) {
         if (className.startsWith(prefix))
             return className.replace(prefix, '');
     }
@@ -35,8 +45,8 @@ const changeTheme = function(event) {
 
 
 const setTheme = function(className) {
-    body.classList.remove(prefix + getTheme());
-    body.classList.add(className);
+    body().classList.remove(prefix + getTheme());
+    body().classList.add(className);
     setCookie('themeClass', className);
     markCurrentTheme();
 };
