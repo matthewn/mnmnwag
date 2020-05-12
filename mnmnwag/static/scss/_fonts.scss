@@ -13,11 +13,11 @@ h2, .h2 {
 }
 
 h3, .h3 {
-  font-size: 1.35rem;
+  font-size: 1.45rem;
 }
 
 h4, .h4 {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
 }
 
 .post-title {
@@ -31,6 +31,12 @@ h4, .h4 {
 .read-more {
   font-size: 1.15rem;
   letter-spacing: .25rem;
+}
+
+.comment-content {
+  .content {
+    font-size: 1.15rem;
+  }
 }
 
 .comment-form-container {
