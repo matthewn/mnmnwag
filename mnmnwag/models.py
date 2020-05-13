@@ -196,13 +196,15 @@ class ComplexPage(Page):
 # COMMENT MODERATOR CLASS & REGISTRATION
 # ···························································
 
-# move to apps. py?
 class BlogPostModerator(CommentModerator):
     email_notification = True
 
     def moderate(self, comment, content_object, request):
         # moderate all messages
-        return True
+        if request.user.is_superuser:
+            return False
+        else:
+            return True
 
 
 moderator.register(LegacyPost, BlogPostModerator)

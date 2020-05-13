@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="comment-form-container">
-    <div class="moderation-message">⮞ Your comment has been added to the moderation queue.</div>
+    <div class="moderation-message">⮞ Your comment has been submitted for moderation.</div>
 </div>
 <p>
     {% with content_object_url=comment.content_object.get_absolute_url content_object_str=comment.content_object %}

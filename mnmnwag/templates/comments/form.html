@@ -41,6 +41,10 @@
 
         <div class="row{% if 'comment' in form.errors %} has-danger{% endif %}">
             <label for="id_comment">{{ form.comment.label }}</label>
+            <span>
+                (plain text or
+                <a href="https://commonmark.org/help/" target="_blank">Markdown</a>)
+            </span>
             <div>{{ form.comment }}</div>
         </div>
 

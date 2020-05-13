@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'django_comments_xtd',  # 1 (do not reorder)
     'django_comments',      # 2 (do not reorder)
     'django_extensions',
+    'django_markdown2',
     'typogrify',
     'vendor.wagtailcomments_xtd',
     'wagtailfontawesome',

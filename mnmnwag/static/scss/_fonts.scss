@@ -41,9 +41,12 @@ h4, .h4 {
 
 .comment-form-container {
   form {
-    label {
+    label,
+    label + span {
       font-size: .75rem;
       font-weight: $semibold;
+    }
+    label {
       text-transform: uppercase;
     }
     input[type='submit'] {
@@ -51,7 +54,7 @@ h4, .h4 {
     }
     input[type='text'],
     textarea {
-      font-family: $sans-stack;
+      font-family: $mono-stack;
       font-size: 1.15rem;
     }
     .checkbox label {

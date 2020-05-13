@@ -1,10 +1,9 @@
 .comments {
   margin-top: 2rem;
   > * {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.75rem;
   }
   .comments-tree {
-    margin-bottom: 2rem;
     > .comment-container {
       margin-bottom: 1.5rem;
     }
@@ -20,27 +19,39 @@
     }
   }
   .comment-content {
+    > header,
     > main > * {
-      margin-top: .45rem;
+      margin-bottom: .5rem;
+    }
+    p:last-child {
+      margin-bottom: 0;
+    }
+    div.reply-form-container {
+      margin: 1.75rem 0 2.5rem;
     }
   }
 }
 
 .comment-form-container {
+  h4 {
+    margin-bottom: 1rem;
+  }
   form {
     fieldset { border: none; }
+    input[type='checkbox'] {
+      position: relative;
+      top: 3px;
+    }
     input[type='submit'] {
       border: none;
       padding: .5rem 1rem;
     }
-    input[type='text'] {
-      margin-top: .25rem;
-    }
     input[type='text'],
     textarea {
       border: none;
+      margin-top: .25rem;
       max-width: 500px;
-      padding: .25rem .5rem;
+      padding: .5rem;
       width: 100%;
     }
     textarea {
@@ -53,7 +64,7 @@
       }
     }
     .row {
-      margin-top: 1rem;
+      margin-bottom: 1rem;
     }
   }
 }
