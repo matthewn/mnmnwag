@@ -10,7 +10,7 @@ from wagtail.core.models import Page
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.admin.edit_handlers import (
     FieldPanel,
-    StreamFieldPanel
+    StreamFieldPanel,
 )
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
@@ -40,6 +40,12 @@ class PostTag(TaggedItemBase):
 
 
 class BlogPost(models.Model):
+    has_comments_enabled = models.BooleanField(
+        default=True,
+        verbose_name='Comments enabled',
+    )
+    tags = ClusterTaggableManager(through=PostTag, blank=True)
+
     def get_absolute_url(self):
         """
         Returns an absolute URL for the page.
@@ -58,11 +64,11 @@ class LegacyPost(Page, BlogPost):
     # TODO: this needs to become a plain (long) text field; we are not
     #       going to want Draftail messing with this shit
     body = RichTextField()
-    tags = ClusterTaggableManager(through=PostTag, blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel('body', classname="full"),
         FieldPanel('tags'),
+        FieldPanel('has_comments_enabled'),
     ]
 
     subpage_types = []
@@ -75,11 +81,11 @@ class ModernPost(Page, BlogPost):
         ('image', ImageChooserBlock()),
         ('raw_HTML', blocks.RawHTMLBlock(required=False)),
     ])
-    tags = ClusterTaggableManager(through=PostTag, blank=True)
 
     content_panels = Page.content_panels + [
         StreamFieldPanel('body'),
         FieldPanel('tags'),
+        FieldPanel('has_comments_enabled'),
     ]
 
     subpage_types = []
@@ -100,7 +106,7 @@ class BlogIndex(RoutablePageMixin, Page):
     ]
 
     def get_posts(self):
-        return Page.objects.descendant_of(self).live().order_by('-last_published_at')
+        return Page.objects.descendant_of(self).live().order_by('-first_published_at')
 
     def paginate_posts(self, request, posts):
         paginator = self.truncate_paginator(Paginator(posts, 4))
@@ -198,6 +204,7 @@ class ComplexPage(Page):
 
 class BlogPostModerator(CommentModerator):
     email_notification = True
+    enable_field = 'has_comments_enabled'
 
     def moderate(self, comment, content_object, request):
         # moderate all messages

@@ -67,22 +67,26 @@
         </section>
         {% if page.content_type.model != 'blogindex' %}
             <section class="comments">
-                {% get_comment_count for post as comment_count %}
-                <h3 id="comments">
+                {% if page.has_comments_enabled %}
+                    {% get_comment_count for post as comment_count %}
+                    <h3 id="comments">
+                        {% if comment_count %}
+                            {{ comment_count }}
+                        {% endif %}
+                        Comment{{ comment_count|pluralize:",s" }}
+                    </h3>
                     {% if comment_count %}
-                        {{ comment_count }}
+                        <div class="comments-tree">
+                            {% render_xtdcomment_tree for post %}
+                        </div>
                     {% endif %}
-                    Comment{{ comment_count|pluralize:",s" }}
-                </h3>
-                {% if comment_count %}
-                    <div class="comments-tree">
-                        {% render_xtdcomment_tree for post %}
+                    <div class="comment-form-container">
+                        <h4>Leave a comment! It's easy! No account required.</h4>
+                        {% render_comment_form for post %}
                     </div>
+                {% else %}
+                    <div>Comments are disabled for this post.</div>
                 {% endif %}
-                <div class="comment-form-container">
-                    <h4>Leave a comment! It's easy! No account required.</h4>
-                    {% render_comment_form for post %}
-                </div>
             </section>
         {% endif %}
     </footer>
