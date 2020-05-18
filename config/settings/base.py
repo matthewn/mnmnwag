@@ -80,6 +80,8 @@ MIDDLEWARE = [
 
     'wagtail.core.middleware.SiteMiddleware',
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
+
+    # 'mnmnwag.middleware.AddUnpolyHeadersMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
