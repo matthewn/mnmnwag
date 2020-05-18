@@ -90,7 +90,8 @@ body {
     }
     nav {
       font-size: 1.1rem;
-      li.active {
+      a.active,
+      a.up-active {
         font-weight: $semibold;
       }
     }

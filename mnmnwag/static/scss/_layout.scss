@@ -60,7 +60,7 @@ body {
       justify-content: space-between;
       padding: $std-padding-short;
     }
-    .active a:hover {
+    a.active:hover {
       text-decoration: none;
     }
     #page-message {
@@ -76,12 +76,12 @@ body {
         display: flex;
         justify-content: space-between;
       }
-      li.active {
-        ::after {
+      a.active {
+        &::after {
           content: '<';
           margin-left: .25rem;
         }
-        ::before {
+        &::before {
           content: '>';
           margin-right: .25rem;
         }
