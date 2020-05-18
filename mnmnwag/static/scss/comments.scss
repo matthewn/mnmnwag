@@ -33,7 +33,8 @@
 }
 
 .comment-form-container {
-  h4 {
+  h4,
+  .error-message {
     margin-bottom: 1rem;
   }
   form {
