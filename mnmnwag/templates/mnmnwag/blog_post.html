@@ -4,7 +4,7 @@
 {% load typefixes %}
 {% load wagtailcore_tags %}
 
-<article class="blog-post">
+<article class="blog-post{% if post.specific.is_micro %} micro{% endif %}">
     {% if not post.specific.is_micro %}
         <header>
             {% if page.content_type.model == 'blogindex' %}
