@@ -50,10 +50,8 @@
             </div>
             <div class="post-tags">
                 filed under
-                {% for tag in post.specific.tagged_items.all %}
-                    <a href="/blog/tag/{{ tag.tag.slug }}" up-target="#header, #content" up-transition="cross-fade">
-                        #{{ tag.tag.name }}
-                    </a>
+                {% for item in post.specific.tagged_items.all|dictsort:"tag" %}
+                    <a href="/blog/tag/{{ item.tag.slug }}" up-target="#header, #content" up-transition="cross-fade">#{{ item.tag.name }}</a>
                 {% endfor %}
             </div>
             {% if page.content_type.model == 'blogindex' %}
