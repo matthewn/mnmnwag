@@ -1,5 +1,7 @@
 {% load is_numeric %}
 
+{% if page.posts.has_previous or page.posts.has_next %}
+
 <section class="pagination">
     <ul class="pager">
         <li class="pager-prev">
@@ -33,3 +35,5 @@
         </li>
     </ul>
 </section>
+
+{% endif %}
