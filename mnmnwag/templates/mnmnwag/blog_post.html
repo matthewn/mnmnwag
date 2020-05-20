@@ -58,13 +58,15 @@
             </div>
             {% if page.content_type.model == 'blogindex' %}
                 {% get_comment_count for post.specific as comment_count %}
-                {% if comment_count %}
-                    <div class="post-comments">
-                        <a href="{% pageurl post %}#comments" up-target="#header, #content" up-transition="cross-fade">
-                            {{ comment_count }} comment{{ comment_count|pluralize }}
-                        </a>
-                    </div>
-                {% endif %}
+                <div class="post-comments">
+                    <a href="{% pageurl post %}#comments" up-target="#header, #content" up-transition="cross-fade">
+                    {% if comment_count %}
+                        {{ comment_count }} comment{{ comment_count|pluralize }}
+                    {% else %}
+                        leave a comment
+                    {% endif %}
+                    </a>
+                </div>
             {% endif %}
         </section>
         {% if page.content_type.model != 'blogindex' %}
