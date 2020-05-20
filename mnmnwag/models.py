@@ -90,6 +90,10 @@ class ModernPost(Page, BlogPost):
 
     subpage_types = []
 
+    def is_micro(self):
+        val = True if 'micro' in self.tags.names() else False
+        return val
+
 
 # ···························································
 # INDEX(ES)

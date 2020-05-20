@@ -5,15 +5,17 @@
 {% load wagtailcore_tags %}
 
 <article class="blog-post">
-    <header>
-        {% if page.content_type.model == 'blogindex' %}
-            <a href="{% pageurl post %}" up-target="#header, #content" up-transition="cross-fade">
-                <h3 class="post-title">{{ post.title|typefixes }}</h3>
-            </a>
-        {% else %}
-            <h2 class="post-title">{{ post.title|typefixes }}</h2>
-        {% endif %}
-    </header>
+    {% if not post.specific.is_micro %}
+        <header>
+            {% if page.content_type.model == 'blogindex' %}
+                <a href="{% pageurl post %}" up-target="#header, #content" up-transition="cross-fade">
+                    <h3 class="post-title">{{ post.title|typefixes }}</h3>
+                </a>
+            {% else %}
+                <h2 class="post-title">{{ post.title|typefixes }}</h2>
+            {% endif %}
+        </header>
+    {% endif %}
 
     <main>
         {% with post.specific.body as body %}
