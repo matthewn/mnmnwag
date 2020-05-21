@@ -1,6 +1,7 @@
 // !!! depends on functions defined in cookies.js !!!
 
 const body = function() { return document.getElementsByTagName('body')[0]; };
+const picker = '#theme-picker';
 const links = '#theme-picker li a';
 const prefix = 'theme-';
 
@@ -8,7 +9,6 @@ const prefix = 'theme-';
 // on page load, enable cookied theme (if it exists)
 document.addEventListener('DOMContentLoaded', function() {
     if (getCookie('themeClass').length > 0) setTheme(getCookie('themeClass'));
-    else markCurrentTheme();
 });
 
 
@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
 // this bit could thus require refactoring at some point in the future
 up.on('up:history:restored', function() {
     if (getCookie('themeClass').length > 0) setTheme(getCookie('themeClass'));
-    else markCurrentTheme();
 });
 
 
@@ -26,6 +25,13 @@ up.on('up:history:restored', function() {
 // (both on initial page load (if links are there) & after subsequent AJAX calls)
 up.compiler(links, function(link) {
     link.addEventListener('click', changeTheme);
+});
+
+
+// use unpoly to call markCurrentTheme()
+// (both on initial page load & after subsequent AJAX calls)
+up.compiler(picker, function() {
+    markCurrentTheme();
 });
 
 
