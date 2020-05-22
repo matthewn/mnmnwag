@@ -116,6 +116,16 @@ body {
       > main {
         flex-grow: 1;
         padding-bottom: 1rem;
+
+        ol,
+        ul {
+          margin-left: 4rem;
+        }
+
+        ul {
+          list-style: disc;
+        }
+
         &.blog {
           @include media(desktop) {
             max-width: $content-max-width;
