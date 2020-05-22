@@ -1,6 +1,22 @@
 .blog-post {
-  > * {
+  &:not(.micro) > * {
     margin-bottom: 1.5rem;
+  }
+
+  &.micro {
+    &.on-index {
+      header {
+        margin-right: .5rem;
+      }
+      header, main {
+        display: inline-block;
+      }
+    }
+    &:not(.on-index) {
+      header {
+        display: none;
+      }
+    }
   }
 
   main {
@@ -9,7 +25,6 @@
     ol {
       margin-bottom: 1rem;
     }
-
   }
 
   footer {

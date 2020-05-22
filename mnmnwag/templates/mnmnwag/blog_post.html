@@ -4,18 +4,22 @@
 {% load typefixes %}
 {% load wagtailcore_tags %}
 
-<article class="blog-post{% if post.specific.is_micro %} micro{% endif %}">
-    {% if not post.specific.is_micro %}
-        <header>
-            {% if page.content_type.model == 'blogindex' %}
-                <a href="{% pageurl post %}" up-target="#header, #content" up-transition="cross-fade">
+<article class="blog-post{% if post.specific.is_micro %} micro{% endif %}{% if page.content_type.model == 'blogindex' %} on-index{% endif %}">
+    <header>
+        {% if page.content_type.model == 'blogindex' %}
+            <a href="{% pageurl post %}" up-target="#header, #content" up-transition="cross-fade">
+                {% if not post.specific.is_micro %}
                     <h3 class="post-title">{{ post.title|typefixes }}</h3>
-                </a>
-            {% else %}
+                {% else %}
+                    ⁂
+                {% endif %}
+            </a>
+        {% else %}
+            {% if not post.specific.is_micro %}
                 <h2 class="post-title">{{ post.title|typefixes }}</h2>
             {% endif %}
-        </header>
-    {% endif %}
+        {% endif %}
+    </header>
 
     <main>
         {% with post.specific.body as body %}
