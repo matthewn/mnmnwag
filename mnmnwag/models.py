@@ -22,7 +22,7 @@ import datetime as dt
 
 
 # ···························································
-# SUPPORTING CLASSES: TAGS AND ???
+# SUPPORTING CLASSES: TAGS AND SIDEBAR ELEMENTS
 # ···························································
 
 
@@ -34,12 +34,18 @@ class PostTag(TaggedItemBase):
     )
 
 
+class BlogSidebar():
+    def blogroll(self):
+        page = BasicPage.objects.get(title='Blogroll')
+        return page.body
+
+
 # ···························································
 # BLOG POSTS: LEGACY (FROM DRUPAL) AND MODERN (WAGTAIL)
 # ···························································
 
 
-class BlogPost(models.Model):
+class BlogPost(models.Model, BlogSidebar):
     has_comments_enabled = models.BooleanField(
         default=True,
         verbose_name='Comments enabled',
@@ -100,7 +106,7 @@ class ModernPost(Page, BlogPost):
 # ···························································
 
 
-class BlogIndex(RoutablePageMixin, Page):
+class BlogIndex(RoutablePageMixin, Page, BlogSidebar):
     page_message = RichTextField()
     max_count = 1
     subpage_types = ['LegacyPost', 'ModernPost']

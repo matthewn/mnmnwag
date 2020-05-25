@@ -137,7 +137,7 @@ body {
       > aside {
         @include media(desktop) {
           flex-grow: 1;
-          min-width: 280px;
+          min-width: 285px;
         }
         > * {
           margin-bottom: 2rem;
@@ -148,6 +148,7 @@ body {
             display: inline-block;
           }
           ul {
+            line-height: 1.45;
             margin-top: .75rem;
           }
         }
