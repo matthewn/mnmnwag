@@ -1,13 +1,12 @@
+{% load typefixes %}
+{% load wagtailcore_tags %}
+
 <div id="archives-by-tag">
     <details>
         <summary>
             <h4>Archives By Tag</h4>
         </summary>
-        <ul>
-            <li><a href="#">#life</a></li>
-            <li><a href="#">#micro</a></li>
-            <li><a href="#">#site</a></li>
-        </ul>
+        {{ page.archives_by_tag|richtext|typefixes }}
     </details>
 </div>
 

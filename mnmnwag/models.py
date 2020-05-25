@@ -3,7 +3,7 @@ from django.db import models
 
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
-from taggit.models import TaggedItemBase
+from taggit.models import Tag, TaggedItemBase
 
 from wagtail.core import blocks
 from wagtail.core.models import Page
@@ -38,6 +38,26 @@ class BlogSidebar():
     def blogroll(self):
         page = BasicPage.objects.get(title='Blogroll')
         return page.body
+
+    def archives_by_tag(self):
+        top_tags = [
+            'life',
+            'micro',
+            'site',
+            'tech',
+        ]
+        content = '<ul>'
+        tags = []
+        all_tags = Tag.objects.all()
+        for tag in all_tags:
+            if tag.name not in top_tags:
+                tags.append(tag)
+        for tag in top_tags:
+            content += f'<li><a href="/blog/{tag}">#{tag}</a></li>'
+        for tag in tags:
+            content += f'<li><a href="/blog/{tag.name}">#{tag.name}</a></li>'
+        content += '</ul>'
+        return content
 
 
 # ···························································
@@ -149,17 +169,6 @@ class BlogIndex(RoutablePageMixin, Page, BlogSidebar):
         self.posts = self.paginate_posts(request, self.get_posts())
         return self.serve(request)
 
-    @route(r'^tag/(?P<tag>[-\w]+)/$')
-    def posts_by_tag(self, request, tag, *args, **kwargs):
-        post_tags = PostTag.objects.filter(tag__slug=tag)
-        tagged_ids = [tag.content_object_id for tag in post_tags]
-        self.posts = self.paginate_posts(
-            request,
-            self.get_posts().filter(id__in=tagged_ids),
-        )
-        self.index_title = f'Posts tagged #{tag}'
-        return self.serve(request, *args, **kwargs)
-
     @route(r'(?P<year>20\d\d)\/?(?P<month>[0-1][0-9])?\/?(?P<day>[0-3][0-9])?/$')
     def posts_by_date(self, request, year, month='', day='', *args, **kwargs):
         if day:
@@ -185,6 +194,17 @@ class BlogIndex(RoutablePageMixin, Page, BlogSidebar):
             request,
             self.get_posts().filter(first_published_at__gt=start_date).filter(first_published_at__lt=end_date),
         )
+        return self.serve(request, *args, **kwargs)
+
+    @route(r'(?P<tag>[-\w]+)/$')
+    def posts_by_tag(self, request, tag, *args, **kwargs):
+        post_tags = PostTag.objects.filter(tag__slug=tag)
+        tagged_ids = [tag.content_object_id for tag in post_tags]
+        self.posts = self.paginate_posts(
+            request,
+            self.get_posts().filter(id__in=tagged_ids),
+        )
+        self.index_title = f'Posts tagged #{tag}'
         return self.serve(request, *args, **kwargs)
 
 
