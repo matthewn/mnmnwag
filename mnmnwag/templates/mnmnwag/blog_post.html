@@ -5,6 +5,7 @@
 {% load wagtailcore_tags %}
 
 <article class="blog-post{% if post.specific.is_micro %} micro{% endif %}{% if page.content_type.model == 'blogindex' %} on-index{% endif %}">
+
     <header>
         {% if page.content_type.model == 'blogindex' %}
             <a href="{% pageurl post %}" up-target="#header, #content" up-transition="cross-fade">

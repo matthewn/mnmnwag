@@ -202,6 +202,17 @@ class ComplexPage(Page):
     ]
 
 
+class BasicPage(Page):
+    body = RichTextField(
+        blank=True,
+        features=['bold', 'italic', 'h3', 'h4', 'h5', 'blockquote', 'ol', 'ul', 'link', 'image', 'document-link'],
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel('body', classname='full'),
+    ]
+
+
 # ···························································
 # COMMENT MODERATOR CLASS & REGISTRATION
 # ···························································
