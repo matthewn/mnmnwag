@@ -33,6 +33,10 @@
 }
 
 .comment-form-container {
+  label,
+  label + span {
+    font-family: $sans-stack;
+  }
   h4,
   .error-message {
     margin-bottom: 1rem;
@@ -67,5 +71,11 @@
     .row {
       margin-bottom: 1rem;
     }
+  }
+}
+
+.template-reply {
+  h2 {
+    margin-bottom: 1rem;
   }
 }

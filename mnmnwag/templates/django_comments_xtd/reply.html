@@ -6,8 +6,34 @@
 {% block title %}Comment reply{% endblock %}
 
 {% block content %}
-<h3>Reply to comment</h3>
-<div class="comment-form-container reply-form-container c{{comment.id}}">
-    {% include "comments/form.html" %}
+<div class="template-reply">
+    <div class="comments">
+        <article id="c{{ comment.id }}" class="comment-container">
+            <div class="gravatar">{{ comment.user_email|xtd_comment_gravatar }}</div>
+            <div class="comment-content">
+                <header>
+                    <h5>
+                        <b>
+                            {% if comment.url and not comment.is_removed %}<a href="{{ comment.url }}" target="_new">{% endif %}
+                                {{ comment.name }}
+                            {% if comment.url %}</a>{% endif %}
+                        </b>
+                        had this to say on
+                        {{ comment.submit_date|date:"j F Y" }}
+                        at {{ comment.submit_date|date:"g:i a" }}...
+                    </h5>
+                </header>
+                <main>
+                    <div class="content">
+                        {% include "includes/django_comments_xtd/comment_content.html" with content=comment.comment %}
+                    </div>
+                </main>
+            </div>
+        </article>
+    </div>
+    <h2>Reply to comment</h2>
+    <div class="comment-form-container reply-form-container c{{comment.id}}">
+        {% include "comments/form.html" %}
+    </div>
 </div>
 {% endblock %}

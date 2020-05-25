@@ -1,0 +1,22 @@
+#theme-picker {
+  a.current {
+    font-weight: bold;
+    &::after {
+      content: '<';
+      margin-left: .1rem;
+    }
+    &::before {
+      content: '>';
+      margin-right: .1rem;
+    }
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  li {
+    display: inline-block;
+    font-variant: small-caps;
+    margin-right: 1rem;
+    text-transform: lowercase;
+  }
+}

@@ -100,14 +100,9 @@ body {
   #content {
     .constrainer > aside {
       font-family: $sans-stack;
-      details {
-        ul {
-          font-variant: small-caps;
-          text-transform: lowercase;
-          .current {
-            font-weight: bold;
-          }
-        }
+      h4, .h4 {
+        font-size: 1rem;
+        text-transform: uppercase;
       }
     }
 

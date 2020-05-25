@@ -137,16 +137,15 @@ body {
       > aside {
         @include media(desktop) {
           flex-grow: 1;
-          min-width: 215px;
+          min-width: 280px;
         }
         > * {
-          margin-bottom: 3rem;
+          margin-bottom: 2rem;
         }
         details {
           summary h4 {
             cursor: pointer;
             display: inline-block;
-            text-transform: uppercase;
           }
           ul {
             margin-top: .75rem;

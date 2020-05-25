@@ -4,8 +4,8 @@ ul.pager {
   font-family: $mono-stack;
   font-size: .94rem;
   font-weight: normal;
-  list-style: none;
-  margin: 3rem 0 4rem;
+  list-style: none !important;
+  margin: 3rem 0 4rem !important;
   width: 100%;
   .pager-pages {
     @include media(mobile) {
