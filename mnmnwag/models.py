@@ -3,7 +3,7 @@ from django.db import models
 
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
-from taggit.models import Tag, TaggedItemBase
+from taggit.models import TaggedItemBase
 
 from wagtail.core import blocks
 from wagtail.core.models import Page
@@ -35,28 +35,50 @@ class PostTag(TaggedItemBase):
 
 
 class BlogSidebar():
+    def archives_by_tag(self):
+        top = ['life', 'micro', 'site', 'tech']
+        post_tags = PostTag.tags_for(Page).order_by('name')
+        bottom_tags = []
+        top_tags = []
+        for tag in post_tags:
+            if tag.name in top:
+                top_tags.append(tag)
+            else:
+                bottom_tags.append(tag)
+        content = '<ul>'
+        for tag in top_tags:
+            content += self.get_tag_link_li(tag)
+        content += '</ul><ul>'
+        for tag in bottom_tags:
+            content += self.get_tag_link_li(tag)
+        content += '</ul>'
+        return content
+
+    def archives_by_year(self):
+        years = list(range(2003, 2011))
+        this_year = dt.date.today().year
+        years += list(range(this_year, this_year + 1))
+        content = '<ul>'
+        for year in years:
+            start_date = dt.datetime(year, 1, 1)
+            end_date = dt.datetime(year + 1, 1, 1)
+            count = (
+                Page.objects.filter(first_published_at__gte=start_date)
+                .filter(first_published_at__lt=end_date)
+                .count()
+            )
+            if count:
+                content += f'<li><a href="/blog/{year}" up-target="#navbar, #content .blog">{year}</a> ({count})</li>'
+        content += '</ul>'
+        return content
+
     def blogroll(self):
         page = BasicPage.objects.get(title='Blogroll')
         return page.body
 
-    def archives_by_tag(self):
-        top_tags = [
-            'life',
-            'micro',
-            'site',
-            'tech',
-        ]
-        content = '<ul>'
-        tags = []
-        all_tags = Tag.objects.all()
-        for tag in all_tags:
-            if tag.name not in top_tags:
-                tags.append(tag)
-        for tag in top_tags:
-            content += f'<li><a href="/blog/{tag}">#{tag}</a></li>'
-        for tag in tags:
-            content += f'<li><a href="/blog/{tag.name}">#{tag.name}</a></li>'
-        content += '</ul>'
+    def get_tag_link_li(self, tag):
+        count = PostTag.objects.filter(tag=tag).count()
+        content = f'<li><a href="/blog/tag/{tag}" up-target="#navbar, #content .blog">#{tag}</a> ({count})</li>'
         return content
 
 
@@ -192,11 +214,11 @@ class BlogIndex(RoutablePageMixin, Page, BlogSidebar):
             self.index_title = f'Posts from {year}'
         self.posts = self.paginate_posts(
             request,
-            self.get_posts().filter(first_published_at__gt=start_date).filter(first_published_at__lt=end_date),
+            self.get_posts().filter(first_published_at__gte=start_date).filter(first_published_at__lt=end_date),
         )
         return self.serve(request, *args, **kwargs)
 
-    @route(r'(?P<tag>[-\w]+)/$')
+    @route(r'^tag/(?P<tag>[-\w]+)/$')
     def posts_by_tag(self, request, tag, *args, **kwargs):
         post_tags = PostTag.objects.filter(tag__slug=tag)
         tagged_ids = [tag.content_object_id for tag in post_tags]

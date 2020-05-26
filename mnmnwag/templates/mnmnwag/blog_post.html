@@ -8,7 +8,7 @@
 
     <header>
         {% if page.content_type.model == 'blogindex' %}
-            <a href="{% pageurl post %}" up-target="#header, #content" up-transition="cross-fade">
+            <a href="{% pageurl post %}" up-target="#header, #content .blog" up-transition="cross-fade">
                 {% if not post.specific.is_micro %}
                     <h3 class="post-title">{{ post.title|typefixes }}</h3>
                 {% else %}

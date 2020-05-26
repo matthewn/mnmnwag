@@ -10,15 +10,11 @@
     </details>
 </div>
 
-<div id="archives-by-date">
+<div id="archives-by-year">
     <details>
         <summary>
-            <h4>Archives By Date</h4>
+            <h4>Archives By Year</h4>
         </summary>
-        <ul>
-            <li><a href="#">2020</a></li>
-            <li><a href="#">2010</a></li>
-            <li><a href="#">2009</a></li>
-        </ul>
+        {{ page.archives_by_year|richtext|typefixes }}
     </details>
 </div>
