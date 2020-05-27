@@ -57,7 +57,7 @@ class BlogSidebar():
     def archives_by_year(self):
         years = list(range(2003, 2011))
         this_year = dt.date.today().year
-        years += list(range(this_year, this_year + 1))
+        years += list(range(2020, this_year + 1))
         content = '<ul>'
         for year in years:
             start_date = dt.datetime(year, 1, 1)
