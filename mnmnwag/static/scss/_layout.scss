@@ -15,7 +15,7 @@ body {
     max-width: $site-max-width;
   }
 
-  > header {
+  #header {
     @include media(desktop) {
       padding-top: 1rem;
     }
@@ -106,6 +106,7 @@ body {
       display: flex;
       flex-direction: column-reverse;
 
+      main.blog,  // maintains style during unpoly transition
       > * {
         @include media(mobile) {
           padding: $std-padding-mobile;

@@ -70,7 +70,7 @@ h4, .h4 {
 body {
   font-family: $serif-stack;
 
-  > header {
+  #header {
     font-family: $sans-stack;
     font-size: 2rem;
     #site-logo {
@@ -106,6 +106,7 @@ body {
       }
     }
 
+    .constrainer main.blog,  // maintains style during unpoly transition
     .constrainer > main {
       p,
       ul,
