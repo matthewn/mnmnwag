@@ -270,7 +270,7 @@ class BlogPostModerator(CommentModerator):
     enable_field = 'has_comments_enabled'
 
     def moderate(self, comment, content_object, request):
-        # moderate all messages
+        # moderate all messages unless superuser is posting
         if request.user.is_superuser:
             return False
         else:
