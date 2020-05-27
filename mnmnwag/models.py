@@ -68,7 +68,7 @@ class BlogSidebar():
                 .count()
             )
             if count:
-                content += f'<li><a href="/blog/{year}" up-target="#navbar, #content .blog">{year}</a> ({count})</li>'
+                content += f'<li><a href="/blog/{year}" up-target="#navbar, #content .blog" up-transition="cross-fade">{year}</a> ({count})</li>'
         content += '</ul>'
         return content
 
@@ -78,7 +78,7 @@ class BlogSidebar():
 
     def get_tag_link_li(self, tag):
         count = PostTag.objects.filter(tag=tag).count()
-        content = f'<li><a href="/blog/tag/{tag}" up-target="#navbar, #content .blog">#{tag}</a> ({count})</li>'
+        content = f'<li><a href="/blog/tag/{tag}" up-target="#navbar, #content .blog" up-transition="cross-fade">#{tag}</a> ({count})</li>'
         return content
 
 
