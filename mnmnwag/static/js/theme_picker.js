@@ -1,4 +1,4 @@
-// !!! depends on functions defined in cookies.js !!!
+// DEPENDENCIES: ./cookies.js, ../vendor/unpoly.js
 
 const body = function() { return document.getElementsByTagName('body')[0]; };
 const picker = '#theme-picker';
