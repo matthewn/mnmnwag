@@ -1,3 +1,7 @@
+body:not(.has-js) #theme-picker {
+  display: none;
+}
+
 #theme-picker {
   a.current {
     font-weight: bold;
