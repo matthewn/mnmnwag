@@ -1,20 +1,24 @@
 {% load typefixes %}
 {% load wagtailcore_tags %}
 
-<div id="archives-by-tag">
-    <details>
-        <summary>
-            <h4>Archives By Tag</h4>
-        </summary>
-        {{ page.archives_by_tag|richtext|typefixes }}
-    </details>
-</div>
+{% if page.archives_by_tag %}
+    <div id="archives-by-tag">
+        <details>
+            <summary>
+                <h4>Archives By Tag</h4>
+            </summary>
+            {{ page.archives_by_tag|richtext|typefixes }}
+        </details>
+    </div>
+{% endif %}
 
-<div id="archives-by-year">
-    <details>
-        <summary>
-            <h4>Archives By Year</h4>
-        </summary>
-        {{ page.archives_by_year|richtext|typefixes }}
-    </details>
-</div>
+{% if page.archives_by_tag %}
+    <div id="archives-by-year">
+        <details>
+            <summary>
+                <h4>Archives By Year</h4>
+            </summary>
+            {{ page.archives_by_year|richtext|typefixes }}
+        </details>
+    </div>
+{% endif %}

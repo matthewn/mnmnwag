@@ -1,11 +1,13 @@
 {% load typefixes %}
 {% load wagtailcore_tags %}
 
-<div id="blogroll">
-    <details open>
-        <summary>
-            <h4>Blogroll</h4>
-        </summary>
-        {{ page.blogroll|richtext|typefixes }}
-    </details>
-</div>
+{% if page.blogroll %}
+    <div id="blogroll">
+        <details open>
+            <summary>
+                <h4>Blogroll</h4>
+            </summary>
+            {{ page.blogroll|richtext|typefixes }}
+        </details>
+    </div>
+{% endif %}
