@@ -81,7 +81,7 @@ MIDDLEWARE = [
     'wagtail.core.middleware.SiteMiddleware',
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 
-    # 'mnmnwag.middleware.AddUnpolyHeadersMiddleware',
+    'extlinks.middleware.RewriteExternalLinksMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -224,6 +224,10 @@ INTERNAL_IPS = [
 # django-libsass
 
 LIBSASS_OUTPUT_STYLE = 'compressed'
+
+# extlinks
+
+EXTLINKS_TEMPLATES_WHITELIST = ['mnmnwag']
 
 
 SITE_ID = 1
