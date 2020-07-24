@@ -5,16 +5,19 @@ from .models import BlogIndex
 
 class LatestEntriesFeed(Feed):
     feed_type = Atom1Feed
-    title = "mahnamahna.net/blog"
-    link = "/rss/"
-    subtitle = "The latest blog posts from mahnamahna.net."
+    title = 'mahnamahna.net/blog'
+    link = '/blog/feed'
+    subtitle = 'The latest blog posts from mahnamahna.net.'
 
     def items(self):
         index = BlogIndex.objects.get()
-        return index.get_posts()[:2]
+        return index.get_posts()[:15]
 
     def item_title(self, item):
-        return item.title
+        if 'micro' in item.specific.tags.names():
+            return item.first_published_at.strftime('%Y-%m-%d %I:%M %p')
+        else:
+            return item.title
 
     def item_description(self, item):
         return item.specific.body
