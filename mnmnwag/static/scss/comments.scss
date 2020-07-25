@@ -32,7 +32,19 @@
   }
 }
 
-.comment-form-container {
+body #content .comment-form-container {
+  > details {
+    margin-bottom: 1rem;
+    &[open] summary {
+      margin: 1rem 0;
+    }
+    summary {
+      cursor: pointer;
+    }
+    ul {
+      margin-left: 1rem;
+    }
+  }
   label,
   label + span {
     font-family: $sans-stack;

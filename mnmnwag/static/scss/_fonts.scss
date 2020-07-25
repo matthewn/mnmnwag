@@ -44,6 +44,16 @@ h4, .h4 {
 }
 
 .comment-form-container {
+  > details {
+    summary {
+      font-size: .75rem;
+      font-weight: $semibold;
+      text-transform: uppercase;
+    }
+    li {
+      font-size: .9rem;
+    }
+  }
   form {
     label,
     label + span {
