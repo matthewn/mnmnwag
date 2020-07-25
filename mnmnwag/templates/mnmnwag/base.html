@@ -1,18 +1,54 @@
+{% load compress %}
 {% load navigation_tags %}
+{% load static %}
 {% load typefixes %}
 {% load wagtailcore_tags %}
 {% load wagtailuserbar %}
 <!DOCTYPE html>
 <html>
     <head>
-        {% include "mnmnwag/site_head.html" %}
+        <meta charset="utf-8" />
+        <title>
+            {% spaceless %}
+            {% block title %}{% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}{% endblock %}
+            {% block title_suffix %} | mahna mahna .net {% endblock %}
+            {% endspaceless %}
+        </title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="alternate" type="application/atom+xml" title="feed for mahnamahna.net/blog" href="/blog/feed/">
+
+        {# <link rel="shortcut icon" href="{% static 'img/script_cal.ico' %}" type="image/vnd.microsoft.icon" /> #}
+
+        {# Global stylesheets #}
+        {% compress css %}
+            <link rel="stylesheet" type="text/css" href="{% static 'css/vendor/minireset.min.css' %}">
+            <link rel="stylesheet" type="text/css" href="{% static 'css/vendor/unpoly.min.css' %}">
+            <link rel="stylesheet" type="text/css" href="{% static 'css/font_faces.css' %}">
+            <link rel="stylesheet" type="text/x-scss" href="{% static 'scss/styles.scss' %}">
+        {% endcompress %}
+
+        {% block extra_css %}
+            {# override this in templates to add extra stylesheets #}
+        {% endblock %}
     </head>
 
     <body class="theme-light {% block body_class %}{% endblock %}">
 
         <header id="header" class="right_menu">
             <div class="constrainer">
-                {% include "mnmnwag/site_header.html" %}
+                <div id="site-header">
+                    <div id="site-logo">
+                        <a href="/" rel="home" up-target="#header, #navbar, #content" up-transition="cross-fade">
+                            /\/\/\/
+                        </a>
+                    </div>
+                    <div id="site-name">
+                        <a href="/" rel="home" up-target="#header, #navbar, #content" up-transition="cross-fade">
+                            <h1>mahna mahna .net</h1>
+                        </a>
+                    </div>
+                </div>
             </div>
         </header>
 
@@ -52,11 +88,30 @@
 
         <footer id="footer">
             <div class="constrainer">
-                {% include "mnmnwag/site_footer.html" %}
+                <p>
+                    © {% now "Y" %}
+                    Matthew Newton, published under a
+                    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons License</a>.
+                </p>
             </div>
         </footer>
 
-        {% include "mnmnwag/site_tail.html" %}
+        {# {% compress js %} #}
+            <script src="{% static 'js/vendor/unpoly.js' %}"></script>
+            <script src="{% static 'js/cookies.js' %}"></script>
+            <script src="{% static 'js/theme_picker.js' %}"></script>
+            <script src="{% static 'js/misc.js' %}"></script>
+        {# {% endcompress %} #}
+        {# <script async src="https://www.googletagmanager.com/gtag/js?id=UA-54995806-2"></script> #}
+        {# <script> #}
+        {#     window.dataLayer = window.dataLayer || []; #}
+        {#     function gtag(){dataLayer.push(arguments);} #}
+        {#     gtag('js', new Date()); #}
+        {#     gtag('config', 'UA-54995806-2'); #}
+        {# </script> #}
+        {% block extra_js %}
+            {# override this in templates to add extra javascript #}
+        {% endblock %}
         {% wagtailuserbar 'bottom-left' %}
 
     </body>
