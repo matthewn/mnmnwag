@@ -9,6 +9,14 @@ $std-padding-mobile-short: 1rem;
   padding: .5rem 1rem;
 }
 
+// for text we want read by screen readers,
+// but never seen onscreen
+[only-heard] {
+  display: block;
+  height: 0;
+  text-indent: -9999px;
+}
+
 input[type='text'],
 textarea {
   border: none;
@@ -159,6 +167,7 @@ body {
             cursor: pointer;
             display: inline-block;
           }
+          form,
           ul {
             line-height: 1.45;
             margin-top: .75rem;

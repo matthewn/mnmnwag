@@ -12,14 +12,6 @@
   }
 }
 
-// for text we want read by screen readers,
-// but never seen onscreen
-@mixin only-heard {
-  display: block;
-  height: 0;
-  text-indent: -9999px;
-}
-
 @mixin roundrect-button {
   -webkit-appearance: none; // for iOS/Safari only, BOO!
   background: #fff;

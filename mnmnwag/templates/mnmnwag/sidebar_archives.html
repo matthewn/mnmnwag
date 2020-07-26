@@ -12,13 +12,28 @@
     </div>
 {% endif %}
 
-{% if page.archives_by_tag %}
+{% if page.archives_by_year %}
     <div id="archives-by-year">
         <details>
             <summary>
                 <h4>Archives By Year</h4>
             </summary>
             {{ page.archives_by_year|richtext|typefixes }}
+        </details>
+    </div>
+{% endif %}
+
+{% if page.archives_by_tag %}{# [sic] #}
+    <div id="archives-by-keyword">
+        <details>
+            <summary>
+                <h4>Archives By Keyword</h4>
+            </summary>
+            <form action="{% url 'search' %}" method="get">
+                <label for="search_query" only-heard>Search</label>
+                <input id="search_query" placeholder="enter your query" type="text" name="query">
+                <input type="submit" value="search" style-as-button>
+            </form>
         </details>
     </div>
 {% endif %}
