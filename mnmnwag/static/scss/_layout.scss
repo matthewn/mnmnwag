@@ -4,6 +4,17 @@ $std-padding-short: .8rem 2.5rem .8rem 2.5rem;
 $std-padding-mobile: 2.5rem 1rem 3rem;
 $std-padding-mobile-short: 1rem;
 
+[style-as-button] {
+  border: none;
+  padding: .5rem 1rem;
+}
+
+input[type='text'],
+textarea {
+  border: none;
+  padding: .5rem;
+}
+
 body {
   display: flex;
   flex-direction: column;

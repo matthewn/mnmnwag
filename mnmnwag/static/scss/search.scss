@@ -1,0 +1,20 @@
+.template-searchresults {
+  h2 {
+    margin-bottom: 2rem;
+  }
+  article {
+    margin-bottom: 3rem;
+  }
+  form {
+    margin-bottom: 3rem;
+    input {
+      height: 2.25rem;
+    }
+    input[type='text'] {
+      margin-right: 5px;
+      min-width: 300px;
+      position: relative;
+      top: -2px;
+    }
+  }
+}

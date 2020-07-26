@@ -59,16 +59,10 @@ body #content .comment-form-container {
       position: relative;
       top: 3px;
     }
-    input[type='submit'] {
-      border: none;
-      padding: .5rem 1rem;
-    }
     input[type='text'],
     textarea {
-      border: none;
       margin-top: .25rem;
       max-width: 500px;
-      padding: .5rem;
       width: 100%;
     }
     textarea {

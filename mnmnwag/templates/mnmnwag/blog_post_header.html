@@ -1,0 +1,18 @@
+{% load typefixes %}
+{% load wagtailcore_tags %}
+
+<header>
+    {% if page.content_type.model == 'blogindex' or is_search_page %}
+        <a href="{% pageurl post %}" up-target="#header, #content .blog" up-transition="cross-fade">
+            {% if not post.specific.is_micro %}
+                <h3 class="post-title">{{ post.title|typefixes }}</h3>
+            {% else %}
+                ⁂
+            {% endif %}
+        </a>
+    {% else %}
+        {% if not post.specific.is_micro %}
+            <h2 class="post-title">{{ post.title|typefixes }}</h2>
+        {% endif %}
+    {% endif %}
+</header>

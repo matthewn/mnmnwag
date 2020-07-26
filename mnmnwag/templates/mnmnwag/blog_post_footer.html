@@ -1,0 +1,64 @@
+{% load comments %}
+{% load comments_xtd %}
+{% load wagtailcore_tags %}
+
+<footer>
+    <section class="post-info">
+        <div class="post-date">
+            posted {{ post.specific.first_published_at|date:"j F Y" }}
+            at {{ post.specific.first_published_at|date:"g:i a" }}
+        </div>
+        <div class="post-tags">
+            filed under
+            {% for item in post.specific.tagged_items.all|dictsort:"tag" %}
+                <a href="/blog/tag/{{ item.tag.slug }}" up-target="#header, #content" up-transition="cross-fade">#{{ item.tag.name }}</a>
+            {% endfor %}
+        </div>
+        {% if post.specific.has_comments_enabled %}
+            {% if page.content_type.model == 'blogindex' or is_search_page %}
+                {% get_comment_count for post.specific as comment_count %}
+                <div class="post-comments">
+                    <a href="{% pageurl post %}#comments" up-target="#header, #content" up-transition="cross-fade">
+                    {% if comment_count %}
+                        {{ comment_count }} comment{{ comment_count|pluralize }}
+                    {% else %}
+                        leave a comment
+                    {% endif %}
+                    </a>
+                </div>
+            {% endif %}
+        {% endif %}
+    </section>
+    {% if page.content_type.model != 'blogindex' and not is_search_page %}
+        <section class="comments">
+            {% if page.has_comments_enabled %}
+                {% get_comment_count for post as comment_count %}
+                <h3 id="comments">
+                    {% if comment_count %}
+                        {{ comment_count }}
+                    {% endif %}
+                    Comment{{ comment_count|pluralize:",s" }}
+                </h3>
+                {% if comment_count %}
+                    <div class="comments-tree">
+                        {% render_xtdcomment_tree for post %}
+                    </div>
+                {% endif %}
+                <div class="comment-form-container">
+                    <h4>Leave a comment! It’s easy! No account required.</h4>
+                    <details>
+                        <summary>Comments Policy</summary>
+                        <ul>
+                            <li>This site is its owner’s little corner of the web.</li>
+                            <li>All comments are moderated. Nothing posts without the owner's approval.</li>
+                            <li>Absolutely no trolls, bots, <a href="http://wondermark.com/1k62/">sea lions</a>, or <a href="https://www.penny-arcade.com/comic/2004/03/19"> shitcockery</a> allowed.</li>
+                        </ul>
+                    </details>
+                    {% render_comment_form for post %}
+                </div>
+            {% else %}
+                <div>Comments are disabled for this post.</div>
+            {% endif %}
+        </section>
+    {% endif %}
+</footer>

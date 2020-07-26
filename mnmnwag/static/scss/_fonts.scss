@@ -7,6 +7,10 @@ $mono-stack: 'Nanum Gothic Coding', monospace;
 $medium: 500;     // Alegreya uses this
 $semibold: 600;   // Raleway uses this
 
+[style-as-button] {
+  font-size: 1rem;
+}
+
 h2, .h2 {
   font-family: $sans-stack;
   font-size: 1.6rem;
@@ -18,6 +22,11 @@ h3, .h3 {
 
 h4, .h4 {
   font-size: 1.25rem;
+}
+
+input[type='text'],
+textarea {
+  font-family: $mono-stack;
 }
 
 .force-sans {
@@ -63,12 +72,8 @@ h4, .h4 {
     label {
       text-transform: uppercase;
     }
-    input[type='submit'] {
-      font-size: 1rem;
-    }
     input[type='text'],
     textarea {
-      font-family: $mono-stack;
       font-size: 1.15rem;
     }
     .checkbox label {

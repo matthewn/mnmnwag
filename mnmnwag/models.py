@@ -5,15 +5,16 @@ from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 
-from wagtail.core import blocks
-from wagtail.core.models import Page
-from wagtail.core.fields import RichTextField, StreamField
 from wagtail.admin.edit_handlers import (
     FieldPanel,
     StreamFieldPanel,
 )
-from wagtail.images.blocks import ImageChooserBlock
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
+from wagtail.core import blocks
+from wagtail.core.fields import RichTextField, StreamField
+from wagtail.core.models import Page
+from wagtail.images.blocks import ImageChooserBlock
+from wagtail.search import index
 
 from django_comments.moderation import CommentModerator
 from django_comments_xtd.moderation import moderator
@@ -96,8 +97,7 @@ class BlogPost(models.Model, BlogSidebar):
 
     def get_absolute_url(self):
         """
-        Returns an absolute URL for the page.
-        (Required by django_comments_xtd.)
+        Returns an absolute URL for the page. (Required by django_comments_xtd.)
         """
         return self.full_url
 
@@ -119,6 +119,10 @@ class LegacyPost(Page, BlogPost):
         FieldPanel('has_comments_enabled'),
     ]
 
+    search_fields = Page.search_fields + [
+        index.SearchField('body'),
+    ]
+
     subpage_types = []
 
 
@@ -136,11 +140,14 @@ class ModernPost(Page, BlogPost):
         FieldPanel('has_comments_enabled'),
     ]
 
+    search_fields = Page.search_fields + [
+        index.SearchField('body'),
+    ]
+
     subpage_types = []
 
     def is_micro(self):
-        val = True if 'micro' in self.tags.names() else False
-        return val
+        return True if 'micro' in self.tags.names() else False
 
 
 # ···························································

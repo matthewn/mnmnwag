@@ -29,6 +29,8 @@ def search(request):
         search_results = paginator.page(paginator.num_pages)
 
     return render(request, 'search/search.html', {
+        'is_search_page': True,
+        'page_message': 'seek and ye shall find. (or perhaps not.)',
         'search_query': search_query,
         'search_results': search_results,
     })
