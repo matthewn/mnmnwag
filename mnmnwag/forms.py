@@ -7,7 +7,7 @@ from django_comments_xtd.conf import settings
 class MahnaCommentForm(XtdCommentForm):
     followup = forms.BooleanField(
         required=False,
-        label='Notify me about follow-up comments',
+        label='Receive email notifications for replies',
     )
 
     def __init__(self, *args, **kwargs):
