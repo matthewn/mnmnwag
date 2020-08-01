@@ -154,10 +154,11 @@ body {
         }
       }
 
+      // THE "SIDEBAR"
       > aside {
         @include media(desktop) {
           flex-grow: 1;
-          min-width: 285px;
+          min-width: 295px; // wide enough for "archives by keyword" to fit
         }
         > * {
           margin-bottom: 2rem;
