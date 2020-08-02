@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', function() {
 // this bit could thus require refactoring at some point in the future
 up.on('up:history:restored', function() {
     if (getCookie('themeClass').length > 0) setTheme(getCookie('themeClass'));
+    // workaround: theme picker disappears on back button unless we do:
+    document.body.classList.add('has-js');
 });
 
 
