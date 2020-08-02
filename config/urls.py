@@ -13,9 +13,9 @@ from mnmnwag.feeds import LatestEntriesFeed
 
 
 urlpatterns = [
-    url(r'^django-admin/', admin.site.urls),
+    url(r'^dja/', admin.site.urls),
 
-    url(r'^admin/', include(wagtailadmin_urls)),
+    url(r'^cms/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
 
     url(r'^comments/', include('django_comments_xtd.urls')),
