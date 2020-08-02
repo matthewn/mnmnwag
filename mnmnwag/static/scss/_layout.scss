@@ -159,7 +159,9 @@ body {
         @include media(desktop) {
           flex-grow: 1;
           min-width: 295px; // wide enough for "archives by keyword" to fit
+          text-align: left;
         }
+        text-align: center;
         > * {
           margin-bottom: 2rem;
         }
@@ -173,6 +175,9 @@ body {
             line-height: 1.45;
             margin-top: .75rem;
           }
+        }
+        input[type='text'] {
+          margin-bottom: .5rem;
         }
       }
     }
