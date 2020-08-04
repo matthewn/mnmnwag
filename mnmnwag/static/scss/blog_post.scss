@@ -17,6 +17,14 @@
     }
   }
 
+  &.micro.snapshot {
+    &.on-index {
+      header {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
   main {
     p,
     ul,
@@ -26,6 +34,7 @@
   }
 
   footer {
+    margin-top: 1rem;
     .post-info {
       > div {
         margin-bottom: .25rem;

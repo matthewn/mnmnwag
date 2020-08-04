@@ -2,7 +2,7 @@
 {% load typefixes %}
 {% load wagtailcore_tags %}
 
-<article class="blog-post{% if post.specific.is_micro %} micro{% endif %}{% if page.content_type.model == 'blogindex' %} on-index{% endif %}">
+<article class="blog-post{% if post.specific.is_micro %} micro{% endif %}{% if post.specific.is_snapshot %} snapshot{% endif %}{% if page.content_type.model == 'blogindex' %} on-index{% endif %}">
 
     {% include "mnmnwag/blog_post_header.html" %}
 

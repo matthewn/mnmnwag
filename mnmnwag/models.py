@@ -152,6 +152,9 @@ class ModernPost(Page, BlogPost):
     def is_micro(self):
         return True if 'micro' in self.tags.names() else False
 
+    def is_snapshot(self):
+        return True if 'snapshot' in self.tags.names() else False
+
 
 # ···························································
 # INDEX(ES)
