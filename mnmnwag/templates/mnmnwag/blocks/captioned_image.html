@@ -1,0 +1,16 @@
+{% load wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% load static from staticfiles %}
+{% load typefixes %}
+
+<figure id="{{ block_id }}">
+    <picture>
+        {% image value.image width-800 as small_image %}
+        <a href="{{ value.image.file.url }}" class="glightbox">
+            <img src="{{ small_image.file.url }}" alt="{{ value.alt_text }}">
+        </a>
+    </picture>
+    {% if value.caption %}
+    <figcaption class="caption"><p>{{ value.caption }}</p></figcaption>
+    {% endif %}
+</figure>

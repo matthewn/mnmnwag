@@ -13,11 +13,12 @@ from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.core import blocks
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Page
-from wagtail.images.blocks import ImageChooserBlock
 from wagtail.search import index
 
 from django_comments.moderation import CommentModerator
 from django_comments_xtd.moderation import moderator
+
+from .blocks import CaptionedImageBlock
 
 import datetime as dt
 
@@ -130,7 +131,7 @@ class ModernPost(Page, BlogPost):
     body = StreamField([
         ('heading', blocks.CharBlock(classname="full title")),
         ('paragraph', blocks.RichTextBlock()),
-        ('image', ImageChooserBlock()),
+        ('image', CaptionedImageBlock()),
         ('raw_HTML', blocks.RawHTMLBlock(required=False)),
     ])
 
@@ -252,7 +253,7 @@ class ComplexPage(Page):
     body = StreamField([
         ('heading', blocks.CharBlock(classname="full title")),
         ('paragraph', blocks.RichTextBlock()),
-        ('image', ImageChooserBlock()),
+        ('image', CaptionedImageBlock()),
         ('raw_HTML', blocks.RawHTMLBlock(required=False)),
     ])
     page_message = RichTextField()
