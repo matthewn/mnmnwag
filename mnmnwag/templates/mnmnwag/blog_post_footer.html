@@ -8,12 +8,14 @@
             posted {{ post.specific.first_published_at|date:"j F Y" }}
             at {{ post.specific.first_published_at|date:"g:i a" }}
         </div>
-        <div class="post-tags">
-            filed under
-            {% for item in post.specific.tagged_items.all|dictsort:"tag" %}
-                <a href="/blog/tag/{{ item.tag.slug }}" up-target="#header, #content" up-transition="cross-fade">#{{ item.tag.name }}</a>
-            {% endfor %}
-        </div>
+        {% if post.specific.tagged_items.all %}
+            <div class="post-tags">
+                filed under
+                {% for item in post.specific.tagged_items.all|dictsort:"tag" %}
+                    <a href="/blog/tag/{{ item.tag.slug }}" up-target="#header, #content" up-transition="cross-fade">#{{ item.tag.name }}</a>
+                {% endfor %}
+            </div>
+        {% endif %}
         {% if post.specific.has_comments_enabled %}
             {% if page.content_type.model == 'blogindex' or is_search_page %}
                 {% get_comment_count for post.specific as comment_count %}
