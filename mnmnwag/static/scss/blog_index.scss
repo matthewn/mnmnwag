@@ -9,3 +9,10 @@
     margin: 6rem 0 0;
   }
 }
+
+.template-blogindex {
+  .gbtn.gnext,
+  .gbtn.gprev {
+    display: none !important; // override glightbox
+  }
+}
