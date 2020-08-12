@@ -15,7 +15,8 @@ class LatestEntriesFeed(Feed):
 
     def item_title(self, item):
         if 'micro' in item.specific.tags.names():
-            return item.first_published_at.strftime('%Y-%m-%d %I:%M %p')
+            post_date = item.first_published_at.strftime('%Y-%m-%d %I:%M %p')
+            return f'micropost ({post_date})'
         else:
             return item.title
 
