@@ -73,6 +73,9 @@ body.theme-light {
     background-color: $jet;
     color: $white;
   }
+  .up-modal-content {
+    background-color: $white;
+  }
   .wagtail-userbar__item a { color: #aaa; }
 }
 
@@ -127,6 +130,9 @@ body.theme-dark {
   [style-as-button] {
     background-color: $ming;
     color: $white;
+  }
+  .up-modal-content {
+    background-color: $black;
   }
 }
 
@@ -184,5 +190,8 @@ body.theme-retro {
   [style-as-button] {
     background-color: $dark-green;
     color: $sheen-green;
+  }
+  .up-modal-content {
+    background-color: $black;
   }
 }

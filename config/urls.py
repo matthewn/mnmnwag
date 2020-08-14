@@ -10,6 +10,7 @@ from wagtail.documents import urls as wagtaildocs_urls
 from search import views as search_views
 
 from mnmnwag.feeds import LatestEntriesFeed
+from mnmnwag.views import zoom
 
 
 urlpatterns = [
@@ -21,6 +22,7 @@ urlpatterns = [
     url(r'^comments/', include('django_comments_xtd.urls')),
 
     url(r'^search/$', search_views.search, name='search'),
+    path('zoom/<path:filepath>', zoom, name='zoom'),
 
     url(r'^blog/feed/', LatestEntriesFeed()),
 
