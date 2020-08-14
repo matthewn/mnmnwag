@@ -131,6 +131,9 @@ body.theme-dark {
     background-color: $ming;
     color: $white;
   }
+  .up-modal-close {
+    color: $platinum;
+  }
   .up-modal-content {
     background-color: $black;
   }
@@ -190,6 +193,9 @@ body.theme-retro {
   [style-as-button] {
     background-color: $dark-green;
     color: $sheen-green;
+  }
+  .up-modal-close {
+    color: $green;
   }
   .up-modal-content {
     background-color: $black;
