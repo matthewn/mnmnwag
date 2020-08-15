@@ -97,6 +97,7 @@ class BlogPost(models.Model, BlogSidebar):
     tags = ClusterTaggableManager(through=PostTag, blank=True)
 
     search_fields = Page.search_fields + [
+        index.SearchField('title'),
         index.SearchField('body'),
     ]
 
