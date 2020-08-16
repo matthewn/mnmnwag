@@ -194,7 +194,16 @@ body {
   }
 }
 
+.up-modal-content,
+.up-modal-viewport {
+  padding: 1rem;
+}
+.up-modal-viewport {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
 .up-modal-dialog .up-modal-close {
-  right: -8px;
-  top: -9px;
+  right: -10px;
+  top: -12px;
 }

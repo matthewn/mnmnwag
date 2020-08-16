@@ -31,6 +31,11 @@
     ol {
       margin-bottom: 1rem;
     }
+    .block-image {
+      img {
+        max-height: 95vh;
+      }
+    }
   }
 
   footer {

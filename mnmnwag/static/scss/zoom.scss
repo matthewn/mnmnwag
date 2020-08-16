@@ -1,6 +1,14 @@
-body #content.content-zoom {
+#content.content-zoom {
   > .constrainer > main {
     padding: 5rem 0 7rem;
     text-align: center;
+  }
+}
+
+.zoom {
+  display: flex;
+  justify-content: center;
+  img {
+    max-height: calc(100vh - 3rem);
   }
 }
