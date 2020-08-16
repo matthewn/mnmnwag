@@ -3,14 +3,14 @@
 {% load static from staticfiles %}
 {% load typefixes %}
 
-<figure id="{{ block_id }}">
+<figure>
     <picture>
         {% image value.image width-800 as small_image %}
-        <a href="/zoom/img/{{ value.image.id }}" up-modal=".zoom">
+        <a href="{% url 'zoom_image' value.image.id %}" up-modal=".zoom">
             <img src="{{ small_image.file.url }}" alt="{{ value.alt_text }}">
         </a>
     </picture>
     {% if value.caption %}
-    <figcaption class="caption"><p>{{ value.caption }}</p></figcaption>
+    <figcaption class="caption"><p>{{ value.caption|richtext|typefixes }}</p></figcaption>
     {% endif %}
 </figure>

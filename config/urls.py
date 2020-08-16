@@ -10,7 +10,7 @@ from wagtail.documents import urls as wagtaildocs_urls
 from search import views as search_views
 
 from mnmnwag.feeds import LatestEntriesFeed
-from mnmnwag.views import theme_picker, zoom
+from mnmnwag.views import theme_picker, zoom_image
 
 
 urlpatterns = [
@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^comments/', include('django_comments_xtd.urls')),
 
     url(r'^search/$', search_views.search, name='search'),
-    path('zoom/img/<int:image_id>', zoom, name='zoom'),
+    path('zoom/img/<int:image_id>', zoom_image, name='zoom_image'),
     path('theme/<str:chosen_theme>', theme_picker, name='theme_picker'),
 
     url(r'^blog/feed/', LatestEntriesFeed()),

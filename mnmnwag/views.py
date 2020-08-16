@@ -1,22 +1,15 @@
-from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
 
 from wagtail.images.models import Image
 
 import datetime as dt
 
 
-def zoom(request, image_id):
-    img = Image.objects.get(id=image_id)
-    return render(request, 'mnmnwag/zoom.html', {
-        'img': img,
-    })
-
-
 def theme_picker(request, chosen_theme):
     try:
         destination = request.META['HTTP_REFERER']
-    except AttributeError:
+    except KeyError:
         destination = request.META['HTTP_HOST'] + '/blog'
     response = HttpResponseRedirect(destination)
     expires = dt.datetime.now(tz=dt.timezone.utc) + dt.timedelta(days=365)
@@ -29,3 +22,10 @@ def theme_picker(request, chosen_theme):
             samesite='strict',
         )
     return response
+
+
+def zoom_image(request, image_id):
+    img = Image.objects.get(id=image_id)
+    return render(request, 'mnmnwag/zoom.html', {
+        'img': img,
+    })

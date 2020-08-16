@@ -82,7 +82,7 @@ class PostTag(TaggedItemBase):
 
 class BlogSidebar():
     def archives_by_tag(self):
-        top = ['life', 'micro', 'site', 'tech']
+        top = ['life', 'micro', 'site', 'snapshot', 'tech']
         post_tags = PostTag.tags_for(Page).order_by('name')
         bottom_tags = []
         top_tags = []
@@ -101,6 +101,8 @@ class BlogSidebar():
         return content
 
     def archives_by_year(self):
+        # TODO/FIXME: the way the years list gets built is stupid;
+        # we should just fetch distinct years from post dates
         years = list(range(2003, 2011))
         this_year = dt.date.today().year
         years += list(range(2020, this_year + 1))
@@ -114,7 +116,10 @@ class BlogSidebar():
                 .count()
             )
             if count:
-                content += f'<li><a href="/blog/{year}" up-target="#header, #content .blog" up-transition="cross-fade">{year}</a> ({count})</li>'
+                idx = self.get_idx_obj()
+                href = idx.url + idx.reverse_subpage('posts_by_date', kwargs={'year': year})
+                # ideally this would be in a template somewhere
+                content += f'<li><a href="{href}" up-target="#header, #content .blog" up-transition="cross-fade">{year}</a> ({count})</li>'
         content += '</ul>'
         return content
 
@@ -124,8 +129,14 @@ class BlogSidebar():
 
     def get_tag_link_li(self, tag):
         count = PostTag.objects.filter(tag=tag).count()
-        content = f'<li><a href="/blog/tag/{tag}" up-target="#header, #content .blog" up-transition="cross-fade">#{tag}</a> ({count})</li>'
+        idx = self.get_idx_obj()
+        href = idx.url + idx.reverse_subpage('posts_by_tag', kwargs={'tag': tag})
+        # ideally this would be in a template somewhere
+        content = f'<li><a href="{href}" up-target="#header, #content .blog" up-transition="cross-fade">#{tag}</a> ({count})</li>'
         return content
+
+    def get_idx_obj(self):
+        return BlogIndex.objects.get()
 
 
 # ···························································
