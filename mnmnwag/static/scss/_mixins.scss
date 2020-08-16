@@ -1,5 +1,10 @@
 // breakpoints, simple and easy
 @mixin media($breakpoint) {
+  @if $breakpoint == 'tiny' {
+    @media (max-width: 359px) {
+      @content;
+    }
+  }
   @if $breakpoint == 'mobile' {
     @media (max-width: 814px) {
       @content;
