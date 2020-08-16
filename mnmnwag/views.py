@@ -1,10 +1,10 @@
 from django.shortcuts import render
 
-import os.path
+from wagtail.images.models import Image
 
 
-def zoom(request, filepath):
+def zoom(request, image_id):
+    img = Image.objects.get(id=image_id)
     return render(request, 'mnmnwag/zoom.html', {
-        'filepath': filepath,
-        'filename': os.path.basename(filepath),
+        'img': img,
     })

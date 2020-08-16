@@ -73,9 +73,9 @@
             </div>
         </section>
 
-        <section id="content">
+        <section id="content" class="{% block content_class %}{% endblock %}">
             <div class="constrainer">
-                {% if page.content_type.model != 'complexpage' %}
+                {% if page.content_type.model == 'blogindex' or page.content_type.model == 'modernpost' or page.content_type.model == 'legacypost' %}
                     <aside>
                         {% include "mnmnwag/sidebar_theme.html" %}
                         {% include "mnmnwag/sidebar_archives.html" %}
@@ -83,10 +83,10 @@
                     </aside>
                 {% endif %}
 
-                {% if page.content_type.model == 'complexpage' %}
-                    <main>
-                {% else %}
+                {% if page.content_type.model == 'blogindex' or page.content_type.model == 'modernpost' or page.content_type.model == 'legacypost' %}
                     <main class="blog">
+                {% else %}
+                    <main>
                 {% endif %}
                     {% block content %}{% endblock %}
                 </main>

@@ -6,7 +6,7 @@
 <figure id="{{ block_id }}">
     <picture>
         {% image value.image width-800 as small_image %}
-        <a href="/zoom{{ value.image.file.url }}" up-modal=".zoom">
+        <a href="/zoom/img/{{ value.image.id }}" up-modal=".zoom">
             <img src="{{ small_image.file.url }}" alt="{{ value.alt_text }}">
         </a>
     </picture>

@@ -1,8 +1,15 @@
-<html>
-    <head>
-        <title>{{ filename }}</title>
-    </head>
-    <body>
-        <div class="zoom"><img src="/{{ filepath }}"></div>
-    </body>
-</html>
+{% extends "mnmnwag/base.html" %}
+
+{% load wagtailimages_tags %}
+
+
+{% block title %}{{ img.filename }}{% endblock %}
+
+{% block content_class %}content-zoom{% endblock %}
+
+{% block content %}
+    {% image img original as zoom_img %}
+    <div class="zoom">
+        <img src="{{ zoom_img.url }}">
+    </div>
+{% endblock %}

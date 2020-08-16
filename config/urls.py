@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^comments/', include('django_comments_xtd.urls')),
 
     url(r'^search/$', search_views.search, name='search'),
-    path('zoom/<path:filepath>', zoom, name='zoom'),
+    path('zoom/img/<int:image_id>', zoom, name='zoom'),
 
     url(r'^blog/feed/', LatestEntriesFeed()),
 
