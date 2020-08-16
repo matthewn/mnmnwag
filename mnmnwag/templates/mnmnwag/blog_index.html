@@ -1,11 +1,6 @@
 {% extends "mnmnwag/base.html" %}
 
-{# {% load capture_tags %} #}
-{# {% load wagtailcore_tags %} #}
-{# {% load compress %} #}
-{# {% load static %} #}
-{# {% load typefixes %} #}
-{# {% load wagtailimages_tags %} #}
+{% load typefixes %}
 
 {% block title %}blog{% endblock %}
 {% block body_class %}template-blogindex{% endblock %}
@@ -15,7 +10,7 @@
     <div id="blog-index">
 
         {% if page.index_title %}
-            <h2 class="page-title">{{ page.index_title }}</h2>
+            <h2 class="page-title">{{ page.index_title|typefixes }}</h2>
         {% endif %}
 
         {% for post in page.posts %}
@@ -28,10 +23,4 @@
 
     </div>
 
-{% endblock %}
-
-{% block extra_js %}
-    {# {% compress js %} #}
-        {# <script>$.endlessPaginate();</script> #}
-    {# {% endcompress %} #}
 {% endblock %}
