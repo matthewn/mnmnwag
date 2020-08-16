@@ -105,12 +105,12 @@
             </div>
         </footer>
 
-        {# {% compress js %} #}
+        {% compress js %}
             <script src="{% static 'js/vendor/unpoly.min.js' %}"></script>
             <script src="{% static 'js/cookies.js' %}"></script>
             <script src="{% static 'js/theme_picker.js' %}"></script>
             <script src="{% static 'js/misc.js' %}"></script>
-        {# {% endcompress %} #}
+        {% endcompress %}
         {# <script async src="https://www.googletagmanager.com/gtag/js?id=UA-54995806-2"></script> #}
         {# <script> #}
         {#     window.dataLayer = window.dataLayer || []; #}
