@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "c7174c27cf285ebe39f4cfae3ca60bef1d083066411f3bec6a00c3167662dd4c"
+            "sha256": "02c74acc21d29a664245b3a4bec344c88b674bdc644d5586bf1a8ac457e508df"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -431,6 +431,14 @@
             ],
             "index": "pypi",
             "version": "==2.10"
+        },
+        "wagtail-cache": {
+            "hashes": [
+                "sha256:9fdbefe091130cb2e72f220a0d6f8e74e668775bf5b2c80202c2d861191d1df0",
+                "sha256:beaf34a1aeb2027c5f1f64c06987b537826643d4a707359f45218b708ab4f924"
+            ],
+            "index": "pypi",
+            "version": "==1.0.1"
         },
         "wagtailcomments-xtd": {
             "git": "https://github.com/arttobe/wagtailcomments_xtd.git",

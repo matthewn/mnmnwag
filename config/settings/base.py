@@ -48,10 +48,12 @@ INSTALLED_APPS = [
     'django_markdown2',
     'typogrify',
     'vendor.wagtailcomments_xtd',
-    'wagtailfontawesome',
+    'wagtailcache',
+    'wagtailfontawesome',  # req'd by wagtailcomments_xtd
 ]
 
 MIDDLEWARE = [
+    'wagtailcache.cache.UpdateCacheMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -66,6 +68,7 @@ MIDDLEWARE = [
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 
     'extlinks.middleware.RewriteExternalLinksMiddleware',
+    'wagtailcache.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -92,6 +95,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'static', 'DJCACHE'),
+        'KEY_PREFIX': 'wagtailcache',
+        'TIMEOUT': 3600,  # one hour (in seconds)
+    }
+}
 
 
 # Database

@@ -23,6 +23,7 @@ wagtailcomments-xtd = {git = "https://github.com/arttobe/wagtailcomments_xtd.git
 django-debug-toolbar = "*"
 django-markdown2 = "*"
 psycopg2 = "*"
+wagtail-cache = "*"
 
 [requires]
 python_version = "3.6"
