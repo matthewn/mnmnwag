@@ -1,4 +1,4 @@
-from .base import *
+from .base import *  # noqa: F401
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -7,12 +7,15 @@ DEBUG = True
 SECRET_KEY = '=3g5ja(nplppud^1d2u%5m54w168!2g7l+yxatm$@5tdw@oact'
 
 # SECURITY WARNING: define the correct hosts in production!
-ALLOWED_HOSTS = ['*'] 
+ALLOWED_HOSTS = ['*']
 
+# print emails on console instead of sending them
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+# BASE_URL required for notification emails
+BASE_URL = 'http://localhost:8000'
 
-try:
-    from .local import *
-except ImportError:
-    pass
+# django-debug-toolbar
+INTERNAL_IPS = [
+    '127.0.0.1',
+]

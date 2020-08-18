@@ -1,0 +1,20 @@
+from .dev import *  # noqa: F403, F401
+# from .production import *  # noqa: F403, F401
+
+
+# Database
+# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'FIXME',
+        'USER': 'FIXME',
+        'PASSWORD': 'FIXME',
+        'HOST': '127.0.0.1',
+        'PORT': '5432'
+    }
+}
+
+
+# Override settings here
