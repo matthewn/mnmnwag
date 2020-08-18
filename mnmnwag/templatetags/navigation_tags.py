@@ -1,7 +1,7 @@
 """Lifed from the wagtail bakerydemo; provides context-aware menu items."""
 
 from django import template
-
+from wagtail.core.models import Site
 
 register = template.Library()
 
@@ -11,7 +11,8 @@ def get_site_root(context):
     # This returns a core.Page. The main menu needs to have the site.root_page
     # defined else will return an object attribute error ('str' object has no
     # attribute 'get_children')
-    return context['request'].site.root_page
+    current_site = Site.find_for_request(context['request'])
+    return current_site.root_page
 
 
 def has_menu_children(page):

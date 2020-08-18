@@ -63,7 +63,6 @@ MIDDLEWARE = [
 
     # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 
-    'wagtail.core.middleware.SiteMiddleware',
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 
     'extlinks.middleware.RewriteExternalLinksMiddleware',
