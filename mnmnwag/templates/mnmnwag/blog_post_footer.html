@@ -5,7 +5,13 @@
 <footer>
     <section class="post-info">
         <div class="post-date">
-            posted {{ post.specific.first_published_at|date:"j F Y" }}
+            posted by
+            {% if page.owner.username == 'matthewn' %}
+                <div class="mahna">/\/\/\/</div>
+            {% else %}
+                {{ page.owner.username }}
+            {% endif %}
+            {{ post.specific.first_published_at|date:"j F Y" }}
             at {{ post.specific.first_published_at|date:"g:i a" }}
         </div>
         {% if post.specific.tagged_items.all %}
