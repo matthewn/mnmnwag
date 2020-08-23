@@ -35,12 +35,16 @@
         {% block extra_css %}
             {# override this in templates to add extra stylesheets #}
         {% endblock %}
+
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-176045696-1"></script>
+        <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-176045696-1');</script>
+
     </head>
 
     <body class="{% get_theme_class %} {% block body_class %}{% endblock %}">
-        <h1></h1>
 
         <header id="header" class="right_menu">
+
             <div class="constrainer">
                 <div id="site-header">
                     <div id="site-logo">
@@ -113,13 +117,7 @@
             <script src="{% static 'js/theme_picker.js' %}"></script>
             <script src="{% static 'js/misc.js' %}"></script>
         {% endcompress %}
-        {# <script async src="https://www.googletagmanager.com/gtag/js?id=UA-54995806-2"></script> #}
-        {# <script> #}
-        {#     window.dataLayer = window.dataLayer || []; #}
-        {#     function gtag(){dataLayer.push(arguments);} #}
-        {#     gtag('js', new Date()); #}
-        {#     gtag('config', 'UA-54995806-2'); #}
-        {# </script> #}
+
         {% block extra_js %}
             {# override this in templates to add extra javascript #}
         {% endblock %}
