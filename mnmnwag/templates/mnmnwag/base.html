@@ -1,4 +1,5 @@
 {% load compress %}
+{% load get_theme_class %}
 {% load navigation_tags %}
 {% load static %}
 {% load typefixes %}
@@ -36,7 +37,8 @@
         {% endblock %}
     </head>
 
-    <body class="{{ theme_class }} {% block body_class %}{% endblock %}">
+    <body class="{% get_theme_class %} {% block body_class %}{% endblock %}">
+        <h1></h1>
 
         <header id="header" class="right_menu">
             <div class="constrainer">

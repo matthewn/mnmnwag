@@ -7,5 +7,5 @@ register = template.Library()
 @register.filter(is_safe=True)
 @stringfilter
 def is_numeric(value):
-    """Remove True if value is numeric."""
+    """ Return True if value is numeric. """
     return "{}".format(value).isdigit()
