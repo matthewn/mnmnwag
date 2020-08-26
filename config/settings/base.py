@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'vendor.wagtailcomments_xtd',
     'wagtailcache',
     'wagtailfontawesome',  # req'd by wagtailcomments_xtd
+    'wagtailmedia',
 ]
 
 MIDDLEWARE = [

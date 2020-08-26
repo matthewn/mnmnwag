@@ -13,6 +13,7 @@ from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.core import blocks
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Page
+from wagtail.embeds.blocks import EmbedBlock
 from wagtail.search import index
 
 from django_comments.moderation import CommentModerator
@@ -144,6 +145,7 @@ class ModernPost(Page, BlogPost):
         ('heading', blocks.CharBlock(classname="full title")),
         ('paragraph', blocks.RichTextBlock()),
         ('image', CaptionedImageBlock()),
+        ('embed', EmbedBlock()),
         ('raw_HTML', blocks.RawHTMLBlock(required=False)),
     ])
 
