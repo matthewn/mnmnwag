@@ -28,6 +28,52 @@ import datetime as dt
 
 
 # ···························································
+# CUSTOM BASE PAGE MODEL AND MISC PAGE(S)
+# ···························································
+
+
+class BasePage(Page):
+    def get_context(self, request):
+        context = super().get_context(request)
+        try:
+            context['theme_class'] = request.COOKIES['themeClass']
+        except KeyError:
+            context['theme_class'] = 'theme-light'
+        return context
+
+    class Meta:
+        abstract = True
+
+
+class ComplexPage(BasePage):
+    body = StreamField([
+        ('heading', blocks.CharBlock(classname="full title")),
+        ('paragraph', blocks.RichTextBlock()),
+        ('image', CaptionedImageBlock()),
+        ('embed', EmbedBlock()),
+        ('media', MediaBlock(icon='media')),
+        ('raw_HTML', blocks.RawHTMLBlock(required=False)),
+    ])
+    page_message = RichTextField()
+
+    content_panels = Page.content_panels + [
+        FieldPanel('page_message'),
+        StreamFieldPanel('body'),
+    ]
+
+
+class BasicPage(BasePage):
+    body = RichTextField(
+        blank=True,
+        features=['bold', 'italic', 'h3', 'h4', 'h5', 'blockquote', 'ol', 'ul', 'link', 'image', 'document-link'],
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel('body', classname='full'),
+    ]
+
+
+# ···························································
 # SUPPORTING CLASSES: TAGS AND SIDEBAR ELEMENTS
 # ···························································
 
@@ -129,7 +175,7 @@ class BlogPost(models.Model, BlogSidebar):
         abstract = True
 
 
-class LegacyPost(Page, BlogPost):
+class LegacyPost(BasePage, BlogPost):
     # TODO: this needs to become a plain (long) text field; we are not
     #       going to want Draftail messing with this shit
     body = RichTextField()
@@ -143,7 +189,7 @@ class LegacyPost(Page, BlogPost):
     subpage_types = []
 
 
-class ModernPost(Page, BlogPost):
+class ModernPost(BasePage, BlogPost):
     body = StreamField([
         ('heading', blocks.CharBlock(classname="full title")),
         ('paragraph', blocks.RichTextBlock()),
@@ -180,7 +226,7 @@ class ModernPost(Page, BlogPost):
 # ···························································
 
 
-class BlogIndex(RoutablePageMixin, Page, BlogSidebar):
+class BlogIndex(RoutablePageMixin, BasePage, BlogSidebar):
     page_message = RichTextField()
     max_count = 1
     subpage_types = ['LegacyPost', 'ModernPost']
@@ -260,39 +306,6 @@ class BlogIndex(RoutablePageMixin, Page, BlogSidebar):
         )
         self.index_title = f'Posts tagged #{tag}'
         return self.serve(request, *args, **kwargs)
-
-
-# ···························································
-# MISC PAGE(S)
-# ···························································
-
-
-class ComplexPage(Page):
-    body = StreamField([
-        ('heading', blocks.CharBlock(classname="full title")),
-        ('paragraph', blocks.RichTextBlock()),
-        ('image', CaptionedImageBlock()),
-        ('embed', EmbedBlock()),
-        ('media', MediaBlock(icon='media')),
-        ('raw_HTML', blocks.RawHTMLBlock(required=False)),
-    ])
-    page_message = RichTextField()
-
-    content_panels = Page.content_panels + [
-        FieldPanel('page_message'),
-        StreamFieldPanel('body'),
-    ]
-
-
-class BasicPage(Page):
-    body = RichTextField(
-        blank=True,
-        features=['bold', 'italic', 'h3', 'h4', 'h5', 'blockquote', 'ol', 'ul', 'link', 'image', 'document-link'],
-    )
-
-    content_panels = Page.content_panels + [
-        FieldPanel('body', classname='full'),
-    ]
 
 
 # ···························································
