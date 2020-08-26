@@ -14,12 +14,15 @@ from wagtail.core import blocks
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Page
 from wagtail.embeds.blocks import EmbedBlock
+from wagtail.images.models import Image, AbstractImage, AbstractRendition
 from wagtail.search import index
+
+from wagtailmedia.models import Media, AbstractMedia
 
 from django_comments.moderation import CommentModerator
 from django_comments_xtd.moderation import moderator
 
-from .blocks import CaptionedImageBlock
+from .blocks import CaptionedImageBlock, MediaBlock
 
 import datetime as dt
 
@@ -146,6 +149,7 @@ class ModernPost(Page, BlogPost):
         ('paragraph', blocks.RichTextBlock()),
         ('image', CaptionedImageBlock()),
         ('embed', EmbedBlock()),
+        ('media', MediaBlock(icon='media')),
         ('raw_HTML', blocks.RawHTMLBlock(required=False)),
     ])
 
@@ -268,6 +272,8 @@ class ComplexPage(Page):
         ('heading', blocks.CharBlock(classname="full title")),
         ('paragraph', blocks.RichTextBlock()),
         ('image', CaptionedImageBlock()),
+        ('embed', EmbedBlock()),
+        ('media', MediaBlock(icon='media')),
         ('raw_HTML', blocks.RawHTMLBlock(required=False)),
     ])
     page_message = RichTextField()
@@ -307,3 +313,40 @@ class BlogPostModerator(CommentModerator):
 
 moderator.register(LegacyPost, BlogPostModerator)
 moderator.register(ModernPost, BlogPostModerator)
+
+
+# ···························································
+# CUSTOM MEDIA CLASSES                       (for future use)
+# ···························································
+
+class CustomImage(AbstractImage):
+    # Add any extra fields to image here
+
+    # eg. To add a caption field:
+    # caption = models.CharField(max_length=255, blank=True)
+
+    admin_form_fields = Image.admin_form_fields + (
+        # Then add the field names here to make them appear in the form:
+        # 'caption',
+    )
+
+
+class CustomRendition(AbstractRendition):
+    image = models.ForeignKey(CustomImage, on_delete=models.CASCADE, related_name='renditions')
+
+    class Meta:
+        unique_together = (
+            ('image', 'filter_spec', 'focal_point_key'),
+        )
+
+
+class CustomMedia(AbstractMedia):
+    # Add any extra fields to image here
+
+    # eg. To add a caption field:
+    # caption = models.CharField(max_length=255, blank=True)
+
+    admin_form_fields = Media.admin_form_fields + (
+        # Then add the field names here to make them appear in the form:
+        # 'caption',
+    )

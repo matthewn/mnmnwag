@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
-from wagtail.images.models import Image
+from .models import CustomImage
 
 import datetime as dt
 
@@ -25,7 +25,7 @@ def theme_picker(request, chosen_theme):
 
 
 def zoom_image(request, image_id):
-    img = Image.objects.get(id=image_id)
+    img = CustomImage.objects.get(id=image_id)
     return render(request, 'mnmnwag/zoom.html', {
         'img': img,
     })
