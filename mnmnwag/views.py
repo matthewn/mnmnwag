@@ -12,9 +12,9 @@ def theme_picker(request, chosen_theme):
     except KeyError:
         destination = request.META['HTTP_HOST'] + '/blog'
     response = HttpResponseRedirect(destination)
-    expires = dt.datetime.now(tz=dt.timezone.utc) + dt.timedelta(days=365)
-    theme_class = f'theme-{chosen_theme}'
     if chosen_theme in ('light', 'dark', 'retro'):
+        theme_class = f'theme-{chosen_theme}'
+        expires = dt.datetime.now(tz=dt.timezone.utc) + dt.timedelta(days=365)
         response.set_cookie(
             'themeClass',
             value=theme_class,
