@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'mnmnwag',
+    'mnmnwag.apps.MnmnwagConfig',
 
     'capture_tag',
     'compressor',
@@ -178,8 +178,7 @@ COMMENTS_XTD_CONFIRM_EMAIL = False
 COMMENTS_XTD_FORM_CLASS = 'mnmnwag.forms.MahnaCommentForm'
 COMMENTS_XTD_MAX_THREAD_LEVEL = 8
 MANAGERS = (('M N', 'matthewn@mahnamahna.net'),)
-# COMMENTS_XTD_SALT = 'zVHJEuPVWauJbk3ANXrDiSFW4pD2ZrKQkDcV9FT7nwm4yLO1l90vQy'
-# COMMENTS_XTD_FROM_EMAIL = 'bot@mahnamahna.net'
+COMMENTS_XTD_FROM_EMAIL = 'bot@mahnamahna.net'
 
 
 # django-compressor
