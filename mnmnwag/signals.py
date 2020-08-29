@@ -20,7 +20,10 @@ def send_delayed_notifications(sender, **kwargs):
     published again, the notifications will get sent again. Hmm.
     """
     if kwargs['instance'].is_public is True:
-        current = XtdComment.objects.get(id=kwargs['instance'].id)
-        if current.is_public is False:
-            # comment is being published, so send notifications
-            notify_comment_followers(current)
+        try:
+            current = XtdComment.objects.get(id=kwargs['instance'].id)
+            if current.is_public is False:
+                # comment is being published, so send notifications
+                notify_comment_followers(current)
+        except XtdComment.DoesNotExist:
+            pass
