@@ -1,3 +1,0 @@
-[submodule "vendor/wagtailcomments_xtd"]
-	path = vendor/wagtailcomments_xtd
-	url = https://github.com/arttobe/wagtailcomments_xtd.git

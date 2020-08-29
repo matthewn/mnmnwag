@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_markdown2',
     'typogrify',
-    'vendor.wagtailcomments_xtd',
     'wagtailcache',
     'wagtailfontawesome',  # req'd by wagtailcomments_xtd
     'wagtailmedia',
