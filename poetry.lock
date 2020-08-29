@@ -31,6 +31,20 @@ version = "3.0.4"
 
 [[package]]
 category = "main"
+description = ""
+name = "comments-wagtail-xtd"
+optional = false
+python-versions = ">=3"
+version = "1.0.1"
+
+[package.dependencies]
+Django = ">=2.0.0"
+django-comments-xtd = ">=2.2.1"
+wagtail = ">2.2"
+wagtailfontawesome = ">=1.1.3"
+
+[[package]]
+category = "main"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
 name = "django"
 optional = false
@@ -523,7 +537,7 @@ requests = ">=2.11.1,<3.0"
 xlsxwriter = ">=1.2.8,<2.0"
 
 [package.dependencies.tablib]
-extras = ["xlsx", "xls"]
+extras = ["xls", "xlsx"]
 version = ">=0.14.0"
 
 [package.extras]
@@ -620,7 +634,7 @@ python-versions = "*"
 version = "1.3.0"
 
 [metadata]
-content-hash = "cc3797dba582263bde3aa65cf9af0941176acf4e7e8a69bd97eada6eba9b85eb"
+content-hash = "0031a9b67957bd09f84195e7480225f95a052fb7c4aa8ac3d427d6a423ff75c0"
 lock-version = "1.0"
 python-versions = "^3.6"
 
@@ -637,6 +651,10 @@ certifi = [
 chardet = [
     {file = "chardet-3.0.4-py2.py3-none-any.whl", hash = "sha256:fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"},
     {file = "chardet-3.0.4.tar.gz", hash = "sha256:84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae"},
+]
+comments-wagtail-xtd = [
+    {file = "comments_wagtail_xtd-1.0.1-py3-none-any.whl", hash = "sha256:434fe9f6487e1f7b9514160daa702d279aeeba2fe38f4032e149a564140b31c0"},
+    {file = "comments_wagtail_xtd-1.0.1.tar.gz", hash = "sha256:0741b5c9c85b3e48eb472bed65050bc9f4ec07762cd2dc40511aa2a68557039c"},
 ]
 django = [
     {file = "Django-2.2.15-py3-none-any.whl", hash = "sha256:91f540000227eace0504a24f508de26daa756353aa7376c6972d7920bc339a3a"},

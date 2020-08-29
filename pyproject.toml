@@ -22,8 +22,8 @@ django-debug-toolbar = "^2.2"
 django-markdown2 = "^0.3.1"
 psycopg2 = "^2.8.5"
 wagtail-cache = "^1.0.1"
-wagtailfontawesome = "^1.2.1"
 wagtailmedia = "^0.6.0"
+comments_wagtail_xtd = "^1.0.1"
 
 [tool.poetry.dev-dependencies]
 

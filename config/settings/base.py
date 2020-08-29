@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'mnmnwag.apps.MnmnwagConfig',
 
     'capture_tag',
+    'comments_wagtail_xtd',
     'compressor',
     'dbbackup',
     # 'debug_toolbar',
