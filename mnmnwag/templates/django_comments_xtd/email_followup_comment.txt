@@ -1,21 +1,22 @@
 {% load i18n %}
-{{ user_name }},
+Greetings {{ user_name }}.
 
-{% blocktrans %}There is a new comment following up yours.{% endblocktrans %}
+There's a new comment on a post you commented on at mahnamahna.net.
 
 Post: {{ content_object.title }}
-URL:  http://{{ site.domain }}{{ content_object.get_absolute_url }}
-Sent by: {{ comment.name }}, {{ comment.submit_date|date:"SHORT_DATE_FORMAT" }}
+URL:  {{ site.domain }}{{ content_object.get_absolute_url }}
 
---- Comment: ---
+{{ comment.name }} had this to say:
+
 {{ comment.comment }}
 
 
 -----
-Click on the following link to mute the comments thread. You will no longer receive follow-up notifications:
+Click the following link to mute the comments thread. You will no longer receive follow-up notifications:
 
-http://{{ site.domain }}{{ mute_url }}
+https://{{ site.domain }}{{ mute_url }}
 
 --
 {% trans "Kind regards" %},
-{{ site }}
+
+the lonely comment notification bot at {{ site }}
