@@ -5,13 +5,13 @@
 
   &.micro {
     &.on-index {
-      header {
+      > header {
         float: left;
         margin: .5rem .5rem 0 0;
       }
     }
     &:not(.on-index) {
-      header {
+      > header {
         display: none;
       }
     }
@@ -19,7 +19,7 @@
 
   &.micro.snapshot {
     &.on-index {
-      header {
+      > header {
         margin-bottom: 1rem;
       }
     }
