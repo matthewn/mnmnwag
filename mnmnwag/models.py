@@ -48,7 +48,22 @@ class BasePage(Page):
 class ComplexPage(BasePage):
     body = StreamField([
         ('heading', blocks.CharBlock(classname="full title")),
-        ('paragraph', blocks.RichTextBlock()),
+        ('paragraph', blocks.RichTextBlock(
+            features=[
+                'ol',
+                'ul',
+                'blockquote',
+                'bold',
+                'italic',
+                'superscript',
+                'subscript',
+                'strikethrough',
+                'code',
+                'link',
+                'image',
+                'document-link'
+            ],
+        )),
         ('image', CaptionedImageBlock()),
         ('embed', EmbedBlock()),
         ('media', MediaBlock(icon='media')),
@@ -65,7 +80,23 @@ class ComplexPage(BasePage):
 class BasicPage(BasePage):
     body = RichTextField(
         blank=True,
-        features=['bold', 'italic', 'h3', 'h4', 'h5', 'blockquote', 'ol', 'ul', 'link', 'image', 'document-link'],
+        features=[
+            'h3',
+            'h4',
+            'h5',
+            'ol',
+            'ul',
+            'blockquote',
+            'bold',
+            'italic',
+            'superscript',
+            'subscript',
+            'strikethrough',
+            'code',
+            'link',
+            'image',
+            'document-link'
+        ],
     )
 
     content_panels = Page.content_panels + [
@@ -194,7 +225,22 @@ class LegacyPost(BasePage, BlogPost):
 class ModernPost(BasePage, BlogPost):
     body = StreamField([
         ('heading', blocks.CharBlock(classname="full title")),
-        ('paragraph', blocks.RichTextBlock()),
+        ('paragraph', blocks.RichTextBlock(
+            features=[
+                'ol',
+                'ul',
+                'blockquote',
+                'bold',
+                'italic',
+                'superscript',
+                'subscript',
+                'strikethrough',
+                'code',
+                'link',
+                'image',
+                'document-link'
+            ],
+        )),
         ('image', CaptionedImageBlock()),
         ('embed', EmbedBlock()),
         ('media', MediaBlock(icon='media')),
