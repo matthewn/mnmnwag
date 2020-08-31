@@ -31,6 +31,10 @@
     ol {
       margin-bottom: 1rem;
     }
+    code:only-child {
+      font-size: 1rem;
+      white-space: pre;
+    }
     .block-image {
       img {
         max-height: 95vh;

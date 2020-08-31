@@ -28,6 +28,7 @@
         {% compress css %}
             <link rel="stylesheet" type="text/css" href="{% static 'css/vendor/minireset.min.css' %}">
             <link rel="stylesheet" type="text/css" href="{% static 'css/vendor/unpoly.min.css' %}">
+            <link rel="stylesheet" type="text/css" href="{% static 'css/vendor/highlight.ir-black.css' %}">
             <link rel="stylesheet" type="text/css" href="{% static 'css/font_faces.css' %}">
             <link rel="stylesheet" type="text/x-scss" href="{% static 'scss/styles.scss' %}">
         {% endcompress %}
@@ -111,6 +112,7 @@
 
         {% compress js %}
             <script src="{% static 'js/vendor/unpoly.min.js' %}"></script>
+            <script src="{% static 'js/vendor/highlight.pack.js' %}"></script>
             <script src="{% static 'js/cookies.js' %}"></script>
             <script src="{% static 'js/theme_picker.js' %}"></script>
             <script src="{% static 'js/misc.js' %}"></script>
