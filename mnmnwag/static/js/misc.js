@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 // on initial page load...
 document.addEventListener('DOMContentLoaded', function() {
     up.modal.config.history = false;
@@ -17,4 +19,4 @@ up.on('up:link:follow', function(event) {
 // trigger highlight.js when needed
 up.compiler('.blog-post code', function(element) {
     hljs.highlightBlock(element);
-})
+});
