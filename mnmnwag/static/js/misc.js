@@ -2,8 +2,25 @@
 
 // on initial page load...
 document.addEventListener('DOMContentLoaded', function() {
-    up.modal.config.history = false;
     hljs.configure({useBR: true});
+
+    up.modal.config.history = false;
+
+    up.macro('[up-blog-link]', function(link) {
+        link.setAttribute('up-target', '#header, #content .blog, .wagtail-userbar-items');
+        link.setAttribute('up-transition', 'cross-fade');
+    });
+
+    up.macro('[up-content-link]', function(link) {
+        link.setAttribute('up-target', '#header, #content, .wagtail-userbar-items');
+        link.setAttribute('up-transition', 'cross-fade');
+    });
+
+    up.macro('[up-nav-link]', function(link) {
+        link.setAttribute('up-target', '#header, #navbar, #content, .wagtail-userbar-items');
+        link.setAttribute('up-transition', 'cross-fade');
+    });
+
     console.clear();
 });
 

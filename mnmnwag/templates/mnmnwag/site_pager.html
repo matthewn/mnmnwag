@@ -6,7 +6,7 @@
     <ul class="pager">
         <li class="pager-prev">
             {% if page.posts.has_previous %}
-                <a title="previous page" href="?&page={{ page.posts.previous_page_number }}" up-target="#header, #content" up-transition="cross-fade">
+                <a title="previous page" href="?&page={{ page.posts.previous_page_number }}" up-content-link>
                     <span class="arrow">&lt;</span>
                 </a>
             {% endif %}
@@ -16,7 +16,7 @@
         {% for page_num in page.posts.paginator.display_range %}
             <li class="pager-item{% if page_num == page.posts.number %} active{% endif %}">
                 {% if page_num|is_numeric %}
-                    <a href="?&page={{ page_num }}" up-target="#header, #content" up-transition="cross-fade">
+                    <a href="?&page={{ page_num }}" up-content-link>
                 {% endif %}
                 &nbsp;{{ page_num }}&nbsp;
                 {% if page_num|is_numeric %}
@@ -28,7 +28,7 @@
 
         <li class="pager-next">
             {% if page.posts.has_next %}
-                <a class="next page" href="?&page={{ page.posts.next_page_number }}" up-target="#header, #content" up-transition="cross-fade">
+                <a class="next page" href="?&page={{ page.posts.next_page_number }}" up-content-link>
                     <span class="arrow">&gt;</span>
                 </a>
             {% endif %}

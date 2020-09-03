@@ -18,7 +18,7 @@
             <div class="post-tags">
                 filed under
                 {% for item in post.specific.tagged_items.all|dictsort:"tag" %}
-                    <a href="/blog/tag/{{ item.tag.slug }}" up-target="#header, #content" up-transition="cross-fade">#{{ item.tag.name }}</a>
+                    <a href="/blog/tag/{{ item.tag.slug }}" up-content-link>#{{ item.tag.name }}</a>
                 {% endfor %}
             </div>
         {% endif %}
@@ -26,7 +26,7 @@
             {% if page.content_type.model == 'blogindex' or is_search_page %}
                 {% get_comment_count for post.specific as comment_count %}
                 <div class="post-comments">
-                    <a href="{% pageurl post %}#comments" up-target="#header, #content" up-transition="cross-fade">
+                    <a href="{% pageurl post %}#comments" up-content-link>
                     {% if comment_count %}
                         {{ comment_count }} comment{{ comment_count|pluralize }}
                     {% else %}
