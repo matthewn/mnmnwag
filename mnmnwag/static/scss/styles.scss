@@ -13,6 +13,10 @@
 @import 'search';
 @import 'zoom';
 
+@import 'vendor/highlight.a11y-light';
+@import 'vendor/highlight.ir-black';
+@import 'vendor/highlight.xt256';
+
 body {
   transition: all .25s;
 }

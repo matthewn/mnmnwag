@@ -1,5 +1,9 @@
 .theme-light {
 
+  code.hljs {
+    border: 1px dashed $jet !important;
+  }
+
   /* a11y-light theme */
   /* Based on the Tomorrow Night Eighties theme: https://github.com/isagalaev/highlight.js/blob/master/src/styles/tomorrow-night-eighties.css */
   /* @author: ericwbailey */
