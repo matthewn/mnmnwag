@@ -1,5 +1,16 @@
 [[package]]
 category = "main"
+description = "ASGI specs, helper code, and adapters"
+name = "asgiref"
+optional = false
+python-versions = ">=3.5"
+version = "3.2.10"
+
+[package.extras]
+tests = ["pytest", "pytest-asyncio"]
+
+[[package]]
+category = "main"
 description = "Screen-scraping library"
 name = "beautifulsoup4"
 optional = false
@@ -48,10 +59,11 @@ category = "main"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
 name = "django"
 optional = false
-python-versions = ">=3.5"
-version = "2.2.15"
+python-versions = ">=3.6"
+version = "3.1.1"
 
 [package.dependencies]
+asgiref = ">=3.2.10,<3.3.0"
 pytz = "*"
 sqlparse = ">=0.2.2"
 
@@ -537,7 +549,7 @@ requests = ">=2.11.1,<3.0"
 xlsxwriter = ">=1.2.8,<2.0"
 
 [package.dependencies.tablib]
-extras = ["xls", "xlsx"]
+extras = ["xlsx", "xls"]
 version = ">=0.14.0"
 
 [package.extras]
@@ -634,11 +646,15 @@ python-versions = "*"
 version = "1.3.0"
 
 [metadata]
-content-hash = "0031a9b67957bd09f84195e7480225f95a052fb7c4aa8ac3d427d6a423ff75c0"
+content-hash = "a69496229594f45ddd23f686995d19f35c2c26b1e626993b00ad2b5a8337f3d4"
 lock-version = "1.0"
 python-versions = "^3.6"
 
 [metadata.files]
+asgiref = [
+    {file = "asgiref-3.2.10-py3-none-any.whl", hash = "sha256:9fc6fb5d39b8af147ba40765234fa822b39818b12cc80b35ad9b0cef3a476aed"},
+    {file = "asgiref-3.2.10.tar.gz", hash = "sha256:7e51911ee147dd685c3c8b805c0ad0cb58d360987b56953878f8c06d2d1c6f1a"},
+]
 beautifulsoup4 = [
     {file = "beautifulsoup4-4.8.2-py2-none-any.whl", hash = "sha256:e1505eeed31b0f4ce2dbb3bc8eb256c04cc2b3b72af7d551a4ab6efd5cbe5dae"},
     {file = "beautifulsoup4-4.8.2-py3-none-any.whl", hash = "sha256:9fbb4d6e48ecd30bcacc5b63b94088192dcda178513b2ae3c394229f8911b887"},
@@ -657,8 +673,8 @@ comments-wagtail-xtd = [
     {file = "comments_wagtail_xtd-1.0.1.tar.gz", hash = "sha256:0741b5c9c85b3e48eb472bed65050bc9f4ec07762cd2dc40511aa2a68557039c"},
 ]
 django = [
-    {file = "Django-2.2.15-py3-none-any.whl", hash = "sha256:91f540000227eace0504a24f508de26daa756353aa7376c6972d7920bc339a3a"},
-    {file = "Django-2.2.15.tar.gz", hash = "sha256:3e2f5d172215862abf2bac3138d8a04229d34dbd2d0dab42c6bf33876cc22323"},
+    {file = "Django-3.1.1-py3-none-any.whl", hash = "sha256:b5fbb818e751f660fa2d576d9f40c34a4c615c8b48dd383f5216e609f383371f"},
+    {file = "Django-3.1.1.tar.gz", hash = "sha256:59c8125ca873ed3bdae9c12b146fbbd6ed8d0f743e4cf5f5817af50c51f1fc2f"},
 ]
 django-appconf = [
     {file = "django-appconf-1.0.4.tar.gz", hash = "sha256:be58deb54a43d77d2e1621fe59f787681376d3cd0b8bd8e4758ef6c3a6453380"},
