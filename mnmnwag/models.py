@@ -22,7 +22,7 @@ from wagtailmedia.models import Media, AbstractMedia
 from django_comments.moderation import CommentModerator
 from django_comments_xtd.moderation import moderator
 
-from .blocks import CaptionedImageBlock, MediaBlock
+from .blocks import ImageBlock, MediaBlock
 
 import datetime as dt
 
@@ -64,7 +64,7 @@ class ComplexPage(BasePage):
                 'document-link'
             ],
         )),
-        ('image', CaptionedImageBlock()),
+        ('image', ImageBlock()),
         ('embed', EmbedBlock()),
         ('media', MediaBlock(icon='media')),
         ('raw_HTML', blocks.RawHTMLBlock(required=False)),
@@ -241,7 +241,7 @@ class ModernPost(BasePage, BlogPost):
                 'document-link'
             ],
         )),
-        ('image', CaptionedImageBlock()),
+        ('image', ImageBlock()),
         ('embed', EmbedBlock()),
         ('media', MediaBlock(icon='media')),
         ('raw_HTML', blocks.RawHTMLBlock(required=False)),

@@ -1,0 +1,25 @@
+{% load wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% load static %}
+{% load typefixes %}
+
+<figure{% if value.float == '1' %} class="float left"{% endif %}{% if value.float == '2' %} class="float right"{% endif %}>
+    <picture>
+        {% image value.image width-800 as small_image %}
+
+        {% if value.link %}
+            <a href="{{ value.link }}">
+        {% elif value.zoom == '1' %}
+            <a href="{% url 'zoom_image' value.image.id %}" up-modal=".zoom">
+        {% endif %}
+
+        <img src="{{ small_image.file.url }}" alt="{{ value.alt_text }}">
+
+        {% if value.link or value.zoom == '1' %}
+            </a>
+        {% endif %}
+    </picture>
+    {% if value.caption %}
+        <figcaption class="caption">{{ value.caption|richtext|typefixes }}</figcaption>
+    {% endif %}
+</figure>

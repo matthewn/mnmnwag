@@ -36,6 +36,29 @@
       white-space: pre;
     }
     .block-image {
+      figcaption {
+        caption-side: bottom ;
+        display: table-caption;
+        margin-top: .4rem;
+        p {
+          font-size: .9rem !important;
+          line-height: 1.4 !important;
+        }
+      }
+      figure {
+        display: table;
+        &.float {
+          max-width: 65%;
+          &.left {
+            float: left;
+            margin: 0 3rem 0 0;
+          }
+          &.right {
+            float: right;
+            margin: 0 0 0 3rem;
+          }
+        }
+      }
       img {
         max-height: 95vh;
       }
