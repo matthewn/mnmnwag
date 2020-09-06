@@ -12,13 +12,13 @@
                 {% if post.content_type.model == 'legacypost' %}
                     {{ body|richtext|typefixes|truncatewords_html:150 }}
                     {% ifnotequal body|richtext|typefixes|truncatewords_html:150|length body|richtext|typefixes|truncatewords_html:151|length %}
-                        <a class="read-more" href="{% pageurl post %}" up-content-link>read more…</a>
+                        <a class="read-more" href="{% pageurl post %}" up-content-link>read full post…</a>
                     {% endifnotequal %}
                 {% elif post.content_type.model == 'modernpost' %}
                     {% capture as body1 %}{% include_block body|typefixes|truncatewords_html:150 %}{% endcapture %}
                     {% capture as body2 silent %}{% include_block body|typefixes|truncatewords_html:151 %}{% endcapture %}
                     {% ifnotequal body1 body2 %}
-                        <a class="read-more" href="{% pageurl post %}" up-content-link>read more…</a>
+                        <a class="read-more" href="{% pageurl post %}" up-content-link>read full post…</a>
                     {% endifnotequal %}
                 {% endif %}
             {% else %}
