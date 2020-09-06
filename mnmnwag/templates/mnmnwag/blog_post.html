@@ -9,6 +9,8 @@
     <main>
         {% with post.specific.body as body %}
             {% if page.content_type.model == 'blogindex' %}
+
+                {# TRUNCATED POST (FOR BLOG INDEX) #}
                 {% if post.content_type.model == 'legacypost' %}
                     {{ body|richtext|typefixes|truncatewords_html:150 }}
                     {% ifnotequal body|richtext|typefixes|truncatewords_html:150|length body|richtext|typefixes|truncatewords_html:151|length %}
@@ -21,12 +23,16 @@
                         <a class="read-more" href="{% pageurl post %}" up-content-link>read full post…</a>
                     {% endifnotequal %}
                 {% endif %}
+
             {% else %}
+
+                {# FULL POST #}
                 {% if post.content_type.model == 'legacypost' %}
                     {{ body|richtext|typefixes }}
                 {% elif post.content_type.model == 'modernpost' %}
                     {% include_block body|typefixes %}
                 {% endif %}
+
             {% endif %}
         {% endwith %}
     </main>

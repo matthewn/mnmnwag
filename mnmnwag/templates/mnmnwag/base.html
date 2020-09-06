@@ -1,3 +1,4 @@
+{% spaceless %}
 {% load compress %}
 {% load get_theme_class %}
 {% load navigation_tags %}
@@ -5,6 +6,7 @@
 {% load typefixes %}
 {% load wagtailcore_tags %}
 {% load wagtailuserbar %}
+{% endspaceless %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,7 +17,7 @@
             {% block title_suffix %} | mahna mahna .net{% endblock %}
             {% endspaceless %}
         </title>
-        <meta name="description" content="">
+        {# <meta name="description" content=""> #}
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="alternate" type="application/atom+xml" title="feed for mahnamahna.net/blog" href="/blog/feed/">
 
@@ -37,12 +39,11 @@
 
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-176045696-1"></script>
         <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-176045696-1');</script>
-
     </head>
 
     <body class="{% get_theme_class %} {% block body_class %}{% endblock %}">
 
-        <header id="header" class="right_menu">
+        <header id="header">
 
             <div class="constrainer">
                 <div id="site-header">
