@@ -529,7 +529,7 @@ description = "A Django content management system."
 name = "wagtail"
 optional = false
 python-versions = "*"
-version = "2.10.1"
+version = "2.10.2"
 
 [package.dependencies]
 Django = ">=2.2,<3.2"
@@ -549,7 +549,7 @@ requests = ">=2.11.1,<3.0"
 xlsxwriter = ">=1.2.8,<2.0"
 
 [package.dependencies.tablib]
-extras = ["xlsx", "xls"]
+extras = ["xls", "xlsx"]
 version = ">=0.14.0"
 
 [package.extras]
@@ -891,8 +891,8 @@ urllib3 = [
     {file = "urllib3-1.25.10.tar.gz", hash = "sha256:91056c15fa70756691db97756772bb1eb9678fa585d9184f24534b100dc60f4a"},
 ]
 wagtail = [
-    {file = "wagtail-2.10.1-py3-none-any.whl", hash = "sha256:3a1613fd1808f20e8d0244eb6505f5cd9ef257ed9469323ed1d5713ce9aae402"},
-    {file = "wagtail-2.10.1.tar.gz", hash = "sha256:b56c07e161ce634aa15b740a203984dd878926488f8cbe791b8bdc3a154bec4e"},
+    {file = "wagtail-2.10.2-py3-none-any.whl", hash = "sha256:d6937bf1b64b970315867eac08f786e206059bd882f793e2a4bffca81cfe71d9"},
+    {file = "wagtail-2.10.2.tar.gz", hash = "sha256:fb3c76685abad023a2e8430e55ec24671ec6b0730759f29aaae5042e581bed92"},
 ]
 wagtail-cache = [
     {file = "wagtail-cache-1.0.1.tar.gz", hash = "sha256:9fdbefe091130cb2e72f220a0d6f8e74e668775bf5b2c80202c2d861191d1df0"},
