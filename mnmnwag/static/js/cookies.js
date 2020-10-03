@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 // cookie handling functions stolen from https://stackoverflow.com/a/38699214/546468
 
 const setCookie = (name, value, days = 365, path = '/') => {

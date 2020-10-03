@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 // DEPENDENCIES: ./cookies.js, ../vendor/unpoly.js
 
 const body = function() { return document.getElementsByTagName('body')[0]; };
