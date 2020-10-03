@@ -138,22 +138,19 @@ class BlogSidebar():
         return content
 
     def archives_by_year(self):
-        # TODO/FIXME: the way the years list gets built is stupid;
-        # we should just fetch distinct years from post dates
-        years = list(range(2003, 2011))
-        this_year = dt.date.today().year
-        years += list(range(2020, this_year + 1))
+        idx = self.get_idx_obj()
+        years = [d.year for d in Page.objects.dates('first_published_at', 'year')]
         content = '<ul>'
         for year in years:
             start_date = dt.datetime(year, 1, 1)
             end_date = dt.datetime(year + 1, 1, 1)
             count = (
-                Page.objects.filter(first_published_at__gte=start_date)
+                Page.objects.descendant_of(idx)
+                .filter(first_published_at__gte=start_date)
                 .filter(first_published_at__lt=end_date)
                 .count()
             )
             if count:
-                idx = self.get_idx_obj()
                 href = idx.url + idx.reverse_subpage('posts_by_date', kwargs={'year': year})
                 # ideally this would be in a template somewhere
                 content += f'<li><a href="{href}" up-target="#header, #content .blog" up-transition="cross-fade">{year}</a> ({count})</li>'
