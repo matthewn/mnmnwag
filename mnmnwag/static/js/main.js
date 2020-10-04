@@ -1,8 +1,14 @@
 /* eslint-disable no-undef */
 
 document.addEventListener('DOMContentLoaded', function() {
-    // console.clear();
-    console.log('\n\nwe were talking\nabout the love that’s grown so cold\nand the people who gain the world and lose their soul\nthey don’t know\nthey can’t see\nare you one of them?\n\n— George Harrison\n\n');
+    // console splash
+    console.clear();
+    console.log('\nwe were talking\nabout the love that’s grown so cold\nand the people who gain the world and lose their soul\nthey don’t know\nthey can’t see\nare you one of them?\n\n— George Harrison\n\n');
+
+    // if no theme chosen, but OS wants dark mode, give user the dark theme
+    if ( (getCookie('themeClass') == '') && (window.matchMedia('(prefers-color-scheme: dark)').matches) ) {
+        setTheme('theme-dark');
+    }
 });
 
 
