@@ -1,0 +1,41 @@
+.block-heading {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.block-image {
+  figcaption {
+    @include media(mobile) {
+      margin-bottom: 1.75rem;
+    }
+    caption-side: bottom ;
+    display: table-caption;
+    margin-bottom: 1rem;
+    margin-top: .4rem;
+    p {
+      font-size: .9rem !important;
+      line-height: 1.4 !important;
+    }
+  }
+  figure {
+    display: table;
+    &.float {
+      @include media(desktop) {
+        max-width: 65%;
+        &.left {
+          float: left;
+          margin: 0 3rem 0 0;
+        }
+        &.right {
+          float: right;
+          margin: 0 0 0 3rem;
+        }
+      }
+    }
+  }
+  img {
+    @include media(desktop) {
+      max-height: 95vh;
+    }
+  }
+}

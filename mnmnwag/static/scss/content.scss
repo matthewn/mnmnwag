@@ -1,0 +1,13 @@
+#content {
+  main {
+    p,
+    ul,
+    ol {
+      margin-bottom: 1rem;
+    }
+    code:only-child {
+      font-size: 1rem;
+      white-space: pre;
+    }
+  }
+}
