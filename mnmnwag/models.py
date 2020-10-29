@@ -61,7 +61,7 @@ class ComplexPage(BasePage):
                 'code',
                 'link',
                 'image',
-                'document-link'
+                'document-link',
             ],
         )),
         ('image', ImageBlock()),
@@ -95,7 +95,7 @@ class BasicPage(BasePage):
             'code',
             'link',
             'image',
-            'document-link'
+            'document-link',
         ],
     )
 
@@ -113,7 +113,7 @@ class PostTag(TaggedItemBase):
     content_object = ParentalKey(
         Page,
         on_delete=models.CASCADE,
-        related_name='tagged_items'
+        related_name='tagged_items',
     )
 
 
@@ -206,12 +206,13 @@ class BlogPost(models.Model, BlogSidebar):
 
 
 class LegacyPost(BasePage, BlogPost):
-    # TODO: this needs to become a plain (long) text field; we are not
-    #       going to want Draftail messing with this shit
+    # TODO: this needs to become a plain (long) text field before we
+    #       do the content import from drupal -- we are not going to want
+    #       Draftail messing with the legacy markup
     body = RichTextField()
 
     content_panels = Page.content_panels + [
-        FieldPanel('body', classname="full"),
+        FieldPanel('body', classname='full'),
         FieldPanel('tags'),
         FieldPanel('has_comments_enabled'),
     ]
@@ -221,7 +222,7 @@ class LegacyPost(BasePage, BlogPost):
 
 class ModernPost(BasePage, BlogPost):
     body = StreamField([
-        ('heading', blocks.CharBlock(classname="full title")),
+        ('heading', blocks.CharBlock(classname='full title')),
         ('paragraph', blocks.RichTextBlock(
             features=[
                 'ol',
@@ -235,7 +236,7 @@ class ModernPost(BasePage, BlogPost):
                 'code',
                 'link',
                 'image',
-                'document-link'
+                'document-link',
             ],
         )),
         ('image', ImageBlock()),
