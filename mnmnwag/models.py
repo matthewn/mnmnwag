@@ -68,6 +68,7 @@ class ComplexPage(BasePage):
         ('embed', EmbedBlock()),
         ('media', MediaBlock(icon='media')),
         ('raw_HTML', blocks.RawHTMLBlock(required=False)),
+        ('danger', blocks.RawHTMLBlock(label='DANGER!', required=False)),
     ])
     page_message = RichTextField()
 

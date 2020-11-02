@@ -1,0 +1,21 @@
+// one-off page layout tweaks
+
+// about page: two-column treatment for desktop only
+@include media(desktop) {
+  .page-body.slug-about {
+    display: table;
+    .column {
+      display: table-cell;
+      vertical-align: top;
+      &:last-child {
+        width: 60%;
+      }
+    }
+    .block-image figure.float {
+      max-width: unset;
+      img {
+        max-height: unset;
+      }
+    }
+  }
+}
