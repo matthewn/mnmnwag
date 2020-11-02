@@ -1,41 +1,43 @@
 {% extends "mnmnwag/base.html" %}
 {% load static wagtailcore_tags %}
 
-{% block body_class %}template-searchresults{% endblock %}
-
 {% block title %}search{% endblock %}
 
 {% block content %}
-    <form action="{% url 'search' %}" method="get">
-        <label for="search_query"><h2>Search</h2></label>
-        <input id="search_query" placeholder="enter your query" type="text" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
-        <input type="submit" value="search" style-as-button>
-    </form>
+    <div class="page-search">
 
-    {% if search_results %}
-        {% for post in search_results %}
-            <article class="blog-post{% if post.specific.is_micro %} micro{% endif %} on-index">
-                {% include "mnmnwag/blog_post_header.html" %}
-                <main>
-                    <p>
-                        {{ post.specific.body|striptags|truncatewords:50 }}
-                        {# {% if result.search_description %} #}
-                        {#     {{ result.search_description }} #}
-                        {# {% endif %} #}
-                    </p>
-                </main>
-                {% include "mnmnwag/blog_post_footer.html" %}
-            </article>
-        {% endfor %}
+        <form action="{% url 'search' %}" method="get" up-target="#navbar,#content">
+            <label for="search_query"><h2>Search</h2></label>
+            <input id="search_query" placeholder="enter your query" type="text" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
+            <input type="submit" value="search" style-as-button>
+        </form>
 
-        {% if search_results.has_previous %}
-            <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}">Previous</a>
+        {% if search_results %}
+            {% for post in search_results %}
+                <article class="blog-post{% if post.specific.is_micro %} micro{% endif %} on-index">
+                    {% include "mnmnwag/blog_post_header.html" %}
+                    <main>
+                        <p>
+                            {{ post.specific.body|striptags|truncatewords:50 }}
+                            {# {% if result.search_description %} #}
+                            {#     {{ result.search_description }} #}
+                            {# {% endif %} #}
+                        </p>
+                    </main>
+                    {% include "mnmnwag/blog_post_footer.html" %}
+                </article>
+            {% endfor %}
+
+            {% if search_results.has_previous %}
+                <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            {% if search_results.has_next %}
+                <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}">Next</a>
+            {% endif %}
+        {% elif search_query %}
+            <p>Your query returned no results.</p>
         {% endif %}
 
-        {% if search_results.has_next %}
-            <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}">Next</a>
-        {% endif %}
-    {% elif search_query %}
-        <p>Your query returned no results.</p>
-    {% endif %}
+    </div>
 {% endblock %}

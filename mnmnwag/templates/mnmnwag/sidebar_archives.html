@@ -29,7 +29,7 @@
             <summary>
                 <h4>Archives By Keyword</h4>
             </summary>
-            <form action="{% url 'search' %}" method="get">
+            <form action="{% url 'search' %}" method="get" up-target="#navbar,#content">
                 <label for="search_query" only-heard>Search</label>
                 <input id="search_query" placeholder="enter your query" type="text" name="query">
                 <input type="submit" value="search" style-as-button>
