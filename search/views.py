@@ -1,3 +1,5 @@
+# this is mostly taken from the wagtail bakerydemo
+
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
 
@@ -11,7 +13,7 @@ def search(request):
 
     # Search
     if search_query:
-        search_results = Page.objects.live().search(search_query)
+        search_results = Page.objects.live().public().search(search_query)
         query = Query.get(search_query)
 
         # Record hit

@@ -188,11 +188,6 @@ class BlogPost(models.Model, BlogSidebar):
     )
     tags = ClusterTaggableManager(through=PostTag, blank=True)
 
-    search_fields = Page.search_fields + [
-        index.SearchField('title'),
-        index.SearchField('body'),
-    ]
-
     def get_absolute_url(self):
         """
         Returns an absolute URL for the page. (Required by django_comments_xtd.)
@@ -216,6 +211,11 @@ class LegacyPost(BasePage, BlogPost):
         FieldPanel('body', classname='full'),
         FieldPanel('tags'),
         FieldPanel('has_comments_enabled'),
+    ]
+
+    search_fields = Page.search_fields + [
+        index.SearchField('title'),
+        index.SearchField('body'),
     ]
 
     subpage_types = []
@@ -250,6 +250,11 @@ class ModernPost(BasePage, BlogPost):
         StreamFieldPanel('body'),
         FieldPanel('tags'),
         FieldPanel('has_comments_enabled'),
+    ]
+
+    search_fields = Page.search_fields + [
+        index.SearchField('title'),
+        index.SearchField('body'),
     ]
 
     subpage_types = []
