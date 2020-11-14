@@ -17,4 +17,10 @@ DATABASES = {
 }
 
 
+# django-comments(-xtd)
+
+MANAGERS = (('Firstname Lastname', 'user@example.org'),)
+COMMENTS_XTD_FROM_EMAIL = 'bot@example.org'
+
+
 # Override settings here
