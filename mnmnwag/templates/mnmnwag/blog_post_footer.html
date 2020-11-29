@@ -11,9 +11,18 @@
             {% else %}
                 {{ page.owner.username }}
             {% endif %}
-            {{ post.specific.first_published_at|date:"j F Y" }}
-            at {{ post.specific.first_published_at|date:"g:i a" }}
+            {{ post.first_published_at|date:"j F Y" }}
+            at {{ post.first_published_at|date:"g:i a" }}
         </div>
+
+        {% if post.last_published_at != post.first_published_at and page.content_type.model != 'blogindex'%}
+            <div class="post-updated">
+                last updated
+                {{ post.last_published_at|date:"j F Y" }}
+                at {{ post.last_published_at|date:"g:i a" }}
+            </div>
+        {% endif %}
+
         {% if post.specific.tagged_items.all %}
             <div class="post-tags">
                 filed under
@@ -22,6 +31,7 @@
                 {% endfor %}
             </div>
         {% endif %}
+
         {% if post.specific.has_comments_enabled %}
             {% if page.content_type.model == 'blogindex' or is_search_page %}
                 {% get_comment_count for post.specific as comment_count %}
@@ -37,6 +47,7 @@
             {% endif %}
         {% endif %}
     </section>
+
     {% if page.content_type.model != 'blogindex' and not is_search_page %}
         <section class="comments">
             {% if page.has_comments_enabled %}
