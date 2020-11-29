@@ -43,6 +43,7 @@ const changeTheme = function(event) {
     event.preventDefault();
     let className = prefix + this.textContent.toLowerCase();
     setTheme(className);
+    up.proxy.clear();  // clear unpoly cache
 };
 
 
