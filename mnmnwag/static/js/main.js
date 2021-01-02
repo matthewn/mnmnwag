@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', function() {
     console.clear();
     console.log('\nwe were talking\nabout the love that’s grown so cold\nand the people who gain the world and lose their soul\nthey don’t know\nthey can’t see\nare you one of them?\n\n— George Harrison\n\n');
 
+    // fix firefox android edge case (theme missing on initial page load)
+    if (getCookie('themeClass').length > 0) setTheme(getCookie('themeClass'));
+
     // if no theme chosen, but OS wants dark mode, give user the dark theme
     if ( (getCookie('themeClass') == '') && (window.matchMedia('(prefers-color-scheme: dark)').matches) ) {
         setTheme('theme-dark');
