@@ -11,7 +11,7 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': '/tmp/WAGTAIL_CACHE',
         'KEY_PREFIX': 'wagtailcache',
-        'TIMEOUT': 3600,  # one hour (in seconds)
+        'TIMEOUT': 900,  # 15 minutes (in seconds)
     }
 }
 
