@@ -15,16 +15,6 @@
             at {{ post.first_published_at|date:"g:i a" }}
         </div>
 
-        {% if post.last_published_at != post.first_published_at and page.content_type.model != 'blogindex'%}
-            <!-- 
-            <div class="post-updated">
-                last updated
-                {{ post.last_published_at|date:"j F Y" }}
-                at {{ post.last_published_at|date:"g:i a" }}
-            </div>
-            -->
-        {% endif %}
-
         {% if post.specific.tagged_items.all %}
             <div class="post-tags">
                 filed under
