@@ -1,9 +1,9 @@
-from .base import *
+from .base import *  # noqa: 401
 
 DEBUG = False
 
 
-# Djnago cache settings
+# Django cache settings
 # https://docs.djangoproject.com/en/2.2/topics/cache/
 
 CACHES = {
@@ -18,5 +18,5 @@ CACHES = {
 
 # wagtailcache middleware entries
 
-MIDDLEWARE.insert(0, 'wagtailcache.cache.UpdateCacheMiddleware')  # noqa: 405
-MIDDLEWARE.append('wagtailcache.cache.FetchFromCacheMiddleware')  # noqa: 405
+# MIDDLEWARE.insert(0, 'wagtailcache.cache.UpdateCacheMiddleware')  # noqa: 405
+# MIDDLEWARE.append('wagtailcache.cache.FetchFromCacheMiddleware')  # noqa: 405
