@@ -281,7 +281,7 @@ class ModernPost(BasePage, BlogPost):
 class BlogIndex(RoutablePageMixin, BasePage, BlogSidebar):
     page_message = RichTextField()
     max_count = 1
-    subpage_types = ['LegacyPost', 'ModernPost']
+    subpage_types = ['ModernPost']
 
     content_panels = Page.content_panels + [
         FieldPanel('page_message'),
