@@ -3,7 +3,7 @@ from django.db import models
 
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
-from taggit.models import TaggedItemBase
+from taggit.models import Tag, TaggedItemBase
 
 from wagtail.admin.edit_handlers import (
     FieldPanel,
@@ -16,6 +16,7 @@ from wagtail.core.models import Page
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images.models import Image, AbstractImage, AbstractRendition
 from wagtail.search import index
+from wagtail.snippets.models import register_snippet
 
 from wagtailmedia.models import Media, AbstractMedia
 
@@ -116,6 +117,36 @@ class PostTag(TaggedItemBase):
         on_delete=models.CASCADE,
         related_name='tagged_items',
     )
+
+
+@register_snippet
+class TagDescription(models.Model):
+    tag = models.OneToOneField(
+        Tag,
+        on_delete=models.CASCADE,
+    )
+    description = RichTextField(
+        features=[
+            'bold',
+            'italic',
+            'superscript',
+            'subscript',
+            'strikethrough',
+            'code',
+            'link',
+        ],
+    )
+
+    panels = [
+        FieldPanel('tag'),
+        FieldPanel('description'),
+    ]
+
+    def __str__(self):
+        return self.tag.name
+
+    class Meta:
+        ordering = ['tag__name']
 
 
 class BlogSidebar():
@@ -351,12 +382,16 @@ class BlogIndex(RoutablePageMixin, BasePage, BlogSidebar):
     @route(r'^tag/(?P<tag>[-\w]+)/$')
     def posts_by_tag(self, request, tag, *args, **kwargs):
         post_tags = PostTag.objects.filter(tag__slug=tag)
-        tagged_ids = [tag.content_object_id for tag in post_tags]
+        post_ids = [item.content_object_id for item in post_tags]
         self.posts = self.paginate_posts(
             request,
-            self.get_posts().filter(id__in=tagged_ids),
+            self.get_posts().filter(id__in=post_ids),
         )
         self.index_title = f'Posts tagged #{tag}'
+        try:
+            self.tag_description = TagDescription.objects.get(tag__slug=tag).description
+        except TagDescription.DoesNotExist:
+            pass
         return self.serve(request, *args, **kwargs)
 
 

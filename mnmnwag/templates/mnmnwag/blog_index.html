@@ -1,6 +1,7 @@
 {% extends "mnmnwag/base.html" %}
 
 {% load typefixes %}
+{% load wagtailcore_tags %}
 
 {% block title %}blog{% endblock %}
 {% block body_class %}template-blogindex{% endblock %}
@@ -11,6 +12,10 @@
 
         {% if page.index_title %}
             <h2 class="page-title">{{ page.index_title|typefixes }}</h2>
+        {% endif %}
+
+        {% if page.tag_description %}
+            <div class="tag-description">{{ page.tag_description|richtext|typefixes }}</div>
         {% endif %}
 
         {% for post in page.posts %}
