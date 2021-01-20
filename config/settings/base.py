@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'mnmnwag.apps.MnmnwagConfig',
+    'admin_tweaks',
 
     'capture_tag',
     'comments_wagtail_xtd',

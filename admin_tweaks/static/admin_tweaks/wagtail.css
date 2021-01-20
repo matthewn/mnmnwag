@@ -1,0 +1,5 @@
+.fieldname-danger textarea,
+.fieldname-raw_HTML textarea {
+  font-family: mono;
+  font-size: .9rem;
+}
