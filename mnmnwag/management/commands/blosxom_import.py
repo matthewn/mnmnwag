@@ -23,7 +23,7 @@ class Command(BaseCommand):
                     old_path = os.path.join(path, filename)
                     title = post[0][0:-1]
                     # body = '\r'.join(post[1:])
-                    created = time.ctime(os.path.getctime(filepath))
+                    created = time.ctime(os.path.getmtime(filepath))
                     has_comments = os.path.exists(filepath.replace('.blog', '.wb'))
 
                     print(f'{old_path} {created} {tag} {title}')
