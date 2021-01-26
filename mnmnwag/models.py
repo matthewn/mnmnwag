@@ -233,12 +233,11 @@ class BlogPost(models.Model, BlogSidebar):
 
 
 class LegacyPost(BasePage, BlogPost):
-    # TODO: this needs to become a plain (long) text field before we
-    #       do the content import from drupal -- we are not going to want
-    #       Draftail messing with the legacy markup
-    body = RichTextField()
+    body = models.TextField()
+    old_path = models.CharField(max_length=64)
 
     content_panels = Page.content_panels + [
+        FieldPanel('old_path'),
         FieldPanel('body', classname='full'),
         FieldPanel('tags'),
         FieldPanel('has_comments_enabled'),
