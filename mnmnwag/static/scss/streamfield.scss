@@ -1,11 +1,8 @@
 .block-image {
+  margin-bottom: 1rem;
   figcaption {
-    @include media(mobile) {
-      margin-bottom: 1.75rem;
-    }
     caption-side: bottom ;
     display: table-caption;
-    margin-bottom: 1rem;
     margin-top: .4rem;
     p {
       font-size: .9rem !important;
@@ -33,6 +30,10 @@
       max-height: 95vh;
     }
   }
+}
+
+.block-embed {
+  margin-bottom: 1rem;
 }
 
 // boilerplate for responsive wagtail embeds
