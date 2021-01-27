@@ -123,6 +123,8 @@ class Command(BaseCommand):
                     url = comment['url']
             else:
                 email = url = ''
+            comment['comment'] = comment['comment'].replace('<br>', '\r')
+            comment['comment'] = comment['comment'].replace('<br />', '\r')
             XtdComment.objects.create(
                 content_type=page.content_type,
                 object_pk=page.id,
