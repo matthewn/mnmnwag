@@ -157,6 +157,7 @@ MEDIA_URL = '/media/'
 # Wagtail settings
 
 WAGTAIL_SITE_NAME = "mnmnwag"
+WAGTAILEMBEDS_RESPONSIVE_HTML = True
 WAGTAILIMAGES_IMAGE_MODEL = 'mnmnwag.CustomImage'
 WAGTAILMEDIA_MEDIA_MODEL = 'mnmnwag.CustomMedia'
 
