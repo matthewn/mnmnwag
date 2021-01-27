@@ -9,7 +9,10 @@ Assumes that TARGET_DIR is a directory tree containing blosxom blog posts
 
 from django.core.management.base import BaseCommand
 from django.utils.timezone import make_aware
+from django_comments_xtd.models import XtdComment
+from django.contrib.sites.models import Site
 from wagtail.core.models import Page
+from wagtail.contrib.redirects.models import Redirect
 from mnmnwag.models import LegacyPost
 
 import datetime as dt
@@ -28,67 +31,76 @@ class Command(BaseCommand):
             for filename in files:
                 if filename.endswith('5books.blog'):  # FIXME
                     filepath = os.path.join(dirname, filename)
-
-                    page = self.build_page(filepath)
-                    self.publish_page(**page)
+                    post = self.grok_post(filepath)
+                    page = self.publish_page(**post)
+                    self.create_redirect(page)
 
                     # does this post have comments?
                     has_comments = os.path.exists(filepath.replace('.blog', '.wb'))
 
                     if has_comments:
-                        with open(filepath.replace('.blog', '.wb')) as f:
-                            writebacks = f.readlines()
-                        comments = self.get_comments(writebacks)
-                        if comments:
-                            # print(comments)
-                            pass
+                        comments = self.get_comments(filepath.replace('.blog', '.wb'))
+                        self.publish_comments(page, comments)
 
-    def build_page(self, filepath):
-        page = {}
+    def grok_post(self, filepath):
+        post = {}
         with open(filepath, 'r') as f:
-            post = f.readlines()
-        # get post title
-        page['title'] = post[0][0:-1]
-        # convert old filename to new slug
-        page['slug'] = filepath.split('/')[-1].replace('.blog', '').replace('_', '-')
-        # get post creation datetime
-        page['created'] = make_aware(dt.datetime.fromtimestamp(os.path.getmtime(filepath)))
+            postfile = f.readlines()
+        # get title as string
+        post['title'] = postfile[0][0:-1]
+        # get slug from old filename
+        post['slug'] = filepath.split('/')[-1].replace('.blog', '').replace('_', '-')
+        # get creation datetime from file modified date
+        post['created'] = make_aware(dt.datetime.fromtimestamp(os.path.getmtime(filepath)))
         # get old relative URL (for redirects on new site)
-        page['old_path'] = filepath.replace(TARGET_DIR, '').replace('.blog', '.html')
-        # get wagtail tag (tail directory from path)
-        page['tag'] = filepath.split('/')[-2]
-        # get body
-        page['body'] = '\r'.join(post[1:])
-        return page
+        post['old_path'] = '/blog' + filepath.replace(TARGET_DIR, '').replace('.blog', '.html')
+        # get wagtail tag from path's tail directory
+        post['tag'] = filepath.split('/')[-2]
+        # get body as string with line breaks
+        post['body'] = '\r'.join(postfile[1:])
+        return post
 
     def publish_page(self, title, slug, created, old_path, tag, body):
-        # print(f'\n{title}\n{slug}\n{created}\n{old_path}\n{tag}\n{body[:200]} ...')
-        print(title)
         parent_page = Page.objects.get(id=PARENT_PAGE_ID).specific
         page = LegacyPost(  # foooo
             title=title,
             body=body,
             old_path=old_path,
             slug=slug,
-            has_comments_enabled=False,
+            has_comments_enabled=True,
             first_published_at=created,
         )
         page.tags.add(tag)
         page.tags.add('from-blosxom')
         parent_page.add_child(instance=page)
         page.save_revision().publish()
+        self.stdout.write(self.style.SUCCESS(f'Published: {title}'))
+        return page
 
-    def get_comments(self, writebacks):
+    def create_redirect(self, page):
         """
-        Return a list of dictionaries, each one containing a comment
-        for a post.
+        Create a wagtail redirect from post's old path to new page.
+        """
+        Redirect.objects.create(
+            old_path=page.old_path,
+            site=page.get_site(),
+            redirect_page=page,
+        )
+        self.stdout.write(self.style.SUCCESS(f'Created redirect for: {page.old_path}'))
+
+    def get_comments(self, filepath):
+        """
+        Given a writebacks file (.wb) containing comments for a post, return a
+        list of dictionaries, each one containing a comment.
         """
         comments = []  # holds all comments
         comment = {}   # holds one comment
+        with open(filepath, 'r') as f:
+            writebacks = f.readlines()
         for line in writebacks:
             if '-----' not in line:
                 # store this line's data in the dictionary
-                regex = '^(.*): (.*)\n'
+                regex = '^(.*?): (.*)\n'
                 match = re.search(regex, line)
                 if match and match.group(2) != '':
                     comment[match.group(1)] = match.group(2)
@@ -98,3 +110,28 @@ class Command(BaseCommand):
                 comments.append(comment)
                 comment = {}
         return comments
+
+    def publish_comments(self, page, comments):
+        for comment in comments:
+            print(comment)
+            if 'url' in comment:
+                if 'mailto:' in comment['url']:
+                    email = comment['url'].replace('mailto:', '')
+                    url = ''
+                else:
+                    email = ''
+                    url = comment['url']
+            else:
+                email = url = ''
+            XtdComment.objects.create(
+                content_type=page.content_type,
+                object_pk=page.id,
+                user_name=comment['name'],
+                user_email=email,
+                user_url=url,
+                comment=comment['comment'],
+                submit_date=make_aware(dt.datetime.strptime(comment['date'], '%m/%d/%Y %H:%M:%S')),
+                site=Site.objects.get(),
+                is_public=True,
+            )
+            self.stdout.write(self.style.SUCCESS(f"Published comment from: {comment['name']}"))
