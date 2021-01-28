@@ -172,6 +172,7 @@ class BlogSidebar():
     def archives_by_year(self):
         idx = self.get_idx_obj()
         years = [d.year for d in Page.objects.dates('first_published_at', 'year')]
+        years.reverse()
         content = '<ul>'
         for year in years:
             start_date = dt.datetime(year, 1, 1)
