@@ -31,18 +31,16 @@ class Command(BaseCommand):
             for filename in files:
                 if filename.endswith('5books.blog'):  # FIXME
                     filepath = os.path.join(dirname, filename)
-                    post = self.grok_post(filepath)
+                    post = self.get_post(filepath)
                     page = self.publish_page(**post)
                     self.create_redirect(page)
 
-                    # does this post have comments?
                     has_comments = os.path.exists(filepath.replace('.blog', '.wb'))
-
                     if has_comments:
                         comments = self.get_comments(filepath.replace('.blog', '.wb'))
                         self.publish_comments(page, comments)
 
-    def grok_post(self, filepath):
+    def get_post(self, filepath):
         post = {}
         with open(filepath, 'r') as f:
             postfile = f.readlines()
@@ -62,7 +60,7 @@ class Command(BaseCommand):
 
     def publish_page(self, title, slug, created, old_path, tag, body):
         parent_page = Page.objects.get(id=PARENT_PAGE_ID).specific
-        page = LegacyPost(  # foooo
+        page = LegacyPost(
             title=title,
             body=body,
             old_path=old_path,
@@ -105,8 +103,16 @@ class Command(BaseCommand):
                 if match and match.group(2) != '':
                     comment[match.group(1)] = match.group(2)
             else:
-                # we have reached the end of a comment, so add it
-                # to the dictionary and start a new one
+                # we have reached the end of a comment, so make some tweaks to
+                # the dictionary and start a new one
+                if 'url' in comment:
+                    if 'mailto:' in comment['url']:
+                        comment['email'] = comment['url'].replace('mailto:', '')
+                        comment['url'] = ''
+                    else:
+                        comment['email'] = ''
+                else:
+                    comment['email'] = comment['url'] = ''
                 comments.append(comment)
                 comment = {}
         return comments
@@ -114,23 +120,12 @@ class Command(BaseCommand):
     def publish_comments(self, page, comments):
         for comment in comments:
             print(comment)
-            if 'url' in comment:
-                if 'mailto:' in comment['url']:
-                    email = comment['url'].replace('mailto:', '')
-                    url = ''
-                else:
-                    email = ''
-                    url = comment['url']
-            else:
-                email = url = ''
-            comment['comment'] = comment['comment'].replace('<br>', '\r')
-            comment['comment'] = comment['comment'].replace('<br />', '\r')
             XtdComment.objects.create(
                 content_type=page.content_type,
                 object_pk=page.id,
                 user_name=comment['name'],
-                user_email=email,
-                user_url=url,
+                user_email=comment['email'],
+                user_url=comment['url'],
                 comment=comment['comment'],
                 submit_date=make_aware(dt.datetime.strptime(comment['date'], '%m/%d/%Y %H:%M:%S')),
                 site=Site.objects.get(),
