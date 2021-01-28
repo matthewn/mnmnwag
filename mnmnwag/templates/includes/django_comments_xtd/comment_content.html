@@ -1,2 +1,6 @@
 {% load md2 %}
-{{ content|markdown:"safe, code-friendly, code-color" }}
+{% if post.content_type.model == 'legacypost' %}
+    {% autoescape off %}{{ content }}{% endautoescape %}
+{% else %}
+    {{ content|markdown:"safe, code-friendly, code-color" }}
+{% endif %}
