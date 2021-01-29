@@ -24,19 +24,19 @@
             </div>
         {% endif %}
 
-        {% if post.specific.has_comments_enabled %}
-            {% if page.content_type.model == 'blogindex' or is_search_page %}
-                {% get_comment_count for post.specific as comment_count %}
-                <div class="post-comments">
-                    <a href="{% pageurl post %}#comments" up-content-link>
-                    {% if comment_count %}
-                        {{ comment_count }} comment{{ comment_count|pluralize }}
-                    {% else %}
+        {% if page.content_type.model == 'blogindex' or is_search_page %}
+            {% get_comment_count for post.specific as comment_count %}
+            <div class="post-comments">
+                <a href="{% pageurl post %}#comments" up-content-link>
+                {% if comment_count %}
+                    {{ comment_count }} comment{{ comment_count|pluralize }}
+                {% else %}
+                    {% if post.specific.has_comments_enabled %}
                         leave a comment
                     {% endif %}
-                    </a>
-                </div>
-            {% endif %}
+                {% endif %}
+                </a>
+            </div>
         {% endif %}
     </section>
 
