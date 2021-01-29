@@ -1,16 +1,8 @@
-.block-heading {
-  font-size: 1.75rem;
-  margin-bottom: 1.5rem;
-}
-
 .block-image {
+  margin-bottom: 1rem;
   figcaption {
-    @include media(mobile) {
-      margin-bottom: 1.75rem;
-    }
     caption-side: bottom ;
     display: table-caption;
-    margin-bottom: 1rem;
     margin-top: .4rem;
     p {
       font-size: .9rem !important;
@@ -38,4 +30,27 @@
       max-height: 95vh;
     }
   }
+}
+
+.block-embed {
+  margin-bottom: 1rem;
+}
+
+// boilerplate for responsive wagtail embeds
+// https://docs.wagtail.io/en/latest/topics/writing_templates.html#responsive-embeds
+.responsive-object {
+  position: relative;
+}
+.responsive-object iframe,
+.responsive-object object,
+.responsive-object embed {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.block-heading {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
 }
