@@ -14,7 +14,7 @@
 
         <div class="pager-pages">
         {% for page_num in page.posts.paginator.display_range %}
-            <li class="pager-item{% if page_num == page.posts.number %} active{% endif %}">
+            <li class="pager-item{% if page_num == page.posts.number %} active{% endif %}{% if not page_num|is_numeric %} dots{% endif %}">
                 {% if page_num|is_numeric %}
                     <a href="?&page={{ page_num }}" up-content-link>
                 {% endif %}

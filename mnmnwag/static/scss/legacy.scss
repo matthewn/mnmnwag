@@ -3,10 +3,28 @@
     font-size: 1.25rem;
     line-height: 1.6;
     blockquote {
-      margin: 1rem 0;
+      margin: 1rem 0 1rem 2rem;
     }
   }
+  a.read-more {
+    display: block;
+    margin-top: 1rem;
+  }
+  form[name='karaoke'] {
+    margin-bottom: 1.5rem;
+  }
+  .leftHandThumb {
+    float: left;
+    margin-bottom: 15px;
+    margin-right: 20px;
+  }
   .rightHandThumb {
-    border: 4px solid yellow;
+    float: right;
+    margin-bottom: 20px;
+    margin-left: 25px;
+  }
+  .thumb {
+    float: left;
+    margin: 5px;
   }
 }

@@ -15,7 +15,7 @@ ul.pager {
     flex-grow: 1;
     justify-content: center;
   }
-  .pager-item {
+  .pager-item:not(.dots) {
     border: 2px solid;
     border-radius: 50%;
   }
@@ -31,7 +31,6 @@ ul.pager {
   }
   .pager-prev,
   .pager-next {
-    width: 120px;
     a:hover {
       font-weight: bold;
     }
