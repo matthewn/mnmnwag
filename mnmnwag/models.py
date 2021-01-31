@@ -322,30 +322,49 @@ class BlogIndex(RoutablePageMixin, BasePage, BlogSidebar):
         return Page.objects.descendant_of(self).live().order_by('-first_published_at')
 
     def paginate_posts(self, request, posts):
-        paginator = self.truncate_paginator(Paginator(posts, 15))
+        paginator = Paginator(posts, 15)
         page_number = request.GET.get('page')
+        display_range = self.get_elided_page_range(
+            num_pages=paginator.num_pages,
+            page_range=paginator.page_range,
+            number=page_number,
+        )
+        paginator.display_range = display_range
         return paginator.get_page(page_number)
 
-    def truncate_paginator(self, paginator):
+    def get_elided_page_range(self, num_pages, page_range, number=1, *, on_each_side=2, on_ends=3):
         """
-        Provide a truncated (if necessary) page list by adding a
-        display_range property to the provided paginator.
+        Modified version of a method found in
+        Django 3.2's Paginator (still forthcoming, as of now).
         """
-        if len(paginator.page_range) > 10:
-            display_range = [1, 2]
-            display_range += ['...']
+        try:
+            if isinstance(number, float) and not number.is_integer():
+                raise ValueError
+            number = int(number)
+        except (TypeError, ValueError):
+            number = 1
+        if number < 1:
+            number = 1
+        if number > num_pages:
+            number = num_pages
 
-            start = 2
-            end = paginator.num_pages - 1
-            length = 7
-            display_range += [start + x * (end - start) // (length - 1) for x in range(length)][1:-1]
+        if num_pages <= (on_each_side + on_ends) * 2:
+            yield from page_range
+            return
 
-            display_range += ['...']
-            display_range += [paginator.num_pages - 1, paginator.num_pages]
+        if number > (1 + on_each_side + on_ends) + 1:
+            yield from range(1, on_ends + 1)
+            yield '...'
+            yield from range(number - on_each_side, number + 1)
         else:
-            display_range = paginator.page_range
-        paginator.display_range = display_range
-        return paginator
+            yield from range(1, number + 1)
+
+        if number < (num_pages - on_each_side - on_ends) - 1:
+            yield from range(number + 1, number + on_each_side + 1)
+            yield '...'
+            yield from range(num_pages - on_ends + 1, num_pages + 1)
+        else:
+            yield from range(number + 1, num_pages + 1)
 
     @route(r'^$')
     def posts_all(self, request):
