@@ -59,7 +59,7 @@ def zoom_old(request, image_path):
 
     img = {}
     img['url'] = f'/{image_path}'
-    img['filename'] = caption_path.split('/')[-1]
+    img['filename'] = image_path.split('/')[-1]
     img['caption'] = caption
 
     return render(request, 'mnmnwag/zoom.html', {
