@@ -152,7 +152,7 @@ class TagDescription(models.Model):
 
 class BlogSidebar():
     def archives_by_tag(self):
-        top = ['life', 'micro', 'site', 'snapshot', 'tech']
+        top = ['micro', 'snapshot']
         post_tags = PostTag.tags_for(Page).order_by('name')
         bottom_tags = []
         top_tags = []
