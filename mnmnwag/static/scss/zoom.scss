@@ -3,6 +3,14 @@
     padding: 5rem 0 7rem;
     text-align: center;
   }
+  figcaption {
+    caption-side: bottom;
+    display: table-caption;
+    font-size: .9rem !important;
+    line-height: 1.4 !important;
+    margin-top: .4rem;
+  }
+  figure { display: table; }
 }
 
 .zoom {

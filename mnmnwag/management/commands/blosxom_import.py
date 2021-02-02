@@ -60,7 +60,16 @@ class Command(BaseCommand):
         # get wagtail tag from final directory in filepath
         post['tag'] = filepath.split('/')[-2]
         # get body as string with newlines
-        post['body'] = '\n'.join(postfile[1:])
+        body = '\n'.join(postfile[1:])
+        # rewrite old blog image paths
+        body = body.replace('/images/blog/', '/media/legacy/images/blog/')
+        # rewrite zoom.py links
+        body = body.replace('/cgi-bin/zoom.py?img=/', '/zoom/old/')
+        # rewrite zoom shortcut links
+        body = body.replace('/img/', '/zoom/old/media/legacy/images/')
+        # add some unpoly modal magic to zoom links
+        body = body.replace('<a href="/zoom/old/', '<a up-modal=".zoom" href="/zoom/old/')
+        post['body'] = body
         return post
 
     def publish_page(self, title, slug, created, old_path, tag, body):

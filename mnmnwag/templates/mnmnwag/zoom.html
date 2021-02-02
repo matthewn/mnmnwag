@@ -2,14 +2,27 @@
 
 {% load wagtailimages_tags %}
 
-
-{% block title %}{{ img.filename }}{% endblock %}
+{% block title %}{% if img %}{{ img.filename }}{% endif %}{% if old_img %}{{ old_img.filename }}{% endif %}{% endblock %}
 
 {% block content_class %}content-zoom{% endblock %}
 
+
 {% block content %}
-    {% image img original as zoom_img %}
-    <div class="zoom">
-        <img src="{{ zoom_img.url }}">
-    </div>
+
+    {% if img %}
+
+        {% image img original as zoom_img %}
+        <div class="zoom"><img src="{{ zoom_img.url }}"></div>
+
+    {% elif old_img %}
+
+        <div class="zoom old">
+            <figure>
+                <img src="{{ old_img.url }}">
+                <figcaption class="caption">{{ old_img.caption }}</figcaption>
+            </figure>
+        </div>
+
+    {% endif %}
+
 {% endblock %}
