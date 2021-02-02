@@ -2,6 +2,7 @@ from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.utils.safestring import mark_safe
 
 from .models import CustomImage
 
@@ -60,7 +61,7 @@ def zoom_old(request, image_path):
     img = {}
     img['url'] = f'/{image_path}'
     img['filename'] = image_path.split('/')[-1]
-    img['caption'] = caption
+    img['caption'] = mark_safe(caption)
 
     return render(request, 'mnmnwag/zoom.html', {
         'old_img': img,
