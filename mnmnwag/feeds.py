@@ -12,7 +12,7 @@ class LatestEntriesFeed(Feed):
 
     def items(self):
         index = BlogIndex.objects.get()
-        return index.get_posts()[:15]
+        return index.get_modern_posts()[:15]
 
     def item_title(self, item):
         if 'micro' in item.specific.tags.names():
