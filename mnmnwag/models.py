@@ -24,6 +24,7 @@ from django_comments.moderation import CommentModerator
 from django_comments_xtd.moderation import moderator
 
 from .blocks import ImageBlock, MediaBlock
+from .utils import get_elided_page_range
 
 import datetime as dt
 
@@ -321,10 +322,13 @@ class BlogIndex(RoutablePageMixin, BasePage, BlogSidebar):
     def get_posts(self):
         return Page.objects.descendant_of(self).live().order_by('-first_published_at')
 
+    def get_modern_posts(self):
+        return ModernPost.objects.descendant_of(self).live().order_by('-first_published_at')
+
     def paginate_posts(self, request, posts):
         paginator = Paginator(posts, 15)
         page_number = request.GET.get('page')
-        display_range = self.get_elided_page_range(
+        display_range = get_elided_page_range(
             num_pages=paginator.num_pages,
             page_range=paginator.page_range,
             number=page_number,
@@ -332,43 +336,14 @@ class BlogIndex(RoutablePageMixin, BasePage, BlogSidebar):
         paginator.display_range = display_range
         return paginator.get_page(page_number)
 
-    def get_elided_page_range(self, num_pages, page_range, number=1, *, on_each_side=2, on_ends=3):
-        """
-        Modified version of a method found in
-        Django 3.2's Paginator (still forthcoming, as of now).
-        """
-        try:
-            if isinstance(number, float) and not number.is_integer():
-                raise ValueError
-            number = int(number)
-        except (TypeError, ValueError):
-            number = 1
-        if number < 1:
-            number = 1
-        if number > num_pages:
-            number = num_pages
-
-        if num_pages <= (on_each_side + on_ends) * 2:
-            yield from page_range
-            return
-
-        if number > (1 + on_each_side + on_ends) + 1:
-            yield from range(1, on_ends + 1)
-            yield '...'
-            yield from range(number - on_each_side, number + 1)
-        else:
-            yield from range(1, number + 1)
-
-        if number < (num_pages - on_each_side - on_ends) - 1:
-            yield from range(number + 1, number + on_each_side + 1)
-            yield '...'
-            yield from range(num_pages - on_ends + 1, num_pages + 1)
-        else:
-            yield from range(number + 1, num_pages + 1)
-
     @route(r'^$')
-    def posts_all(self, request):
-        self.posts = self.paginate_posts(request, self.get_posts())
+    def posts_main(self, request):
+        """
+        This is the "main" blog index route, which lives at /blog.
+        Only show ModernPosts here so that the pager is not dominated by
+        ancient stuff. LegacyPosts are available in the other routes.
+        """
+        self.posts = self.paginate_posts(request, self.get_modern_posts())
         return self.serve(request)
 
     @route(r'(?P<year>20\d\d)\/?(?P<month>[0-1][0-9])?\/?(?P<day>[0-3][0-9])?/$')
