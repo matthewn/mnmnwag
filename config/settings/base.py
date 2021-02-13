@@ -7,6 +7,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 SITE_ID = 1
 
 INSTALLED_APPS = [
+    'admin_tweaks',
     'search',
 
     'wagtail.contrib.forms',
@@ -36,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'mnmnwag.apps.MnmnwagConfig',
-    'admin_tweaks',
 
     'capture_tag',
     'comments_wagtail_xtd',

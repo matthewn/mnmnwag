@@ -1,5 +1,12 @@
+/* #181f41 */
+:root {
+  --color-primary-hue: 230;
+  --color-primary-saturation: 46%;
+  --color-primary-lightness: 17%;
+}
+
 .fieldname-danger textarea,
 .fieldname-raw_HTML textarea {
-  font-family: mono;
+  font-family: monospace;
   font-size: .9rem;
 }
