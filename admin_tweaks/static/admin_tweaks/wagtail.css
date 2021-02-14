@@ -2,7 +2,6 @@
 .fieldname-raw_HTML textarea,
 .model-legacypost #id_body,
 .model-legacypost #id_old_path {
-  font-family: mono;
+  font-family: monospace;
   font-size: .9rem;
 }
-
