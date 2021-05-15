@@ -5,7 +5,7 @@
 
 (function() {
   window.up = {
-    version: "0.62.0"
+    version: "1.0.0"
   };
 
 }).call(this);
@@ -1305,7 +1305,8 @@ to not include another library in your asset bundle.
       "&": "&amp;",
       "<": "&lt;",
       ">": "&gt;",
-      '"': '&quot;'
+      '"': '&quot;',
+      "'": '&#x27;'
     };
 
     /***
@@ -1317,7 +1318,7 @@ to not include another library in your asset bundle.
     @stable
      */
     escapeHtml = function(string) {
-      return string.replace(/[&<>"]/g, function(char) {
+      return string.replace(/[&<>"']/g, function(char) {
         return ESCAPE_HTML_ENTITY_MAP[char];
       });
     };
@@ -2519,6 +2520,7 @@ It complements [native `Element` methods](https://www.w3schools.com/jsref/dom_ob
     [this WHATWG mailing list post](http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Apr/0094.html).
     
     @function up.element.show
+    @param {Element} element
     @experimental
      */
     show = function(element) {
@@ -2557,8 +2559,10 @@ It complements [native `Element` methods](https://www.w3schools.com/jsref/dom_ob
     @param {Element} element
       The element for which to add or remove the class.
     @param {String} className
-      A boolean value to determine whether the class should be added or removed.
-    @param {String} state
+      The class which should be added or removed.
+    @param {Boolean} [newPresent]
+      Pass `true` to add the class to the element or `false` to remove it.
+    
       If omitted, the class will be added if missing and removed if present.
     @experimental
      */
@@ -3428,32 +3432,32 @@ It complements [native `Element` methods](https://www.w3schools.com/jsref/dom_ob
     }
 
     BodyShifter.prototype.shift = function() {
-      var anchor, body, bodyRightPadding, bodyRightShift, elementRight, elementRightShift, i, len, overflowElement, ref, results, scrollbarWidth;
-      if (!up.viewport.rootHasVerticalScrollbar()) {
-        return;
-      }
-      body = document.body;
+      var anchor, body, bodyRightPadding, bodyRightShift, elementRight, elementRightShift, i, len, overflowElement, ref, results, rootHadVerticalScrollbar, scrollbarWidth;
+      rootHadVerticalScrollbar = up.viewport.rootHasVerticalScrollbar();
       overflowElement = up.viewport.rootOverflowElement();
-      scrollbarWidth = up.viewport.scrollbarWidth();
-      bodyRightPadding = e.styleNumber(body, 'paddingRight');
-      bodyRightShift = scrollbarWidth + bodyRightPadding;
-      this.unshiftFns.push(e.setTemporaryStyle(body, {
-        paddingRight: bodyRightShift
-      }));
       this.unshiftFns.push(e.setTemporaryStyle(overflowElement, {
         overflowY: 'hidden'
       }));
-      ref = up.viewport.anchoredRight();
-      results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        anchor = ref[i];
-        elementRight = e.styleNumber(anchor, 'right');
-        elementRightShift = scrollbarWidth + elementRight;
-        results.push(this.unshiftFns.push(e.setTemporaryStyle(anchor, {
-          right: elementRightShift
-        })));
+      if (rootHadVerticalScrollbar) {
+        body = document.body;
+        scrollbarWidth = up.viewport.scrollbarWidth();
+        bodyRightPadding = e.styleNumber(body, 'paddingRight');
+        bodyRightShift = scrollbarWidth + bodyRightPadding;
+        this.unshiftFns.push(e.setTemporaryStyle(body, {
+          paddingRight: bodyRightShift
+        }));
+        ref = up.viewport.anchoredRight();
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          anchor = ref[i];
+          elementRight = e.styleNumber(anchor, 'right');
+          elementRightShift = scrollbarWidth + elementRight;
+          results.push(this.unshiftFns.push(e.setTemporaryStyle(anchor, {
+            right: elementRightShift
+          })));
+        }
+        return results;
       }
-      return results;
     };
 
     BodyShifter.prototype.unshift = function() {
@@ -5358,18 +5362,19 @@ It complements [native `Element` methods](https://www.w3schools.com/jsref/dom_ob
       if (u.isMissing(raw)) {
 
       } else if (raw instanceof this.constructor) {
-        return (ref = this.entries).push.apply(ref, raw.entries);
+        (ref = this.entries).push.apply(ref, raw.entries);
       } else if (u.isArray(raw)) {
-        return (ref1 = this.entries).push.apply(ref1, raw);
+        (ref1 = this.entries).push.apply(ref1, raw);
       } else if (u.isString(raw)) {
-        return this.addAllFromQuery(raw);
+        this.addAllFromQuery(raw);
       } else if (u.isFormData(raw)) {
-        return this.addAllFromFormData(raw);
+        this.addAllFromFormData(raw);
       } else if (u.isObject(raw)) {
-        return this.addAllFromObject(raw);
+        this.addAllFromObject(raw);
       } else {
-        return up.fail("Unsupport params type: %o", raw);
+        up.fail("Unsupport params type: %o", raw);
       }
+      return this;
     };
 
     Params.prototype.addAllFromObject = function(object) {
@@ -6829,13 +6834,11 @@ It complements [native `Element` methods](https://www.w3schools.com/jsref/dom_ob
         });
         isBooting = false;
         return up.event.onReady(function() {
-          return u.task(function() {
-            up.emit('up:app:boot', {
-              log: 'Booting user application'
-            });
-            return up.emit('up:app:booted', {
-              log: 'User application booted'
-            });
+          up.emit('up:app:boot', {
+            log: 'Booting user application'
+          });
+          return up.emit('up:app:booted', {
+            log: 'User application booted'
           });
         });
       } else {
@@ -7699,12 +7702,15 @@ The output can be configured using the [`up.log.config`](/up.log.config) propert
       prints to the developer console.
     @param {string} [options.prefix='[UP] ']
       A string to prepend to Unpoly's logging messages so you can distinguish it from your own messages.
+    @param {boolean} [options.banner=true]
+      Print the Unpoly banner to the developer console.
     @stable
      */
     config = new up.Config({
       prefix: '[UP] ',
       enabled: sessionStore.get('enabled'),
-      collapse: false
+      collapse: false,
+      banner: true
     });
     reset = function() {
       return config.reset();
@@ -7898,7 +7904,9 @@ The output can be configured using the [`up.log.config`](/up.log.config) propert
       }
       return console.log(banner);
     };
-    up.on('up:framework:booted', printBanner);
+    if (config.banner) {
+      up.on('up:framework:booted', printBanner);
+    }
     up.on('up:framework:reset', reset);
     setEnabled = function(value) {
       sessionStore.set('enabled', value);
@@ -8432,15 +8440,14 @@ or when a matching fragment is [inserted via AJAX](/up.link) later.
       var cleanables;
       cleanables = e.subtree(fragment, '.up-can-clean');
       return u.each(cleanables, function(cleanable) {
-        var destructor, destructors, i, len, results;
-        if (destructors = cleanable.upDestructors) {
-          results = [];
+        var destructor, destructors, i, len;
+        if (destructors = u.pluckKey(cleanable, 'upDestructors')) {
           for (i = 0, len = destructors.length; i < len; i++) {
             destructor = destructors[i];
-            results.push(destructor());
+            destructor();
           }
-          return results;
         }
+        return cleanable.classList.remove('up-can-clean');
       });
     };
 
@@ -10837,7 +10844,7 @@ You can define custom animations using [`up.transition()`](/up.transition) and
     
     You can pass additional options:
     
-        up.animate('warning', '.fade-in', {
+        up.animate('.warning', 'fade-in', {
           delay: 1000,
           duration: 250,
           easing: 'linear'
@@ -13054,6 +13061,9 @@ open dialogs with sub-forms, etc. all without losing form state.
       If set to `'auto'` (default), Unpoly will try to find a match in the form's layer.
     @param {string} [options.failLayer='auto']
       The name of the layer that ought to be updated if the server sends a non-200 status code.
+    @param {Object|FormData|string|Array|up.Params} [options.params]
+      Extra form [parameters](/up.Params) that will be submitted in addition to
+      the parameters from the form.
     @return {Promise}
       A promise for the successful form submission.
     @stable
@@ -13103,7 +13113,7 @@ open dialogs with sub-forms, etc. all without losing form state.
       if (options.failLayer == null) {
         options.failLayer = form.getAttribute('up-fail-layer');
       }
-      options.params = up.Params.fromForm(form);
+      options.params = up.Params.fromForm(form).addAll(options.params);
       options = u.merge(options, up.motion.animateOptions(options, form));
       if (options.validate) {
         options.headers || (options.headers = {});
@@ -13824,6 +13834,15 @@ open dialogs with sub-forms, etc. all without losing form state.
     whenever the `<input>` changes:
     
         <input name="query" up-observe="showSuggestions(value)">
+    
+    Note that the parameter name in the markup must be called `value` or it will not work.
+    The parameter name can be called whatever you want in the JavaScript, however.
+        
+    Also note that the function must be declared on the `window` object to work, like so:
+        
+        window.showSuggestions = function(selectedValue) {
+          console.log(`Called showSuggestions() with ${selectedValue}`);
+        }
     
     \#\#\# Callback context
     
@@ -15031,6 +15050,9 @@ or function.
       }
       if (options.failLayer == null) {
         options.failLayer = (ref12 = link.getAttribute('up-fail-layer')) != null ? ref12 : 'auto';
+      }
+      if (options.cache == null) {
+        options.cache = e.booleanAttr(link, 'up-cache');
       }
       animateOptions = up.motion.animateOptions(options, link, {
         duration: flavorDefault('openDuration', options.flavor),
