@@ -12,3 +12,15 @@
   font-family: monospace;
   font-size: .9rem;
 }
+
+/* make wagtailmedia element fit */
+#wagtail.homepage .summary ul.stats li {
+  width: 25%;
+}
+#wagtail.homepage .summary ul.stats li::before {
+  width: 35%;
+}
+#wagtail.homepage .summary ul.stats li a {
+  float: left;
+  width: 45%;
+}
