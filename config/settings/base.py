@@ -5,6 +5,10 @@ PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 SITE_ID = 1
+ROOT_URLCONF = 'config.urls'
+WSGI_APPLICATION = 'config.wsgi.application'
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 
 INSTALLED_APPS = [
     'admin_tweaks',
@@ -70,8 +74,6 @@ MIDDLEWARE = [
     'extlinks.middleware.RewriteExternalLinksMiddleware',
 ]
 
-ROOT_URLCONF = 'config.urls'
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -92,8 +94,6 @@ TEMPLATES = [
         },
     },
 ]
-
-WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Password validation
