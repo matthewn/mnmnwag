@@ -387,7 +387,7 @@ class BlogIndex(RoutablePageMixin, BasePage, BlogSidebar):
         )
         self.index_title = f'Posts tagged #{tag}'
         try:
-            self.tag_description = TagDescription.objects.get(tag__slug=tag).description
+            self.tag_description = TagDescription.objects.get(tag__slug=tag.lower()).description
         except TagDescription.DoesNotExist:
             pass
         return self.serve(request, *args, **kwargs)
