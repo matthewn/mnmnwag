@@ -379,7 +379,7 @@ class BlogIndex(RoutablePageMixin, BasePage, BlogSidebar):
 
     @route(r'^tag/(?P<tag>[-\w]+)/$')
     def posts_by_tag(self, request, tag, *args, **kwargs):
-        post_tags = PostTag.objects.filter(tag__slug=tag)
+        post_tags = PostTag.objects.filter(tag__slug=tag.lower())
         post_ids = [item.content_object_id for item in post_tags]
         self.posts = self.paginate_posts(
             request,
