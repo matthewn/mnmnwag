@@ -2,15 +2,14 @@
 Utility functions for mnmnwag
 
 At the moment this file only houses a hacked up version of
-get_elided_page_range(), coming soon in Django 3.2.
+Django 3.2's Paginator.get_elided_page_range().
 """
 
 
 def get_elided_page_range(num_pages, page_range, *, number=1, on_each_side=2, on_ends=3):
     """
-    Modified version of a method found in
-    Django 3.2's Paginator (still forthcoming, as of now).
-    (There is almost certainly a better place for this to live.)
+    Modified (SMARTER!) version of a method found in Django 3.2's Paginator.
+    This version handles out-of-bounds page # requests w/o throwing errors.
     """
     try:
         if isinstance(number, float) and not number.is_integer():
