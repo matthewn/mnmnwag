@@ -59,10 +59,6 @@ body #content .comment-form-container {
   }
   form {
     fieldset { border: none; }
-    input[type='checkbox'] {
-      position: relative;
-      top: 3px;
-    }
     input[type='text'],
     textarea {
       margin-top: .25rem;
