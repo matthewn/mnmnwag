@@ -5,6 +5,7 @@ from django.utils.html import format_html, format_html_join
 from wagtail.core.blocks import (
     CharBlock,
     ChoiceBlock,
+    ListBlock,
     RichTextBlock,
     StructBlock,
     URLBlock,
@@ -44,6 +45,18 @@ class ImageBlock(StructBlock):
     class Meta:
         icon = 'image'
         template = 'mnmnwag/blocks/image_block.html'
+
+
+class SlideBlock(StructBlock):
+    image = ImageChooserBlock()
+
+
+class SlidesBlock(StructBlock):
+    slides = ListBlock(SlideBlock())
+
+    class Meta:
+        icon = 'image'
+        template = 'mnmnwag/blocks/slides_block.html'
 
 
 class MediaBlock(AbstractMediaChooserBlock):

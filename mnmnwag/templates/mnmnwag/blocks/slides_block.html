@@ -1,0 +1,19 @@
+{% load wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% load static %}
+{% load typefixes %}
+{% load get_image_set %}
+
+{% with img_set=value.slides|get_image_set %}
+{% for slide in value.slides %}
+
+    <picture>
+        {% image slide.image fill-180x180 as small_image %}
+        <a href="{% url 'zoom_slides' img_set=img_set pos=forloop.counter0 %}" up-modal=".zoom">
+            <img src="{{ small_image.file.url }}" alt="">
+        </a>
+    </picture>
+
+{% endfor %}
+{% endwith %}
+

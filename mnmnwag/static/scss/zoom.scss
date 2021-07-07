@@ -20,3 +20,21 @@
     max-height: calc(100vh - 3rem);
   }
 }
+
+.zoom.set {
+  a:hover { text-decoration: none; }
+  figure {
+    position: relative;
+  }
+  .next, .prev {
+    font-size: 4rem;
+    position: absolute;
+    top: calc(50% - 2rem);
+  }
+  .next {
+    right: -17px;
+  }
+  .prev {
+    left: -17px;
+  }
+}

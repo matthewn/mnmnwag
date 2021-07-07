@@ -6,13 +6,26 @@
 
 {% block content_class %}content-zoom{% endblock %}
 
-
 {% block content %}
 
     {% if img %}
 
         {% image img original as zoom_img %}
-        <div class="zoom"><img src="{{ zoom_img.url }}"></div>
+        <div class="zoom{% if prev_pos or next_pos %} set{% endif %}">
+            <figure>
+                {% if prev_pos %}
+                    {# medium left-pointing angle bracket ornament #}
+                    <a class="prev" title="previous slide" href="{% url 'zoom_slides' img_set=img_set pos=prev_pos %}" up-modal=".zoom">&#10092;</a>
+                {% endif %}
+
+                <img src="{{ zoom_img.url }}">
+
+                {% if next_pos %}
+                    {# medium right-pointing angle bracket ornament #}
+                    <a class="next" title="next slide" href="{% url 'zoom_slides' img_set=img_set pos=next_pos %}" up-modal=".zoom">&#10093;</a>
+                {% endif %}
+            </figure>
+        </div>
 
     {% elif old_img %}
 

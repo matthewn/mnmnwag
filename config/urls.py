@@ -10,7 +10,7 @@ from wagtail.documents import urls as wagtaildocs_urls
 from search import views as search_views
 
 from mnmnwag.feeds import LatestEntriesFeed
-from mnmnwag.views import theme_picker, zoom_image, zoom_old
+from mnmnwag.views import theme_picker, zoom_image, zoom_old, zoom_slides
 
 
 urlpatterns = [
@@ -23,6 +23,7 @@ urlpatterns = [
 
     url(r'^search/$', search_views.search, name='search'),
     path('zoom/img/<int:image_id>', zoom_image, name='zoom_image'),
+    path('zoom/img/set/<str:img_set>/<str:pos>', zoom_slides, name='zoom_slides'),
     path('zoom/old/<path:image_path>', zoom_old, name='zoom_old'),
     path('theme/<str:chosen_theme>', theme_picker, name='theme_picker'),
 

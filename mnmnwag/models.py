@@ -23,7 +23,7 @@ from wagtailmedia.models import Media, AbstractMedia
 from django_comments.moderation import CommentModerator
 from django_comments_xtd.moderation import moderator
 
-from .blocks import ImageBlock, MediaBlock
+from .blocks import ImageBlock, MediaBlock, SlidesBlock
 from .utils import get_elided_page_range
 
 import datetime as dt
@@ -67,6 +67,7 @@ class ComplexPage(BasePage):
             ],
         )),
         ('image', ImageBlock()),
+        ('slides', SlidesBlock()),
         ('embed', EmbedBlock()),
         ('media', MediaBlock(icon='media')),
         ('raw_HTML', blocks.RawHTMLBlock(required=False)),
@@ -277,6 +278,7 @@ class ModernPost(BasePage, BlogPost):
             ],
         )),
         ('image', ImageBlock()),
+        ('slides', SlidesBlock()),
         ('embed', EmbedBlock()),
         ('media', MediaBlock(icon='media')),
         ('raw_HTML', blocks.RawHTMLBlock(required=False)),
