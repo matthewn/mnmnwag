@@ -208,16 +208,16 @@ body {
   }
 }
 
-.up-modal-content,
-.up-modal-viewport {
+up-modal-content,
+up-modal-viewport {
   padding: 1rem;
 }
-.up-modal-viewport {
+up-modal-viewport {
   align-items: center;
   display: flex;
   justify-content: center;
 }
-.up-modal-dialog .up-modal-close {
+up-modal-dialog up-modal-close {
   right: -10px;
   top: -12px;
 }

@@ -73,7 +73,7 @@ body.theme-light {
     background-color: $jet;
     color: $white;
   }
-  .up-modal-content {
+  up-modal-content {
     background-color: $white;
   }
   .wagtail-userbar__item a { color: #aaa; }
@@ -131,10 +131,10 @@ body.theme-dark {
     background-color: $ming;
     color: $white;
   }
-  .up-modal-close {
+  up-modal-close {
     color: $platinum;
   }
-  .up-modal-content {
+  up-modal-content {
     background-color: $black;
   }
 }
@@ -194,10 +194,10 @@ body.theme-retro {
     background-color: $dark-green;
     color: $sheen-green;
   }
-  .up-modal-close {
+  up-modal-close {
     color: $green;
   }
-  .up-modal-content {
+  up-modal-content {
     background-color: $black;
   }
 }

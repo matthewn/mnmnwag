@@ -10,7 +10,7 @@
         {% if value.link %}
             <a href="{{ value.link }}">
         {% elif value.zoom == '1' %}
-            <a href="{% url 'zoom_image' value.image.id %}" up-modal=".zoom">
+            <a href="{% url 'zoom_image' value.image.id %}" up-layer="new modal" up-class="zoom">
         {% endif %}
 
         <img src="{{ small_image.file.url }}" alt="{{ value.alt_text }}">
