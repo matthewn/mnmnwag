@@ -208,18 +208,20 @@ body {
   }
 }
 
-up-modal-content,
-up-modal-viewport {
-  padding: 1rem;
-}
-up-modal-viewport {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-}
-up-modal-dialog up-modal-close {
-  right: -10px;
-  top: -12px;
+up-modal {
+  up-modal-content,
+  up-modal-viewport {
+    padding: 20px 15px;
+  }
+  up-modal-box {
+    padding: 0;
+    position: relative;
+    width: unset !important;
+  }
+  up-modal-dismiss {
+    right: 1px;
+    top: 2px;
+  }
 }
 
 .social-icons a svg {

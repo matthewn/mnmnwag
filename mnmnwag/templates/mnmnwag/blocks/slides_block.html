@@ -9,7 +9,7 @@
 
     <picture>
         {% image slide.image fill-180x180 as small_image %}
-        <a href="{% url 'zoom_slides' img_set=img_set pos=forloop.counter0 %}" up-layer="new modal" up-class="zoom">
+        <a href="{% url 'zoom_slides' img_set=img_set pos=forloop.counter0 %}" up-layer="new modal" up-animation="fade-in">
             <img src="{{ small_image.file.url }}" alt="">
         </a>
     </picture>

@@ -9,10 +9,7 @@ const prefix = 'theme-';
 
 
 // on return to page via back button, enable cookied theme (if it exists)
-//
-// NOTE TO SELF: up:history:restored is marked as 'experimental' --
-// this bit could thus require refactoring at some point in the future
-up.on('up:history:restored', function() {
+up.on('up:location:changed', function() {
     if (getCookie('themeClass').length > 0) setTheme(getCookie('themeClass'));
 });
 

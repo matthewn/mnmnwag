@@ -2,7 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // console splash
-    console.clear();
+    // console.clear();
     console.log('\nwe were talking\nabout the love that’s grown so cold\nand the people who gain the world and lose their soul\nthey don’t know\nthey can’t see\nare you one of them?\n\n— George Harrison\n\n');
 
     // fix firefox android edge case (theme missing on initial page load)
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // UNPOLY
 //
 
-up.modal.config.history = false;
+up.layer.config.modal.history = false;
 
 up.macro('[up-blog-link]', function(link) {
     link.setAttribute('up-target', '#header, #content .blog, .wagtail-userbar-items');
