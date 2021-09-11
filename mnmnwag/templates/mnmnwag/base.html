@@ -79,7 +79,7 @@
             </div>
         </section>
 
-        <section id="content" class="{% block content_class %}{% endblock %}" up-main>
+        <section id="content" class="{% block content_class %}{% endblock %}">
             <div class="constrainer">
                 {% if page.content_type.model == 'blogindex' or page.content_type.model == 'modernpost' or page.content_type.model == 'legacypost' %}
                     <aside>
@@ -109,14 +109,13 @@
             </div>
         </footer>
 
-        {% compress js %}
-            <script src="{% static 'js/vendor/unpoly.min.js' %}"></script>
-            <script src="{% static 'js/vendor/unpoly-migrate.js' %}"></script>
+        <script src="{% static 'js/vendor/unpoly.min.js' %}"></script>
+        {# {% compress js %} #}
             <script src="{% static 'js/vendor/highlight.pack.js' %}"></script>
             <script src="{% static 'js/cookies.js' %}"></script>
             <script src="{% static 'js/theme_picker.js' %}"></script>
-            <script src="{% static 'js/main.js' %}"></script>
-        {% endcompress %}
+        {# {% endcompress %} #}
+        <script src="{% static 'js/main.js' %}"></script>
 
         {% block extra_js %}
             {# override this in templates to add extra javascript #}
