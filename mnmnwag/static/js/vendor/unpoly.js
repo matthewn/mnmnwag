@@ -8,7 +8,7 @@
 @module up
 */
 window.up = {
-    version: '2.2.1'
+    version: '2.4.1'
 };
 
 
@@ -96,27 +96,63 @@ up.util = (function () {
     }
     const NORMALIZE_URL_DEFAULTS = {
         host: 'cross-domain',
-        stripTrailingSlash: false,
-        search: true,
-        hash: false
     };
     /*-
-    Normalizes the given URL or path.
+    Returns a normalized version of the given URL string.
+  
+    Two URLs that point to the same resource should normalize to the same string.
+  
+    ### Comparing normalized URLs
+  
+    The main purpose of this function is to normalize two URLs for string comparison:
+  
+    ```js
+    up.util.normalizeURL('http://current-host/path') === up.util.normalizeURL('/path') // => true
+    ```
+  
+    By default the hostname is only included if it points to a different origin:
+  
+    ```js
+    up.util.normalizeURL('http://current-host/path') // => '/path'
+    up.util.normalizeURL('http://other-host/path') // => 'http://other-host/path'
+    ```
+  
+    Relative paths are normalized to absolute paths:
+  
+    ```js
+    up.util.normalizeURL('index.html') // => '/path/index.html'
+    ```
+  
+    ### Excluding URL components
+  
+    You may pass options to exclude URL components from the normalized string:
+  
+    ```js
+    up.util.normalizeURL('/foo?query=bar', { query: false }) => '/foo'
+    up.util.normalizeURL('/bar#hash', { hash: false }) => '/bar'
+    ```
+  
+    ### Limitations
+  
+    - Username and password are always omitted from the normalized URL.
+    - Only `http` and `https` schemes are supported.
   
     @function up.util.normalizeURL
     @param {boolean} [options.host='cross-domain']
       Whether to include protocol, hostname and port in the normalized URL.
   
-      By default the host is only included if it differ's from the page's hostname.
-    @param {boolean} [options.hash=false]
-      Whether to include an `#hash` anchor in the normalized URL
+      When set to `'cross-domain'` (the default), the host is only included if it differ's from the page's hostname.
+  
+      The port is omitted if the port is the standard port for the given protocol, e.g. `:443` for `https://`.
+    @param {boolean} [options.hash=true]
+      Whether to include an `#hash` anchor in the normalized URL.
     @param {boolean} [options.search=true]
-      Whether to include a `?query` string in the normalized URL
-    @param {boolean} [options.stripTrailingSlash=false]
-      Whether to strip a trailing slash from the pathname
+      Whether to include a `?query` string in the normalized URL.
+    @param {boolean} [options.trailingSlash=true]
+      Whether to include a trailing slash from the pathname.
     @return {string}
       The normalized URL.
-    @internal
+    @experimental
     */
     function normalizeURL(urlOrAnchor, options) {
         options = newOptions(options, NORMALIZE_URL_DEFAULTS);
@@ -135,20 +171,17 @@ up.util = (function () {
             }
         }
         let { pathname } = parts;
-        if (options.stripTrailingSlash) {
+        if (options.trailingSlash === false && pathname !== '/') {
             pathname = pathname.replace(/\/$/, '');
         }
         normalized += pathname;
-        if (options.search) {
+        if (options.search !== false) {
             normalized += parts.search;
         }
-        if (options.hash) {
+        if (options.hash !== false) {
             normalized += parts.hash;
         }
         return normalized;
-    }
-    function urlWithoutHost(url) {
-        return normalizeURL(url, { host: false });
     }
     function matchURLs(leftURL, rightURL) {
         return normalizeURL(leftURL) === normalizeURL(rightURL);
@@ -1211,7 +1244,7 @@ up.util = (function () {
   
     @function up.util.pickBy
     @param {Object} object
-    @param {Function<string, string, object>} tester
+    @param {Function(string, string, object): boolean} tester
       A function that will be called with each property.
   
       The arguments are the property value, key and the entire object.
@@ -1911,7 +1944,6 @@ up.util = (function () {
     return {
         parseURL,
         normalizeURL,
-        urlWithoutHost,
         matchURLs,
         normalizeMethod,
         methodAllowsPayload,
@@ -2020,7 +2052,7 @@ up.util = (function () {
         renameKeys,
         timestamp: secondsSinceEpoch,
         allSettled,
-        negate
+        negate,
     };
 })();
 
@@ -2093,47 +2125,15 @@ up.migrate = { config: {} };
 /***/ (() => {
 
 /*-
-Browser support
-===============
+Browser interface
+=================
 
-Unpoly supports all modern browsers.
-
-### Chrome, Firefox, Edge, Safari
-
-Full support.
-
-### Internet Explorer 11
-
-Full support with a `Promise` polyfill like [es6-promise](https://github.com/stefanpenner/es6-promise) (2.4 KB).\
-Support may be removed when Microsoft retires IE11 in [June 2022](https://blogs.windows.com/windowsexperience/2021/05/19/the-future-of-internet-explorer-on-windows-10-is-in-microsoft-edge/).
-
-### Internet Explorer 10 or lower
-
-Unpoly will not boot or [run compilers](/up.compiler),
-leaving you with a classic server-side application.
+We tunnel some browser APIs through this module for easier mocking in tests.
 
 @module up.browser
 */
 up.browser = (function () {
     const u = up.util;
-    /*-
-    Makes a full-page request, replacing the entire browser environment with a new page from the server response.
-  
-    Also see `up.Request#loadPage()`.
-  
-    @function up.browser.loadPage
-    @param {string} options.url
-      The URL to load.
-    @param {string} [options.method='get']
-      The method for the request.
-  
-      Methods other than GET or POST will be [wrapped](/up.protocol.config#config.methodParam) in a POST request.
-    @param {Object|Array|FormData|string} [options.params]
-    @experimental
-    */
-    function loadPage(requestsAttrs) {
-        new up.Request(requestsAttrs).loadPage();
-    }
     /*-
     Submits the given form with a full page load.
     
@@ -2147,6 +2147,11 @@ up.browser = (function () {
     }
     function isIE11() {
         return 'ActiveXObject' in window; // this is undefined, but the key is set
+    }
+    function isEdge18() {
+        // Edge 18: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582
+        // Edge 92: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36 Edg/92.0.902.78
+        return u.contains(navigator.userAgent, ' Edge/');
     }
     /*-
     Returns whether this browser supports manipulation of the current URL
@@ -2197,6 +2202,17 @@ up.browser = (function () {
     function canJQuery() {
         return !!window.jQuery;
     }
+    const canEval = u.memoize(function () {
+        try {
+            // Don't use eval() which would prevent minifiers from compressing local variables.
+            return new Function('return true')();
+        }
+        catch {
+            // With a strict CSP this will be an error like:
+            // Uncaught EvalError: call to Function() blocked by CSP
+            return false;
+        }
+    });
     // IE11: Use the browser.cookies API instead.
     function popCookie(name) {
         let value = document.cookie.match(new RegExp(name + "=(\\w+)"))?.[1];
@@ -2225,42 +2241,19 @@ up.browser = (function () {
         }
         return true;
     }
-    /*-
-    Returns whether Unpoly supports the current browser.
-  
-    If this returns `false` Unpoly will prevent itself from booting
-    and ignores all registered [event handlers](/up.on) and [compilers](/up.compiler).
-    This leaves you with a classic server-side application.
-    This is usually a better fallback than loading incompatible Javascript and causing
-    many errors on load.
-  
-    @function up.browser.isSupported
-    @stable
-    */
-    function isSupported() {
-        return !supportIssue();
-    }
-    function supportIssue() {
-        if (!canPromise()) {
-            return "Browser doesn't support promises";
-        }
-        if (document.compatMode === 'BackCompat') {
-            return 'Browser is in quirks mode (missing DOCTYPE?)';
-        }
-    }
     return {
-        loadPage,
         submitForm,
         canPushState,
         canFormatLog,
         canPassiveEventListener,
         canJQuery,
+        canPromise,
+        canEval,
         assertConfirmed,
-        isSupported,
-        supportIssue,
         popCookie,
         get jQuery() { return getJQuery(); },
-        isIE11
+        isIE11,
+        isEdge18,
     };
 })();
 
@@ -3223,7 +3216,7 @@ up.element = (function () {
         let code = link.getAttribute(attr);
         if (code) {
             // Allow callbacks to refer to an exposed property directly instead of through `event.value`.
-            const callback = new Function('event', ...exposedKeys, code);
+            const callback = up.NonceableCallback.fromString(code).toFunction('event', ...exposedKeys);
             // Emulate the behavior of the `onclick` attribute,
             // where `this` refers to the clicked element.
             return function (event) {
@@ -3897,7 +3890,7 @@ up.Change.Addition = class Addition extends up.Change {
         // (1) Don't set a source if { false } is passed.
         // (2) Don't set a source if the element HTML already has an [up-source] attribute.
         if (source) {
-            e.setMissingAttr(newElement, 'up-source', u.normalizeURL(source));
+            e.setMissingAttr(newElement, 'up-source', u.normalizeURL(source, { hash: false }));
         }
     }
 };
@@ -4009,7 +4002,7 @@ up.Change.OpenLayer = class OpenLayer extends up.Change.Addition {
         // We assume that the server will respond with our target.
         return this.target;
     }
-    execute(responseDoc) {
+    execute(responseDoc, onApplicable) {
         if (this.target === ':none') {
             this.content = document.createElement('up-none');
         }
@@ -4019,6 +4012,7 @@ up.Change.OpenLayer = class OpenLayer extends up.Change.Addition {
         if (!this.content || this.baseLayer.isClosed()) {
             throw this.notApplicable();
         }
+        onApplicable();
         up.puts('up.render()', `Opening element "${this.target}" in new overlay`);
         this.options.title = this.improveHistoryValue(this.options.title, responseDoc.getTitle());
         if (this.emitOpenEvent().defaultPrevented) {
@@ -4179,11 +4173,12 @@ up.Change.UpdateLayer = class UpdateLayer extends up.Change.Addition {
         this.matchPreflight();
         return u.map(this.steps, 'selector').join(', ') || ':none';
     }
-    execute(responseDoc) {
+    execute(responseDoc, onApplicable) {
         this.responseDoc = responseDoc;
         // For each step, find a step.alternative that matches in both the current page
         // and the response document.
         this.matchPostflight();
+        onApplicable();
         // Don't log @target since that does not include hungry elements
         up.puts('up.render()', `Updating "${this.bestPreflightSelector()}" in ${this.layer}`);
         this.options.title = this.improveHistoryValue(this.options.title, this.responseDoc.getTitle());
@@ -4573,7 +4568,7 @@ up.Change.CloseLayer = class CloseLayer extends up.Change.Removal {
         // because the layer is detached. We do not want to emit it on the parent layer where users
         // might confuse it with an event for the parent layer itself. Since @layer.element
         // is now detached, the event will no longer bubble up to the document where global
-        // event listeners can receive it. So we explicitely emit the event a second time
+        // event listeners can receive it. So we explicitly emit the event a second time
         // on the document.
         return this.layer.emit(this.buildEvent(`up:layer:${verbPast}`), {
             // Set up.layer.current to the parent of the closed layer, which is now likely
@@ -4671,12 +4666,20 @@ up.Change.FromContent = class FromContent extends up.Change {
         if (this.options.preload) {
             return Promise.resolve();
         }
-        const executePlan = plan => plan.execute(this.getResponseDoc());
-        return this.seekPlan(executePlan) || this.postflightTargetNotApplicable();
+        return this.seekPlan(this.executePlan.bind(this)) || this.postflightTargetNotApplicable();
+    }
+    executePlan(matchedPlan) {
+        return matchedPlan.execute(this.getResponseDoc(), this.onPlanApplicable.bind(this, matchedPlan));
+    }
+    onPlanApplicable(plan) {
+        let primaryPlan = this.getPlans()[0];
+        if (plan !== primaryPlan) {
+            up.puts('up.render()', 'Could not match primary target (%s). Updating a fallback target (%s).', primaryPlan.target, plan.target);
+        }
     }
     getResponseDoc() {
         if (!this.preview && !this.responseDoc) {
-            const docOptions = u.pick(this.options, ['target', 'content', 'fragment', 'document', 'html']);
+            const docOptions = u.pick(this.options, ['target', 'content', 'fragment', 'document', 'html', 'cspNonces']);
             up.migrate.handleResponseDocOptions?.(docOptions);
             // If neither { document } nor { fragment } source is given, we assume { content }.
             if (this.defaultPlacement() === 'content') {
@@ -4766,7 +4769,7 @@ up.Change.FromURL = class FromURL extends up.Change {
         let newPageReason = this.newPageReason();
         if (newPageReason) {
             up.puts('up.render()', newPageReason);
-            up.browser.loadPage(this.options);
+            up.network.loadPage(this.options);
             // Prevent our caller from executing any further code, since we're already
             // navigating away from this JavaScript environment.
             return u.unresolvablePromise();
@@ -4833,17 +4836,21 @@ up.Change.FromURL = class FromURL extends up.Change {
     isSuccessfulResponse() {
         return (this.successOptions.fail === false) || this.response.ok;
     }
-    buildEvent(type, props) {
-        const defaultProps = { request: this.request, response: this.response, renderOptions: this.options };
-        return up.event.build(type, u.merge(defaultProps, props));
-    }
+    // buildEvent(type, props) {
+    //   const defaultProps = { request: this.request, response: this.response, renderOptions: this.options }
+    //   return up.event.build(type, u.merge(defaultProps, props))
+    // }
     updateContentFromResponse(log, renderOptions) {
         // Allow listeners to inspect the response and either prevent the fragment change
         // or manipulate change options. An example for when this is useful is a maintenance
         // page with its own layout, that cannot be loaded as a fragment and must be loaded
         // with a full page load.
-        const event = this.buildEvent('up:fragment:loaded', { renderOptions });
-        this.request.assertEmitted(event, { log, callback: this.options.onLoaded });
+        this.request.assertEmitted('up:fragment:loaded', {
+            callback: this.options.onLoaded,
+            response: this.response,
+            log,
+            renderOptions,
+        });
         // The response might carry some updates for our change options,
         // like a server-set location, or server-sent events.
         this.augmentOptionsFromResponse(renderOptions);
@@ -4887,6 +4894,7 @@ up.Change.FromURL = class FromURL extends up.Change {
         // If the server has provided an update to our context via the X-Up-Context
         // response header, merge it into our existing { context } option.
         renderOptions.context = u.merge(renderOptions.context, this.response.context);
+        renderOptions.cspNonces = this.response.cspNonces;
     }
 };
 
@@ -5336,13 +5344,20 @@ up.EventListener = class EventListener extends up.Record {
             'guard',
             'baseLayer',
             'passive',
-            'once'
+            'once',
+            'beforeBoot',
         ];
     }
     constructor(attributes) {
         super(attributes);
         this.key = this.constructor.buildKey(attributes);
-        this.isDefault = up.framework.booting;
+        this.isDefault = up.framework.evaling;
+        // We don't usually run up.on() listeners before Unpoly has booted.
+        // This is done so incompatible code is not called on browsers that don't support Unpoly.
+        // Listeners that do need to run before Unpoly boots can pass { beforeBoot: true } to override.
+        // We also default to { beforeBoot: true } for framework events that are emitted
+        // before booting.
+        this.beforeBoot ?? (this.beforeBoot = this.eventType.indexOf('up:framework:') === 0);
         // Need to store the bound nativeCallback function because addEventListener()
         // and removeEventListener() need to see the exact same reference.
         this.nativeCallback = this.nativeCallback.bind(this);
@@ -5371,6 +5386,9 @@ up.EventListener = class EventListener extends up.Record {
         this.element.removeEventListener(...this.addListenerArgs());
     }
     nativeCallback(event) {
+        if (up.framework.beforeBoot && !this.beforeBoot) {
+            return;
+        }
         // Once we drop IE11 support we can forward the { once } option
         // to Element#addEventListener().
         if (this.once) {
@@ -5457,7 +5475,8 @@ up.EventListenerGroup = class EventListenerGroup extends up.Record {
             'guard',
             'baseLayer',
             'passive',
-            'once'
+            'once',
+            'beforeBoot',
         ];
     }
     bind() {
@@ -6500,13 +6519,16 @@ up.Layer = class Layer extends up.Record {
         }
     }
     restoreHistory() {
+        if (!this.showsLiveHistory()) {
+            return;
+        }
         if (this.savedLocation) {
+            // We cannot use the `this.title` setter as that does not
+            // push a state if `newLocation === this.savedLocation`.
             up.history.push(this.savedLocation);
-            this.savedLocation = null;
         }
         if (this.savedTitle) {
             document.title = this.savedTitle;
-            this.savedTitle = null;
         }
     }
     /*-
@@ -7733,6 +7755,119 @@ up.MotionController = class MotionController {
 
 const u = up.util;
 const e = up.element;
+up.NonceableCallback = class NonceableCallback {
+    constructor(script, nonce) {
+        this.script = script;
+        this.nonce = nonce;
+    }
+    static fromString(string) {
+        let match = string.match(/^(nonce-([^\s]+)\s)?(.*)$/);
+        return new this(match[3], match[2]);
+    }
+    /*-
+    Replacement for `new Function()` that can take a nonce to work with a strict Content Security Policy.
+  
+    It also prints an error when a strict CSP is active, but user supplies no nonce.
+  
+    ### Examples
+  
+    ```js
+    new up.NonceableCallback('1 + 2', 'secret').toFunction()
+    ```
+  
+    @function up.NonceableCallback#toFunction
+    @internal
+    */
+    toFunction(...argNames) {
+        if (up.browser.canEval()) {
+            return new Function(...argNames, this.script);
+        }
+        else if (this.nonce) {
+            // Don't return a bound function so callers can re-bind to a different this.
+            let callbackThis = this;
+            return function (...args) {
+                return callbackThis.runAsNoncedFunction(this, argNames, args);
+            };
+        }
+        else {
+            return this.cannotRun.bind(this);
+        }
+    }
+    toString() {
+        return `nonce-${this.nonce} ${this.script}`;
+    }
+    cannotRun() {
+        throw new Error(`Your Content Security Policy disallows inline JavaScript (${this.script}). See https://unpoly.com/csp for solutions.`);
+    }
+    runAsNoncedFunction(thisArg, argNames, args) {
+        let wrappedScript = `
+      try {
+        up.noncedEval.value = (function(${argNames.join(',')}) {
+          ${this.script}
+        }).apply(up.noncedEval.thisArg, up.noncedEval.args)
+      } catch (error) {
+        up.noncedEval.error = error
+      }
+    `;
+        let script;
+        try {
+            up.noncedEval = { args, thisArg: thisArg };
+            script = up.element.affix(document.body, 'script', { nonce: this.nonce, text: wrappedScript });
+            if (up.noncedEval.error) {
+                throw up.noncedEval.error;
+            }
+            else {
+                return up.noncedEval.value;
+            }
+        }
+        finally {
+            up.noncedEval = undefined;
+            if (script) {
+                up.element.remove(script);
+            }
+        }
+    }
+    allowedBy(allowedNonces) {
+        return this.nonce && u.contains(allowedNonces, this.nonce);
+    }
+    static adoptNonces(element, allowedNonces) {
+        if (!allowedNonces?.length) {
+            return;
+        }
+        // Looking up a nonce requires a DOM query.
+        // For performance reasons we only do this when we're actually rewriting
+        // a nonce, and only once per response.
+        const getPageNonce = u.memoize(up.protocol.cspNonce);
+        u.each(up.protocol.config.nonceableAttributes, (attribute) => {
+            let matches = e.subtree(element, `[${attribute}^="nonce-"]`);
+            u.each(matches, (match) => {
+                let attributeValue = match.getAttribute(attribute);
+                let callback = this.fromString(attributeValue);
+                let warn = (message, ...args) => up.log.warn('up.render()', `Cannot use callback [${attribute}="${attributeValue}"]: ${message}`, ...args);
+                if (!callback.allowedBy(allowedNonces)) {
+                    // Don't rewrite a nonce that the browser would have rejected.
+                    return warn("Callback's CSP nonce (%o) does not match response header (%o)", callback.nonce, allowedNonces);
+                }
+                // Replace the nonce with that of the current page.
+                // This will allow the handler to run via #toFunction().
+                let pageNonce = getPageNonce();
+                if (!pageNonce) {
+                    return warn("Current page's CSP nonce is unknown");
+                }
+                callback.nonce = pageNonce;
+                match.setAttribute(attribute, callback.toString());
+            });
+        });
+    }
+};
+
+
+/***/ }),
+/* 50 */
+/***/ (() => {
+
+const u = up.util;
+const e = up.element;
 up.OptionsParser = class OptionsParser {
     constructor(options, element, parserOptions) {
         this.options = options;
@@ -7795,7 +7930,7 @@ up.OptionsParser = class OptionsParser {
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (() => {
 
 const e = up.element;
@@ -7886,7 +8021,7 @@ up.OverlayFocus = class OverlayFocus {
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (() => {
 
 const u = up.util;
@@ -8473,7 +8608,7 @@ up.Params = class Params {
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (() => {
 
 const e = up.element;
@@ -8530,7 +8665,7 @@ up.ProgressBar = class ProgressBar {
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (() => {
 
 const u = up.util;
@@ -8668,7 +8803,7 @@ up.RenderOptions = (function () {
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (() => {
 
 /*-
@@ -8709,7 +8844,7 @@ up.RenderResult = class RenderResult extends up.Record {
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (() => {
 
 const u = up.util;
@@ -9258,7 +9393,11 @@ up.Request = class Request extends up.Record {
         // This way listeners can observe event-related events on a given layer.
         // This request has an optional { layer } attribute, which is used by
         // EventEmitter.
-        return up.EventEmitter.fromEmitArgs(args, { request: this, layer: this.layer });
+        return up.EventEmitter.fromEmitArgs(args, {
+            layer: this.layer,
+            request: this,
+            origin: this.origin
+        });
     }
     emit(...args) {
         return this.buildEventEmitter(args).emit();
@@ -9270,11 +9409,27 @@ up.Request = class Request extends up.Record {
         return this.method + ' ' + this.url;
     }
 };
+// A request is also a promise ("thenable") for its response.
 u.delegate(up.Request.prototype, ['then', 'catch', 'finally'], function () { return this.deferred; });
+up.Request.tester = function (condition) {
+    if (u.isFunction(condition)) {
+        return condition;
+    }
+    else if (condition instanceof this) {
+        return (request) => condition === request;
+    }
+    else if (u.isString(condition)) {
+        let pattern = new up.URLPattern(condition);
+        return (request) => pattern.test(request.url);
+    }
+    else { // boolean, truthy/falsy values
+        return (_request) => condition;
+    }
+};
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (() => {
 
 let u = up.util;
@@ -9305,24 +9460,21 @@ up.Request.Cache = class Cache extends up.Cache {
     //        candidates.push(request.variant(target: 'body'))
     //
     //    u.findResult candidates, (candidate) => super(candidate)
-    clear(pattern) {
-        if (pattern && (pattern !== '*') && (pattern !== true)) {
-            pattern = new up.URLPattern(pattern);
-            return this.each((key, request) => {
-                if (pattern.test(request.url)) {
-                    this.store.remove(key);
-                }
-            });
-        }
-        else {
-            super.clear();
-        }
+    clear(condition = true) {
+        let tester = up.Request.tester(condition);
+        this.each((key, request) => {
+            if (tester(request)) {
+                // It is generally not a great idea to manipulate the list we're iterating over,
+                // but the implementation of up.Cache#each copies keys before iterating.
+                this.store.remove(key);
+            }
+        });
     }
 };
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (() => {
 
 const u = up.util;
@@ -9419,20 +9571,19 @@ up.Request.Queue = class Queue {
     }
     // Aborting a request will cause its promise to reject, which will also uncache it
     abort(conditions = true) {
+        let tester = up.Request.tester(conditions);
         for (let list of [this.currentRequests, this.queuedRequests]) {
-            const matches = u.filter(list, request => this.requestMatches(request, conditions));
-            matches.forEach(function (match) {
-                match.abort();
-                u.remove(list, match);
+            const abortableRequests = u.filter(list, tester);
+            abortableRequests.forEach(function (abortableRequest) {
+                abortableRequest.abort();
+                // Avoid changing the list we're iterating over.
+                u.remove(list, abortableRequest);
             });
         }
     }
     abortExcept(excusedRequest, additionalConditions = true) {
         const excusedCacheKey = excusedRequest.cacheKey();
         this.abort(queuedRequest => (queuedRequest.cacheKey() !== excusedCacheKey) && u.evalOption(additionalConditions, queuedRequest));
-    }
-    requestMatches(request, conditions) {
-        return (request === conditions) || u.evalOption(conditions, request);
     }
     checkSlow() {
         const currentSlow = this.isSlow();
@@ -9461,7 +9612,7 @@ up.Request.Queue = class Queue {
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (() => {
 
 const u = up.util;
@@ -9489,7 +9640,7 @@ up.Request.FormRenderer = class FormRenderer {
             method = up.protocol.wrapMethod(method, this.params);
         }
         this.form = e.affix(document.body, 'form.up-request-loader', { method, action });
-        // We only need an [enctype] attribute if the user has explicitely
+        // We only need an [enctype] attribute if the user has explicitly
         // requested one. If none is given, we can use the browser's default
         // [enctype]. Binary values cannot be sent by this renderer anyway, so
         // we don't need to default to multipart/form-data in this case.
@@ -9513,7 +9664,7 @@ up.Request.FormRenderer = class FormRenderer {
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (() => {
 
 const CONTENT_TYPE_URL_ENCODED = 'application/x-www-form-urlencoded';
@@ -9620,7 +9771,7 @@ up.Request.XHRRenderer = class XHRRenderer {
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (() => {
 
 /*-
@@ -9776,6 +9927,9 @@ up.Response = class Response extends up.Record {
     get contentType() {
         return this.getHeader('Content-Type');
     }
+    get cspNonces() {
+        return up.protocol.cspNoncesFromHeader(this.getHeader('Content-Security-Policy'));
+    }
     /*-
     The response body parsed as a JSON string.
   
@@ -9798,7 +9952,7 @@ up.Response = class Response extends up.Record {
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (() => {
 
 const u = up.util;
@@ -9828,6 +9982,7 @@ up.ResponseDoc = class ResponseDoc {
             this.parseDocument(options) ||
                 this.parseFragment(options) ||
                 this.parseContent(options);
+        this.cspNonces = options.cspNonces;
     }
     parseDocument(options) {
         return this.parse(options.document, e.createDocumentFromHTML);
@@ -9894,6 +10049,8 @@ up.ResponseDoc = class ResponseDoc {
     finalizeElement(element) {
         // Restore <noscript> tags so they become available to compilers.
         this.noscriptWrapper.unwrap(element);
+        // Rewrite per-request CSP nonces to match that of the current page.
+        up.NonceableCallback.adoptNonces(element, this.cspNonces);
         // Restore <script> so they will run.
         this.scriptWrapper.unwrap(element);
     }
@@ -9901,7 +10058,7 @@ up.ResponseDoc = class ResponseDoc {
 
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (() => {
 
 const e = up.element;
@@ -9937,7 +10094,7 @@ up.RevealMotion = class RevealMotion {
         let newScrollTop = originalScrollTop;
         if (this.top || (elementRect.height > viewportRect.height)) {
             // Element is either larger than the viewport,
-            // or the user has explicitely requested for the element to align at top
+            // or the user has explicitly requested for the element to align at top
             // => Scroll the viewport so the first element row is the first viewport row
             const diff = elementRect.top - viewportRect.top;
             newScrollTop += diff;
@@ -10017,7 +10174,7 @@ up.RevealMotion = class RevealMotion {
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (() => {
 
 const u = up.util;
@@ -10096,7 +10253,7 @@ up.ScrollMotion = class ScrollMotion {
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (() => {
 
 const e = up.element;
@@ -10147,7 +10304,7 @@ up.Selector = class Selector {
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (() => {
 
 const u = up.util;
@@ -10181,7 +10338,7 @@ up.store.Memory = class Memory {
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (() => {
 
 //#
@@ -10251,7 +10408,7 @@ up.store.Session = class Session extends up.store.Memory {
 
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (() => {
 
 const u = up.util;
@@ -10411,7 +10568,7 @@ up.Tether = class Tether {
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (() => {
 
 const u = up.util;
@@ -10436,7 +10593,17 @@ up.URLPattern = class URLPattern {
         if (!list.length) {
             return;
         }
-        let reCode = list.map(this.normalizeURL).map(u.escapeRegExp).join('|');
+        list = list.map((url) => {
+            // If the current browser location is multiple directories deep (e.g. /foo/bar),
+            // a leading asterisk would be normalized to /foo/*. So we prepend a slash.
+            if (url[0] === '*') {
+                url = '/' + url;
+            }
+            url = this.normalizeURL(url);
+            url = u.escapeRegExp(url);
+            return url;
+        });
+        let reCode = list.join('|');
         reCode = reCode.replace(/\\\*/g, '.*?');
         reCode = reCode.replace(/(:|\\\$)([a-z][\w-]*)/ig, (match, type, name) => {
             // It's \\$ instead of $ because we do u.escapeRegExp above
@@ -10488,14 +10655,32 @@ up.URLPattern = class URLPattern {
 
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (() => {
 
 /*-
+Framework initialization
+========================
+
+The `up.framework` module lets you customize Unpoly's [initialization sequence](/install#initialization).
+
+@see up.boot
+@see script[up-boot=manual]
+@see up.framework.isSupported
+
 @module up.framework
 */
 up.framework = (function () {
-    let booting = true;
+    // Event                          up.framework.readyState   document.readyState
+    // ------------------------------------------------------------------------------------------------------
+    // Browser starts parsing HTML    -                         loading
+    // Unpoly script is running       evaling                   loading (if sync) or interactive (if defered)
+    // ... submodules are running     evaling                   loading (if sync) or interactive (if defered)
+    // User scripts are running       configuring               loading (if sync) or interactive (if defered)
+    // DOMContentLoaded               configuring => booting    interactive
+    // Initial page is compiling      booting                   interactive
+    // Document resources loaded      booted                    complete
+    let readyState = 'evaling'; // evaling => configuring => booting => booted
     /*-
     Resets Unpoly to the state when it was booted.
     All custom event handlers, animations, etc. that have been registered
@@ -10516,64 +10701,172 @@ up.framework = (function () {
     @internal
     */
     /*-
-    Boots the Unpoly framework.
+    Manually boots the Unpoly framework.
   
-    **This is called automatically** by including the Unpoly JavaScript files.
+    It is not usually necessary to call `up.boot()` yourself. When you load [Unpoly's JavaScript file](/install),
+    Unpoly will automatically boot on [`DOMContentLoaded`](https://developer.mozilla.org/en-US/docs/Web/API/Window/DOMContentLoaded_event).
+    There are only two cases when you would boot manually:
   
-    Unpoly will not boot if the current browser is [not supported](/up.browser.isSupported).
+    - When you load Unpoly with `<script async>`
+    - When you explicitly ask to manually boot by loading Unpoly with [`<script up-boot="manual">`](/script-up-boot-manual).
+  
+    Before you manually boot, Unpoly should be configured and compilers should be registered.
+    Booting will cause Unpoly to [compile](/up.hello) the initial page.
+  
+    Unpoly will refuse to boot if the current browser is [not supported](/up.framework.isSupported).
     This leaves you with a classic server-side application on legacy browsers.
   
     @function up.boot
-    @internal
+    @experimental
     */
     function boot() {
+        if (readyState !== 'configuring') {
+            // In an app with a lot of async script the user may attempt to boot us twice.
+            console.error('Unpoly has already booted');
+            return;
+        }
         // This is called synchronously after all Unpoly modules have been parsed
         // and executed. We cannot delay booting until the DOM is ready, since by then
         // all user-defined event listeners and compilers will have registered.
         // Note that any non-async scripts after us will delay DOMContentLoaded.
-        let supportIssue = up.browser.supportIssue();
+        let supportIssue = up.framework.supportIssue();
         if (!supportIssue) {
-            // Some Unpoly modules will use the up:framework:boot event to:
-            //
-            // - Snapshot their state before user-defined compilers, handlers, etc. have
-            //   been registered. We need to know this state for when we up.reset() later.
-            // - Run delayed initialization that could not run at load time due to
-            //   circular dependencies.
+            // Change the state in case any user-provided compiler calls up.boot().
+            // up.boot() is a no-op unless readyState === 'configuring'.
+            readyState = 'booting';
             up.emit('up:framework:boot', { log: false });
-            booting = false;
-            // From here on, all event handlers (both Unpoly's and user code) want to
-            // work with the DOM, so wait for the DOM to be ready.
-            up.event.onReady(function () {
-                // By now all non-sync <script> tags have been loaded and called, including
-                // those after us. All user-provided compilers, event handlers, etc. have
-                // been registered.
-                //
-                // The following event will cause Unpoly to compile the <body>.
-                up.emit('up:app:boot', { log: 'Booting user application' });
-            });
+            readyState = 'booted';
         }
         else {
-            console.error("Unpoly cannot load: %s", supportIssue);
+            console.error("Unpoly cannot boot: %s", supportIssue);
         }
     }
+    function mustBootManually() {
+        let unpolyScript = document.currentScript;
+        // If we're is loaded via <script async>, there are no guarantees
+        // when we're called or when subsequent scripts that configure Unpoly
+        // have executed
+        if (unpolyScript?.async) {
+            return true;
+        }
+        // If we're loaded with <script up-boot="manual"> the user explicitly
+        // requested to boot Unpoly manually.
+        if (unpolyScript?.getAttribute('up-boot') === 'manual') {
+            return true;
+        }
+        // If we're loaded this late, someone loads us dynamically.
+        // We don't know when subsequent scripts that configure Unpoly
+        // have executed.
+        if (document.readyState === 'complete') {
+            return true;
+        }
+    }
+    /*-
+    Prevent Unpoly from booting automatically.
+  
+    By default Unpoly [automatically boots](/install#initialization)
+    on [`DOMContentLoaded`](https://developer.mozilla.org/en-US/docs/Web/API/Window/DOMContentLoaded_event).
+    To prevent this, add an `[up-boot="manual"]` attribute to the `<script>` element
+    that loads Unpoly:
+  
+    ```html
+    <script src="unpoly.js" up-boot="manual"></script>
+    ```
+    You may then call `up.boot()` to manually boot Unpoly at a later time.
+  
+    ### Browser support
+  
+    To use this feature in Internet Explorer 11 you need a polyfill for `document.currentScript`.
+  
+    @selector script[up-boot=manual]
+    @experimental
+    */
+    function onEvaled() {
+        up.emit('up:framework:evaled', { log: false });
+        if (mustBootManually()) {
+            console.debug('Call up.boot() after you have configured Unpoly');
+        }
+        else {
+            // (1) On DOMContentLoaded we know that all non-[async] scripts have executed.
+            // (2) Deferred scripts execute after the DOM was parsed (document.readyState === 'interactive'),
+            //     but before DOMContentLoaded. That's why we must *not* boot synchonously when
+            //     document.readyState === 'interactive'. We must wait until DOMContentLoaded, when we know that
+            //     subsequent users scripts have executed and (possibly) configured Unpoly.
+            // (3) There are no guarantees when [async] scripts execute. These must boot Unpoly manually.
+            document.addEventListener('DOMContentLoaded', boot);
+        }
+        // After this line user scripts may run and configure Unpoly, add compilers, etc.
+        readyState = 'configuring';
+    }
     function startExtension() {
-        booting = true;
+        if (readyState !== 'configuring') {
+            throw new Error('Unpoly extensions must be loaded before booting');
+        }
+        readyState = 'evaling';
     }
     function stopExtension() {
-        booting = false;
+        readyState = 'configuring';
+    }
+    /*-
+    Returns whether Unpoly can boot in the current browser.
+  
+    If this returns `false` Unpoly will prevent itself from [booting](/up.boot)
+    and will not [compile](/up.compiler) the initial page.
+    This leaves you with a classic server-side application.
+  
+    ### Browser support
+  
+    Unpoly aims to supports all modern browsers.
+  
+    #### Chrome, Firefox, Edge, Safari
+  
+    Full support.
+  
+    #### Internet Explorer 11
+  
+    Full support with a `Promise` polyfill like [es6-promise](https://github.com/stefanpenner/es6-promise) (2.4 KB).\
+    Support may be removed when Microsoft retires IE11 in [June 2022](https://blogs.windows.com/windowsexperience/2021/05/19/the-future-of-internet-explorer-on-windows-10-is-in-microsoft-edge/).
+  
+    #### Internet Explorer 10 or lower
+  
+    Unpoly will not boot or [run compilers](/up.compiler),
+    leaving you with a classic server-side application.
+  
+    @function up.framework.isSupported
+    @stable
+    */
+    function isSupported() {
+        return !supportIssue();
+    }
+    function supportIssue() {
+        if (!up.browser.canPromise()) {
+            return "Browser doesn't support promises";
+        }
+        if (document.compatMode === 'BackCompat') {
+            return 'Browser is in quirks mode (missing DOCTYPE?)';
+        }
+        if (up.browser.isEdge18()) {
+            return 'Edge 18 or lower is unsupported';
+        }
     }
     return {
+        onEvaled,
         boot,
         startExtension,
         stopExtension,
         reset: emitReset,
-        get booting() { return booting; }
+        get evaling() { return readyState === 'evaling'; },
+        get booted() { return readyState === 'booted'; },
+        get beforeBoot() { return readyState !== 'booting' && readyState !== 'booted'; },
+        isSupported,
+        supportIssue,
     };
 })();
+up.boot = up.framework.boot;
 
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (() => {
 
 /*-
@@ -10585,7 +10878,7 @@ This module contains functions to [emit](/up.emit) and [observe](/up.on) DOM eve
 While the browser also has built-in functions to work with events,
 you will find Unpoly's functions to be very concise and feature-rich.
 
-*# Events emitted by Unpoly
+### Events emitted by Unpoly
 
 Most Unpoly features emit events that are prefixed with `up:`.
 
@@ -10624,6 +10917,7 @@ up.event = (function () {
   
     - You may pass a selector for [event delegation](https://davidwalsh.name/event-delegate).
     - The event target is automatically passed as a second argument.
+    - Your event listener will not be called when Unpoly has not [booted](/up.boot) in an unsupported browser
     - You may register a listener to multiple events by passing a space-separated list of event name (e.g. `"click mousedown"`)
     - You may register a listener to multiple elements in a single `up.on()` call, by passing a [list](/up.util.isList) of elements.
     - You use an [`[up-data]`](/up-data) attribute to [attach structured data](/up.on#attaching-structured-data)
@@ -11041,30 +11335,6 @@ up.event = (function () {
         event.stopImmediatePropagation();
         event.preventDefault();
     }
-    /*-
-    Runs the given callback when the the initial HTML document has been completely loaded.
-  
-    The callback is guaranteed to see the fully parsed DOM tree.
-    This function does not wait for stylesheets, images or frames to finish loading.
-  
-    If `up.event.onReady()` is called after the initial document was loaded,
-    the given callback is run immediately.
-  
-    @function up.event.onReady
-    @param {Function} callback
-      The function to call then the DOM tree is acessible.
-    @experimental
-    */
-    function onReady(callback) {
-        // Values are "loading", "interactive" and "completed".
-        // https://developer.mozilla.org/en-US/docs/Web/API/Document/readyState
-        if (document.readyState !== 'loading') {
-            callback();
-        }
-        else {
-            document.addEventListener('DOMContentLoaded', callback);
-        }
-    }
     const keyModifiers = ['metaKey', 'shiftKey', 'ctrlKey', 'altKey'];
     /*-
     @function up.event.isUnmodified
@@ -11149,7 +11419,6 @@ up.event = (function () {
         assertEmitted,
         onEscape,
         halt,
-        onReady,
         isUnmodified,
         fork,
         keyModifiers
@@ -11163,7 +11432,7 @@ up.emit = up.event.emit;
 
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (() => {
 
 /*-
@@ -11182,7 +11451,7 @@ While the protocol can help you optimize performance and handle some edge cases,
 implementing it is **entirely optional**. For instance, `unpoly.com` itself is a static site
 that uses Unpoly on the frontend and doesn't even have an active server component.
 
-*# Existing implementations
+### Existing implementations
 
 You should be able to implement the protocol in a very short time.
 
@@ -11380,23 +11649,39 @@ up.protocol = (function () {
         return extractHeader(xhr, 'clearCache', parseClearCacheValue);
     }
     /*-
-    The server may send this optional response header with the value `clear` to [clear the cache](/up.cache.clear).
+    The server may send this optional response header to control which previously cached responses should be [uncached](/up.cache.clear) after this response.
   
-    ### Example
+    The value of this header is a [URL pattern](/url-patterns) matching responses that should be uncached.
+  
+    For example, to uncache all responses to URLs starting with `/notes/`:
   
     ```http
-    X-Up-Cache: clear
+    X-Up-Clear-Cache: /notes/*
     ```
   
-    @header X-Up-Cache
-    @param value
-      The string `"clear"`.
+    ### Overriding the client-side default
+  
+    If the server does not send an `X-Up-Clear-Cache` header, Unpoly will [clear the entire cache](/up.network.config#config.clearCache) after a non-GET request.
+  
+    You may force Unpoly to *keep* the cache after a non-GET request:
+  
+    ```http
+    X-Up-Clear-Cache: false
+    ```
+  
+    You may also force Unpoly to *clear* the cache after a GET request:
+  
+    ```http
+    X-Up-Clear-Cache: *
+    ```
+  
+    @header X-Up-Clear-Cache
     @stable
     */
     /*-
     This request header contains a timestamp of an existing fragment that is being [reloaded](/up.reload).
   
-    The timestamp must be explicitely set by the user as an `[up-time]` attribute on the fragment.
+    The timestamp must be explicitly set by the user as an `[up-time]` attribute on the fragment.
     It should indicate the time when the fragment's underlying data was last changed.
   
     See `[up-time]` for a detailed example.
@@ -11710,7 +11995,7 @@ up.protocol = (function () {
     ### Rendering content
   
     The response may contain `text/html` content. If the root layer is targeted,
-    the `X-Up-Accept-Layer` header is ignored and the fragment is updated with
+    the `X-Up-Dismiss-Layer` header is ignored and the fragment is updated with
     the response's HTML content.
   
     If you know that an overlay will be closed don't want to render HTML,
@@ -11719,7 +12004,7 @@ up.protocol = (function () {
     ```http
     HTTP/1.1 200 OK
     Content-Type: text/html
-    X-Up-Accept-Layer: {"user_id": 1012}
+    X-Up-Dismiss-Layer: {"user_id": 1012}
     X-Up-Target: :none
     ```
   
@@ -11841,11 +12126,27 @@ up.protocol = (function () {
       <meta name='csrf-token' content='secret12345'>
       ```
   
+    @param {string|Function(): string} [config.cspNonce]
+      A [CSP script nonce](https://content-security-policy.com/nonce/)
+      for the initial page that [booted](/up.boot) Unpoly.
+  
+      The nonce let Unpoly run JavaScript in HTML attributes like
+      [`[up-on-loaded]`](/a-up-follow#up-on-loaded) or [`[up-on-accepted]`](/a-up-layer-new#up-on-accepted).
+      See [Working with a strict Content Security Policy](/csp).
+  
+      The nonce can either be configured as a string or as function that returns the nonce.
+  
+      Defaults to the `content` attribute of a `<meta>` tag named `csp-nonce`:
+  
+      ```
+      <meta name='csrf-token' content='secret98765'>
+      ```
+  
     @param {string} [config.methodParam='_method']
       The name of request parameter containing the original request method when Unpoly needs to wrap
       the method.
   
-      Methods must be wrapped when making a [full page request](/up.browser.loadPage) with a methods other
+      Methods must be wrapped when making a [full page request](/up.network.loadPage) with a methods other
       than GET or POST. In this case Unpoly will make a POST request with the original request method
       in a form parameter named `_method`:
   
@@ -11863,7 +12164,9 @@ up.protocol = (function () {
         methodParam: '_method',
         csrfParam() { return e.metaContent('csrf-param'); },
         csrfToken() { return e.metaContent('csrf-token'); },
-        csrfHeader: 'X-CSRF-Token' // Used by Rails. Other frameworks use different headers.
+        cspNonce() { return e.metaContent('csp-nonce'); },
+        csrfHeader: 'X-CSRF-Token',
+        nonceableAttributes: ['up-observe', 'up-on-accepted', 'up-on-dismissed', 'up-on-loaded', 'up-on-finished', 'up-observe'],
     }));
     function csrfHeader() {
         return u.evalOption(config.csrfHeader);
@@ -11873,6 +12176,25 @@ up.protocol = (function () {
     }
     function csrfToken() {
         return u.evalOption(config.csrfToken);
+    }
+    function cspNonce() {
+        return u.evalOption(config.cspNonce);
+    }
+    function cspNoncesFromHeader(cspHeader) {
+        let nonces = [];
+        if (cspHeader) {
+            let parts = cspHeader.split(/\s*;\s*/);
+            for (let part of parts) {
+                if (part.indexOf('script-src') === 0) {
+                    let noncePattern = /'nonce-([^']+)'/g;
+                    let match;
+                    while (match = noncePattern.exec(part)) {
+                        nonces.push(match[1]);
+                    }
+                }
+            }
+        }
+        return nonces;
     }
     function wrapMethod(method, params) {
         params.add(config.methodParam, method);
@@ -11897,15 +12219,17 @@ up.protocol = (function () {
         csrfHeader,
         csrfParam,
         csrfToken,
+        cspNonce,
         initialRequestMethod,
         headerize,
-        wrapMethod
+        wrapMethod,
+        cspNoncesFromHeader,
     };
 })();
 
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (() => {
 
 /*-
@@ -11929,13 +12253,13 @@ up.log = (function () {
     Configures the logging output on the developer console.
   
     @property up.log.config
-    @param {boolean} [options.enabled=false]
+    @param {boolean} [config.enabled=false]
       Whether Unpoly will print debugging information to the developer console.
   
       Debugging information includes which elements are being [compiled](/up.syntax)
       and which [events](/up.event) are being emitted.
       Note that errors will always be printed, regardless of this setting.
-    @param {boolean} [options.banner=true]
+    @param {boolean} [config.banner=true]
       Print the Unpoly banner to the developer console.
     @stable
     */
@@ -11993,7 +12317,7 @@ up.log = (function () {
             console[stream](message, ...args);
         }
     }
-    const printBanner = function () {
+    function printBanner() {
         if (!config.banner) {
             return;
         }
@@ -12019,8 +12343,8 @@ up.log = (function () {
         else {
             console.log(logo + text);
         }
-    };
-    up.on('up:app:boot', printBanner);
+    }
+    up.on('up:framework:boot', printBanner);
     up.on('up:framework:reset', reset);
     function setEnabled(value) {
         sessionStore.set('enabled', value);
@@ -12116,7 +12440,7 @@ up.log = (function () {
         disable,
         fail,
         muteUncriticalRejection,
-        isEnabled() { return config.enabled; }
+        isEnabled() { return config.enabled; },
     };
 })();
 up.puts = up.log.puts;
@@ -12125,7 +12449,7 @@ up.fail = up.log.fail;
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (() => {
 
 /*-
@@ -12371,7 +12695,7 @@ up.syntax = (function () {
     */
     function registerMacro(...args) {
         const macro = buildCompiler(args);
-        if (up.framework.booting) {
+        if (up.framework.evaling) {
             macro.priority = detectSystemMacroPriority(macro.selector) ||
                 up.fail('Unregistered priority for system macro %o', macro.selector);
         }
@@ -12432,7 +12756,7 @@ up.syntax = (function () {
         let [selector, options, callback] = parseCompilerArgs(args);
         options = u.options(options, {
             selector,
-            isDefault: up.framework.booting,
+            isDefault: up.framework.evaling,
             priority: 0,
             batch: false,
             keep: false,
@@ -12441,6 +12765,9 @@ up.syntax = (function () {
         return u.assign(callback, options);
     }
     function insertCompiler(queue, newCompiler) {
+        if (up.framework.booted) {
+            up.puts('up.compiler()', 'Compiler %s was registered after booting Unpoly. Compiler will run for future fragments.', newCompiler.selector);
+        }
         let existingCompiler;
         let index = 0;
         while ((existingCompiler = queue[index]) && (existingCompiler.priority >= newCompiler.priority)) {
@@ -12627,7 +12954,7 @@ up.data = up.syntax.data;
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (() => {
 
 /*-
@@ -12670,7 +12997,7 @@ up.history = (function () {
     /*-
     Returns a normalized URL for the previous history entry.
   
-    Only history entries pushed by Unpoly will be considered.
+    Only history entries added by Unpoly functions will be considered.
   
     @property up.history.previousLocation
     @param {string} previousLocation
@@ -12684,12 +13011,19 @@ up.history = (function () {
         nextPreviousLocation = undefined;
         trackCurrentLocation();
     }
-    function normalizeURL(url, normalizeOptions = {}) {
-        normalizeOptions.hash = true;
-        return u.normalizeURL(url, normalizeOptions);
+    const DEFAULT_NORMALIZE_OPTIONS = { hash: true };
+    function normalizeURL(url, options) {
+        // The reason why we this takes an { options } object is that
+        // isCurrentLocation() ignores a trailing slash. This is used to check whether
+        // we're already at the given URL before pushing a history state.
+        options = u.merge(DEFAULT_NORMALIZE_OPTIONS, options);
+        return u.normalizeURL(url, options);
     }
     /*-
     Returns a normalized URL for the current browser location.
+  
+    The returned URL is an absolute pathname like `"/path"` without a hostname or port.
+    It will include a `#hash` fragment and query string, if present.
   
     Note that if the current [layer](/up.layer) does not have [visible history](/up.Layer.prototype.history),
     the browser's address bar will show the location of an ancestor layer.
@@ -12716,11 +13050,51 @@ up.history = (function () {
         }
     }
     trackCurrentLocation();
-    function isCurrentLocation(url) {
-        // Some web frameworks care about a trailing slash, some consider it optional.
-        // Only for the equality test (is this the current URL) we consider it optional.
-        const normalizeOptions = { stripTrailingSlash: true };
-        return normalizeURL(url, normalizeOptions) === currentLocation(normalizeOptions);
+    // Some web frameworks care about a trailing slash, some consider it optional.
+    // Only for the equality test ("is this the current URL?") we consider it optional.
+    // Note that we inherit { hash: true } from DEFAULT_NORMALIZE_OPTIONS.
+    const ADDITIONAL_NORMALIZE_OPTIONS_FOR_COMPARISON = { trailingSlash: false };
+    /*-
+    Returns whether the given URL matches the [current browser location](/up.history.location).
+  
+    ### Examples
+  
+    ```js
+    location.hostname // => '/path'
+  
+    up.history.isLocation('/path') // => true
+    up.history.isLocation('/path?query') // => false
+    up.history.isLocation('/path#hash') // => false
+    up.history.isLocation('/other') // => false
+    ```
+  
+    The given URL is [normalized](/up.util.normalizeURL), so any URL string pointing to the browser location
+    will match:
+  
+    ```js
+    location.hostname // => '/current-host'
+    location.pathname // => '/foo'
+  
+    up.history.isLocation('/foo') // => true
+    up.history.isLocation('http://current-host/foo') // => true
+    up.history.isLocation('http://otgher-host/foo') // => false
+    ```
+  
+    @function up.history.isLocation
+    @param {string} url
+      The URL to compare against the current browser location.
+  
+      This can be a either an absolute pathname (`/path`), a relative filename (`index.html`) or a fully qualified URL (`https://...`).
+    @param {boolean} [options.hash=true]
+      Whether to consider `#hash` fragments in the given or current URLs.
+  
+      When set to `false` this function will consider the URLs `/foo#one` and `/foo#two` to be equal.
+    @return {boolean}
+    @experimental
+    */
+    function isLocation(url, options) {
+        options = u.merge(ADDITIONAL_NORMALIZE_OPTIONS_FOR_COMPARISON, options);
+        return normalizeURL(url, options) === currentLocation(options);
     }
     /*-
     Replaces the current history entry and updates the
@@ -12739,8 +13113,9 @@ up.history = (function () {
     @internal
     */
     function replace(url, options = {}) {
+        url = normalizeURL(url);
         if (manipulate('replaceState', url) && (options.event !== false)) {
-            emit('up:location:changed', { url, reason: 'replace', log: `Replaced state for ${u.urlWithoutHost(url)}` });
+            emit('up:location:changed', { url, reason: 'replace', log: `Replaced state for ${url}` });
         }
     }
     /*-
@@ -12753,6 +13128,8 @@ up.history = (function () {
     Note that [fragment navigation](/navigation) will automatically update the
     browser's location bar for you.
   
+    Does not add a history entry if the the given URL is already the current browser location.
+  
     Emits event `up:location:changed`.
   
     @function up.history.push
@@ -12762,8 +13139,8 @@ up.history = (function () {
     */
     function push(url) {
         url = normalizeURL(url);
-        if (!isCurrentLocation(url) && manipulate('pushState', url)) {
-            up.emit('up:location:changed', { url, reason: 'push', log: `Advanced to location ${u.urlWithoutHost(url)}` });
+        if (!isLocation(url) && manipulate('pushState', url)) {
+            up.emit('up:location:changed', { url, reason: 'push', log: `Advanced to location ${url}` });
         }
     }
     /*-
@@ -12854,7 +13231,7 @@ up.history = (function () {
             replace(currentLocation(), { event: false });
         }
     }
-    up.on('up:app:boot', function () {
+    up.on('up:framework:boot', function () {
         if ('jasmine' in window) {
             // Can't delay this in tests.
             register();
@@ -12912,17 +13289,17 @@ up.history = (function () {
         replace,
         get location() { return currentLocation(); },
         get previousLocation() { return previousLocation; },
-        isLocation: isCurrentLocation,
-        normalizeURL
+        normalizeURL,
+        isLocation
     };
 })();
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-__webpack_require__(76);
+__webpack_require__(77);
 const u = up.util;
 const e = up.element;
 /*-
@@ -13322,7 +13699,7 @@ up.fragment = (function () {
       for the fragment.
   
     @param {string|Element} [options.fragment]
-      A string of HTML comprising *only* the new fragment.
+      A string of HTML comprising *only* the new fragment's [outer HTML](https://developer.mozilla.org/en-US/docs/Web/API/Element/outerHTML).
   
       The `{ target }` selector will be derived from the root element in the given
       HTML:
@@ -13422,11 +13799,17 @@ up.fragment = (function () {
     @param {boolean|string} [options.clearCache]
       Whether existing [cache](/up.request#caching) entries will be [cleared](/up.cache.clear) with this request.
   
-      You may also pass a [URL pattern](/url-patterns) to only clear matching requests.
+      Defaults to the result of `up.network.config.clearCache`, which
+      defaults to clearing the entire cache after a non-GET request.
   
-      By default a non-GET request will clear the entire cache.
+      To only uncache some requests, pass an [URL pattern](/url-patterns) that matches requests to uncache.
+      You may also pass a function that accepts an existing `up.Request` and returns a boolean value.
   
-      Also see [`up.request({ clearCache })`](/up.request#options.clearCache) and `up.network.config.clearCache`.
+    @param {boolean|string|Function(request): boolean} [options.solo]
+      With `{ solo: true }` Unpoly will [abort](/up.network.abort) all other requests before laoding the new fragment.
+  
+      To only abort some requests, pass an [URL pattern](/url-patterns) that matches requests to abort.
+      You may also pass a function that accepts an existing `up.Request` and returns a boolean value.
   
     @param {Element|jQuery} [options.origin]
       The element that triggered the change.
@@ -13605,12 +13988,19 @@ up.fragment = (function () {
     to mutate options to the `up.render()` call that will process the server response.
   
     @event up:fragment:loaded
+  
     @param event.preventDefault()
       Event listeners may call this method to prevent the fragment change.
+  
     @param {up.Request} event.request
       The original request to the server.
+  
     @param {up.Response} event.response
       The server response.
+  
+    @param {Element} [event.origin]
+      The link or form element that caused the fragment update.
+  
     @param {Object} event.renderOptions
       Options for the `up.render()` call that will process the server response.
     @stable
@@ -13717,14 +14107,16 @@ up.fragment = (function () {
     @stable
     */
     /*-
-    Compiles a page fragment that has been inserted into the DOM
+    Manually compiles a page fragment that has been inserted into the DOM
     by external code.
   
+    All registered [compilers](/up.compiler) and [macros](/up.macro) will be called
+    with matches in the given `element`.
+  
     **As long as you manipulate the DOM using Unpoly, you will never
-    need to call this method.** You only need to use `up.hello()` if the
+    need to call `up.hello()`.** You only need to use `up.hello()` if the
     DOM is manipulated without Unpoly' involvement, e.g. by setting
-    the `innerHTML` property or calling jQuery methods like
-    `html`, `insertAfter` or `appendTo`:
+    the `innerHTML` property:
   
     ```html
     element = document.createElement('div')
@@ -13736,7 +14128,7 @@ up.fragment = (function () {
     event.
   
     @function up.hello
-    @param {Element|jQuery} target
+    @param {Element|jQuery} element
     @param {Element|jQuery} [options.origin]
     @return {Element}
       The compiled element
@@ -14648,9 +15040,9 @@ up.fragment = (function () {
         selector = parseSelector(selector, element, options);
         return selector.matches(element);
     }
-    up.on('up:app:boot', function () {
+    up.on('up:framework:boot', function () {
         const { body } = document;
-        body.setAttribute('up-source', up.history.location);
+        body.setAttribute('up-source', u.normalizeURL(location.href, { hash: false }));
         hello(body);
         if (!up.browser.canPushState()) {
             return up.warn('Cannot push history changes. Next fragment update will load in a new page.');
@@ -14707,16 +15099,16 @@ u.delegate(up, 'context', () => up.layer.current);
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (() => {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-__webpack_require__(78);
+__webpack_require__(79);
 /*-
 Scrolling viewports
 ===================
@@ -15206,22 +15598,6 @@ up.viewport = (function () {
         return up.fragment.toTarget(viewport);
     }
     /*-
-    Returns a hash with scroll positions.
-  
-    Each key in the hash is a viewport selector. The corresponding
-    value is the viewport's top scroll position:
-  
-        up.viewport.scrollTops()
-        => { '.main': 0, '.sidebar': 73 }
-  
-    @function up.viewport.scrollTops
-    @return Object<string, number>
-    @internal
-    */
-    function scrollTops(options = {}) {
-        return u.mapObject(getAll(options), viewport => [scrollTopKey(viewport), viewport.scrollTop]);
-    }
-    /*-
     @function up.viewport.fixedElements
     @internal
     */
@@ -15259,6 +15635,19 @@ up.viewport = (function () {
             options.layer.lastScrollTops.set(url, tops);
         }
     }
+    /*-
+    Returns a hash with scroll positions.
+  
+    Each key in the hash is a viewport selector. The corresponding
+    value is the viewport's top scroll position:
+  
+        getScrollTops()
+        => { '.main': 0, '.sidebar': 73 }
+  
+    @function up.viewport.getScrollTops
+    @return Object<string, number>
+    @internal
+    */
     function getScrollTops(viewports) {
         return u.mapObject(viewports, viewport => [scrollTopKey(viewport), viewport.scrollTop]);
     }
@@ -15281,7 +15670,7 @@ up.viewport = (function () {
         const [viewports, options] = parseOptions(args);
         const url = options.layer.location;
         const scrollTopsForURL = options.layer.lastScrollTops.get(url) || {};
-        up.puts('up.viewport.restoreScroll()', 'Restoring scroll positions for URL %s to %o', u.urlWithoutHost(url), scrollTopsForURL);
+        up.puts('up.viewport.restoreScroll()', 'Restoring scroll positions for URL %s to %o', url, scrollTopsForURL);
         return setScrollTops(viewports, scrollTopsForURL);
     }
     function parseOptions(args) {
@@ -15520,23 +15909,24 @@ up.viewport = (function () {
         return value?.replace(/^#/, '');
     }
     let userScrolled = false;
-    up.on('scroll', { once: true }, () => userScrolled = true);
-    up.on('up:app:boot', () => // When the initial URL contains an #anchor link, the browser will automatically
-     
-    // reveal a matching fragment. We want to override that behavior with our own,
-    // so we can honor configured obstructions. Since we cannot disable the automatic
-    // browser behavior we need to ensure our code runs after it.
-    //
-    // In Chrome, when reloading, the browser behavior happens before DOMContentLoaded.
-    // However, when we follow a link with an #anchor URL, the browser
-    // behavior happens *after* DOMContentLoaded. Hence we wait one more task.
-    u.task(function () {
-        // If the user has scrolled while the page was loading, we will
-        // not reset their scroll position by revealing the #anchor fragment.
-        if (!userScrolled) {
-            return revealHash();
-        }
-    }));
+    up.on('scroll', { once: true, beforeBoot: true }, () => userScrolled = true);
+    up.on('up:framework:boot', function () {
+        // When the initial URL contains an #anchor link, the browser will automatically
+        // reveal a matching fragment. We want to override that behavior with our own,
+        // so we can honor configured obstructions. Since we cannot disable the automatic
+        // browser behavior we need to ensure our code runs after it.
+        //
+        // In Chrome, when reloading, the browser behavior happens before DOMContentLoaded.
+        // However, when we follow a link with an #anchor URL, the browser
+        // behavior happens *after* DOMContentLoaded. Hence we wait one more task.
+        u.task(function () {
+            // If the user has scrolled while the page was loading, we will
+            // not reset their scroll position by revealing the #anchor fragment.
+            if (!userScrolled) {
+                return revealHash();
+            }
+        });
+    });
     up.on(window, 'hashchange', () => revealHash());
     up.on('up:framework:reset', reset);
     return {
@@ -15557,16 +15947,14 @@ up.viewport = (function () {
         rootOverflowElement,
         isRoot,
         scrollbarWidth,
-        scrollTops,
         saveScroll,
         restoreScroll,
         resetScroll,
         anchoredRight,
-        fixedElements,
         absolutize,
         focus: doFocus,
         tryFocus,
-        makeFocusable
+        makeFocusable,
     };
 })();
 up.focus = up.viewport.focus;
@@ -15575,13 +15963,13 @@ up.reveal = up.viewport.reveal;
 
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (() => {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (() => {
 
 /*-
@@ -16085,7 +16473,7 @@ up.motion = (function () {
     */
     function registerTransition(name, transition) {
         const fn = findTransitionFn(transition);
-        fn.isDefault = up.framework.booting;
+        fn.isDefault = up.framework.evaling;
         namedTransitions[name] = fn;
     }
     /*-
@@ -16124,16 +16512,16 @@ up.motion = (function () {
     */
     function registerAnimation(name, animation) {
         const fn = findAnimationFn(animation);
-        fn.isDefault = up.framework.booting;
+        fn.isDefault = up.framework.evaling;
         namedAnimations[name] = fn;
     }
-    function warnIfDisabled() {
+    up.on('up:framework:boot', function () {
         // Explain to the user why animations aren't working.
         // E.g. the user might have disabled animations in her OS.
         if (!isEnabled()) {
             up.puts('up.motion', 'Animations are disabled');
         }
-    }
+    });
     /*-
     Returns whether the given animation option will cause the animation
     to be skipped.
@@ -16250,7 +16638,6 @@ up.motion = (function () {
       @see server-errors
     @stable
     */
-    up.on('up:framework:boot', warnIfDisabled);
     up.on('up:framework:reset', reset);
     return {
         morph,
@@ -16273,10 +16660,10 @@ up.animate = up.motion.animate;
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-__webpack_require__(81);
+__webpack_require__(82);
 const u = up.util;
 /*-
 Network requests
@@ -16502,7 +16889,7 @@ up.network = (function () {
     By default Unpoly automatically clears the entire cache whenever it processes
     a request with an non-GET HTTP method. To customize this rule, use `up.network.config.clearCache`.
   
-    The server may also clear the cache by sending an [`X-Up-Cache: clear`](/X-Up-Cache) header.
+    The server may also clear the cache by sending an [`X-Up-Clear-Cache`](/X-Up-Clear-Cache) header.
   
     @function up.cache.clear
     @param {string} [pattern]
@@ -16648,10 +17035,16 @@ up.network = (function () {
     @param {boolean|string} [options.clearCache]
       Whether to [clear](/up.cache.clear) the [cache](/up.cache.get) after this request.
   
-      You may also pass a [URL pattern](/url-patterns) to only clear matching requests.
-  
       Defaults to the result of `up.network.config.clearCache`, which
       defaults to clearing the entire cache after a non-GET request.
+  
+      You may also pass a [URL pattern](/url-patterns) to only uncache matching responses.
+  
+    @param {boolean|string|Function} [options.solo]
+      With `{ solo: true }` Unpoly will [abort](/up.network.abort) all other requests before making this new request.
+  
+      To only abort some requests, pass an [URL pattern](/url-patterns) that matches requests to abort.
+      You may also pass a function that accepts an existing `up.Request` and returns a boolean value.
   
     @param {Object} [options.headers={}]
       An object of additional HTTP headers.
@@ -16681,6 +17074,11 @@ up.network = (function () {
   
     @param {string} [options.layer='current']
       The [layer](/up.layer) this request is associated with.
+  
+      If this request is intended to update an existing fragment, this is that fragment's layer.
+  
+      If this request is intended to [open an overlay](/opening-overlays),
+      the associated layer is the future overlay's parent layer.
   
     @param {string} [options.failLayer='current']
       The [layer](/up.layer) this request is associated with if the server [sends a HTTP status code](/server-errors).
@@ -16718,25 +17116,31 @@ up.network = (function () {
     function makeRequest(...args) {
         const request = new up.Request(parseRequestOptions(args));
         useCachedRequest(request) || queueRequest(request);
-        let solo = request.solo;
-        if (solo) {
-            // The { solo } option may also contain a function.
-            // This way users can excempt some requests from being solo-aborted
-            // by configuring up.fragment.config.navigateOptions.
-            queue.abortExcept(request, solo);
-        }
+        handleSolo(request);
         return request;
     }
     function mimicLocalRequest(options) {
-        let solo = options.solo;
-        if (solo) {
-            abortRequests(solo);
-        }
+        handleSolo(options);
         // We cannot consult config.clearCache since there is no up.Request
         // for a local update.
         let clearCache = options.clearCache;
         if (clearCache) {
             cache.clear(clearCache);
+        }
+    }
+    function handleSolo(requestOrOptions) {
+        let solo = requestOrOptions.solo;
+        if (solo && isBusy()) {
+            up.puts('up.request()', 'Change with { solo } option will abort other requests');
+            // The { solo } option may also contain a function.
+            // This way users can excempt some requests from being solo-aborted
+            // by configuring up.fragment.config.navigateOptions.
+            if (requestOrOptions instanceof up.Request) {
+                queue.abortExcept(requestOrOptions, solo);
+            }
+            else {
+                abortRequests(solo);
+            }
         }
     }
     function parseRequestOptions(args) {
@@ -16832,6 +17236,24 @@ up.network = (function () {
      */
     const isIdle = u.negate(isBusy);
     /*-
+    Makes a full-page request, replacing the entire browser environment with a new page from the server response.
+  
+    Also see `up.Request#loadPage()`.
+  
+    @function up.network.loadPage
+    @param {string} options.url
+      The URL to load.
+    @param {string} [options.method='get']
+      The method for the request.
+  
+      Methods other than GET or POST will be [wrapped](/up.protocol.config#config.methodParam) in a POST request.
+    @param {Object|Array|FormData|string} [options.params]
+    @experimental
+    */
+    function loadPage(requestsAttrs) {
+        new up.Request(requestsAttrs).loadPage();
+    }
+    /*-
     Returns whether optional requests should be avoided where possible.
   
     We assume the user wants to avoid requests if either of following applies:
@@ -16914,11 +17336,23 @@ up.network = (function () {
     The event is emitted on the layer that caused the request.
   
     @event up:request:aborted
+  
     @param {up.Request} event.request
       The aborted request.
+  
     @param {up.Layer} [event.layer]
-      The [layer](/up.layer) that caused the request.
+      The [layer](/up.layer) this request is associated with.
+  
+      If this request was intended to update an existing fragment, this is that fragment's layer.
+  
+      If this request was intended to [open an overlay](/opening-overlays),
+      the associated layer is the future overlay's parent layer.
+  
+    @param {Element} [event.origin]
+      The link or form element that caused the request.
+  
     @param event.preventDefault()
+  
     @experimental
     */
     /*-
@@ -16997,7 +17431,14 @@ up.network = (function () {
     @param {up.Request} event.request
       The request to be sent.
     @param {up.Layer} [event.layer]
-      The [layer](/up.layer) that caused the request.
+      The [layer](/up.layer) this request is associated with.
+  
+      If this request is intended to update an existing fragment, this is that fragment's layer.
+  
+      If this request is intended to [open an overlay](/opening-overlays),
+      the associated layer is the future overlay's parent layer.
+    @param {Element} [event.origin]
+      The link or form element that caused the request.
     @param event.preventDefault()
       Event listeners may call this method to prevent the request from being sent.
     @stable
@@ -17023,12 +17464,24 @@ up.network = (function () {
     The event is emitted on the layer that caused the request.
   
     @event up:request:loaded
+  
     @param {up.Request} event.request
       The request.
+  
     @param {up.Response} event.response
       The response that was received from the server.
+  
     @param {up.Layer} [event.layer]
-      The [layer](/up.layer) that caused the request.
+      The [layer](/up.layer) this request is associated with.
+  
+      If this request is intended to update an existing fragment, this is that fragment's layer.
+  
+      If this request is intended to [open an overlay](/opening-overlays),
+      the associated layer is the future overlay's parent layer.
+  
+    @param {Element} [event.origin]
+      The link or form element that caused the request.
+  
     @stable
     */
     /*-
@@ -17042,10 +17495,21 @@ up.network = (function () {
     The event is emitted on the layer that caused the request.
   
     @event up:request:fatal
+  
     @param {up.Request} event.request
-      The request.
+      The failed request.
+  
     @param {up.Layer} [event.layer]
-      The [layer](/up.layer) that caused the request.
+      The [layer](/up.layer) this request is associated with.
+  
+      If this request was intended to update an existing fragment, this is that fragment's layer.
+  
+      If this request was intended to [open an overlay](/opening-overlays),
+      the associated layer is the future overlay's parent layer.
+  
+    @param {Element} [event.origin]
+      The link or form element that caused the request.
+  
     @stable
     */
     function isSafeMethod(method) {
@@ -17073,7 +17537,8 @@ up.network = (function () {
         registerAliasForRedirect,
         queue,
         shouldReduceRequests,
-        mimicLocalRequest
+        mimicLocalRequest,
+        loadPage,
     };
 })();
 up.request = up.network.request;
@@ -17081,16 +17546,16 @@ up.cache = up.network.cache;
 
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (() => {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-__webpack_require__(83);
+__webpack_require__(84);
 const u = up.util;
 const e = up.element;
 /*-
@@ -17786,6 +18251,8 @@ up.layer = (function () {
       | `value`    | The overlay's [acceptance value](/closing-overlays#overlay-result-values) |
       | `event`    | An `up:layer:accepted` event                  |
   
+      With a strict Content Security Policy [additional rules apply](/csp).
+  
     @param [up-on-dismissed]
       A JavaScript snippet that is called when the overlay was [dismissed](/closing-overlays).
   
@@ -17797,6 +18264,8 @@ up.layer = (function () {
       | `layer`    | An `up.Layer` object for the dismissed overlay |
       | `value`    | The overlay's [dismissal value](/closing-overlays#overlay-result-values) |
       | `event`    | An `up:layer:dismissed` event                   |
+  
+      With a strict Content Security Policy [additional rules apply](/csp).
   
     @param [up-accept-event]
       One or more space-separated event types that will cause this overlay to automatically be
@@ -17923,7 +18392,10 @@ up.layer = (function () {
     up.on('up:fragment:destroyed', function () {
         stack.sync();
     });
-    up.on('up:framework:boot', function () {
+    up.on('up:framework:evaled', function () {
+        // Due to circular dependencies we must delay initialization of the stack until all of
+        // Unpoly's submodules have been evaled. We cannot delay initialization until up:framework:boot,
+        // since by then user scripts have run and event listeners will no longer register as "default".
         stack = new up.LayerStack();
     });
     up.on('up:framework:reset', reset);
@@ -18290,16 +18762,16 @@ up.layer = (function () {
 
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (() => {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-__webpack_require__(85);
+__webpack_require__(86);
 /*-
 Linking to fragments
 ====================
@@ -18534,7 +19006,7 @@ up.link = (function () {
             if (options.cache == null) {
                 options.cache = 'auto';
             }
-            options.basic = true; //
+            options.basic = true;
             const request = new up.Request(options);
             return request.willCache();
         }
@@ -18589,6 +19061,13 @@ up.link = (function () {
       You may pass this additional `options` object to supplement or override
       options parsed from the link attributes.
   
+    @param {boolean} [options.navigate=true]
+      Whether this fragment update is considered [navigation](/navigation).
+  
+      Setting this to `false` will disable most defaults, causing
+      Unpoly to render a fragment without side-effects like updating history
+      or scrolling.
+  
     @return {Promise<up.RenderResult>}
       A promise that will be fulfilled when the link destination
       has been loaded and rendered.
@@ -18607,7 +19086,7 @@ up.link = (function () {
         parser.json('params');
         parser.booleanOrString('cache');
         parser.booleanOrString('clearCache');
-        parser.boolean('solo');
+        parser.booleanOrString('solo');
         parser.string('contentType', { attr: ['enctype', 'up-content-type'] });
         return options;
     }
@@ -18797,7 +19276,7 @@ up.link = (function () {
         return u.normalizeMethod(options.method || link.getAttribute('up-method') || link.getAttribute('data-method'));
     }
     function followURL(link, options = {}) {
-        const url = options.url || link.getAttribute('href') || link.getAttribute('up-href');
+        const url = options.url || link.getAttribute('up-href') || link.getAttribute('href');
         // Developers sometimes make a <a href="#"> to give a JavaScript interaction standard
         // link behavior (like keyboard navigation or default styles). However, we don't want to
         // consider this  a link with remote content, and rather honor [up-content], [up-document]
@@ -19062,6 +19541,13 @@ up.link = (function () {
   
     @selector a[up-follow]
   
+    @param [up-navigate='true']
+      Whether this fragment update is considered [navigation](/navigation).
+  
+      Setting this to `false` will disable most defaults documented below,
+      causing Unpoly to render a fragment without side-effects like updating history
+      or scrolling.
+  
     @param [href]
       The URL to fetch from the server.
   
@@ -19073,7 +19559,7 @@ up.link = (function () {
   
       If omitted a [main target](/up-main) will be rendered.
   
-    @param [up-fallback]
+    @param [up-fallback='true']
       Specifies behavior if the [target selector](/up.render#options.target) is missing from the current page or the server response.
   
       If set to a CSS selector, Unpoly will attempt to replace that selector instead.
@@ -19081,9 +19567,6 @@ up.link = (function () {
       If set to `true` Unpoly will attempt to replace a [main target](/up-main) instead.
   
       If set to `false` Unpoly will immediately reject the render promise.
-  
-    @param [up-navigate='true']
-      Whether this fragment update is considered [navigation](/navigation).
   
     @param [up-method='get']
       The HTTP method to use for the request.
@@ -19109,8 +19592,15 @@ up.link = (function () {
       E.g. the `X-Up-Target` header includes the targeted CSS selector.
       See `up.protocol` and `up.network.config.requestMetaKeys` for details.
   
+    @param [up-content]
+      A string for the fragment's new [inner HTML](https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML).
+  
+      If your HTML string also contains the fragment's [outer HTML](https://developer.mozilla.org/en-US/docs/Web/API/Element/outerHTML),
+      consider the `[up-fragment]` attribute instead.
+  
     @param [up-fragment]
-      A string of HTML comprising *only* the new fragment. No server request will be sent.
+      A string of HTML comprising *only* the new fragment's
+      [outer HTML](https://developer.mozilla.org/en-US/docs/Web/API/Element/outerHTML).
   
       The `[up-target]` selector will be derived from the root element in the given
       HTML:
@@ -19147,7 +19637,7 @@ up.link = (function () {
   
       See [handling server errors](/server-errors) for details.
   
-    @param [up-history]
+    @param [up-history='auto']
       Whether the browser URL and window title will be updated.
   
       If set to `true`, the history will always be updated, using the title and URL from
@@ -19198,7 +19688,7 @@ up.link = (function () {
       See [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function)
       for a list of available timing functions.
   
-    @param [up-cache]
+    @param [up-cache='auto']
       Whether to read from and write to the [cache](/up.request#caching).
   
       With `[up-cache=true]` Unpoly will try to re-use a cached response before connecting
@@ -19207,6 +19697,8 @@ up.link = (function () {
   
       With `[up-cache=auto]` Unpoly will use the cache only if `up.network.config.autoCache`
       returns `true` for the request.
+  
+      With `[up-cache=false]` Unpoly will always make a network request.
   
       Also see [`up.request({ cache })`](/up.request#options.cache).
   
@@ -19218,6 +19710,11 @@ up.link = (function () {
   
       Also see [`up.request({ clearCache })`](/up.request#options.clearCache) and `up.network.config.clearCache`.
   
+    @param [up-solo='true']
+      With `[up-solo=true]` Unpoly will [abort](/up.network.abort) all other requests before laoding the new fragment.
+  
+      To only abort some requests, pass an [URL pattern](/url-patterns) that matches requests to abort.
+  
     @param [up-layer='origin current']
       The [layer](/up.layer) in which to match and render the fragment.
   
@@ -19226,7 +19723,7 @@ up.link = (function () {
       To [open the fragment in a new overlay](/opening-overlays), pass `[up-layer=new]`.
       In this case attributes for `a[up-layer=new]` may also be used.
   
-    @param [up-peel]
+    @param [up-peel='true']
       Whether to close overlays obstructing the updated layer when the fragment is updated.
   
       This is only relevant when updating a layer that is not the [frontmost layer](/up.layer.front).
@@ -19241,7 +19738,7 @@ up.link = (function () {
     @param [up-hungry='true']
       Whether [`[up-hungry]`](/up-hungry) elements outside the updated fragment will also be updated.
   
-    @param [up-scroll]
+    @param [up-scroll='auto']
       How to scroll after the new fragment was rendered.
   
       See [scroll option](/scroll-option) for a list of allowed values.
@@ -19251,7 +19748,7 @@ up.link = (function () {
   
       Saved scroll positions can later be restored with [`[up-scroll=restore]`](/scroll-option#restoring-scroll-positions).
   
-    @param [up-focus]
+    @param [up-focus='auto']
       What to focus after the new fragment was rendered.
   
       See [focus option](/focus-option) for a list of allowed values.
@@ -19263,7 +19760,7 @@ up.link = (function () {
   
       If the user does not confirm the render promise will reject and no fragments will be updated.
   
-    @param [up-feedback]
+    @param [up-feedback='true']
       Whether to give the link an `.up-active` class
       while loading and rendering content.
   
@@ -19273,9 +19770,13 @@ up.link = (function () {
   
       The callback argument is a preventable `up:fragment:loaded` event.
   
+      With a strict Content Security Policy [additional rules apply](/csp).
+  
     @param [up-on-finished]
       A JavaScript snippet that is called when all animations have concluded and
       elements were removed from the DOM tree.
+  
+      With a strict Content Security Policy [additional rules apply](/csp).
   
     @stable
     */
@@ -19407,13 +19908,13 @@ up.follow = up.link.follow;
 
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (() => {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (() => {
 
 /*-
@@ -19449,7 +19950,7 @@ up.form = (function () {
       You can configure Unpoly to handle *all* forms on a page without requiring an `[up-submit]` attribute:
   
       ```js
-      up.form.config.submitSelectors.push('form']
+      up.form.config.submitSelectors.push('form')
       ```
   
       Individual forms may opt out with an `[up-submit=follow]` attribute.
@@ -19590,6 +20091,11 @@ up.form = (function () {
   
       You may pass this additional `options` object to supplement or override
       options parsed from the form attributes.
+  
+    @param {boolean} [options.navigate=true]
+      Whether this fragment update is considered [navigation](/navigation).
+  
+      Setting this to `false` will disable most defaults.
   
     @return {Promise<up.RenderResult>}
       A promise that will be fulfilled when the server response was rendered.
@@ -19784,6 +20290,15 @@ up.form = (function () {
     const observe = function (elements, ...args) {
         elements = e.list(elements);
         const fields = u.flatMap(elements, findFields);
+        const unnamedFields = u.reject(fields, 'name');
+        if (unnamedFields.length) {
+            // (1) We do not need to exclude the unnamed fields for up.FieldObserver, since that
+            //     parses values with up.Params.fromFields(), and that ignores unnamed fields.
+            // (2) Only warn, don't crash. There are some legitimate cases for having unnamed
+            //     a mix of named and unnamed fields in a form, and we don't want to prevent
+            //     <form up-observe> in that case.
+            up.warn('up.observe()', 'Will not observe fields without a [name]: %o', unnamedFields);
+        }
         const callback = u.extractCallback(args) || observeCallbackFromElement(elements[0]) || up.fail('up.observe: No change callback given');
         const options = u.extractOptions(args);
         options.delay = options.delay ?? e.numberAttr(elements[0], 'up-delay') ?? config.observeDelay;
@@ -19794,7 +20309,7 @@ up.form = (function () {
     function observeCallbackFromElement(element) {
         let rawCallback = element.getAttribute('up-observe');
         if (rawCallback) {
-            return new Function('value', 'name', rawCallback);
+            return up.NonceableCallback.fromString(rawCallback).toFunction('value', 'name');
         }
     }
     /*-
@@ -20137,7 +20652,7 @@ up.form = (function () {
     @selector form[up-submit]
   
     @params-note
-      All attributes for `a[up-follow]` may also be used.
+      All attributes for `a[up-follow]` may be used.
   
     @stable
     */
@@ -20468,6 +20983,8 @@ up.form = (function () {
     This is useful for observing text fields while the user is typing.
     If you want to submit the form after a change see [`input[up-autosubmit]`](/input-up-autosubmit).
   
+    With a strict Content Security Policy [additional rules apply](/csp).
+  
     The programmatic variant of this is the [`up.observe()`](/up.observe) function.
   
     ### Example
@@ -20528,6 +21045,8 @@ up.form = (function () {
   
     This is useful for observing text fields while the user is typing.
     If you want to submit the form after a change see [`input[up-autosubmit]`](/input-up-autosubmit).
+  
+    With a strict Content Security Policy [additional rules apply](/csp).
   
     The programmatic variant of this is the [`up.observe()`](/up.observe) function.
   
@@ -20648,7 +21167,7 @@ up.validate = up.form.validate;
 
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (() => {
 
 /*-
@@ -20728,10 +21247,11 @@ up.feedback = (function () {
     */
     const config = new up.Config(() => ({
         currentClasses: ['up-current'],
-        navSelectors: ['[up-nav]', 'nav']
+        navSelectors: ['[up-nav]', 'nav'],
     }));
     function reset() {
         config.reset();
+        up.layer.root.feedbackLocation = null;
     }
     const CLASS_ACTIVE = 'up-active';
     const SELECTOR_LINK = 'a, [up-href]';
@@ -20740,7 +21260,7 @@ up.feedback = (function () {
     }
     function normalizeURL(url) {
         if (url) {
-            return u.normalizeURL(url, { stripTrailingSlash: true });
+            return u.normalizeURL(url, { trailingSlash: false, hash: false });
         }
     }
     function linkURLs(link) {
@@ -20775,17 +21295,11 @@ up.feedback = (function () {
         const links = u.flatMap(navs, nav => e.subtree(nav, SELECTOR_LINK));
         updateLinks(links, options);
     }
-    const getLayerLocation = layer => // We store the last processed location in layer.feedbackLocation,
-     
-    // so multiple calls for the same layer won't unnecessarily reprocess links.
-    // We update the property on up:layer:location:changed.
-    //
-    // The { feedbackLocation } property may be nil if:
-    // (1) The layer was opened without a location, e.g. if it was created from local HTML.
-    // (2) The layer is the root layer and the location was never changed.
-    //     The initial page load does not emit an up:layer:location:changed event for
-    //     the root layer to be consistent with up:location:changed.
-    layer.feedbackLocation || layer.location;
+    function getNormalizedLayerLocation(layer) {
+        // Don't re-use layer.feedbackLocation since the current layer returns
+        // location.href in case someone changed the history using the pushState API.
+        return layer.feedbackLocation || normalizeURL(layer.location);
+    }
     function updateLinks(links, options = {}) {
         if (!links.length) {
             return;
@@ -20793,7 +21307,7 @@ up.feedback = (function () {
         const layer = options.layer || up.layer.get(links[0]);
         // An overlay might not have a { location } property, e.g. if it was created
         // from local { content }. In this case we do not set .up-current.
-        let layerLocation = getLayerLocation(layer);
+        let layerLocation = getNormalizedLayerLocation(layer);
         if (layerLocation) {
             for (let link of links) {
                 const isCurrent = linkURLs(link).isCurrent(layerLocation);
@@ -21008,6 +21522,8 @@ up.feedback = (function () {
     - the link's `[up-href]` attribute
     - the URL pattern in the link's [`[up-alias]`](/a-up-alias) attribute
   
+    Any `#hash` fragments in the link's or current URLs will be ignored.
+  
     @selector [up-nav]
     @stable
     */
@@ -21042,13 +21558,14 @@ up.feedback = (function () {
     */
     function updateLayerIfLocationChanged(layer) {
         const processedLocation = layer.feedbackLocation;
-        const currentLocation = normalizeURL(layer.location);
+        const layerLocation = getNormalizedLayerLocation(layer.location);
         // A history change might call this function multiple times,
         // since we listen to both up:location:changed and up:layer:location:changed.
+        // We also don't want to unnecessarily reprocess nav links, which is expensive.
         // For this reason we check whether the current location differs from
         // the last processed location.
-        if (!processedLocation || (processedLocation !== currentLocation)) {
-            layer.feedbackLocation = currentLocation;
+        if (!processedLocation || (processedLocation !== layerLocation)) {
+            layer.feedbackLocation = layerLocation;
             updateLinksWithinNavs(layer.element, { layer });
         }
     }
@@ -21078,13 +21595,13 @@ up.feedback = (function () {
         stop,
         around,
         aroundForOptions,
-        normalizeURL
+        normalizeURL,
     };
 })();
 
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (() => {
 
 /*-
@@ -21297,7 +21814,7 @@ up.radio = (function () {
 
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (() => {
 
 /*
@@ -21436,16 +21953,17 @@ __webpack_require__(72);
 __webpack_require__(73);
 __webpack_require__(74);
 __webpack_require__(75);
-__webpack_require__(77);
-__webpack_require__(79);
+__webpack_require__(76);
+__webpack_require__(78);
 __webpack_require__(80);
-__webpack_require__(82);
-__webpack_require__(84);
-__webpack_require__(86);
+__webpack_require__(81);
+__webpack_require__(83);
+__webpack_require__(85);
 __webpack_require__(87);
 __webpack_require__(88);
 __webpack_require__(89);
-up.framework.boot();
+__webpack_require__(90);
+up.framework.onEvaled();
 
 })();
 
