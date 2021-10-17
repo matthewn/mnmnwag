@@ -47,6 +47,9 @@ textarea {
 
 .post-info {
   font-style: italic;
+  & > div::after {
+    font-style: normal;
+  }
 }
 
 .read-more {

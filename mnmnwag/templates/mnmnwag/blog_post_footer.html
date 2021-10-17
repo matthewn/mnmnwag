@@ -3,43 +3,9 @@
 {% load wagtailcore_tags %}
 
 <footer>
-    <section class="post-info">
-        <div class="post-date">
-            posted by
-            {% if page.owner.username == 'matthewn' %}
-                <div class="mahna">/\/\/\/</div>
-            {% else %}
-                {{ page.owner.username }}
-            {% endif %}
-            {{ post.first_published_at|date:"j F Y" }}
-            at {{ post.first_published_at|date:"g:i a" }}
-        </div>
-
-        {% if post.specific.tagged_items.all %}
-            <div class="post-tags">
-                filed under
-                {% for item in post.specific.tagged_items.all|dictsort:"tag" %}
-                    <a href="/blog/tag/{{ item.tag.slug }}" up-content-link>#{{ item.tag.name }}</a>
-                {% endfor %}
-            </div>
-        {% endif %}
-
-        {% if page.content_type.model == 'blogindex' or is_search_page %}
-            {% get_comment_count for post.specific as comment_count %}
-            <div class="post-comments">
-                <a href="{% pageurl post %}#comments" up-content-link>
-                {% if comment_count %}
-                    {{ comment_count }} comment{{ comment_count|pluralize }}
-                {% else %}
-                    {% if post.specific.has_comments_enabled %}
-                        leave a comment
-                    {% endif %}
-                {% endif %}
-                </a>
-            </div>
-        {% endif %}
-    </section>
-
+    {% if post.specific.is_micro %}
+        {% include "mnmnwag/blog_post_info.html" %}
+    {% endif %}
     {% if page.content_type.model != 'blogindex' and not is_search_page %}
         <section class="comments">
             {% get_comment_count for post as comment_count %}

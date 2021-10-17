@@ -5,6 +5,7 @@
 
   &.micro {
     &.on-index:not(.snapshot) {
+      // position the asterism
       > header {
         float: left;
         margin: .5rem .5rem 0 0;
@@ -25,12 +26,33 @@
     }
   }
 
-  footer {
-    margin-top: 1rem;
+  header {
     .post-info {
+      margin-top: .5rem;
+    }
+  }
+
+  .post-info {
+    > div {
+      margin-bottom: .25rem;
+    }
+    @include media(desktop) {
       > div {
-        margin-bottom: .25rem;
+        display: inline-block;
+
+        &:not(:last-child) {
+          margin-right: .5rem;
+        }
+
+        &:not(:last-child)::after {
+          content: '∘';
+          margin-left: .5rem;
+        }
       }
     }
+  }
+
+  footer {
+    margin-top: 1rem;
   }
 }
