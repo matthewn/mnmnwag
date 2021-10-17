@@ -209,8 +209,12 @@ body {
 }
 
 up-modal {
-  up-modal-content,
-  up-modal-viewport {
+  &[nesting='0'] {
+    up-modal-viewport {
+      padding: 0;
+    }
+  }
+  up-modal-content {
     padding: 20px 15px;
   }
   up-modal-box {
