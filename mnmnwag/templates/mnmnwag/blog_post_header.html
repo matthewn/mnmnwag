@@ -15,4 +15,8 @@
             <h2 class="post-title">{{ post.title|typefixes }}</h2>
         {% endif %}
     {% endif %}
+
+    {% if not post.specific.is_micro %}
+        {% include "mnmnwag/blog_post_info.html" %}
+    {% endif %}
 </header>
