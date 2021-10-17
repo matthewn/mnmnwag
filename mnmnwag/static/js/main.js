@@ -2,7 +2,6 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // console splash
-    // console.clear();
     console.log('\nwe were talking\nabout the love that’s grown so cold\nand the people who gain the world and lose their soul\nthey don’t know\nthey can’t see\nare you one of them?\n\n— George Harrison\n\n');
 
     // fix firefox android edge case (theme missing on initial page load)
@@ -20,20 +19,24 @@ document.addEventListener('DOMContentLoaded', function() {
 //
 
 up.layer.config.modal.history = false;
+up.log.config.banner = false;
 
 up.macro('[up-blog-link]', function(link) {
-    link.setAttribute('up-target', '#header, #content .blog, .wagtail-userbar-items');
+    link.setAttribute('up-target', '#content .blog, .wagtail-userbar-items');
     link.setAttribute('up-transition', 'cross-fade');
+    link.setAttribute('up-scroll', '#header');
 });
 
 up.macro('[up-content-link]', function(link) {
-    link.setAttribute('up-target', '#header, #content, .wagtail-userbar-items');
+    link.setAttribute('up-target', '#content, .wagtail-userbar-items');
     link.setAttribute('up-transition', 'cross-fade');
+    link.setAttribute('up-scroll', '#header');
 });
 
 up.macro('[up-nav-link]', function(link) {
-    link.setAttribute('up-target', '#header, #navbar, #content, .wagtail-userbar-items');
+    link.setAttribute('up-target', '#navbar, #content, .wagtail-userbar-items');
     link.setAttribute('up-transition', 'cross-fade');
+    link.setAttribute('up-scroll', '#header');
 });
 
 // when any unpoly link is followed...
