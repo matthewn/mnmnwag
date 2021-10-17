@@ -16,8 +16,8 @@
 .zoom {
   display: flex;
   justify-content: center;
-  img {
-    max-height: calc(100vh - 3rem);
+  figure, img {
+    height: calc(100vh - 3rem);
   }
 }
 
@@ -27,14 +27,18 @@
     position: relative;
   }
   .next, .prev {
-    font-size: 4rem;
+    bottom: -1rem;
+    font-style: italic;
+    line-height: 1rem;
     position: absolute;
-    top: calc(50% - 2rem);
+    span {
+      font-style: normal;
+    }
   }
   .next {
-    right: -17px;
+    right: 0;
   }
   .prev {
-    left: -17px;
+    left: 0;
   }
 }

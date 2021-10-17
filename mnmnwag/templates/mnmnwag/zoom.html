@@ -14,15 +14,13 @@
         <div class="zoom{% if prev_pos or next_pos %} set{% endif %}">
             <figure>
                 {% if prev_pos %}
-                    {# medium left-pointing angle bracket ornament #}
-                    <a class="prev" title="previous slide" href="{% url 'zoom_slides' img_set=img_set pos=prev_pos %}" up-layer="current">&#10092;</a>
+                    <a class="prev" href="{% url 'zoom_slides' img_set=img_set pos=prev_pos %}" up-layer="current"><span>⮜</span> previous</a>
                 {% endif %}
 
                 <img src="{{ zoom_img.url }}">
 
                 {% if next_pos %}
-                    {# medium right-pointing angle bracket ornament #}
-                    <a class="next" title="next slide" href="{% url 'zoom_slides' img_set=img_set pos=next_pos %}" up-layer="current">&#10093;</a>
+                    <a class="next" href="{% url 'zoom_slides' img_set=img_set pos=next_pos %}" up-layer="current">next <span>⮞</span></a>
                 {% endif %}
             </figure>
         </div>
