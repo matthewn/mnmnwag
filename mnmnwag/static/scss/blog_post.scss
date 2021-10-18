@@ -40,13 +40,13 @@
       > div {
         display: inline-block;
 
-        &:not(:last-child) {
-          margin-right: .5rem;
+        &:not(:first-child) {
+          margin-left: .5rem;
         }
 
-        &:not(:last-child)::after {
+        &:not(:first-child)::before {
           content: '∘';
-          margin-left: .5rem;
+          margin-right: .5rem;
         }
       }
     }
