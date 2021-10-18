@@ -109,13 +109,13 @@
             </div>
         </footer>
 
-        <script src="{% static 'js/vendor/unpoly.min.js' %}"></script>
-        {# {% compress js %} #}
+        {% compress js %}
+            <script src="{% static 'js/vendor/unpoly.min.js' %}"></script>
             <script src="{% static 'js/vendor/highlight.pack.js' %}"></script>
             <script src="{% static 'js/cookies.js' %}"></script>
             <script src="{% static 'js/theme_picker.js' %}"></script>
-        {# {% endcompress %} #}
-        <script src="{% static 'js/main.js' %}"></script>
+            <script src="{% static 'js/main.js' %}"></script>
+        {% endcompress %}
 
         {% block extra_js %}
             {# override this in templates to add extra javascript #}
