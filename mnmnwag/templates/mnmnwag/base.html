@@ -107,6 +107,8 @@
                     <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons License</a>.
                 </p>
             </div>
+            {% wagtailuserbar 'bottom-left' %}
+            <div class="fake wagtail-userbar-items"></div>
         </footer>
 
         {% compress js %}
@@ -121,7 +123,6 @@
         {% block extra_js %}
             {# override this in templates to add extra javascript #}
         {% endblock %}
-        {% wagtailuserbar 'bottom-left' %}
 
     </body>
 </html>

@@ -30,19 +30,19 @@ up.layer.config.modal.history = false;
 up.log.config.banner = false;
 
 up.macro('[up-blog-link]', function(link) {
-    link.setAttribute('up-target', '#content .blog');
+    link.setAttribute('up-target', '#content .blog, .wagtail-userbar-items');
     link.setAttribute('up-transition', 'cross-fade');
     link.setAttribute('up-scroll', '#header');
 });
 
 up.macro('[up-content-link]', function(link) {
-    link.setAttribute('up-target', '#content');
+    link.setAttribute('up-target', '#content, .wagtail-userbar-items');
     link.setAttribute('up-transition', 'cross-fade');
     link.setAttribute('up-scroll', '#header');
 });
 
 up.macro('[up-nav-link]', function(link) {
-    link.setAttribute('up-target', '#navbar, #content');
+    link.setAttribute('up-target', '#navbar, #content, .wagtail-userbar-items');
     link.setAttribute('up-transition', 'cross-fade');
     link.setAttribute('up-scroll', '#header');
 });
