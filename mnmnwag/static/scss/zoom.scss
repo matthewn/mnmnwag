@@ -16,8 +16,14 @@
 .zoom {
   display: flex;
   justify-content: center;
-  figure, img {
+  figure {
+    display: flex;
+    flex-direction: column;
     height: calc(100vh - 3rem);
+    justify-content: center;
+  }
+  img {
+    max-height: calc(100vh - 3rem);
   }
 }
 
