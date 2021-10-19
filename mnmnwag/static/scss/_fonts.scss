@@ -53,8 +53,11 @@ textarea {
 }
 
 .read-more {
+  font-family: $sans-stack;
   font-size: 1.15rem;
-  letter-spacing: .25rem;
+  font-weight: $semibold;
+  letter-spacing: .2rem;
+  text-transform: lowercase;
 }
 
 .tag-description {
