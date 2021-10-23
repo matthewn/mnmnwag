@@ -28,7 +28,7 @@
 
   header {
     .post-info {
-      margin-top: .5rem;
+      margin-top: .75rem;
     }
   }
 
@@ -37,15 +37,22 @@
       margin-bottom: .25rem;
     }
     @include media(desktop) {
+      display: flex;
+      max-width: 670px;  // "magic" number to prevent weird wrapping for tags
+      .post-date {
+        white-space: nowrap;
+      }
+      .post-comments {
+        white-space: nowrap;
+      }
       > div {
-        display: inline-block;
-
         &:not(:first-child) {
           margin-left: .5rem;
         }
-
         &:not(:first-child)::before {
           content: '∘';
+          float: left;
+          height: 100%;
           margin-right: .5rem;
         }
       }
