@@ -43,6 +43,12 @@ up.macro('[up-content-link]', function(link) {
     link.setAttribute('up-scroll', '#header');
 });
 
+// up-content-link w/o a scroll to top -- used on comment links
+up.macro('[up-content-link-notop]', function(link) {
+    link.setAttribute('up-target', '#content, .wagtail-userbar-items');
+    link.setAttribute('up-transition', 'cross-fade');
+});
+
 // up-nav-link refreshes entire content section + navbar
 up.macro('[up-nav-link]', function(link) {
     link.setAttribute('up-target', '#navbar, #content, .wagtail-userbar-items');

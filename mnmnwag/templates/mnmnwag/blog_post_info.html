@@ -26,7 +26,7 @@
         {% if comment_count > 0 or post.specific.has_comments_enabled %}
             {% get_comment_count for post.specific as comment_count %}
             <div class="post-comments">
-                <a href="{% pageurl post %}#comments" up-content-link>
+                <a href="{% pageurl post %}#comments" up-content-link-notop>
                 {% if comment_count %}
                     {{ comment_count }} comment{{ comment_count|pluralize }}
                 {% else %}
