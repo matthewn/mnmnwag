@@ -8,32 +8,19 @@
 
 {% block content %}
 
-    {% if img %}
-
         {% image img original as zoom_img %}
         <div class="zoom{% if prev_pos or next_pos %} set{% endif %}">
             <figure>
                 {% if prev_pos %}
-                    <a id="go-prev" class="prev" href="{% url 'zoom_set' img_set=img_set pos=prev_pos %}" up-layer="current"><span>&laquo;</span> previous</a>
+                    <a id="go-prev" class="prev" href="{% url 'zoom_slide' page_id=page_id block_id=block_id pos=prev_pos %}" up-layer="current"><span>&laquo;</span> previous</a>
                 {% endif %}
 
                 <img src="{{ zoom_img.url }}">
 
                 {% if next_pos %}
-                    <a id="go-next" class="next" href="{% url 'zoom_set' img_set=img_set pos=next_pos %}" up-layer="current">next <span>&raquo;</span></a>
+                    <a id="go-next" class="next" href="{% url 'zoom_slide' page_id=page_id block_id=block_id pos=next_pos %}" up-layer="current">next <span>&raquo;</span></a>
                 {% endif %}
             </figure>
         </div>
-
-    {% elif old_img %}
-
-        <div class="zoom old">
-            <figure>
-                <img src="{{ old_img.url }}">
-                <figcaption class="caption">{{ old_img.caption }}</figcaption>
-            </figure>
-        </div>
-
-    {% endif %}
 
 {% endblock %}

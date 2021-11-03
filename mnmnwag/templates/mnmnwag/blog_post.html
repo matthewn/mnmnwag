@@ -17,9 +17,16 @@
                         <a class="read-more" href="{% pageurl post %}" up-content-link>read full post &raquo;</a>
                     {% endifnotequal %}
                 {% elif post.content_type.model == 'modernpost' %}
-                    {% capture as body1 %}{% include_block body|typefixes|truncatewords_html:150 %}{% endcapture %}
-                    {% capture as body2 silent %}{% include_block body|typefixes|truncatewords_html:151 %}{% endcapture %}
-                    {% ifnotequal body1 body2 %}
+                    {# ensure block's id is available in block template context (used by zoom_slide view) #}
+                    {% capture as content silent %}
+                        {% for block in body %}
+                            <div class="block-{{ block.block_type }}">
+                                {% include_block block with page_id=post.id block_id=block.id %}
+                            </div>
+                        {% endfor %}
+                    {% endcapture %}
+                    {{ content|typefixes|truncatewords_html:150 }}
+                    {% ifnotequal content|truncatewords_html:150 content|truncatewords_html:151 %}
                         <a class="read-more" href="{% pageurl post %}" up-content-link>read full post &raquo;</a>
                     {% endifnotequal %}
                 {% endif %}
@@ -30,7 +37,15 @@
                 {% if post.content_type.model == 'legacypost' %}
                     {{ body|richtext|typefixes }}
                 {% elif post.content_type.model == 'modernpost' %}
-                    {% include_block body|typefixes %}
+                    {# ensure block's id is available in block template context (used by zoom_slide view) #}
+                    {% for block in body %}
+                        <div class="block-{{ block.block_type }}">
+                            {% capture as content silent %}
+                                {% include_block block with page_id=post.id block_id=block.id %}
+                            {% endcapture %}
+                            {{ content|typefixes }}
+                        </div>
+                    {% endfor %}
                 {% endif %}
 
             {% endif %}
