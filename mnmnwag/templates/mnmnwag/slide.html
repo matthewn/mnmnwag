@@ -1,6 +1,8 @@
 {% extends "mnmnwag/base.html" %}
 
+{% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
+{% load typefixes %}
 
 {% block title %}{% if img %}{{ img.filename }}{% endif %}{% if old_img %}{{ old_img.filename }}{% endif %}{% endblock %}
 
@@ -9,16 +11,21 @@
 {% block content %}
 
         {% image img original as zoom_img %}
-        <div class="zoom{% if prev_pos or next_pos %} set{% endif %}">
+        <div class="zoom slide">
             <figure>
+                <div class="parent-link"><a href="{{ parent_link }}">&larr; back to post</div>
                 {% if prev_pos %}
                     <a id="go-prev" class="prev" href="{% url 'zoom_slide' page_id=page_id block_id=block_id pos=prev_pos %}" up-layer="current"><span>&laquo;</span> previous</a>
                 {% endif %}
 
-                <img src="{{ zoom_img.url }}">
+                <img src="{{ zoom_img.url }}" alt="{{ alt_text }}">
 
                 {% if next_pos %}
                     <a id="go-next" class="next" href="{% url 'zoom_slide' page_id=page_id block_id=block_id pos=next_pos %}" up-layer="current">next <span>&raquo;</span></a>
+                {% endif %}
+
+                {% if caption %}
+                    <figcaption>{{ caption|richtext|typefixes }}</figcaption>
                 {% endif %}
             </figure>
         </div>

@@ -76,7 +76,8 @@ def zoom_slide(request, page_id, block_id, pos):
     block_id is the 1st 8 digits of the uuid of the SlidesBlock to reference
     pos ('position') is a zero-based index of the slide to display
     """
-    body = Page.objects.get(id=page_id).specific.body
+    page = Page.objects.get(id=page_id)
+    body = page.specific.body
     block = [b for b in body if b.id[0:7] == block_id][0]
     slides = block.value['slides']
 
@@ -89,6 +90,9 @@ def zoom_slide(request, page_id, block_id, pos):
 
     return render(request, 'mnmnwag/slide.html', {
         'img': slides[pos]['image'],
+        'caption': slides[pos]['caption'],
+        'alt_text': slides[pos]['alt_text'],
+        'parent_link': page.url,
         'next_pos': str(next_pos),
         'prev_pos': str(prev_pos),
         'page_id': page_id,

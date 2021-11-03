@@ -27,10 +27,24 @@
   }
 }
 
-.zoom.set {
+.zoom.slide {
   a:hover { text-decoration: none; }
   figure {
     position: relative;
+  }
+  figcaption {
+    background-color: rgba(0, 0, 0, .5);
+    bottom: 5px;  // applies to fullpage version
+    margin: 0 !important;
+    padding: .35rem 1rem;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    p {
+      color: $white;
+      font-size: 1rem !important;
+      margin: 0 !important;
+    }
   }
   .next, .prev {
     bottom: -17px;
@@ -46,5 +60,18 @@
   }
   .prev {
     left: 0;
+  }
+  .parent-link {
+    margin-bottom: 5px;
+  }
+}
+up-modal-content {
+  .zoom.slide {
+    figcaption {
+      bottom: 0;  // applies to modal version
+    }
+    .parent-link {
+      display: none;
+    }
   }
 }

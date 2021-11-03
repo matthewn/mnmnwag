@@ -49,6 +49,8 @@ class ImageBlock(StructBlock):
 
 class SlideBlock(StructBlock):
     image = ImageChooserBlock()
+    caption = RichTextBlock(required=False, features=['bold', 'italic', 'link'])
+    alt_text = CharBlock(required=False, max_length=256)
 
 
 class SlidesBlock(StructBlock):
