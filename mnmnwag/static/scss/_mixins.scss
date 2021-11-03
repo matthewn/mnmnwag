@@ -6,12 +6,12 @@
     }
   }
   @if $breakpoint == 'mobile' {
-    @media (max-width: 814px) {
+    @media (max-width: 919px) {
       @content;
     }
   }
   @else if $breakpoint == 'desktop' {
-    @media (min-width: 815px) {
+    @media (min-width: 920px) {
       @content;
     }
   }
