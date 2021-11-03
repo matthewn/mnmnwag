@@ -73,11 +73,11 @@ def zoom_slide(request, page_id, block_id, pos):
     Display one slide from a SlidesBlock in a Page.
 
     page_id is the id of a Page containing one or more SlidesBlocks
-    block_id is the uuid of the SlidesBlock to reference
+    block_id is the 1st 8 digits of the uuid of the SlidesBlock to reference
     pos ('position') is a zero-based index of the slide to display
     """
     body = Page.objects.get(id=page_id).specific.body
-    block = [b for b in body if b.id == block_id][0]
+    block = [b for b in body if b.id[0:7] == block_id][0]
     slides = block.value['slides']
 
     next_pos = ''

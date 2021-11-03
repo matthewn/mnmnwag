@@ -21,7 +21,7 @@
                     {% capture as content silent %}
                         {% for block in body %}
                             <div class="block-{{ block.block_type }}">
-                                {% include_block block with page_id=post.id block_id=block.id %}
+                                {% include_block block with page_id=post.id block_id=block.id|slice:'0:7' %}
                             </div>
                         {% endfor %}
                     {% endcapture %}
@@ -41,7 +41,7 @@
                     {% for block in body %}
                         <div class="block-{{ block.block_type }}">
                             {% capture as content silent %}
-                                {% include_block block with page_id=post.id block_id=block.id %}
+                                {% include_block block with page_id=post.id block_id=block.id|slice:'0:7' %}
                             {% endcapture %}
                             {{ content|typefixes }}
                         </div>
