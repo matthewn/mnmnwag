@@ -19,8 +19,8 @@
   figure {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 3rem);
     justify-content: center;
+    max-height: calc(100vh - 3rem);
   }
   img {
     max-height: calc(100vh - 3rem);
@@ -74,4 +74,9 @@ up-modal-content {
       display: none;
     }
   }
+}
+up-modal-viewport {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
