@@ -25,6 +25,9 @@
   img {
     max-height: calc(100vh - 3rem);
   }
+  .parent-link {
+    margin-bottom: 5px;
+  }
 }
 
 .zoom.slide {
@@ -61,18 +64,15 @@
   .prev {
     left: 0;
   }
-  .parent-link {
-    margin-bottom: 5px;
-  }
 }
 up-modal-content {
   .zoom.slide {
     figcaption {
       bottom: 0;  // applies to modal version
     }
-    .parent-link {
-      display: none;
-    }
+  }
+  .parent-link {
+    display: none;
   }
 }
 up-modal-viewport {

@@ -29,42 +29,15 @@ def theme_picker(request, chosen_theme):
     return response
 
 
-def zoom_image(request, image_id):
+def zoom_image(request, page_id, image_id):
     """
     "Zoom" (on-page popup, really) an image, given an ID.
     """
+    page = Page.objects.get(id=page_id)
     img = CustomImage.objects.get(id=image_id)
     return render(request, 'mnmnwag/zoom.html', {
         'img': img,
-    })
-
-
-def zoom_set(request, img_set, pos):
-    """
-    "Zoom" (on-page popup, usually) an image set, given a comma-separated
-    set of image IDs, and an integer indicating our position in the slideshow.
-
-    This has been superceded by zoom_slide (below) which takes advantage of
-    StreamFields, and thus can provide captions and alt text with images.
-
-    TODO/FIXME: Remove this view?
-    """
-    pos = int(pos)
-    img_list = img_set.split(',')
-    img = CustomImage.objects.get(id=img_list[pos])
-    next_pos = ''
-    prev_pos = ''
-
-    if pos < len(img_list) - 1:
-        next_pos = pos + 1
-    if pos > 0:
-        prev_pos = pos - 1
-
-    return render(request, 'mnmnwag/zoom.html', {
-        'img': img,
-        'img_set': img_set,
-        'next_pos': str(next_pos),
-        'prev_pos': str(prev_pos),
+        'parent_link': page.url,
     })
 
 
