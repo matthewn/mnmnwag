@@ -1,0 +1,36 @@
+{% extends "mnmnwag/base.html" %}
+{% load static wagtailcore_tags %}
+
+{% block title %}subscribe{% endblock %}
+
+{% block content %}
+
+    <div class="h3">
+
+        {% if not email %}
+
+            <form class="subs" action="{% url 'sub_create' %}" method="POST" >
+                {% csrf_token %}
+                <label>
+                    your email address:
+                    <br><br>
+                    <input type="email" name="email" placeholder="reader@example.org">
+                    <br><br>
+                </label>
+                <input type="submit" value="subscribe">
+            </form>
+
+        {% else %}
+
+            <p style="margin: 2rem; text-align: center;">
+                Subscription request received for: {{ email }}
+            </p>
+            <p style="margin: 2rem; text-align: center;">
+                Please check your email for a confirmation link.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+{% endblock %}

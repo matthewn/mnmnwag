@@ -12,6 +12,8 @@ from search import views as search_views
 from mnmnwag.feeds import LatestEntriesFeed
 from mnmnwag.views import theme_picker, zoom_image, zoom_old, zoom_slide
 
+from subs.views import sub_create, sub_confirm, sub_remove
+
 
 urlpatterns = [
     url(r'^dja/', admin.site.urls),
@@ -26,6 +28,10 @@ urlpatterns = [
     path('slide/<int:page_id>/<str:block_id>/<int:pos>', zoom_slide, name='zoom_slide'),
     path('zoom/old/<path:image_path>', zoom_old, name='zoom_old'),
     path('theme/<str:chosen_theme>', theme_picker, name='theme_picker'),
+
+    path('sub/create', sub_create, name='sub_create'),
+    path('sub/<str:uuid>/confirm', sub_confirm, name='sub_confirm'),
+    path('sub/<str:uuid>/remove', sub_remove, name='sub_remove'),
 
     url(r'^blog/feed/', LatestEntriesFeed()),
 

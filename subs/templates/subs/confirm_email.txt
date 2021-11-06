@@ -1,0 +1,12 @@
+Greetings!
+
+You (or a mischievous someone) has requested an email subscription from {{ host }}.
+
+To confirm this subscription, follow this link:
+
+{{ protocol }}://{{ host }}{% url 'sub_confirm' uuid=uuid %}
+
+
+--
+Sent by the subscription bot at {{ host }}.
+
