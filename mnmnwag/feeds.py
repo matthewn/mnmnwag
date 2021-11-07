@@ -23,7 +23,16 @@ class LatestEntriesFeed(Feed):
             return item.title
 
     def item_description(self, item):
-        return item.specific.body
+        """
+        Render body with 'page_id' and 'block_id' in block contexts.
+        (They are required by ImageBlock and SlidesBlock.)
+        """
+        body = ''
+        context = {'page_id': item.id}
+        for block in item.specific.body:
+            context['block_id'] = block.id[0:7]
+            body += block.render(context)
+        return body
 
     def item_link(self, item):
         return item.specific.get_absolute_url()

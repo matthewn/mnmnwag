@@ -17,7 +17,7 @@
                         <a class="read-more" href="{% pageurl post %}" up-content-link>read full post &raquo;</a>
                     {% endifnotequal %}
                 {% elif post.content_type.model == 'modernpost' %}
-                    {# ensure block's id is available in block template context (used by zoom_slide view) #}
+                    {# add page_id and block_id to block context (req'd by ImageBlock and SlidesBlock) #}
                     {% capture as content silent %}
                         {% for block in body %}
                             <div class="block-{{ block.block_type }}">
@@ -37,7 +37,7 @@
                 {% if post.content_type.model == 'legacypost' %}
                     {{ body|richtext|typefixes }}
                 {% elif post.content_type.model == 'modernpost' %}
-                    {# ensure block's id is available in block template context (used by zoom_slide view) #}
+                    {# add page_id and block_id to block context (req'd by ImageBlock and SlidesBlock) #}
                     {% for block in body %}
                         <div class="block-{{ block.block_type }}">
                             {% capture as content silent %}

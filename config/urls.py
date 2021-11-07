@@ -33,7 +33,7 @@ urlpatterns = [
     path('sub/<str:uuid>/confirm', sub_confirm, name='sub_confirm'),
     path('sub/<str:uuid>/remove', sub_remove, name='sub_remove'),
 
-    url(r'^blog/feed/', LatestEntriesFeed()),
+    url(r'^blog/feed/', LatestEntriesFeed(), name='feed'),
 
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in
