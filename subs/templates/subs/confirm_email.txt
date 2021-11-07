@@ -6,7 +6,8 @@ To confirm this subscription, follow this link:
 
 {{ protocol }}://{{ host }}{% url 'sub_confirm' uuid=uuid %}
 
+Thanks for reading,
 
---
-Sent by the subscription bot at {{ host }}.
+  -- the lonely notification bot at {{ host }}
+
 

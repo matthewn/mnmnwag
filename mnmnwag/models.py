@@ -450,3 +450,28 @@ class CustomMedia(AbstractMedia):
         # Then add the field names here to make them appear in the form:
         # 'caption',
     )
+
+
+# ···························································
+# SINGLETON ABSTRACT CLASS
+# ···························································
+
+class SingletonModel(models.Model):
+    """
+    Defines a model with only one row. Taken from:
+    https://steelkiwi.com/blog/practical-application-singleton-design-pattern/
+    """
+    class Meta:
+        abstract = True
+
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        super(SingletonModel, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        pass
+
+    @classmethod
+    def load(cls):
+        obj, created = cls.objects.get_or_create(pk=1)
+        return obj

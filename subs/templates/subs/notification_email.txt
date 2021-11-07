@@ -1,0 +1,17 @@
+Greetings!
+
+There is new content at {{ host }}!
+{% for post in posts %}
+    {{ post.full_url }}
+{% endfor %}
+
+To unsubscribe from these notifications, follow this link:
+
+http://{{ host }}{% url 'sub_remove' uuid=uuid %}
+
+
+Thanks for reading,
+
+  -- the lonely notification bot at {{ host }}
+
+
