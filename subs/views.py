@@ -6,23 +6,15 @@ from .utils import send_confirmation_email
 
 
 def sub_create(request):
+    context = {'page_message': 'oooh! a new subscriber!'}
     if request.method == 'POST':
         try:
             sub = Subscription.objects.create(email=request.POST['email'])
         except IntegrityError:
             sub = Subscription.objects.get(email=request.POST['email'])
-
         send_confirmation_email(request, sub)
-
-        return TemplateResponse(
-            request,
-            'subs/create.html',
-            {
-                'email': sub.email,
-                'page_message': 'oooh! a new subscriber!',
-            }
-        )
-    return TemplateResponse(request, 'subs/create.html', {})
+        context['email'] = sub.email
+    return TemplateResponse(request, 'subs/create.html', context)
 
 
 def sub_confirm(request, uuid):

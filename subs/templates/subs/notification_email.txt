@@ -2,6 +2,7 @@ Greetings!
 
 There is new content at {{ host }}!
 {% for post in posts %}
+    {% if 'micro' in post.tags.names %}micropost{% else %}{{ post.title }}{% endif %}
     {{ post.full_url }}
 {% endfor %}
 

@@ -5,7 +5,7 @@ from .models import Subscription, SubscriptionsTracker
 
 @admin.register(Subscription)
 class SubscriptionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'email', 'is_active')
+    list_display = ('id', 'email', 'is_active', 'created', 'modified')
 
 
 @admin.register(SubscriptionsTracker)
