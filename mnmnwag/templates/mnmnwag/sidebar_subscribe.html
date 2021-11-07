@@ -1,0 +1,16 @@
+{% load typefixes %}
+{% load wagtailcore_tags %}
+
+{% if page.blogroll %}
+    <div id="subscribe">
+        <details>
+            <summary>
+                <h4>Subscribe</h4>
+            </summary>
+            <ul>
+                <li><a href="{% url 'sub_create' %}" up-layer="new modal">via email</a></li>
+                <li><a href="{% url 'feed' %}">via RSS</a></li>
+            </ul>
+        </details>
+    </div>
+{% endif %}
