@@ -9,7 +9,7 @@
 
         {% if not email %}
 
-            <form class="subs" action="{% url 'sub_create' %}" method="POST" >
+            <form class="subs" action="{% url 'sub_create' %}" method="POST" up-target="#content">
                 {% csrf_token %}
                 <label>
                     your email address:
