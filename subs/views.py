@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.core.mail import send_mail
 from django.db import IntegrityError
 from django.template.response import TemplateResponse
 
@@ -13,6 +15,7 @@ def sub_create(request):
         except IntegrityError:
             sub = Subscription.objects.get(email=request.POST['email'])
         send_confirmation_email(request, sub)
+        send_mail(f'mnmnwag: sub requested by {sub.email} [eom]', '', None, [settings.ADMINS[0][1]])
         context['email'] = sub.email
     return TemplateResponse(request, 'subs/create.html', context)
 
@@ -21,6 +24,7 @@ def sub_confirm(request, uuid):
     sub = Subscription.objects.get(id=uuid)
     sub.is_active = True
     sub.save()
+    send_mail(f'mnmnwag: sub confirmed for {sub.email} [eom]', '', None, [settings.ADMINS[0][1]])
     return TemplateResponse(
         request,
         'subs/message.html',

@@ -3,6 +3,7 @@ Greetings!
 There is new content at {{ host }}!
 {% for post in posts %}
     {% if 'micro' in post.tags.names %}micropost{% else %}{{ post.title }}{% endif %}
+    {% for tag in post.tags.names %}#{{ tag }} {% endfor %}
     {{ post.full_url }}
 {% endfor %}
 

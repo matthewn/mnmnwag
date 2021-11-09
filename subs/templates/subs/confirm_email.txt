@@ -1,6 +1,7 @@
 Greetings!
 
-You (or a mischievous someone) has requested an email subscription from {{ host }}.
+Someone using your email address -- hopefully you! -- requested an email
+subscription from {{ host }}.
 
 To confirm this subscription, follow this link:
 
