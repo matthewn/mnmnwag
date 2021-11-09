@@ -16,7 +16,7 @@ def send_confirmation_email(request, subscription):
         'protocol': request.META['wsgi.url_scheme'],
     }
     body = template.render(context)
-    send_mail(f'subscription confirmation from {host}', body, None, (subscription.email,))
+    send_mail(f'please confirm your subscription for {host}', body, None, (subscription.email,))
 
 
 def send_notifications(posts):
