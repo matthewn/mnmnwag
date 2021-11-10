@@ -1,5 +1,7 @@
 {% extends "mnmnwag/base.html" %}
 {% load static wagtailcore_tags %}
+{% load capture_tags %}
+{% load typefixes %}
 
 {% block title %}search{% endblock %}
 
@@ -18,7 +20,19 @@
                     {% include "mnmnwag/blog_post_header.html" %}
                     <main>
                         <p>
-                            {{ post.specific.body|striptags|truncatewords:50 }}
+                            {% if post.content_type.model == 'modernpost' %}
+                                {# add page_id and block_id to block context (req'd by ImageBlock and SlidesBlock) #}
+                                {% capture as content silent %}
+                                    {% for block in post.specific.body %}
+                                        <div class="block-{{ block.block_type }}">
+                                            {% include_block block with page_id=post.id block_id=block.id|slice:'0:7' %}
+                                        </div>
+                                    {% endfor %}
+                                {% endcapture %}
+                                {{ content|striptags|truncatewords:50|typefixes }}
+                            {% else %}
+                                {{ post.specific.body|striptags|truncatewords:50|typefixes }}
+                            {% endif %}
                             {# {% if result.search_description %} #}
                             {#     {{ result.search_description }} #}
                             {# {% endif %} #}
