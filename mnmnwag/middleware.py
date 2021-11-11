@@ -1,7 +1,7 @@
 class AddUnpolyHeadersMiddleware(object):
     """
     Django reimplementation of
-    https://github.com/unpoly/unpoly/blob/master/lib/unpoly/rails/request_echo_headers.rb
+    https://github.com/unpoly/unpoly-rails/blob/master/lib/unpoly/rails/request_echo_headers.rb
 
     Echoes the request's URL as a response header `X-Up-Location` and the
     request's HTTP method as `X-Up-Method`.
