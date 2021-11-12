@@ -24,6 +24,7 @@ psycopg2 = "^2.8.5"
 wagtail-cache = "^1.0.1"
 wagtailmedia = "^0.6.0"
 comments_wagtail_xtd = "^1.0.1"
+tweepy = "^4.3.0"
 
 [tool.poetry.dev-dependencies]
 

@@ -1,7 +1,7 @@
-from dateutil import tz
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Atom1Feed
 from .models import BlogIndex
+from .utils import get_micropost_title
 
 
 class LatestEntriesFeed(Feed):
@@ -16,9 +16,7 @@ class LatestEntriesFeed(Feed):
 
     def item_title(self, item):
         if 'micro' in item.specific.tags.names():
-            home_zone = tz.gettz('America/Los_Angeles')
-            post_date = item.first_published_at.astimezone(home_zone).strftime('%Y-%m-%d %I:%M %p')
-            return f'micropost ({post_date})'
+            return get_micropost_title(item)
         else:
             return item.title
 

@@ -453,7 +453,7 @@ class CustomMedia(AbstractMedia):
 
 
 # ···························································
-# SINGLETON ABSTRACT CLASS
+# SINGLETON ABSTRACT CLASS & ITS CHILDREN
 # ···························································
 
 class SingletonModel(models.Model):
@@ -475,3 +475,10 @@ class SingletonModel(models.Model):
     def load(cls):
         obj, created = cls.objects.get_or_create(pk=1)
         return obj
+
+
+class TweetsTracker(SingletonModel):
+    last_run_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = 'Tweets job tracker'
