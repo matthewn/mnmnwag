@@ -79,6 +79,9 @@ body.theme-light {
   up-modal-dismiss {
     color: $star-command-blue;
   }
+  up-progress-bar {
+    background-color: $star-command-blue;
+  }
 
   .wagtail-userbar__item a { color: #aaa; }
 }
@@ -140,6 +143,9 @@ body.theme-dark {
   }
   up-modal-dismiss {
     color: $blizzard-blue;
+  }
+  up-progress-bar {
+    background-color: $blizzard-blue;
   }
 }
 
@@ -206,5 +212,8 @@ body.theme-retro {
     &:hover {
       color: $sheen-green;
     }
+  }
+  up-progress-bar {
+    background-color: $sheen-green;
   }
 }
