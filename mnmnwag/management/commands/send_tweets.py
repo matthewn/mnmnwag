@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.core.mail import send_mail
+# from django.core.mail import send_mail
 from django.core.management.base import BaseCommand
 import tweepy
 
@@ -34,7 +34,6 @@ class Command(BaseCommand):
                     title = post.title
                 link = post.full_url
                 tweet = f'{title} {link}'
-                status = api.update_status(status=tweet)
-                if 'id_str' in status:
-                    send_mail(f'mnmnwag: posted tweet {status["id_str"]} [eom]', '', None, [settings.ADMINS[0][1]])
+                status = api.update_status(status=tweet)  # noqa F841
+                # send_mail(f'mnmnwag: posted tweet {status["id_str"]} [eom]', '', None, [settings.ADMINS[0][1]])
         tracker.save()
