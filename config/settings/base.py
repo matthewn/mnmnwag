@@ -31,6 +31,9 @@ INSTALLED_APPS = [
     'modelcluster',
     'taggit',
 
+    'mnmnwag',
+    'subs',
+
     'config.apps.MnmnwagAdminConfig',  # replaces 'django.contrib.admin'
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,9 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'mnmnwag',
-    'subs',
 
     'capture_tag',
     'comments_wagtail_xtd',
