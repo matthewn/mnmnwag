@@ -10,5 +10,7 @@ class SubscriptionAdmin(admin.ModelAdmin):
 
 @admin.register(SubscriptionsTracker)
 class SubscriptionsTrackerAdmin(admin.ModelAdmin):
+    readonly_fields = ('last_run_at',)
+
     def has_add_permission(self, request):
         return False
