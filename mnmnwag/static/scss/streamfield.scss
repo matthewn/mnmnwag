@@ -13,14 +13,17 @@
     display: table;
     &.float {
       @include media(desktop) {
-        max-width: 65%;
+        max-width: 40%;
+        img {
+          max-height: unset;
+        }
         &.left {
           float: left;
-          margin: 0 3rem 0 0;
+          margin: .5rem 3rem .5rem 0;
         }
         &.right {
           float: right;
-          margin: 0 0 0 3rem;
+          margin: .5rem 0 .5rem 3rem;
         }
       }
     }
