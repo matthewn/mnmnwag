@@ -24,8 +24,9 @@ h4, .h4 {
   font-size: 1.25rem;
 }
 
-code {
-  font-size: .85rem;
+code, kbd, samp {
+  font-size: 1rem;
+  font-weight: $semibold;
 }
 
 input[type='text'],
