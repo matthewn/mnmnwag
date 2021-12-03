@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'cachalot',
     'capture_tag',
     'comments_wagtail_xtd',
     'compressor',

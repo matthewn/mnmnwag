@@ -97,6 +97,17 @@ python-versions = ">=3.6"
 django = "*"
 
 [[package]]
+name = "django-cachalot"
+version = "2.4.4"
+description = "Caches your Django ORM queries and automatically invalidates them."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+Django = ">=2.2,<3.3"
+
+[[package]]
 name = "django-capture-tag"
 version = "1.0"
 description = "A micro-library to capture output in Django templates"
@@ -707,7 +718,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6"
-content-hash = "d89779879f689a3497a6cdeb5e0293ae615654e4aecea028b9ee84dddfe6d984"
+content-hash = "eef93a278a46bd9296085bc3847ece7c703e9f6c7b6c5272c5d5e02661bd76c0"
 
 [metadata.files]
 anyascii = [
@@ -742,6 +753,10 @@ django = [
 django-appconf = [
     {file = "django-appconf-1.0.5.tar.gz", hash = "sha256:be3db0be6c81fa84742000b89a81c016d70ae66a7ccb620cdef592b1f1a6aaa4"},
     {file = "django_appconf-1.0.5-py3-none-any.whl", hash = "sha256:ae9f864ee1958c815a965ed63b3fba4874eec13de10236ba063a788f9a17389d"},
+]
+django-cachalot = [
+    {file = "django-cachalot-2.4.4.tar.gz", hash = "sha256:8489a74e9a689437f81fa61705b154a4be3cac1b62b61f68215d79668c9ac037"},
+    {file = "django_cachalot-2.4.4-py3-none-any.whl", hash = "sha256:f8995a85197ac290e63a2f97c577cc9825000fe081b08d5c7d35079e7f1daa43"},
 ]
 django-capture-tag = [
     {file = "django-capture-tag-1.0.tar.gz", hash = "sha256:9c8a531687aac2a705a16a96c33930fb8193c17b641b7c24cd97ff180053d539"},

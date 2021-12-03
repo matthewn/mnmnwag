@@ -15,6 +15,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # BASE_URL required for notification emails
 BASE_URL = 'http://localhost:8000'
 
+# django-cachalot
+CACHALOT_ENABLED = False
+
 # django-debug-toolbar
 INTERNAL_IPS = [
     '127.0.0.1',
