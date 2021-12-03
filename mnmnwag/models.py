@@ -288,11 +288,18 @@ class ModernPost(BasePage, BlogPost):
         ('raw_HTML', blocks.RawHTMLBlock(required=False)),
     ])
 
+    tweet_title = models.TextField(
+        blank=True,
+        max_length=256,
+    )
+
     content_panels = Page.content_panels + [
         StreamFieldPanel('body'),
         FieldPanel('tags'),
         FieldPanel('has_comments_enabled'),
     ]
+
+    promote_panels = [FieldPanel('tweet_title')] + Page.promote_panels
 
     search_fields = Page.search_fields + [
         index.SearchField('title'),
