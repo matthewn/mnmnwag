@@ -1,5 +1,9 @@
+from django.conf import settings
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.db import models
+from django.template import loader
 
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -397,14 +401,39 @@ class BlogIndex(RoutablePageMixin, BasePage, BlogSidebar):
 
 # ···························································
 # COMMENT MODERATOR CLASS & REGISTRATION
+# (TODO: need a better place for this to live)
 # ···························································
 
 class BlogPostModerator(CommentModerator):
     email_notification = True
     enable_field = 'has_comments_enabled'
 
+    def email(self, comment, content_object, request):
+        """
+        Override parent method to inject request into notification template
+        context.
+        """
+        if not self.email_notification:
+            return
+        recipient_list = [manager_tuple[1] for manager_tuple in settings.MANAGERS]
+        t = loader.get_template('comments/comment_notification_email.txt')
+        c = {
+            'comment': comment,
+            'content_object': content_object,
+            'request': request,  # this line is our only alteration to this method
+        }
+        subject = ('[%(site)s] New comment posted on "%(object)s"') % {
+            'site': get_current_site(request).name,
+            'object': content_object,
+        }
+        message = t.render(c)
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list, fail_silently=True)
+
     def moderate(self, comment, content_object, request):
-        # moderate all messages unless superuser is posting
+        """
+        Override parent method. Moderate all messages unless superuser is
+        posting.
+        """
         if request.user.is_superuser:
             return False
         else:
