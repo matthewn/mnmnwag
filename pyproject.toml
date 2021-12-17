@@ -26,6 +26,8 @@ wagtailmedia = "^0.6.0"
 comments_wagtail_xtd = "^1.0.1"
 tweepy = "^4.3.0"
 django-cachalot = "^2.4.4"
+django-browser-reload = "^1.0.0"
+pywatchman = "^1.4.1"
 
 [tool.poetry.dev-dependencies]
 

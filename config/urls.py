@@ -17,11 +17,12 @@ from subs.views import sub_create, sub_confirm, sub_remove
 
 urlpatterns = [
     url(r'^dja/', admin.site.urls),
-
     url(r'^cms/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
 
     url(r'^comments/', include('django_comments_xtd.urls')),
+
+    path('__reload__/', include('django_browser_reload.urls')),
 
     url(r'^search/$', search_views.search, name='search'),
     path('zoom/img/<int:page_id>/<int:image_id>', zoom_image, name='zoom_image'),

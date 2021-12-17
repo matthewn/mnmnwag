@@ -97,6 +97,17 @@ python-versions = ">=3.6"
 django = "*"
 
 [[package]]
+name = "django-browser-reload"
+version = "1.0.0"
+description = "Automatically reload your browser in development."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+Django = ">=2.2"
+
+[[package]]
 name = "django-cachalot"
 version = "2.4.4"
 description = "Caches your Django ORM queries and automatically invalidates them."
@@ -437,6 +448,14 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "pywatchman"
+version = "1.4.1"
+description = "Watchman client for python"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "rcssmin"
 version = "1.0.6"
 description = "CSS Minifier"
@@ -718,7 +737,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6"
-content-hash = "eef93a278a46bd9296085bc3847ece7c703e9f6c7b6c5272c5d5e02661bd76c0"
+content-hash = "27b7cdd8ba80c1cb729b8a062ea14d5be6f7b56b1d63f6f0f4a2268e9cd40134"
 
 [metadata.files]
 anyascii = [
@@ -753,6 +772,10 @@ django = [
 django-appconf = [
     {file = "django-appconf-1.0.5.tar.gz", hash = "sha256:be3db0be6c81fa84742000b89a81c016d70ae66a7ccb620cdef592b1f1a6aaa4"},
     {file = "django_appconf-1.0.5-py3-none-any.whl", hash = "sha256:ae9f864ee1958c815a965ed63b3fba4874eec13de10236ba063a788f9a17389d"},
+]
+django-browser-reload = [
+    {file = "django-browser-reload-1.0.0.tar.gz", hash = "sha256:5b7a500486cf596b1cc06a69c7302c2703b5ceb2b85b3eb32f0b4fb1fc8ea25c"},
+    {file = "django_browser_reload-1.0.0-py3-none-any.whl", hash = "sha256:ccecc584c14b11e3ab8e5106ca74d909be7ae6fb50f58a91212bab41cfff7db4"},
 ]
 django-cachalot = [
     {file = "django-cachalot-2.4.4.tar.gz", hash = "sha256:8489a74e9a689437f81fa61705b154a4be3cac1b62b61f68215d79668c9ac037"},
@@ -927,6 +950,9 @@ python-dateutil = [
 pytz = [
     {file = "pytz-2021.3-py2.py3-none-any.whl", hash = "sha256:3672058bc3453457b622aab7a1c3bfd5ab0bdae451512f6cf25f64ed37f5b87c"},
     {file = "pytz-2021.3.tar.gz", hash = "sha256:acad2d8b20a1af07d4e4c9d2e9285c5ed9104354062f275f3fcd88dcef4f1326"},
+]
+pywatchman = [
+    {file = "pywatchman-1.4.1.tar.gz", hash = "sha256:d0047eb275deafb0011eda0a1a815fbd9742478c3d2b5ad6956d300e447dc2f9"},
 ]
 rcssmin = [
     {file = "rcssmin-1.0.6.tar.gz", hash = "sha256:ca87b695d3d7864157773a61263e5abb96006e9ff0e021eff90cbe0e1ba18270"},

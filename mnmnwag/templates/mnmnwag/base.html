@@ -1,5 +1,6 @@
 {% spaceless %}
 {% load compress %}
+{% load django_browser_reload %}
 {% load get_theme_class %}
 {% load navigation_tags %}
 {% load static %}
@@ -125,5 +126,6 @@
             {# override this in templates to add extra javascript #}
         {% endblock %}
 
+        {% django_browser_reload_script %}
     </body>
 </html>
