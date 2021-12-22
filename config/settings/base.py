@@ -73,6 +73,8 @@ MIDDLEWARE = [
 
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 
+    'django_browser_reload.middleware.BrowserReloadMiddleware',
+
     'extlinks.middleware.RewriteExternalLinksMiddleware',
 ]
 
