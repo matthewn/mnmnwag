@@ -65,6 +65,10 @@ body.theme-light {
     }
   }
 
+  #content .block-image .float img {
+    border: 1px solid $jet;
+  }
+
   input[type='text'],
   textarea {
     border: 1px dashed $jet !important;
