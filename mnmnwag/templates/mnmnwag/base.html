@@ -37,9 +37,6 @@
         {% block extra_css %}
             {# override this in templates to add extra stylesheets #}
         {% endblock %}
-
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-176045696-1"></script>
-        <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-176045696-1');</script>
     </head>
 
     <body class="{% get_theme_class %} {% block body_class %}{% endblock %}">
@@ -121,6 +118,8 @@
             <script src="{% static 'js/theme_picker.js' %}"></script>
             <script src="{% static 'js/main.js' %}"></script>
         {% endcompress %}
+
+        <script data-goatcounter="https://mahnamahna.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
         {% block extra_js %}
             {# override this in templates to add extra javascript #}
