@@ -199,6 +199,7 @@ COMPRESS_PRECOMPILERS = (
 
 # django-dbbackup
 
+DBBACKUP_CLEANUP_KEEP = 60
 DBBACKUP_FILENAME_TEMPLATE = 'mnmnwag-{datetime}.sql'
 DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
 DBBACKUP_STORAGE_OPTIONS = {'location': os.path.join(BASE_DIR, 'private', 'db')}
