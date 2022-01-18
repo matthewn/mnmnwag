@@ -5,13 +5,13 @@
 <section class="post-info">
     <div class="post-date">
         posted by
-        {% if page.owner.username == 'matthewn' %}
+        {% if page.owner.username == 'matthewn' or not page.owner.username %}
             <div class="mahna">/\/\/\/</div>
         {% else %}
             {{ page.owner.username }}
         {% endif %}
-        {{ post.first_published_at|date:"j F Y" }}
-        at {{ post.first_published_at|date:"g:i a" }}
+        {{ post.first_published_at|date:"j F Y"|default:"31 December 1999" }}
+        at {{ post.first_published_at|date:"g:i a"|default:"11:59 p.m." }}
     </div>
 
     {% if post.specific.tagged_items.all %}
