@@ -4,6 +4,7 @@ from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.db import models
 from django.template import loader
+from django.utils import timezone
 
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -31,6 +32,7 @@ from .blocks import ImageBlock, MediaBlock, SlidesBlock
 from .utils import get_elided_page_range
 
 import datetime as dt
+import re
 
 
 # ···························································
@@ -414,6 +416,24 @@ class BlogIndex(RoutablePageMixin, BasePage, BlogSidebar):
 class BlogPostModerator(CommentModerator):
     email_notification = True
     enable_field = 'has_comments_enabled'
+
+    def allow(self, comment, content_object, request):
+        """
+        Override parent method to disallow any comment with Cyrillic characters
+        in it, because Russian spam-bots are the absolute worst. :(
+        """
+        # next two lines are our only additions/alterations to this method
+        if bool(re.search('[а-яА-Я]', comment.comment)):
+            return False
+        if self.enable_field:
+            if not getattr(content_object, self.enable_field):
+                return False
+        if self.auto_close_field and self.close_after is not None:
+            close_after_date = getattr(content_object, self.auto_close_field)
+            if close_after_date is not None and self._get_delta(timezone.now(),
+                                                                close_after_date).days >= self.close_after:
+                return False
+        return True
 
     def email(self, comment, content_object, request):
         """
