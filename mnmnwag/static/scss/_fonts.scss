@@ -150,10 +150,17 @@ body {
     .constrainer main.blog,  // maintains style during unpoly transition
     .constrainer > main {
       p,
+      blockquote,
       ul,
       ol {
         font-size: 1.25rem;
         line-height: 1.6;
+      }
+      blockquote {
+        font-style: italic;
+        em, i {
+          font-style: normal;
+        }
       }
 
       header,
