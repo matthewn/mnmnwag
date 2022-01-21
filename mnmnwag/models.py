@@ -267,6 +267,22 @@ class LegacyPost(BasePage, BlogPost):
 class ModernPost(BasePage, BlogPost):
     body = StreamField([
         ('heading', blocks.CharBlock(classname='full title')),
+        ('teaser', blocks.RichTextBlock(
+            features=[
+                'ol',
+                'ul',
+                'blockquote',
+                'bold',
+                'italic',
+                'superscript',
+                'subscript',
+                'strikethrough',
+                'code',
+                'link',
+                'image',
+                'document-link',
+            ],
+        )),
         ('paragraph', blocks.RichTextBlock(
             features=[
                 'ol',
