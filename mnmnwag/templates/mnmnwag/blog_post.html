@@ -12,8 +12,8 @@
 
                 {# TRUNCATED POST (FOR BLOG INDEX) #}
                 {% if post.content_type.model == 'legacypost' %}
-                    {{ body|richtext|typefixes|truncatewords_html:170 }}
-                    {% ifnotequal body|richtext|typefixes|truncatewords_html:170|length body|richtext|typefixes|truncatewords_html:171|length %}
+                    {{ body|richtext|typefixes|truncatewords_html:150 }}
+                    {% ifnotequal body|richtext|typefixes|truncatewords_html:150|length body|richtext|typefixes|truncatewords_html:151|length %}
                         <a class="read-more" href="{% pageurl post %}" up-content-link>read full post &raquo;</a>
                     {% endifnotequal %}
                 {% elif post.content_type.model == 'modernpost' %}
