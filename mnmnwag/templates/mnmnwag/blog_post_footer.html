@@ -3,9 +3,7 @@
 {% load wagtailcore_tags %}
 
 <footer>
-    {% if post.specific.is_micro %}
-        {% include "mnmnwag/blog_post_info.html" %}
-    {% endif %}
+    {% include "mnmnwag/blog_post_info.html" %}
     {% if page.content_type.model != 'blogindex' and not is_search_page %}
         <section class="comments">
             {% get_comment_count for post as comment_count %}

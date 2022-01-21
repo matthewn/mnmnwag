@@ -17,18 +17,33 @@
                         <a class="read-more" href="{% pageurl post %}" up-content-link>read full post &raquo;</a>
                     {% endifnotequal %}
                 {% elif post.content_type.model == 'modernpost' %}
-                    {# add page_id and block_id to block context (req'd by ImageBlock and SlidesBlock) #}
-                    {% capture as content silent %}
-                        {% for block in body %}
-                            <div class="block-{{ block.block_type }}">
-                                {% include_block block with page_id=post.id block_id=block.id|slice:'0:7' %}
-                            </div>
-                        {% endfor %}
-                    {% endcapture %}
-                    {{ content|typefixes|truncatewords_html:170 }}
-                    {% ifnotequal content|truncatewords_html:170 content|truncatewords_html:171 %}
-                        <a class="read-more" href="{% pageurl post %}" up-content-link>read full post &raquo;</a>
-                    {% endifnotequal %}
+					{# if 1st block is teaser, display that + 'read more' #}
+					{% if body.0.block_type == 'teaser' %}
+						{% with body.0 as block %}
+							{% include "mnmnwag/blog_post_block.html" %}
+						{% endwith %}
+						<a class="read-more" href="{% pageurl post %}" up-content-link>read full post &raquo;</a>
+					{# if 1st block is image, 2nd block is teaser, display those + 'read more' #}
+					{% elif body.0.block_type == 'image' and body.1.block_type == 'teaser' %}
+						{% with body.0 as block %}
+							{% include "mnmnwag/blog_post_block.html" %}
+						{% endwith %}
+						{% with body.1 as block %}
+							{% include "mnmnwag/blog_post_block.html" %}
+						{% endwith %}
+						<a class="read-more" href="{% pageurl post %}" up-content-link>read full post &raquo;</a>
+					{# else truncate at 150 chars, display 'read more' if needed #}
+					{% else %}
+						{% capture as content silent %}
+							{% for block in body %}
+								{% include "mnmnwag/blog_post_block.html" %}
+							{% endfor %}
+						{% endcapture %}
+						{{ content|typefixes|truncatewords_html:150 }}
+						{% ifnotequal content|truncatewords_html:150 content|truncatewords_html:151 %}
+							<a class="read-more" href="{% pageurl post %}" up-content-link>read full post &raquo;</a>
+						{% endifnotequal %}
+					{% endif %}
                 {% endif %}
 
             {% else %}
@@ -37,10 +52,11 @@
                 {% if post.content_type.model == 'legacypost' %}
                     {{ body|richtext|typefixes }}
                 {% elif post.content_type.model == 'modernpost' %}
-                    {# add page_id and block_id to block context (req'd by ImageBlock and SlidesBlock) #}
                     {% for block in body %}
                         <div class="block-{{ block.block_type }}">
+							{# using capture here b/c we cannot directly apply typefixes to include_block #}
                             {% capture as content silent %}
+								{# add page_id and block_id to block context (req'd by ImageBlock and SlidesBlock) #}
                                 {% include_block block with page_id=post.id block_id=block.id|slice:'0:7' %}
                             {% endcapture %}
                             {{ content|typefixes }}
