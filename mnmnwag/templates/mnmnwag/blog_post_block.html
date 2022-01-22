@@ -1,4 +1,5 @@
 {% load wagtailcore_tags %}
+
 <div class="block-{{ block.block_type }}">
     {# add page_id and block_id to block context (req'd by ImageBlock and SlidesBlock) #}
     {% include_block block with page_id=post.id block_id=block.id|slice:'0:7' %}
