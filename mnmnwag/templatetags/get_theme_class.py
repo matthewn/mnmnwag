@@ -16,4 +16,3 @@ def get_theme_class(context):
     except KeyError:
         theme = 'theme-light'  # default theme
     return theme
-

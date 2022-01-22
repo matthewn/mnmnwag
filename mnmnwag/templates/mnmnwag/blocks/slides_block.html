@@ -2,9 +2,7 @@
 {% load wagtailcore_tags %}
 {% load static %}
 {% load typefixes %}
-{% load get_image_set %}
 
-{% with img_set=value.slides|get_image_set %}
 {% for slide in value.slides %}
 
     <picture>
@@ -15,5 +13,3 @@
     </picture>
 
 {% endfor %}
-{% endwith %}
-
