@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django_comments',      # 2 (do not reorder)
     'django_extensions',
     'django_markdown2',
+    'stopforumspam',
     'typogrify',
     'wagtailcache',
     'wagtailfontawesome',  # req'd by wagtailcomments_xtd
@@ -74,6 +75,7 @@ MIDDLEWARE = [
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 
     'django_browser_reload.middleware.BrowserReloadMiddleware',
+    'stopforumspam.middleware.StopForumSpamMiddleware',
 
     'extlinks.middleware.RewriteExternalLinksMiddleware',
 ]
@@ -220,3 +222,10 @@ LIBSASS_OUTPUT_STYLE = 'compressed'
 # extlinks
 
 EXTLINKS_TEMPLATES_WHITELIST = ['mnmnwag']
+
+
+# stopforumspam
+
+SFS_ALL_POST_REQUESTS = False
+SFS_URLS_INCLUDE = ['comments-post-comment']
+# SFS_URLS_INCLUDE = ['comments-post-comment', '/comments/post/']
