@@ -28,6 +28,7 @@ tweepy = "^4.3.0"
 django-cachalot = "^2.4.4"
 django-browser-reload = "^1.0.0"
 pywatchman = "^1.4.1"
+stopforumspam = "^1.10"
 
 [tool.poetry.dev-dependencies]
 
