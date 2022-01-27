@@ -48,7 +48,9 @@
                 {# {% endif %} #}
                 {% if item.comment.allow_thread and not item.comment.is_removed %}
                     {% if allow_feedback %}&nbsp;&nbsp;<span class="text-muted">&bull;</span>&nbsp;&nbsp;{% endif %}
-                    <div><a class="reply-form-container c{{ item.comment.id }}" href="{{ item.comment.get_reply_url }}" up-target="&" up-history="false">reply</a></div>
+                    {% if item.comment.content_object.has_comments_enabled %}
+                        <div><a class="reply-form-container c{{ item.comment.id }}" href="{{ item.comment.get_reply_url }}" up-target="&" up-history="false">reply</a></div>
+                    {% endif %}
                 {% endif %}
             {% endif %}
         </main>
