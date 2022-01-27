@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "mnmnwag"
-version = "0.1.0"
+version = "1.2"
 description = ""
 authors = ["Matthew Newton <matthewn@alum.berkeley.edu>"]
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.7"
 django = "*"
 wagtail = "^2.10"
 django-dbbackup = "^3.3.0"
@@ -29,6 +29,7 @@ django-cachalot = "^2.4.4"
 django-browser-reload = "^1.0.0"
 pywatchman = "^1.4.1"
 stopforumspam = "^1.10"
+django-honeypot = "^1.0.3"
 
 [tool.poetry.dev-dependencies]
 

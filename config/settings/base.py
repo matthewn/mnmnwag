@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django_comments',      # 2 (do not reorder)
     'django_extensions',
     'django_markdown2',
+    'honeypot',
     'stopforumspam',
     'typogrify',
     'wagtailcache',
@@ -212,6 +213,11 @@ DBBACKUP_STORAGE_OPTIONS = {'location': os.path.join(BASE_DIR, 'private', 'db')}
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+
+# django-honeypot
+
+HONEYPOT_FIELD_NAME = 'homepage'
 
 
 # django-libsass

@@ -222,6 +222,17 @@ python-versions = ">=3.6"
 Django = ">=2.2"
 
 [[package]]
+name = "django-honeypot"
+version = "1.0.3"
+description = "Django honeypot field utilities"
+category = "main"
+optional = false
+python-versions = ">=3.7,<4.0"
+
+[package.dependencies]
+Django = ">=2.2,<5.0"
+
+[[package]]
 name = "django-libsass"
 version = "0.8"
 description = "A django-compressor filter to compile SASS files using libsass"
@@ -748,8 +759,8 @@ python-versions = "*"
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.6"
-content-hash = "eda57a669d92db410f180b45cdb7649cb5cc313c5b8a8f2b6a9431e38f2a2702"
+python-versions = "^3.7"
+content-hash = "a942fe8e3df98df4c1c62dba9cb1fd09bf39aad6d9f5244299475608f508b549"
 
 [metadata.files]
 anyascii = [
@@ -827,6 +838,10 @@ django-extensions = [
 django-filter = [
     {file = "django-filter-21.1.tar.gz", hash = "sha256:632a251fa8f1aadb4b8cceff932bb52fe2f826dd7dfe7f3eac40e5c463d6836e"},
     {file = "django_filter-21.1-py3-none-any.whl", hash = "sha256:f4a6737a30104c98d2e2a5fb93043f36dd7978e0c7ddc92f5998e85433ea5063"},
+]
+django-honeypot = [
+    {file = "django-honeypot-1.0.3.tar.gz", hash = "sha256:4785913e4175a611d2d4238deb4afb165ef0100d266a8824bfe2791a43347b0d"},
+    {file = "django_honeypot-1.0.3-py3-none-any.whl", hash = "sha256:c0b2dd320ff7c8d5d1ea6646f3e0fd2ac22593d3271a81be3ebfd19be546e5df"},
 ]
 django-libsass = [
     {file = "django-libsass-0.8.tar.gz", hash = "sha256:38fab4ce1245542f3afd7248dc48f8a0b261f5f6c61e7cc43969a9c9079b5ffd"},
