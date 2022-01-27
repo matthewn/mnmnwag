@@ -28,6 +28,8 @@ from wagtailmedia.models import Media, AbstractMedia
 from django_comments.moderation import CommentModerator
 from django_comments_xtd.moderation import moderator
 
+from honeypot.decorators import honeypot_equals
+
 from .blocks import ImageBlock, MediaBlock, SlidesBlock
 from .utils import get_elided_page_range
 
@@ -435,10 +437,13 @@ class BlogPostModerator(CommentModerator):
 
     def allow(self, comment, content_object, request):
         """
-        Override parent method to disallow any comment with Cyrillic characters
-        in it, because Russian spam-bots are the absolute worst. :(
+        Override parent method to include django-honeypot in the mix and to
+        disallow any comment with Cyrillic characters in it, because Russian
+        spam-bots are the absolute worst. :(
         """
-        # next two lines are our only additions/alterations to this method
+        # next four lines are our only additions/alterations to this method
+        if not self.verify_honeypot(request):
+            return False
         if bool(re.search('[а-яА-Я]', comment.comment)):
             return False
         if self.enable_field:
@@ -481,6 +486,18 @@ class BlogPostModerator(CommentModerator):
             return False
         else:
             return True
+
+    def verify_honeypot(self, request, field_name=None):
+        """
+        Modded version of honeypot.validators.verify_honeypot_value().
+        Returns True or False; to be used in allow() in this class.
+        """
+        verifier = getattr(settings, "HONEYPOT_VERIFIER", honeypot_equals)
+        if request.method == "POST":
+            field = field_name or settings.HONEYPOT_FIELD_NAME
+            if field not in request.POST or not verifier(request.POST[field]):
+                return False
+        return True
 
 
 moderator.register(LegacyPost, BlogPostModerator)
