@@ -437,15 +437,25 @@ class BlogPostModerator(CommentModerator):
 
     def allow(self, comment, content_object, request):
         """
-        Override parent method to include django-honeypot in the mix and to
-        disallow any comment with Cyrillic characters in it, because Russian
-        spam-bots are the absolute worst. :(
+        Override parent method to include django-honeypot in the mix,
+        and to add a few custom anti-spam rules of our own.
         """
-        # next four lines are our only additions/alterations to this method
+        # here to END_OF_DIFFS = our additions to this method
         if not self.verify_honeypot(request):
             return False
+        # disallow any comment with Cyrillic characters in it
+        # (Russian spam-bots are the absolute worst!)
         if bool(re.search('[а-яА-Я]', comment.comment)):
             return False
+        # disallow common pattern as of Feb. 2022:
+        #   email ending in .ru with a link in the comment
+        # (Russian spam-bots are the absolute worst!)
+        if (
+            bool(re.search(r'\.ru$', comment.user_email))
+            and 'http' in comment.comment
+        ):
+            return False
+        # END_OF_DIFFS
         if self.enable_field:
             if not getattr(content_object, self.enable_field):
                 return False
