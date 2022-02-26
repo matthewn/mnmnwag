@@ -191,10 +191,6 @@ COMMENTS_XTD_MAX_THREAD_LEVEL = 8
 # django-compressor
 
 COMPRESS_ENABLED = True
-COMPRESS_CSS_FILTERS = (
-    'compressor.filters.css_default.CssAbsoluteFilter',
-    'compressor.filters.cssmin.rCSSMinFilter',
-)
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),
 )
