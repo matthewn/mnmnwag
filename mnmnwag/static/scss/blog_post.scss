@@ -37,8 +37,6 @@
       margin-bottom: .25rem;
     }
     @include media(desktop) {
-      display: flex;
-      max-width: 670px;  // "magic" number to prevent weird wrapping for tags
       .post-date {
         white-space: nowrap;
       }
@@ -46,9 +44,7 @@
         white-space: nowrap;
       }
       > div {
-        &:not(:first-child) {
-          margin-left: .5rem;
-        }
+        display: inline-block;
         &:not(:first-child)::before {
           content: '∘';
           float: left;
