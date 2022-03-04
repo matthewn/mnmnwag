@@ -14,7 +14,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         tracker = TweetsTracker.load()
         auth_keys = settings.TWITTER_AUTH_KEYS
-        posts = ModernPost.objects.filter(
+        posts = ModernPost.objects.live().public().filter(
             first_published_at__gte=tracker.last_run_at
         )
         if posts:
