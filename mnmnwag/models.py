@@ -441,12 +441,15 @@ class BlogPostModerator(CommentModerator):
         and to add a few custom anti-spam rules of our own.
         """
         # here to END_OF_DIFFS = our additions to this method
+
         if not self.verify_honeypot(request):
             return False
+
         # disallow any comment with Cyrillic characters in it
         # (Russian spam-bots are the absolute worst!)
         if bool(re.search('[а-яА-Я]', comment.comment)):
             return False
+
         # disallow common pattern as of Feb. 2022:
         #   email ending in .ru with a link in the comment
         # (Russian spam-bots are the absolute worst!)
@@ -455,7 +458,15 @@ class BlogPostModerator(CommentModerator):
             and 'http' in comment.comment
         ):
             return False
+
+        # disallow common pattern as of Mar. 2022:
+        #   multiple .ru links in comment body
+        # (Russian spam-bots are the absolute worst!)
+        if len(re.findall(r'https?:\/\/.*?\.ru', comment.comment)) > 2:
+            return False
+
         # END_OF_DIFFS
+
         if self.enable_field:
             if not getattr(content_object, self.enable_field):
                 return False
