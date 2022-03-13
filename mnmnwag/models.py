@@ -158,7 +158,7 @@ class GalleryPage(BasePage):
                 FieldPanel('common_alt_text'),
                 FieldPanel('common_caption'),
             ],
-            heading='Import slides from Collection',
+            heading='Import Slides from a Collection',
             classname='collapsible collapsed',
         ),
         StreamFieldPanel('body'),
