@@ -149,7 +149,7 @@ class GalleryPage(BasePage):
         null=True,
     )
     common_alt_text = models.CharField(blank=True, max_length=256)
-    common_caption = models.CharField(blank=True, max_length=256)
+    common_caption = RichTextField(blank=True, features=['bold', 'italic', 'link'])
 
     content_panels = Page.content_panels + [
         MultiFieldPanel(
@@ -179,7 +179,7 @@ class GalleryPage(BasePage):
             for image in images:
                 slide_block = {
                     'image': image,
-                    'caption': RichText(f'<p>{self.common_caption}</p>'),
+                    'caption': RichText(self.common_caption),
                     'alt_text': self.common_alt_text,
                 }
                 slides_block.append(slide_block)
