@@ -12,13 +12,17 @@ from taggit.models import Tag, TaggedItemBase
 
 from wagtail.admin.edit_handlers import (
     FieldPanel,
+    MultiFieldPanel,
     StreamFieldPanel,
 )
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.core import blocks
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Page
+from wagtail.core.models.collections import Collection
+from wagtail.core.rich_text import RichText
 from wagtail.embeds.blocks import EmbedBlock
+from wagtail.images import get_image_model
 from wagtail.images.models import Image, AbstractImage, AbstractRendition
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
@@ -115,6 +119,77 @@ class BasicPage(BasePage):
         FieldPanel('body', classname='full'),
     ]
 
+
+class GalleryPage(BasePage):
+    body = StreamField([
+        ('heading', blocks.CharBlock(classname="full title")),
+        ('paragraph', blocks.RichTextBlock(
+            features=[
+                'blockquote',
+                'bold',
+                'italic',
+                'superscript',
+                'subscript',
+                'strikethrough',
+                'link',
+                'image',
+                'document-link',
+            ],
+        )),
+        ('slides', SlidesBlock()),
+        ('embed', EmbedBlock()),
+        ('media', MediaBlock(icon='media')),
+        ('raw_HTML', blocks.RawHTMLBlock(required=False)),
+    ])
+
+    import_collection = models.ForeignKey(
+        Collection,
+        blank=True,
+        on_delete=models.SET_NULL,
+        null=True,
+    )
+    common_alt_text = models.CharField(blank=True, max_length=256)
+    common_caption = models.CharField(blank=True, max_length=256)
+
+    content_panels = Page.content_panels + [
+        MultiFieldPanel(
+            [
+                FieldPanel('import_collection'),
+                FieldPanel('common_alt_text'),
+                FieldPanel('common_caption'),
+            ],
+            heading='Import slides from Collection',
+            classname='collapsible collapsed',
+        ),
+        StreamFieldPanel('body'),
+    ]
+
+    def save_revision(self, **kwargs):
+        """
+        If an import_collection is provided, append its images to the body in a
+        SlidesBlock. Include common_alt_text and common_caption in each slide
+        if provided. Clear these three fields before moving on.
+        """
+        if self.import_collection:
+
+            image_model = get_image_model()
+            images = image_model.objects.filter(collection=self.import_collection)
+
+            slides_block = []
+            for image in images:
+                slide_block = {
+                    'image': image,
+                    'caption': RichText(f'<p>{self.common_caption}</p>'),
+                    'alt_text': self.common_alt_text,
+                }
+                slides_block.append(slide_block)
+
+            self.body.append(('slides', {'slides': slides_block}))
+            self.import_collection = None
+            self.common_alt_text = ''
+            self.common_caption = ''
+
+        return super(GalleryPage, self).save_revision(**kwargs)
 
 # ···························································
 # SUPPORTING CLASSES: TAGS AND SIDEBAR ELEMENTS
