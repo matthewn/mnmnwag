@@ -172,8 +172,8 @@ class GalleryPage(BasePage):
         """
         if self.import_collection:
 
-            image_model = get_image_model()
-            images = image_model.objects.filter(collection=self.import_collection)
+            i = get_image_model()
+            images = i.objects.filter(collection=self.import_collection).order_by('file')
 
             slides_block = []
             for image in images:
