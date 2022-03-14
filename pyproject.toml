@@ -30,6 +30,7 @@ django-browser-reload = "*"
 pywatchman = "*"
 stopforumspam = "*"
 django-honeypot = "*"
+pyexiv2 = "^2.7.1"
 
 [tool.poetry.dev-dependencies]
 

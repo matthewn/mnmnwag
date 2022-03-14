@@ -38,6 +38,7 @@ from .blocks import ImageBlock, MediaBlock, SlidesBlock
 from .utils import get_elided_page_range
 
 import datetime as dt
+import pyexiv2
 import re
 
 
@@ -164,6 +165,16 @@ class GalleryPage(BasePage):
         StreamFieldPanel('body'),
     ]
 
+    def get_exif_description(self, image):
+        """
+        Return an image's EXIF ImageDescription or None.
+        """
+        f = image.file.file.open()
+        i = pyexiv2.ImageData(f.read())
+        exif_desc = i.read_exif().get('Exif.Image.ImageDescription')
+        i.close()
+        return exif_desc
+
     def save_revision(self, **kwargs):
         """
         If an import_collection is provided, append its images to the body in a
@@ -177,9 +188,12 @@ class GalleryPage(BasePage):
 
             slides_block = []
             for image in images:
+                # check for EXIF ImageDescription, prefer over common_caption
+                exif_desc = self.get_exif_description(image)
+                caption = exif_desc or self.common_caption
                 slide_block = {
                     'image': image,
-                    'caption': RichText(self.common_caption),
+                    'caption': RichText(caption),
                     'alt_text': self.common_alt_text,
                 }
                 slides_block.append(slide_block)
@@ -190,6 +204,7 @@ class GalleryPage(BasePage):
             self.common_caption = ''
 
         return super(GalleryPage, self).save_revision(**kwargs)
+
 
 # ···························································
 # SUPPORTING CLASSES: TAGS AND SIDEBAR ELEMENTS
