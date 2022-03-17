@@ -143,14 +143,23 @@ class GalleryPage(BasePage):
         ('raw_HTML', blocks.RawHTMLBlock(required=False)),
     ])
 
+    # fields for the create-from-collection functionality
     import_collection = models.ForeignKey(
         Collection,
         blank=True,
         on_delete=models.SET_NULL,
         null=True,
     )
-    common_alt_text = models.CharField(blank=True, max_length=256)
-    common_caption = RichTextField(blank=True, features=['bold', 'italic', 'link'])
+    common_alt_text = models.CharField(
+        blank=True,
+        help_text='This alt text will be applied to each new slide.',
+        max_length=256,
+    )
+    common_caption = RichTextField(
+        blank=True,
+        help_text='This caption will be applied to each new slide.',
+        features=['bold', 'italic', 'link'],
+    )
 
     content_panels = Page.content_panels + [
         MultiFieldPanel(
@@ -159,8 +168,9 @@ class GalleryPage(BasePage):
                 FieldPanel('common_alt_text'),
                 FieldPanel('common_caption'),
             ],
-            heading='Import Slides from a Collection',
+            heading='Create Slides from a Collection',
             classname='collapsible collapsed',
+            help_text='Slides will be created in this page\'s Body when you Save.',
         ),
         StreamFieldPanel('body'),
     ]
@@ -197,8 +207,8 @@ class GalleryPage(BasePage):
                     'alt_text': self.common_alt_text,
                 }
                 slides_block.append(slide_block)
-
             self.body.append(('slides', {'slides': slides_block}))
+
             self.import_collection = None
             self.common_alt_text = ''
             self.common_caption = ''
