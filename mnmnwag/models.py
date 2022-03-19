@@ -175,6 +175,10 @@ class GalleryPage(BasePage):
         StreamFieldPanel('body'),
     ]
 
+    settings_panels = Page.settings_panels + [
+        FieldPanel('first_published_at'),
+    ]
+
     def get_exif_description(self, image):
         """
         Return an image's EXIF ImageDescription or None.
