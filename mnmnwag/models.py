@@ -185,6 +185,10 @@ class GalleryPage(BasePage):
         i.close()
         return exif_desc
 
+    @property
+    def page_message(self):
+        return self.get_parent().specific.page_message
+
     def save_revision(self, **kwargs):
         """
         If an import_collection is provided, append its images to the body in a

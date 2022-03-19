@@ -5,11 +5,24 @@
 
 {% for slide in value.slides %}
 
-    <picture>
-        {% image slide.image fill-180x180 as small_image %}
+    {% image slide.image fill-180x180 as small_image %}
+    <picture class="slide-homebrew">
         <a href="{% url 'zoom_slide' page_id=page_id block_id=block_id pos=forloop.counter0 %}" up-layer="new modal" up-history="true" up-animation="fade-in">
-            <img src="{{ small_image.file.url }}" alt="thumbnail for {{ slide.alt_text }}">
+            <img src="{{ small_image.file.url }}" alt="{% if slide.alt_text %}thumbnail for {{ slide.alt_text }}{% endif %}">
         </a>
     </picture>
+
+    {# if this is a gallery page, we write out an alternate version of the slide here: #}
+    {# if javascript is enabled, then this version will be revealed and the homebrew version hidden #}
+    {# (homebrew version provides a js-free, full-roundtrips gallery fallback) #}
+    {% if is_gallery %}
+        {% image slide.image original as original_image %}
+        <picture class="slide-gallery" style="display: none;">
+            <a href="{{ original_image.url }}" data-sub-html=".c{{ forloop.counter }}">
+                <img src="{{ small_image.file.url }}" alt="{% if slide.alt_text %}thumbnail for {{ slide.alt_text }}{% endif %}">
+            </a>
+            <div class="c{{ forloop.counter }}" style="display: none;">{{ slide.caption|richtext|typefixes_minimal }}</div>
+        </picture>
+    {% endif %}
 
 {% endfor %}

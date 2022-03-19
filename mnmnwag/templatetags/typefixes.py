@@ -1,6 +1,6 @@
 from django import template
 from django.template.defaultfilters import stringfilter
-from typogrify.templatetags.typogrify_tags import typogrify
+from typogrify.templatetags.typogrify_tags import smartypants, typogrify
 
 import re
 
@@ -24,5 +24,24 @@ def typefixes(text):
     text = text.replace('&#x27;', "'")
 
     text = typogrify(text)
+    text = alumyears(text)
+    return text
+
+
+@register.filter(is_safe=True)
+@stringfilter
+def typefixes_minimal(text):
+    """
+    A version of the typefixes filter that only applies smartypants instead of
+    the whole typogrify suite of fixes, thus avoiding more problematic filters
+    like number_suffix, which breaks lightgallery (the js library we use on
+    GalleryPages).
+    """
+    # unescape characters from wagtail richtext filter
+    text = text.replace('&quot;', '"')
+    text = text.replace('&#x27;', "'")
+
+    text = smartypants(text)
+
     text = alumyears(text)
     return text

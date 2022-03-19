@@ -8,6 +8,7 @@ SITE_ID = 1
 ROOT_URLCONF = 'config.urls'
 WSGI_APPLICATION = 'config.wsgi.application'
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000  # for SlidesBlock edge case
 
 
 INSTALLED_APPS = [

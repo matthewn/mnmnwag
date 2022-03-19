@@ -1,1 +1,62 @@
-{% extends "mnmnwag/complex_page.html" %}
+{% extends "mnmnwag/base.html" %}
+
+{% load capture_tags %}
+{% load typefixes %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
+
+{% block body_class %}template-gallerypage{% endblock %}
+
+{% block extra_css %}
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/lightgallery@2.4.0/css/lightgallery-bundle.min.css">
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/lightgallery@2.4.0/css/lg-autoplay.css">
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/lightgallery@2.4.0/css/lg-fullscreen.css">
+    <style>
+        .lg-sub-html p { font-size: unset; }
+    </style>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://unpkg.com/lightgallery@2.4.0/lightgallery.min.js"></script>
+    <script src="https://unpkg.com/lightgallery@2.4.0/plugins/autoplay/lg-autoplay.min.js"></script>
+    <script src="https://unpkg.com/lightgallery@2.4.0/plugins/fullscreen/lg-fullscreen.min.js"></script>
+    <script src="https://unpkg.com/lightgallery@2.4.0/plugins/hash/lg-hash.min.js"></script>
+    {# when js enabled, hide homebrew slides, show gallery versions instead #}
+    <script>
+        document.querySelectorAll('picture.slide-homebrew').forEach(el=>el.style.display='none');
+        document.querySelectorAll('picture.slide-gallery').forEach(el=>el.style.display='unset');
+        var sl = document.querySelectorAll('.block-slides').forEach(function(el, count) {
+            lightGallery(el, {
+                plugins: [lgAutoplay, lgFullscreen, lgHash],
+                galleryId: count,
+                hash: 'true',
+                selector: '.slide-gallery > a',
+                slideShowInterval: 7000,
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+
+    <article class="gallery">
+        <header>
+            <h2>{{ page.title }}</h2>
+        </header>
+
+        <div class="page-body type-{{ page.content_type.model }} slug-{{ page.slug }}">
+            {# add page_id and block_id to block context (req'd by ImageBlock and SlidesBlock) #}
+            {# add is_gallery to enable gallery override in block context #}
+            {% capture as content silent %}
+                {% for block in page.body %}
+                    <div class="block-{{ block.block_type }}">
+                        {% include_block block with is_gallery=True page_id=page.id block_id=block.id|slice:'0:7' %}
+                    </div>
+                {% endfor %}
+            {% endcapture %}
+            {{ content|typefixes }}
+        </div>
+    </article>
+
+{% endblock %}
