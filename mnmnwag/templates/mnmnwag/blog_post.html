@@ -6,7 +6,7 @@
 
     {% include "mnmnwag/blog_post_header.html" %}
 
-    <main>
+    <div>
         {% with post.specific.body as body %}
             {% if page.content_type.model == 'blogindex' %}
 
@@ -66,7 +66,7 @@
 
             {% endif %}
         {% endwith %}
-    </main>
+    </div>
 
     {% include "mnmnwag/blog_post_footer.html" %}
 
