@@ -1,6 +1,6 @@
 from django.conf import settings
-from django.conf.urls import include, url
-from django.urls import path
+from django.conf.urls import include
+from django.urls import re_path, path
 from django.contrib import admin
 
 from wagtail.admin import urls as wagtailadmin_urls
@@ -16,15 +16,15 @@ from subs.views import sub_create, sub_confirm, sub_remove
 
 
 urlpatterns = [
-    url(r'^dja/', admin.site.urls),
-    url(r'^cms/', include(wagtailadmin_urls)),
-    url(r'^documents/', include(wagtaildocs_urls)),
+    re_path(r'^dja/', admin.site.urls),
+    re_path(r'^cms/', include(wagtailadmin_urls)),
+    re_path(r'^documents/', include(wagtaildocs_urls)),
 
-    url(r'^comments/', include('django_comments_xtd.urls')),
+    re_path(r'^comments/', include('django_comments_xtd.urls')),
 
     path('__reload__/', include('django_browser_reload.urls')),
 
-    url(r'^search/$', search_views.search, name='search'),
+    re_path(r'^search/$', search_views.search, name='search'),
     path('zoom/img/<int:page_id>/<int:image_id>', zoom_image, name='zoom_image'),
     path('slide/<int:page_id>/<str:block_id>/<int:pos>', zoom_slide, name='zoom_slide'),
     path('zoom/old/<path:image_path>', zoom_old, name='zoom_old'),
@@ -34,12 +34,12 @@ urlpatterns = [
     path('sub/<str:uuid>/confirm', sub_confirm, name='sub_confirm'),
     path('sub/<str:uuid>/remove', sub_remove, name='sub_remove'),
 
-    url(r'^blog/feed/', LatestEntriesFeed(), name='feed'),
+    re_path(r'^blog/feed/', LatestEntriesFeed(), name='feed'),
 
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in
     # the list:
-    url(r'', include(wagtail_urls)),
+    re_path(r'', include(wagtail_urls)),
 
     # Alternatively, if you want Wagtail pages to be served from a subpath
     # of your site, rather than the site root:
