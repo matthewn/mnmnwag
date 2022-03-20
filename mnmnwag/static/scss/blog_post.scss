@@ -36,6 +36,9 @@
     > div {
       margin-bottom: .25rem;
     }
+    .post-date span {
+      white-space: nowrap;
+    }
     @include media(desktop) {
       .post-date {
         white-space: nowrap;

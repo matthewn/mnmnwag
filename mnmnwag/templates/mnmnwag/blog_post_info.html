@@ -11,7 +11,7 @@
             {{ page.owner.username }}
         {% endif %}
         {{ post.first_published_at|date:"j F Y"|default:"31 December 1999" }}
-        at {{ post.first_published_at|date:"g:i a"|default:"11:59 p.m." }}
+        <span>at {{ post.first_published_at|date:"g:i a"|default:"11:59 p.m." }}</span>
     </div>
 
     {% if post.specific.tagged_items.all %}
