@@ -30,6 +30,7 @@ django-honeypot = "*"
 pyexiv2 = "^2.7.1"
 smartypants = "^2.0.1"
 wagtailfontawesome = "^1.2.1"
+num2words = "^0.5.10"
 
 [tool.poetry.dev-dependencies]
 
