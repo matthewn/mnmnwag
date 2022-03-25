@@ -30,12 +30,12 @@
         top: 50%;
         transform: translateY(-50%);
       }
+      a {
+        color: $blizzard-blue;
+      }
       h3 + .block-paragraph {
         display: grid;
         grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-        a {
-          color: $blizzard-blue;
-        }
       }
       .serif {
         font-family: $serif-stack;
