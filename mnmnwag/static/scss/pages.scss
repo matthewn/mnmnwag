@@ -1,5 +1,61 @@
 // one-off page layout tweaks
 
+#museyroom {
+  text-align: center;
+}
+#exhibition {
+  &.archives {
+    margin-top: 3rem;
+    position: relative;
+
+    > .block-image:first-child {
+      figure {
+        width: 100%;
+      }
+      img {
+        @include media(mobile) {
+          min-height: 120vh;
+          object-fit: cover;
+        }
+        max-height: unset;
+        width: 100%;
+      }
+    }
+
+    .overlay {
+      @include media(desktop) {
+        left: unset;
+        max-width: 44%;
+        right: 6%;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      h3 + .block-paragraph {
+        display: grid;
+        grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+        a {
+          color: $blizzard-blue;
+        }
+      }
+      .serif {
+        font-family: $serif-stack;
+      }
+      h3 {
+        margin: 1.5rem auto;
+      }
+      background-color: rgba(121, 140, 147, .8);
+      border-radius: 4px;
+      color: $white;
+      font-family: $sans-stack;
+      left: 50%;
+      padding: 2rem 4rem;
+      position: absolute;
+      top: 10%;
+      transform: translateX(-50%);
+    }
+  }
+}
+
 // about page: two-column treatment for desktop only
 @include media(desktop) {
   .page-body.slug-about {
