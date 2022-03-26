@@ -5,19 +5,19 @@
   text-align: center;
   @include media(desktop) {
     display: flex;
-    max-width: 80%;
+    max-width: 95%;
     text-align: center;
   }
   .block-image {
     @include media(desktop) {
-      height: 35vw;
       margin: 0 2rem 0 0;
-      width: 35vw;
     }
-    height: 75vw;
+    @include media(mobile) {
+      height: 75vw;
+      width: 75vw;
+    }
     margin: 0 auto 2rem;
     overflow: hidden;
-    width: 75vw;
     img {
       object-fit: cover;
     }
@@ -28,6 +28,7 @@
       flex-direction: column;
       justify-content: center;
       margin: 0 0 0 2rem;
+      max-width: 65%;
     }
     @include media(mobile) {
       margin: 0 auto;
