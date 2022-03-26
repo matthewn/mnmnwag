@@ -103,7 +103,7 @@ body {
       min-width: 322px;  // MAGIC NUMBER!
       ul {
         @include media(tiny) {
-          max-width: 88%;  // make nav fit tiny phones
+          padding-right: 1rem;  // fix for tiny phones
         }
         display: flex;
         justify-content: space-between;

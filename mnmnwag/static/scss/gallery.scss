@@ -16,4 +16,10 @@
     margin-right: auto;
     max-width: 45rem;
   }
+
+  @include media(tiny) {
+    .block-slides img {
+      max-width: 48%;
+    }
+  }
 }
