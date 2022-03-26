@@ -39,22 +39,20 @@
                 {# </span> #}
             </h5>
         </header>
-        <main>
-            {% if comment.is_removed %}
-                <div class="content"><i>This comment has been removed.</i></div>
-            {% else %}
-                <div class="content">
-                    {% include "includes/django_comments_xtd/comment_content.html" with content=comment.comment %}
-                </div>
-                {# {% if allow_feedback %} #}
-                {#     {% include "includes/django_comments_xtd/user_feedback.html" %} #}
-                {# {% endif %} #}
-                {% if comment.allow_thread and not comment.is_removed %}
-                    {% if allow_feedback %}&nbsp;&nbsp;<span class="text-muted">&bull;</span>&nbsp;&nbsp;{% endif %}
-                    <div><a class="reply-form-container c{{ comment.id }}" href="{{ comment.get_reply_url }}" up-target="&" up-history="false">reply</a></div>
-                {% endif %}
+        {% if comment.is_removed %}
+            <div class="content"><i>This comment has been removed.</i></div>
+        {% else %}
+            <div class="content">
+                {% include "includes/django_comments_xtd/comment_content.html" with content=comment.comment %}
+            </div>
+            {# {% if allow_feedback %} #}
+            {#     {% include "includes/django_comments_xtd/user_feedback.html" %} #}
+            {# {% endif %} #}
+            {% if comment.allow_thread and not comment.is_removed %}
+                {% if allow_feedback %}&nbsp;&nbsp;<span class="text-muted">&bull;</span>&nbsp;&nbsp;{% endif %}
+                <div><a class="reply-form-container c{{ comment.id }}" href="{{ comment.get_reply_url }}" up-target="&" up-history="false">reply</a></div>
             {% endif %}
-        </main>
+        {% endif %}
         {% if not comment.is_removed and item.children %}
             {% render_xtdcomment_tree with comments=item.children %}
         {% endif %}

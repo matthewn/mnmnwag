@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mnmnwag"
-version = "1.2"
+version = "3.1"
 description = ""
 authors = ["Matthew Newton <matthewn@alum.berkeley.edu>"]
 
