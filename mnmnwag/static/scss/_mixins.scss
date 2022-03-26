@@ -9,8 +9,7 @@
     @media (max-width: 919px) {
       @content;
     }
-  }
-  @else if $breakpoint == 'desktop' {
+  } @else if $breakpoint == 'desktop' {
     @media (min-width: 920px) {
       @content;
     }
@@ -38,4 +37,9 @@
   @include media(mobile) {
     width: 100%;
   }
+}
+
+// https://stackoverflow.com/a/61978019/546468
+@mixin cut-corners($left-top, $right-top: 0, $right-bottom: 0, $left-bottom: 0) {
+  clip-path: polygon($left-top 0%, calc(100% - #{$right-top}) 0%, 100% $right-top, 100% calc(100% - #{$right-bottom}), calc(100% - #{$right-bottom}) 100%, $left-bottom 100%, 0% calc(100% - #{$left-bottom}), 0% $left-top);
 }
