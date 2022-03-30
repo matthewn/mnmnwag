@@ -65,6 +65,9 @@ class ComplexPage(BasePage):
         ('heading', blocks.CharBlock(classname="full title")),
         ('paragraph', blocks.RichTextBlock(
             features=[
+                'h3',
+                'h4',
+                'h5',
                 'ol',
                 'ul',
                 'blockquote',

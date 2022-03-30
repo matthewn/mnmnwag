@@ -1,14 +1,25 @@
 .gallery {
   text-align: center;
+
+  h2 {
+    font-size: 2.25rem;
+    margin-bottom: .5rem;
+  }
+
   & > *,
   .page-body > * {
     margin-bottom: 2rem;
   }
+
   .block-paragraph {
     margin-left: auto;
     margin-right: auto;
     max-width: 45rem;
   }
+
+  @include media(tiny) {
+    .block-slides img {
+      max-width: 48%;
+    }
+  }
 }
-
-

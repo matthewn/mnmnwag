@@ -96,15 +96,14 @@ body {
       @include mobile-full-width;
     }
     nav {
+      @include media(desktop) {
+        min-width: 322px;  // MAGIC NUMBER!
+      }
       @include media(mobile) {
         margin-bottom: 1rem;
         width: 100%;
       }
-      min-width: 322px;  // MAGIC NUMBER!
       ul {
-        @include media(tiny) {
-          max-width: 88%;  // make nav fit tiny phones
-        }
         display: flex;
         justify-content: space-between;
       }

@@ -23,11 +23,9 @@
                         at {{ comment.submit_date|date:"g:i a" }}...
                     </h5>
                 </header>
-                <main>
-                    <div class="content">
-                        {% include "includes/django_comments_xtd/comment_content.html" with content=comment.comment %}
-                    </div>
-                </main>
+                <div class="content">
+                    {% include "includes/django_comments_xtd/comment_content.html" with content=comment.comment %}
+                </div>
             </div>
         </article>
     </div>

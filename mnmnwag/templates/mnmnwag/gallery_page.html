@@ -43,7 +43,7 @@
     <article class="gallery">
         <header>
             <h2>{{ page.title }}</h2>
-            <p>posted {{ post.first_published_at|date:"j F Y"|default:"31 December 1999" }}</p>
+            <p>posted {{ page.first_published_at|date:"j F Y"|default:"31 December 1999" }}</p>
         </header>
 
         <div class="page-body type-{{ page.content_type.model }} slug-{{ page.slug }}">
