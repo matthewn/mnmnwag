@@ -31,6 +31,7 @@ pywatchman = "*"
 stopforumspam = "*"
 django-honeypot = "*"
 pyexiv2 = "^2.7.1"
+gunicorn = "^20.1.0"
 
 [tool.poetry.dev-dependencies]
 
