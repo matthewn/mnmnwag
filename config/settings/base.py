@@ -35,6 +35,9 @@ INSTALLED_APPS = [
     'mnmnwag',
     'subs',
 
+    'djrichtextfield',  # required for seevooplay
+    'seevooplay',
+
     'config.apps.MnmnwagAdminConfig',  # replaces 'django.contrib.admin'
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -220,6 +223,36 @@ HONEYPOT_FIELD_NAME = 'homepage'
 # django-libsass
 
 LIBSASS_OUTPUT_STYLE = 'compressed'
+
+
+# django-richtextfield (for seevooplay)
+
+DJRICHTEXTFIELD_CONFIG = {
+    'js': [
+        '//cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1/trumbowyg.min.js',
+        '//cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1/plugins/cleanpaste/trumbowyg.cleanpaste.min.js',
+        '//cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1/plugins/history/trumbowyg.history.min.js',
+    ],
+    'css': {
+        'all': [
+            '//cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1/ui/trumbowyg.min.css',
+        ]
+    },
+    'init_template': 'seevooplay/trumbowyg.js',
+    'settings': {
+        'autogrow': True,
+        'semantic': False,
+        'minimalLinks': True,
+        'btns': [
+            ['historyUndo', 'historyRedo'],
+            ['strong', 'em'],
+            ['link'],
+            ['removeformat'],
+            ['viewHTML'],
+            ['fullscreen']
+        ]
+    }
+}
 
 
 # extlinks

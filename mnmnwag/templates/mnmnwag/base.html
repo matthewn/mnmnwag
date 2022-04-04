@@ -61,11 +61,13 @@
         <section id="navbar">
             <div class="constrainer">
                 <div id="page-message">
-                    {% if page.page_message %}
-                        {{ page.page_message|richtext|typefixes }}
-                    {% elif page_message %}
-                        {{ page_message|richtext|typefixes }}
-                    {% endif %}
+                    {% block page_message %}
+                        {% if page.page_message %}
+                            {{ page.page_message|richtext|typefixes }}
+                        {% elif page_message %}
+                            {{ page_message|richtext|typefixes }}
+                        {% endif %}
+                    {% endblock %}
                 </div>
                 <nav aria-label="primary site navigation">
                     <ul role="menubar">

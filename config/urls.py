@@ -12,6 +12,7 @@ from search import views as search_views
 from mnmnwag.feeds import LatestEntriesFeed
 from mnmnwag.views import theme_picker, zoom_image, zoom_old, zoom_slide
 
+from seevooplay.views import email_guests, event_page
 from subs.views import sub_create, sub_confirm, sub_remove
 
 
@@ -33,6 +34,11 @@ urlpatterns = [
     path('sub/create', sub_create, name='sub_create'),
     path('sub/<str:uuid>/confirm', sub_confirm, name='sub_confirm'),
     path('sub/<str:uuid>/remove', sub_remove, name='sub_remove'),
+
+    path('dja/email_guests/<int:event_id>/', email_guests, name='email_guests'),
+    path('rsvp/<int:event_id>/', event_page, name='invitation'),
+    path('rsvp/<int:event_id>/<guest_uuid>/', event_page),
+    path('djrichtextfield/', include('djrichtextfield.urls')),
 
     url(r'^blog/feed/', LatestEntriesFeed(), name='feed'),
 
