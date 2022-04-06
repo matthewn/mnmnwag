@@ -257,6 +257,7 @@ DJRICHTEXTFIELD_CONFIG = {
 
 # extlinks
 
+EXTLINKS_IGNORE_DOMAINS = ['www.mahnamahna.net']
 EXTLINKS_TEMPLATES_WHITELIST = ['mnmnwag']
 
 
