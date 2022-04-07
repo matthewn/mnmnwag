@@ -92,7 +92,7 @@
                 {% if page.content_type.model == 'blogindex' or page.content_type.model == 'modernpost' or page.content_type.model == 'legacypost' %}
                     <main class="blog">
                 {% else %}
-                    <main class="slug-{{ page.slug }}">
+                    <main {% if page.slug %}class="slug-{{ page.slug }}"{% endif %}>
                 {% endif %}
                     {% block content %}{% endblock %}
                 </main>
