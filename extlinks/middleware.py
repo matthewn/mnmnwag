@@ -1,5 +1,4 @@
 from django.conf import settings
-# from django.utils.safestring import mark_safe
 import re
 
 
@@ -47,8 +46,6 @@ class RewriteExternalLinksMiddleware(object):
                     if '://' in match and 'target=' not in match:
                         new_link = match.replace(' href=', ' target="_blank" href=')
                         new_content = new_content.replace(match, new_link, 1)
-
-        # mark_safe(new_content)
 
         response.content = new_content
 
