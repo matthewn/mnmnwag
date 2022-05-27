@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'dbbackup',
     # 'debug_toolbar',
     'debugtools',
-    'django_browser_reload',
+    # 'django_browser_reload',
     'django_comments_xtd',  # 1 (do not reorder)
     'django_comments',      # 2 (do not reorder)
     'django_extensions',
@@ -79,7 +79,7 @@ MIDDLEWARE = [
 
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 
-    'django_browser_reload.middleware.BrowserReloadMiddleware',
+    # 'django_browser_reload.middleware.BrowserReloadMiddleware',
     'stopforumspam.middleware.StopForumSpamMiddleware',
 
     'extlinks.middleware.RewriteExternalLinksMiddleware',
