@@ -10,17 +10,16 @@ from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import Tag, TaggedItemBase
 
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.panels import (
     FieldPanel,
     MultiFieldPanel,
-    StreamFieldPanel,
 )
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
-from wagtail.core import blocks
-from wagtail.core.fields import RichTextField, StreamField
-from wagtail.core.models import Page
-from wagtail.core.models.collections import Collection
-from wagtail.core.rich_text import RichText
+from wagtail import blocks
+from wagtail.fields import RichTextField, StreamField
+from wagtail.models import Page
+from wagtail.models.collections import Collection
+from wagtail.rich_text import RichText
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images import get_image_model
 from wagtail.images.models import Image, AbstractImage, AbstractRendition
@@ -88,12 +87,12 @@ class ComplexPage(BasePage):
         ('media', MediaBlock(icon='media')),
         ('raw_HTML', blocks.RawHTMLBlock(required=False)),
         ('danger', blocks.RawHTMLBlock(label='DANGER!', required=False)),
-    ])
+    ], use_json_field=True)
     page_message = RichTextField()
 
     content_panels = Page.content_panels + [
         FieldPanel('page_message'),
-        StreamFieldPanel('body'),
+        FieldPanel('body'),
     ]
 
 
@@ -144,7 +143,7 @@ class GalleryPage(BasePage):
         ('embed', EmbedBlock()),
         ('media', MediaBlock(icon='media')),
         ('raw_HTML', blocks.RawHTMLBlock(required=False)),
-    ])
+    ], use_json_field=True)
 
     # fields for the create-from-collection functionality
     import_collection = models.ForeignKey(
@@ -175,7 +174,7 @@ class GalleryPage(BasePage):
             classname='collapsible collapsed',
             help_text='Slides will be created in this page\'s Body when you Save.',
         ),
-        StreamFieldPanel('body'),
+        FieldPanel('body'),
     ]
 
     settings_panels = Page.settings_panels + [
@@ -417,7 +416,7 @@ class ModernPost(BasePage, BlogPost):
         ('embed', EmbedBlock()),
         ('media', MediaBlock(icon='media')),
         ('raw_HTML', blocks.RawHTMLBlock(required=False)),
-    ])
+    ], use_json_field=True)
 
     tweet_title = models.TextField(
         blank=True,
@@ -425,7 +424,7 @@ class ModernPost(BasePage, BlogPost):
     )
 
     content_panels = Page.content_panels + [
-        StreamFieldPanel('body'),
+        FieldPanel('body'),
         FieldPanel('tags'),
         FieldPanel('has_comments_enabled'),
     ]

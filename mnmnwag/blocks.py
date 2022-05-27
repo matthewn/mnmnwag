@@ -2,7 +2,7 @@ from django.db import models
 from django.forms.utils import flatatt
 from django.utils.html import format_html, format_html_join
 
-from wagtail.core.blocks import (
+from wagtail.blocks import (
     CharBlock,
     ChoiceBlock,
     ListBlock,

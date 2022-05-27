@@ -25,7 +25,7 @@ INSTALLED_APPS = [
     'wagtail.images',
     'wagtail.search',
     'wagtail.admin',
-    'wagtail.core',
+    'wagtail',
     'wagtail.contrib.routable_page',
     # 'wagtail.contrib.styleguide',
 
@@ -174,7 +174,7 @@ WAGTAILMEDIA_MEDIA_MODEL = 'mnmnwag.CustomMedia'
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-BASE_URL = 'https://www.mahnamahna.net'
+WAGTAILADMIN_BASE_URL = 'https://www.mahnamahna.net'
 
 WAGTAILSEARCH_BACKENDS = {
     'default': {

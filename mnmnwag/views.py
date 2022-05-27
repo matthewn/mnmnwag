@@ -3,7 +3,7 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.safestring import mark_safe
-from wagtail.core.models import Page
+from wagtail.models import Page
 
 from .models import CustomImage
 

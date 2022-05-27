@@ -1,7 +1,7 @@
 """Lifed from the wagtail bakerydemo; provides context-aware menu items."""
 
 from django import template
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 register = template.Library()
 

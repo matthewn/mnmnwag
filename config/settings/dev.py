@@ -12,8 +12,8 @@ ALLOWED_HOSTS = ['*']
 # print emails on console instead of sending them
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# BASE_URL required for notification emails
-BASE_URL = 'http://localhost:8000'
+# WAGTAILADMIN_BASE_URL required for notification emails
+WAGTAILADMIN_BASE_URL = 'http://localhost:8000'
 
 # django-cachalot
 CACHALOT_ENABLED = False
