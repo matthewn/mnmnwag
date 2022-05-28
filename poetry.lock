@@ -83,6 +83,18 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-antispam"
+version = "1.0.3"
+description = "Anti-spam protection tools for django applications."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+django = "*"
+python-akismet = "*"
+
+[[package]]
 name = "django-appconf"
 version = "1.0.5"
 description = "A helper class for handling configuration defaults of packaged apps gracefully."
@@ -161,6 +173,17 @@ python-versions = "*"
 
 [package.dependencies]
 Django = ">=2.2"
+
+[[package]]
+name = "django-crequest"
+version = "2018.5.11"
+description = "Middleware that makes the current request available from anywhere."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+Django = ">=1.2"
 
 [[package]]
 name = "django-dbbackup"
@@ -495,6 +518,17 @@ description = "Read/Write metadata(including EXIF, IPTC, XMP), comment and ICC P
 category = "main"
 optional = false
 python-versions = ">=3.5"
+
+[[package]]
+name = "python-akismet"
+version = "0.4.3"
+description = "Akismet v1.1 module for Python."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+requests = "*"
 
 [[package]]
 name = "python-dateutil"
@@ -837,7 +871,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "9d31bbed2ea9307f33502277dbe3216590d63c52c5b1ebdcb49be71459bb5724"
+content-hash = "1a2064ab54b37f3886ca9d17a91e9a2c7e769090d530c41fc8d928dcbaec952b"
 
 [metadata.files]
 anyascii = [
@@ -869,6 +903,10 @@ django = [
     {file = "Django-3.2.13-py3-none-any.whl", hash = "sha256:b896ca61edc079eb6bbaa15cf6071eb69d6aac08cce5211583cfb41515644fdf"},
     {file = "Django-3.2.13.tar.gz", hash = "sha256:6d93497a0a9bf6ba0e0b1a29cccdc40efbfc76297255b1309b3a884a688ec4b6"},
 ]
+django-antispam = [
+    {file = "django-antispam-1.0.3.tar.gz", hash = "sha256:0228af06e33984ec65c16cbb20ccaa57dfaa114ca8a4a238ef7ee8d03cd2ebad"},
+    {file = "django_antispam-1.0.3-py3-none-any.whl", hash = "sha256:b9b76f7dba8d934807559fa464b46b49d559b48781d7918e7c785f5067dbcaaa"},
+]
 django-appconf = [
     {file = "django-appconf-1.0.5.tar.gz", hash = "sha256:be3db0be6c81fa84742000b89a81c016d70ae66a7ccb620cdef592b1f1a6aaa4"},
     {file = "django_appconf-1.0.5-py3-none-any.whl", hash = "sha256:ae9f864ee1958c815a965ed63b3fba4874eec13de10236ba063a788f9a17389d"},
@@ -896,6 +934,9 @@ django-compressor = [
 django-contrib-comments = [
     {file = "django-contrib-comments-2.2.0.tar.gz", hash = "sha256:48de00f15677e016a216aeff205d6e00e4391c9a5702136c64119c472b7356da"},
     {file = "django_contrib_comments-2.2.0-py3-none-any.whl", hash = "sha256:2ca79060bbc8fc5b636981ef6e50f35ab83649af75fc1be47bf770636be3271c"},
+]
+django-crequest = [
+    {file = "django-crequest-2018.5.11.tar.gz", hash = "sha256:e623ec6b2933790717307d5a59cf9db39ff4928b53c506948e1d05776ef4a034"},
 ]
 django-dbbackup = [
     {file = "django-dbbackup-3.3.0.tar.gz", hash = "sha256:bb109735cae98b64ad084e5b461b7aca2d7b39992f10c9ed9435e3ebb6fb76c8"},
@@ -1081,6 +1122,10 @@ pyexiv2 = [
     {file = "pyexiv2-2.7.1-cp39-none-macosx_10_14_x86_64.macosx_11_0_x86_64.whl", hash = "sha256:ea9d6d161655c40dedf2f3a7b11d45831771fc319398c6ced1423ea90798d3a6"},
     {file = "pyexiv2-2.7.1-cp39-none-manylinux2014_x86_64.whl", hash = "sha256:2c6ff01798d72d9093825425d8ccdff98911d06336c4f72aeb46a4aab64db23e"},
     {file = "pyexiv2-2.7.1-cp39-none-win_amd64.whl", hash = "sha256:9c6d2cc14c5e32fd79c58e976b2ac1ef8dcab47e54cb2cf02624f1bbda309c2b"},
+]
+python-akismet = [
+    {file = "python-akismet-0.4.3.tar.gz", hash = "sha256:83e3d73d9835b31ab4a2725860a940739e252ef55144f65c3b66982bf33e2939"},
+    {file = "python_akismet-0.4.3-py2.py3-none-any.whl", hash = "sha256:767572cb82d860c5c74026fafbf9992a02d2cfe140a932ef90f8274bb419befc"},
 ]
 python-dateutil = [
     {file = "python-dateutil-2.8.2.tar.gz", hash = "sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86"},

@@ -10,7 +10,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000  # for SlidesBlock edge case
 
-
 INSTALLED_APPS = [
     'admin_tweaks',
     'search',
@@ -46,10 +45,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'antispam',
+    'antispam.akismet',
     'cachalot',
     'capture_tag',
     'comments_wagtail_xtd',
     'compressor',
+    'crequest',
     'dbbackup',
     # 'debug_toolbar',
     'debugtools',
@@ -75,13 +77,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
 
-    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
-
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     # 'django_browser_reload.middleware.BrowserReloadMiddleware',
+    'crequest.middleware.CrequestMiddleware',
     'stopforumspam.middleware.StopForumSpamMiddleware',
-
     'extlinks.middleware.RewriteExternalLinksMiddleware',
 ]
 
@@ -182,6 +183,11 @@ WAGTAILSEARCH_BACKENDS = {
         'ATOMIC_REBUILD': True,
     }
 }
+
+
+# django-antispam
+AKISMET_SITE_URL = 'https://www.mahnamahna.net'
+AKISMET_TEST_MODE = False
 
 
 # django-comments(-xtd)
