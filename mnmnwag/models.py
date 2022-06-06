@@ -28,9 +28,9 @@ from wagtail.snippets.models import register_snippet
 
 from wagtailmedia.models import Media, AbstractMedia
 
+from dateutil import tz
 from django_comments.moderation import CommentModerator
 from django_comments_xtd.moderation import moderator
-
 from honeypot.decorators import honeypot_equals
 
 from .blocks import ImageBlock, MediaBlock, SlidesBlock
@@ -450,6 +450,20 @@ class ModernPost(BasePage, BlogPost):
 
     def is_snapshot(self):
         return True if 'snapshot' in self.tags.names() else False
+
+    @property
+    def micropost_title(self):
+        """
+        Return a generic title for a micropost.
+        These are used in mnmnwag/feeds.py and
+        mnmnwag/management/commands/send_tweets.py.
+        """
+        if self.is_micro():
+            home_zone = tz.gettz(settings.TIME_ZONE)
+            post_date = self.first_published_at.astimezone(home_zone).strftime('%Y-%m-%d %I:%M %p')
+            return f'micropost ({post_date})'
+        else:
+            return self.title
 
 
 # ···························································

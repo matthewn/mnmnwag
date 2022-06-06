@@ -3,7 +3,6 @@ from django.core.management.base import BaseCommand
 # from django.core.mail import send_mail
 
 from mnmnwag.models import ModernPost, TweetsTracker
-from mnmnwag.utils import get_micropost_title
 
 import tweepy
 
@@ -34,7 +33,7 @@ class Command(BaseCommand):
                     title = post.tweet_title
                 else:
                     if 'micro' in post.tags.names():
-                        title = get_micropost_title(post)
+                        title = post.micropost_title
                     else:
                         title = post.title
                 link = post.full_url
