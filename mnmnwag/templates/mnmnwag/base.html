@@ -13,7 +13,7 @@
         <meta charset="utf-8" />
         <title>
             {% spaceless %}
-            {% block title %}{% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}{% endblock %}
+            {% block title %}{% if self.seo_title %}{{ self.seo_title }}{% elif self.micropost_title %}{{ self.micropost_title }}{% else %}{{ self.title }}{% endif %}{% endblock %}
             {% block title_suffix %} | mahna mahna .net{% endblock %}
             {% endspaceless %}
         </title>
