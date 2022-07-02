@@ -61,7 +61,6 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_markdown2',
     'honeypot',
-    'stopforumspam',
     'typogrify',
     # 'wagtailcache',
     'wagtailfontawesome',  # req'd by wagtailcomments_xtd
@@ -82,7 +81,6 @@ MIDDLEWARE = [
     # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     # 'django_browser_reload.middleware.BrowserReloadMiddleware',
     'crequest.middleware.CrequestMiddleware',
-    'stopforumspam.middleware.StopForumSpamMiddleware',
     'extlinks.middleware.RewriteExternalLinksMiddleware',
 ]
 
@@ -265,10 +263,3 @@ DJRICHTEXTFIELD_CONFIG = {
 
 EXTLINKS_IGNORE_DOMAINS = ['www.mahnamahna.net']
 EXTLINKS_TEMPLATES_WHITELIST = ['mnmnwag']
-
-
-# stopforumspam
-
-SFS_ALL_POST_REQUESTS = False
-SFS_URLS_INCLUDE = ['comments-post-comment']
-# SFS_URLS_INCLUDE = ['comments-post-comment', '/comments/post/']

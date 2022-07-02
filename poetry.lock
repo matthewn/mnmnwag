@@ -664,17 +664,6 @@ optional = false
 python-versions = ">=3.5"
 
 [[package]]
-name = "stopforumspam"
-version = "1.11"
-description = "Django middleware for blocking IPs listed in stopforumspam.com"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-Django = ">=1.9"
-
-[[package]]
 name = "tablib"
 version = "3.2.1"
 description = "Format agnostic tabular data library (XLS, JSON, YAML, CSV)"
@@ -860,7 +849,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "4f188f921212c7dda7d170a5c567baf9379eefdff297fe046d165dc19d105b8c"
+content-hash = "57f42f79f67c7da4c69e9945f9bfbf2d6339dc27bd16d400e9a969e387ef56fe"
 
 [metadata.files]
 anyascii = [
@@ -1270,9 +1259,6 @@ soupsieve = [
 sqlparse = [
     {file = "sqlparse-0.4.2-py3-none-any.whl", hash = "sha256:48719e356bb8b42991bdbb1e8b83223757b93789c00910a616a071910ca4a64d"},
     {file = "sqlparse-0.4.2.tar.gz", hash = "sha256:0c00730c74263a94e5a9919ade150dfc3b19c574389985446148402998287dae"},
-]
-stopforumspam = [
-    {file = "stopforumspam-1.11-py2.py3-none-any.whl", hash = "sha256:803072629786974e910b23af98c495ee779087b38e1c74634e0a95a8315ca5da"},
 ]
 tablib = [
     {file = "tablib-3.2.1-py3-none-any.whl", hash = "sha256:870d7e688f738531a14937a055e8bba404fbc388e77d4d500b2c904075d1019c"},
