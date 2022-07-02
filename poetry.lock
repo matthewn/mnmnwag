@@ -773,17 +773,6 @@ docs = ["pyenchant (>=3.1.1,<4)", "sphinxcontrib-spelling (>=5.4.0,<6)", "Sphinx
 testing = ["python-dateutil (>=2.7)", "pytz (>=2014.7)", "elasticsearch (>=5.0,<6.0)", "Jinja2 (>=3.0,<3.2)", "boto3 (>=1.16,<1.17)", "freezegun (>=0.3.8)", "openpyxl (>=2.6.4)", "azure-mgmt-cdn (>=5.1,<6.0)", "azure-mgmt-frontdoor (>=0.3,<0.4)", "django-pattern-library (>=0.7,<0.8)", "coverage (>=3.7.0)", "black (==22.3.0)", "flake8 (>=3.6.0)", "isort (==5.6.4)", "flake8-blind-except (==0.1.1)", "flake8-comprehensions (==3.8.0)", "flake8-print (==2.0.2)", "doc8 (==0.8.1)", "flake8-assertive (==2.0.0)", "curlylint (==0.13.1)", "djhtml (==1.4.13)", "polib (>=1.1,<2.0)"]
 
 [[package]]
-name = "wagtail-cache"
-version = "2.0.0"
-description = "A simple page cache for Wagtail based on the Django cache middleware."
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-wagtail = ">=3.0,<4.0"
-
-[[package]]
 name = "wagtailfontawesome"
 version = "1.2.1"
 description = "Add FontAwesome icons to StreamField."
@@ -871,7 +860,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "1a2064ab54b37f3886ca9d17a91e9a2c7e769090d530c41fc8d928dcbaec952b"
+content-hash = "4f188f921212c7dda7d170a5c567baf9379eefdff297fe046d165dc19d105b8c"
 
 [metadata.files]
 anyascii = [
@@ -1304,10 +1293,6 @@ urllib3 = [
 wagtail = [
     {file = "wagtail-3.0.1-py3-none-any.whl", hash = "sha256:107d7a1ac9a4fde0fa2e454cc84f548dc41581cc627881abf4bbac3d5a30244c"},
     {file = "wagtail-3.0.1.tar.gz", hash = "sha256:917393fcea8644734beb323d607e02e4316370982ba0b4ea689a576567247bc8"},
-]
-wagtail-cache = [
-    {file = "wagtail-cache-2.0.0.tar.gz", hash = "sha256:1e5b9b9fa073f812b4e66a52ea1eb4e6379e3796b5a171b8185eef8f19cbeac1"},
-    {file = "wagtail_cache-2.0.0-py3-none-any.whl", hash = "sha256:461fe68eabc9b584192e5b7e07d702ed37cf944a8d022a8c6ff7f38b2731afbd"},
 ]
 wagtailfontawesome = [
     {file = "wagtailfontawesome-1.2.1-py2.py3-none-any.whl", hash = "sha256:76b1c64c4f1042d468a83e4352f74b57bda4a4aa09cdfeeb8663dead5ed632be"},
