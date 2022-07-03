@@ -24,3 +24,8 @@
   float: left;
   width: 45%;
 }
+
+/* fix wagtail 3 admin misrender in firefox */
+.page-editor .content-wrapper {
+  margin-bottom: unset !important;
+}

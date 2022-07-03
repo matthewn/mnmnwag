@@ -2,8 +2,8 @@
 
 from django.db import migrations
 import mnmnwag.blocks
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.embeds.blocks
 import wagtail.images.blocks
 
@@ -18,11 +18,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='complexpage',
             name='body',
-            field=wagtail.core.fields.StreamField([('heading', wagtail.core.blocks.CharBlock(classname='full title')), ('paragraph', wagtail.core.blocks.RichTextBlock()), ('image', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('caption', wagtail.core.blocks.RichTextBlock(features=['bold', 'italic', 'link'], required=False)), ('alt_text', wagtail.core.blocks.CharBlock(max_length=256, required=False))])), ('embed', wagtail.embeds.blocks.EmbedBlock()), ('media', mnmnwag.blocks.MediaBlock(icon='media')), ('raw_HTML', wagtail.core.blocks.RawHTMLBlock(required=False))]),
+            field=wagtail.fields.StreamField([('heading', wagtail.blocks.CharBlock(classname='full title')), ('paragraph', wagtail.blocks.RichTextBlock()), ('image', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('caption', wagtail.blocks.RichTextBlock(features=['bold', 'italic', 'link'], required=False)), ('alt_text', wagtail.blocks.CharBlock(max_length=256, required=False))])), ('embed', wagtail.embeds.blocks.EmbedBlock()), ('media', mnmnwag.blocks.MediaBlock(icon='media')), ('raw_HTML', wagtail.blocks.RawHTMLBlock(required=False))]),
         ),
         migrations.AlterField(
             model_name='modernpost',
             name='body',
-            field=wagtail.core.fields.StreamField([('heading', wagtail.core.blocks.CharBlock(classname='full title')), ('paragraph', wagtail.core.blocks.RichTextBlock()), ('image', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('caption', wagtail.core.blocks.RichTextBlock(features=['bold', 'italic', 'link'], required=False)), ('alt_text', wagtail.core.blocks.CharBlock(max_length=256, required=False))])), ('embed', wagtail.embeds.blocks.EmbedBlock()), ('media', mnmnwag.blocks.MediaBlock(icon='media')), ('raw_HTML', wagtail.core.blocks.RawHTMLBlock(required=False))]),
+            field=wagtail.fields.StreamField([('heading', wagtail.blocks.CharBlock(classname='full title')), ('paragraph', wagtail.blocks.RichTextBlock()), ('image', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock()), ('caption', wagtail.blocks.RichTextBlock(features=['bold', 'italic', 'link'], required=False)), ('alt_text', wagtail.blocks.CharBlock(max_length=256, required=False))])), ('embed', wagtail.embeds.blocks.EmbedBlock()), ('media', mnmnwag.blocks.MediaBlock(icon='media')), ('raw_HTML', wagtail.blocks.RawHTMLBlock(required=False))]),
         ),
     ]

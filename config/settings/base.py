@@ -10,7 +10,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000  # for SlidesBlock edge case
 
-
 INSTALLED_APPS = [
     'admin_tweaks',
     'search',
@@ -25,7 +24,7 @@ INSTALLED_APPS = [
     'wagtail.images',
     'wagtail.search',
     'wagtail.admin',
-    'wagtail.core',
+    'wagtail',
     'wagtail.contrib.routable_page',
     # 'wagtail.contrib.styleguide',
 
@@ -35,6 +34,9 @@ INSTALLED_APPS = [
     'mnmnwag',
     'subs',
 
+    'djrichtextfield',  # required for seevooplay
+    'seevooplay',
+
     'config.apps.MnmnwagAdminConfig',  # replaces 'django.contrib.admin'
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,22 +45,24 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'antispam',
+    'antispam.akismet',
     'cachalot',
     'capture_tag',
     'comments_wagtail_xtd',
     'compressor',
+    'crequest',
     'dbbackup',
     # 'debug_toolbar',
     'debugtools',
-    'django_browser_reload',
+    # 'django_browser_reload',
     'django_comments_xtd',  # 1 (do not reorder)
     'django_comments',      # 2 (do not reorder)
     'django_extensions',
     'django_markdown2',
     'honeypot',
-    'stopforumspam',
     'typogrify',
-    'wagtailcache',
+    # 'wagtailcache',
     'wagtailfontawesome',  # req'd by wagtailcomments_xtd
     'wagtailmedia',
 ]
@@ -72,13 +76,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
 
-    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
-
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 
-    'django_browser_reload.middleware.BrowserReloadMiddleware',
-    'stopforumspam.middleware.StopForumSpamMiddleware',
-
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'django_browser_reload.middleware.BrowserReloadMiddleware',
+    'crequest.middleware.CrequestMiddleware',
     'extlinks.middleware.RewriteExternalLinksMiddleware',
 ]
 
@@ -171,7 +173,7 @@ WAGTAILMEDIA_MEDIA_MODEL = 'mnmnwag.CustomMedia'
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-BASE_URL = 'https://www.mahnamahna.net'
+WAGTAILADMIN_BASE_URL = 'https://www.mahnamahna.net'
 
 WAGTAILSEARCH_BACKENDS = {
     'default': {
@@ -179,6 +181,11 @@ WAGTAILSEARCH_BACKENDS = {
         'ATOMIC_REBUILD': True,
     }
 }
+
+
+# django-antispam
+AKISMET_SITE_URL = 'https://www.mahnamahna.net'
+AKISMET_TEST_MODE = False
 
 
 # django-comments(-xtd)
@@ -222,13 +229,37 @@ HONEYPOT_FIELD_NAME = 'homepage'
 LIBSASS_OUTPUT_STYLE = 'compressed'
 
 
+# django-richtextfield (for seevooplay)
+
+DJRICHTEXTFIELD_CONFIG = {
+    'js': [
+        '//cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1/trumbowyg.min.js',
+        '//cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1/plugins/cleanpaste/trumbowyg.cleanpaste.min.js',
+        '//cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1/plugins/history/trumbowyg.history.min.js',
+    ],
+    'css': {
+        'all': [
+            '//cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1/ui/trumbowyg.min.css',
+        ]
+    },
+    'init_template': 'seevooplay/trumbowyg.js',
+    'settings': {
+        'autogrow': True,
+        'semantic': False,
+        'minimalLinks': True,
+        'btns': [
+            ['historyUndo', 'historyRedo'],
+            ['strong', 'em'],
+            ['link'],
+            ['removeformat'],
+            ['viewHTML'],
+            ['fullscreen']
+        ]
+    }
+}
+
+
 # extlinks
 
+EXTLINKS_IGNORE_DOMAINS = ['www.mahnamahna.net']
 EXTLINKS_TEMPLATES_WHITELIST = ['mnmnwag']
-
-
-# stopforumspam
-
-SFS_ALL_POST_REQUESTS = False
-SFS_URLS_INCLUDE = ['comments-post-comment']
-# SFS_URLS_INCLUDE = ['comments-post-comment', '/comments/post/']

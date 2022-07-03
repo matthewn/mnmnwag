@@ -32,15 +32,15 @@
 							{% include "mnmnwag/blog_post_block.html" %}
 						{% endwith %}
 						<a class="read-more" href="{% pageurl post %}" up-content-link>read full post &raquo;</a>
-					{# else truncate at 150 chars, display 'read more' if needed #}
+					{# else truncate at 160 chars, display 'read more' if needed #}
 					{% else %}
 						{% capture as content silent %}
 							{% for block in body %}
 								{% include "mnmnwag/blog_post_block.html" %}
 							{% endfor %}
 						{% endcapture %}
-						{{ content|typefixes|truncatewords_html:150 }}
-						{% ifnotequal content|truncatewords_html:150 content|truncatewords_html:151 %}
+						{{ content|typefixes|truncatewords_html:160 }}
+						{% ifnotequal content|truncatewords_html:160 content|truncatewords_html:161 %}
 							<a class="read-more" href="{% pageurl post %}" up-content-link>read full post &raquo;</a>
 						{% endifnotequal %}
 					{% endif %}

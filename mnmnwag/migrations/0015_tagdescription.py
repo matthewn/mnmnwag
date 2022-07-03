@@ -2,7 +2,7 @@
 
 from django.db import migrations, models
 import django.db.models.deletion
-import wagtail.core.fields
+import wagtail.fields
 
 
 class Migration(migrations.Migration):
@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             name='TagDescription',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('description', wagtail.core.fields.RichTextField()),
+                ('description', wagtail.fields.RichTextField()),
                 ('tag', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='taggit.tag')),
             ],
             options={

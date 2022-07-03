@@ -4,7 +4,7 @@ from django.urls import re_path, path
 from django.contrib import admin
 
 from wagtail.admin import urls as wagtailadmin_urls
-from wagtail.core import urls as wagtail_urls
+from wagtail import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
 from search import views as search_views
@@ -12,6 +12,7 @@ from search import views as search_views
 from mnmnwag.feeds import LatestEntriesFeed
 from mnmnwag.views import theme_picker, zoom_image, zoom_old, zoom_slide
 
+from seevooplay.views import email_guests, event_page
 from subs.views import sub_create, sub_confirm, sub_remove
 
 
@@ -34,7 +35,12 @@ urlpatterns = [
     path('sub/<str:uuid>/confirm', sub_confirm, name='sub_confirm'),
     path('sub/<str:uuid>/remove', sub_remove, name='sub_remove'),
 
-    re_path(r'^blog/feed/', LatestEntriesFeed(), name='feed'),
+    path('dja/email_guests/<int:event_id>/', email_guests, name='email_guests'),
+    path('rsvp/<int:event_id>/', event_page, name='invitation'),
+    path('rsvp/<int:event_id>/<guest_uuid>/', event_page),
+    path('djrichtextfield/', include('djrichtextfield.urls')),
+
+    url(r'^blog/feed/', LatestEntriesFeed(), name='feed'),
 
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in

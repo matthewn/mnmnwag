@@ -5,13 +5,16 @@
 
 {% block content %}
 
-    <div class="h3 force-sans">
+    <div class="force-sans">
 
         {% if not email %}
 
+            <p style="line-height: 1.2; margin-bottom: 1.5rem; max-width: 350px;">
+                <i>Subscribe to receive email notifications for new blog posts on this site. Your address will never be sold or spammed.</i>
+            </p>
             <form class="subs" action="{% url 'sub_create' %}" method="POST" up-target="#content" up-transition="cross-fade">
                 {% csrf_token %}
-                <label>
+                <label class="h3">
                     your email address:
                     <br><br>
                     <input type="email" name="email" placeholder="reader@example.org">

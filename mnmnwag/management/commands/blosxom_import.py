@@ -11,7 +11,7 @@ from django.core.management.base import BaseCommand
 from django.utils.timezone import make_aware
 from django_comments_xtd.models import XtdComment
 from django.contrib.sites.models import Site
-from wagtail.core.models import Page
+from wagtail.models import Page
 from wagtail.contrib.redirects.models import Redirect
 from mnmnwag.models import LegacyPost
 

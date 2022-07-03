@@ -1,18 +1,3 @@
-from dateutil import tz
-from django.conf import settings
-
-
-def get_micropost_title(page):
-    """
-    Return a generic title for a micropost.
-    These are used in mnmnwag/feeds.py and
-    mnmnwag/management/commands/send_tweets.py.
-    """
-    home_zone = tz.gettz(settings.TIME_ZONE)
-    post_date = page.first_published_at.astimezone(home_zone).strftime('%Y-%m-%d %I:%M %p')
-    return f'micropost ({post_date})'
-
-
 def get_elided_page_range(num_pages, page_range, *, number=1, on_each_side=2, on_ends=3):
     """
     Modified (SMARTER!) version of a method found in Django 3.2's Paginator.

@@ -1,7 +1,6 @@
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Atom1Feed
 from .models import BlogIndex
-from .utils import get_micropost_title
 
 
 class LatestEntriesFeed(Feed):
@@ -16,7 +15,7 @@ class LatestEntriesFeed(Feed):
 
     def item_title(self, item):
         if 'micro' in item.specific.tags.names():
-            return get_micropost_title(item)
+            return item.specific.micropost_title
         else:
             return item.title
 
