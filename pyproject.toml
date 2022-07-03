@@ -5,10 +5,10 @@ description = ""
 authors = ["Matthew Newton <matthewn@alum.berkeley.edu>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
-django = "^3.2"
+python = "^3.10"
+django = "*"
 wagtail = "*"
-django-dbbackup = "^3.3.0"
+django-dbbackup = {url = "https://github.com/jazzband/django-dbbackup/archive/refs/tags/4.0.0rc1.tar.gz"}
 django-debugtools = "*"
 django-extensions = "*"
 werkzeug = "*"
@@ -26,12 +26,13 @@ django-cachalot = "*"
 django-browser-reload = "*"
 pywatchman = "*"
 django-honeypot = "*"
-pyexiv2 = "^2.7.1"
-gunicorn = "^20.1.0"
-setproctitle = "^1.2.2"
-seevooplay = "^1.0.5"
-django-antispam = "^1.0.3"
-django-crequest = "^2018.5.11"
+pyexiv2 = "*"
+gunicorn = "*"
+setproctitle = "*"
+seevooplay = "*"
+django-antispam = "*"
+django-crequest = "*"
+django-typogrify = {url = "https://github.com/matthewn/django-typogrify/archive/refs/tags/v2.0.tar.gz"}
 
 [tool.poetry.dev-dependencies]
 

@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.conf.urls import include
-from django.urls import re_path, path
+from django.urls import path, re_path
 from django.contrib import admin
 
 from wagtail.admin import urls as wagtailadmin_urls
@@ -40,7 +40,7 @@ urlpatterns = [
     path('rsvp/<int:event_id>/<guest_uuid>/', event_page),
     path('djrichtextfield/', include('djrichtextfield.urls')),
 
-    url(r'^blog/feed/', LatestEntriesFeed(), name='feed'),
+    re_path(r'^blog/feed/', LatestEntriesFeed(), name='feed'),
 
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in
