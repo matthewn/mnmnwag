@@ -1,8 +1,14 @@
 from antispam import akismet
 from crequest.middleware import CrequestMiddleware
 from django import forms
+from django.apps import apps
 from django_comments_xtd.forms import XtdCommentForm
 from django_comments_xtd.conf import settings
+from zoneinfo import ZoneInfo
+
+from .models import RejectedComment
+
+import datetime as dt
 
 
 class MahnaCommentForm(XtdCommentForm):
@@ -67,5 +73,26 @@ class MahnaCommentForm(XtdCommentForm):
                 )
             )
         ):
+            self.log_rejected_comment(self.cleaned_data, request)
             raise forms.ValidationError('Spam detected', code='spam-protection')
         return super().clean_comment()
+
+    def log_rejected_comment(self, data, request):
+        """
+        Write rejected comments to a table so we can see them in the admin.
+        """
+        model = apps.get_model(data['content_type'])
+        page = model.objects.get(id=data['object_pk'])
+        entry = RejectedComment(
+            comment=data['comment'],
+            name=data['name'],
+            email=data['email'],
+            ip_address=request.META.get('REMOTE_ADDR'),
+            related_post=page,
+            submit_date=dt.datetime.fromtimestamp(
+                data['timestamp'],
+                ZoneInfo(settings.TIME_ZONE)
+            ),
+            url=data.get('url'),
+        )
+        entry.save()

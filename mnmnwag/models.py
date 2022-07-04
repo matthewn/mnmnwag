@@ -45,7 +45,6 @@ import re
 # CUSTOM BASE PAGE MODEL AND MISC PAGE(S)
 # ···························································
 
-
 class BasePage(Page):
     def get_context(self, request):
         context = super().get_context(request)
@@ -230,7 +229,6 @@ class GalleryPage(BasePage):
 # SUPPORTING CLASSES: TAGS AND SIDEBAR ELEMENTS
 # ···························································
 
-
 class PostTag(TaggedItemBase):
     content_object = ParentalKey(
         Page,
@@ -331,7 +329,6 @@ class BlogSidebar():
 # ···························································
 # BLOG POSTS: LEGACY (FROM DRUPAL) AND MODERN (WAGTAIL)
 # ···························································
-
 
 class BlogPost(models.Model, BlogSidebar):
     has_comments_enabled = models.BooleanField(
@@ -467,9 +464,8 @@ class ModernPost(BasePage, BlogPost):
 
 
 # ···························································
-# INDEX(ES)
+# THE BLOG INDEX
 # ···························································
-
 
 class BlogIndex(RoutablePageMixin, BasePage, BlogSidebar):
     page_message = RichTextField()
@@ -552,7 +548,6 @@ class BlogIndex(RoutablePageMixin, BasePage, BlogSidebar):
 
 # ···························································
 # COMMENT MODERATOR CLASS & REGISTRATION
-# (TODO: need a better place for this to live)
 # ···························································
 
 class BlogPostModerator(CommentModerator):
@@ -647,6 +642,20 @@ class BlogPostModerator(CommentModerator):
 
 moderator.register(LegacyPost, BlogPostModerator)
 moderator.register(ModernPost, BlogPostModerator)
+
+
+# ···························································
+# REJECTED COMMENTS   (rejected by Akismet; display in admin)
+# ···························································
+
+class RejectedComment(models.Model):
+    related_post = models.ForeignKey(ModernPost, on_delete=models.CASCADE)
+    submit_date = models.DateTimeField()
+    name = models.CharField(max_length=50)
+    email = models.EmailField()
+    url = models.URLField(blank=True)
+    comment = models.TextField(max_length=3000)
+    ip_address = models.GenericIPAddressField(blank=True, null=True)
 
 
 # ···························································
