@@ -9,26 +9,41 @@
 
         {% if not email %}
 
-            <p style="line-height: 1.2; margin-bottom: 1.5rem; max-width: 350px;">
-                <i>Subscribe to receive email notifications for new blog posts on this site. Your address will never be sold or spammed.</i>
-            </p>
-            <form class="subs" action="{% url 'sub_create' %}" method="POST" up-target="#content" up-transition="cross-fade">
-                {% csrf_token %}
-                <label class="h3">
-                    your email address:
-                    <br><br>
-                    <input type="email" name="email" placeholder="reader@example.org">
-                    <br><br>
-                </label>
-                <input type="submit" value="subscribe" style-as-button>
-            </form>
+            <div style=" max-width: 350px;">
+                <p style="line-height: 1.2; margin-bottom: 1.5rem;">
+                    <i>Subscribe to receive email notifications for new blog posts on this site. Your address will never be sold or spammed.</i>
+                </p>
+                <form class="subs" action="{% url 'sub_create' %}" method="POST" up-target="#content" up-transition="cross-fade">
+                    {% csrf_token %}
+                    <label class="h3">
+                        your email address:
+                        <br><br>
+                        <input type="email" name="email" placeholder="reader@example.org">
+                        <br><br>
+                    </label>
+                    <p class="h3" style="line-height: 1.2; margin-bottom: 1.5rem;">
+                        and (sorry about this) please prove you are not a bot...
+                    </p>
+                    <label>
+                        do not check this box:&nbsp;
+                        <input type="checkbox" name="nope">
+                    </label>
+                    &nbsp;&nbsp; &nbsp;&nbsp;
+                    <label>
+                        check this box:&nbsp;
+                        <input type="checkbox" name="yep">
+                    </label>
+                    <br><br><br>
+                    <input type="submit" value="subscribe" style-as-button>
+                </form>
+            </div>
 
         {% else %}
 
-            <p style="margin: 2rem; text-align: center;">
+            <p class="h3" style="margin: 2rem; text-align: center;">
                 Subscription request received for: {{ email }}
             </p>
-            <p style="margin: 2rem; text-align: center;">
+            <p class="h3" style="margin: 2rem; text-align: center;">
                 Please check your email for a confirmation link.
             </p>
 

@@ -10,13 +10,18 @@ from .utils import send_confirmation_email
 def sub_create(request):
     context = {'page_message': 'oooh! a new subscriber!'}
     if request.method == 'POST':
-        try:
-            sub = Subscription.objects.create(email=request.POST['email'])
-        except IntegrityError:
-            sub = Subscription.objects.get(email=request.POST['email'])
-        send_confirmation_email(request, sub)
-        send_mail(f'mnmnwag: sub requested by {sub.email} [eom]', '', None, [settings.ADMINS[0][1]])
-        context['email'] = sub.email
+        # check our homegrown checkbox captcha fields
+        # (silent fail if they get it wrong is deliberate)
+        nope = request.POST.get('nope')
+        yep = request.POST.get('yep')
+        if nope is None and yep == 'on':
+            try:
+                sub = Subscription.objects.create(email=request.POST['email'])
+            except IntegrityError:
+                sub = Subscription.objects.get(email=request.POST['email'])
+            send_confirmation_email(request, sub)
+            send_mail(f'mnmnwag: sub requested by {sub.email} [eom]', '', None, [settings.ADMINS[0][1]])
+            context['email'] = sub.email
     return TemplateResponse(request, 'subs/create.html', context)
 
 
