@@ -5,10 +5,10 @@ description = ""
 authors = ["Matthew Newton <matthewn@alum.berkeley.edu>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
-django = "^3.2"
+python = "^3.10"
+django = "*"
 wagtail = "*"
-django-dbbackup = "^3.3.0"
+django-dbbackup = "*"
 django-debugtools = "*"
 django-extensions = "*"
 werkzeug = "*"

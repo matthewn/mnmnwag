@@ -1,10 +1,14 @@
 /* #181f41 */
 :root {
-  --color-primary-hue: 230;
-  --color-primary-saturation: 46%;
-  --color-primary-lightness: 17%;
+  --w-color-primary-hue: 230;
+  --w-color-primary-saturation: 46%;
+  --w-color-primary-lightness: 17%;
 }
 
+/*
+ * the following no longer works in Wagtail 4 :( :( :(
+ * there does not appear to be any way to re-implement at this time :(
+ *
 .fieldname-danger textarea,
 .fieldname-raw_HTML textarea,
 .model-legacypost #id_body,
@@ -12,20 +16,4 @@
   font-family: monospace;
   font-size: .9rem;
 }
-
-/* make wagtailmedia element fit */
-#wagtail.homepage .summary ul.stats li {
-  width: 25%;
-}
-#wagtail.homepage .summary ul.stats li::before {
-  width: 35%;
-}
-#wagtail.homepage .summary ul.stats li a {
-  float: left;
-  width: 45%;
-}
-
-/* fix wagtail 3 admin misrender in firefox */
-.page-editor .content-wrapper {
-  margin-bottom: unset !important;
-}
+*/

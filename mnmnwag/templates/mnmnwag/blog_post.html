@@ -13,9 +13,9 @@
                 {# TRUNCATED POST (FOR BLOG INDEX) #}
                 {% if post.content_type.model == 'legacypost' %}
                     {{ body|richtext|typefixes|truncatewords_html:150 }}
-                    {% ifnotequal body|richtext|typefixes|truncatewords_html:150|length body|richtext|typefixes|truncatewords_html:151|length %}
+                    {% if body|richtext|typefixes|truncatewords_html:150|length != body|richtext|typefixes|truncatewords_html:151|length %}
                         <a class="read-more" href="{% pageurl post %}" up-content-link>read full post &raquo;</a>
-                    {% endifnotequal %}
+                    {% endif %}
                 {% elif post.content_type.model == 'modernpost' %}
 					{# if 1st block is teaser, display that + 'read more' #}
 					{% if body.0.block_type == 'teaser' %}
@@ -40,9 +40,9 @@
 							{% endfor %}
 						{% endcapture %}
 						{{ content|typefixes|truncatewords_html:160 }}
-						{% ifnotequal content|truncatewords_html:160 content|truncatewords_html:161 %}
+						{% if content|truncatewords_html:160 != content|truncatewords_html:161 %}
 							<a class="read-more" href="{% pageurl post %}" up-content-link>read full post &raquo;</a>
-						{% endifnotequal %}
+						{% endif %}
 					{% endif %}
                 {% endif %}
 

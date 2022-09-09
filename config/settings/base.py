@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'antispam.akismet',
     'cachalot',
     'capture_tag',
-    'comments_wagtail_xtd',
+    # 'comments_wagtail_xtd',  # broken since wagtail 4.0
     'compressor',
     'crequest',
     'dbbackup',
