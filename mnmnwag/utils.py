@@ -1,3 +1,13 @@
+def get_client_ip(request):
+    # https://stackoverflow.com/a/4581997
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
+
 def get_elided_page_range(num_pages, page_range, *, number=1, on_each_side=2, on_ends=3):
     """
     Modified (SMARTER!) version of a method found in Django 3.2's Paginator.

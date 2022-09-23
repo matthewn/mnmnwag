@@ -6,6 +6,7 @@ from django.utils.safestring import mark_safe
 from wagtail.models import Page
 
 from .models import CustomImage
+from .utils import get_client_ip
 
 import datetime as dt
 import os
@@ -111,6 +112,7 @@ def show_info(request):
     content = f'<br>Python version: {sys.version}'
     content += f'<br>REMOTE_ADDR: {request.META.get("REMOTE_ADDR")}'
     content += f'<br>HTTP_X_FORWARDED_FOR: {request.META.get("HTTP_X_FORWARDED_FOR")}'
+    content += f'<br>CLIENT_IP: {get_client_ip(request)}'
     return render(request, 'mnmnwag/showview.html', {
         'title': 'information!',
         'page_message': 'information!',

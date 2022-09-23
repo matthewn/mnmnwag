@@ -7,6 +7,7 @@ from django_comments_xtd.conf import settings
 from zoneinfo import ZoneInfo
 
 from .models import RejectedComment
+from .utils import get_client_ip
 
 import datetime as dt
 
@@ -87,7 +88,7 @@ class MahnaCommentForm(XtdCommentForm):
             comment=data['comment'],
             name=data['name'],
             email=data['email'],
-            ip_address=request.META.get('REMOTE_ADDR'),
+            ip_address=get_client_ip(request),
             related_post=page,
             submit_date=dt.datetime.fromtimestamp(
                 data['timestamp'],
