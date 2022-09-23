@@ -10,7 +10,7 @@ from wagtail.documents import urls as wagtaildocs_urls
 from search import views as search_views
 
 from mnmnwag.feeds import LatestEntriesFeed
-from mnmnwag.views import theme_picker, zoom_image, zoom_old, zoom_slide
+from mnmnwag.views import show_info, theme_picker, zoom_image, zoom_old, zoom_slide
 
 from seevooplay.views import email_guests, event_page
 from subs.views import sub_create, sub_confirm, sub_remove
@@ -30,6 +30,7 @@ urlpatterns = [
     path('slide/<int:page_id>/<str:block_id>/<int:pos>', zoom_slide, name='zoom_slide'),
     path('zoom/old/<path:image_path>', zoom_old, name='zoom_old'),
     path('theme/<str:chosen_theme>', theme_picker, name='theme_picker'),
+    path('showinfo/', show_info, name='show_info'),
 
     path('sub/create', sub_create, name='sub_create'),
     path('sub/<str:uuid>/confirm', sub_confirm, name='sub_confirm'),

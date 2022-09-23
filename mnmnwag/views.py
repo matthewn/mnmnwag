@@ -9,6 +9,7 @@ from .models import CustomImage
 
 import datetime as dt
 import os
+import sys
 
 
 def theme_picker(request, chosen_theme):
@@ -100,4 +101,16 @@ def zoom_old(request, image_path):
 
     return render(request, 'mnmnwag/zoom.html', {
         'old_img': img,
+    })
+
+
+def show_info(request):
+    """
+    For debugging server-side config woe. Display some stuff we want to see.
+    """
+    content = f'Python version: {sys.version}'
+    return render(request, 'mnmnwag/showview.html', {
+        'title': 'information!',
+        'page_message': 'information!',
+        'content': content,
     })
