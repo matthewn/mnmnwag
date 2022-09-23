@@ -108,9 +108,11 @@ def show_info(request):
     """
     For debugging server-side config woe. Display some stuff we want to see.
     """
-    content = f'Python version: {sys.version}'
+    content = f'<br>Python version: {sys.version}'
+    content += f'<br>REMOTE_ADDR: {request.META.get("REMOTE_ADDR")}'
+    content += f'<br>HTTP_X_FORWARDED_FOR: {request.META.get("HTTP_X_FORWARDED_FOR")}'
     return render(request, 'mnmnwag/showview.html', {
         'title': 'information!',
         'page_message': 'information!',
-        'content': content,
+        'content': mark_safe(content),
     })
