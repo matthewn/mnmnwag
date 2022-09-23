@@ -346,13 +346,21 @@ Django = ">=2.2"
 [[package]]
 name = "django-typogrify"
 version = "1.3.3"
-description = "Make type not look like crap (for django apps)"
+description = ""
 category = "main"
 optional = false
 python-versions = "*"
+develop = false
 
 [package.dependencies]
+num2words = "*"
 smartypants = ">=1.8.3"
+
+[package.source]
+type = "git"
+url = "https://github.com/matthewn/django-typogrify"
+reference = "django40"
+resolved_reference = "ab0f3f200fd270de081f863e80d3716011d696f6"
 
 [[package]]
 name = "djangorestframework"
@@ -365,6 +373,14 @@ python-versions = ">=3.6"
 [package.dependencies]
 django = ">=2.2"
 pytz = "*"
+
+[[package]]
+name = "docopt"
+version = "0.6.2"
+description = "Pythonic argument parser, that will make you smile"
+category = "main"
+optional = false
+python-versions = "*"
 
 [[package]]
 name = "docutils"
@@ -473,6 +489,17 @@ description = "Safely add untrusted strings to HTML/XML markup."
 category = "main"
 optional = false
 python-versions = ">=3.7"
+
+[[package]]
+name = "num2words"
+version = "0.5.12"
+description = "Modules to convert numbers to words. Easily extensible."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+docopt = ">=0.6.2"
 
 [[package]]
 name = "oauthlib"
@@ -868,7 +895,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "638e412a34b85258c70296a00c6d79cd198dec226ad581970167df218af5e482"
+content-hash = "b906ffb8ecb5c2041e9a7788ae74caf747e7e71ee73d825d6c62f36c313bd2a5"
 
 [metadata.files]
 anyascii = [
@@ -952,12 +979,13 @@ django-treebeard = [
     {file = "django-treebeard-4.5.1.tar.gz", hash = "sha256:80150017725239702054e5fa64dc66e383dc13ac262c8d47ee5a82cb005969da"},
     {file = "django_treebeard-4.5.1-py3-none-any.whl", hash = "sha256:7c2b1cdb1e9b46d595825186064a1228bc4d00dbbc186db5b0b9412357fba91c"},
 ]
-django-typogrify = [
-    {file = "django-typogrify-1.3.3.tar.gz", hash = "sha256:deffbb85ddd0c94bed6063ab7ad241b72e0f3e7c3160d9ea5f6388177901541e"},
-]
+django-typogrify = []
 djangorestframework = [
     {file = "djangorestframework-3.13.1-py3-none-any.whl", hash = "sha256:24c4bf58ed7e85d1fe4ba250ab2da926d263cd57d64b03e8dcef0ac683f8b1aa"},
     {file = "djangorestframework-3.13.1.tar.gz", hash = "sha256:0c33407ce23acc68eca2a6e46424b008c9c02eceb8cf18581921d0092bc1f2ee"},
+]
+docopt = [
+    {file = "docopt-0.6.2.tar.gz", hash = "sha256:49b3a825280bd66b3aa83585ef59c4a8c82f2c8a522dbe754a8bc8d08c85c491"},
 ]
 docutils = []
 draftjs-exporter = [
@@ -1001,6 +1029,7 @@ markdown2 = [
     {file = "markdown2-2.4.3.tar.gz", hash = "sha256:412520c7b6bba540c2c2067d6be3a523ab885703bf6a81d93963f848b55dfb9a"},
 ]
 markupsafe = []
+num2words = []
 oauthlib = []
 openpyxl = [
     {file = "openpyxl-3.0.10-py2.py3-none-any.whl", hash = "sha256:0ab6d25d01799f97a9464630abacbb34aafecdcaa0ef3cba6d6b3499867d0355"},

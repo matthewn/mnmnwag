@@ -16,7 +16,7 @@ python-dateutil = "*"
 django-compressor = "*"
 django-libsass = "*"
 django-capture-tag = "*"
-django-typogrify = "*"
+django-typogrify = { git = "https://github.com/matthewn/django-typogrify", branch = "django40" }
 django-comments-xtd = "*"
 django-debug-toolbar = "*"
 django-markdown2 = "*"
@@ -34,6 +34,7 @@ setproctitle = "^1.2.2"
 seevooplay = "^1.0.5"
 django-antispam = "^1.0.3"
 django-crequest = "^2018.5.11"
+num2words = "^0.5.12"
 
 [tool.poetry.dev-dependencies]
 
