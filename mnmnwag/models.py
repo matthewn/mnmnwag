@@ -457,7 +457,11 @@ class ModernPost(BasePage, BlogPost):
         """
         if self.is_micro():
             home_zone = tz.gettz(settings.TIME_ZONE)
-            post_date = self.first_published_at.astimezone(home_zone).strftime('%Y-%m-%d %I:%M %p')
+            try:
+                post_date = self.first_published_at.astimezone(home_zone).strftime('%Y-%m-%d %I:%M %p')
+            except AttributeError:
+                # post is not yet published
+                post_date = self.latest_revision.created_at.astimezone(home_zone).strftime('%Y-%m-%d %I:%M %p')
             return f'micropost ({post_date})'
         else:
             return self.title
