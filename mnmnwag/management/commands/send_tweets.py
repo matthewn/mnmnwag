@@ -29,15 +29,16 @@ class Command(BaseCommand):
             )
             api = tweepy.API(auth)
             for post in posts:
-                if post.tweet_title:
-                    title = post.tweet_title
-                else:
-                    if 'micro' in post.tags.names():
-                        title = post.micropost_title
+                if post.do_not_tweet is False:
+                    if post.tweet_title:
+                        title = post.tweet_title
                     else:
-                        title = post.title
-                link = post.full_url
-                tweet = f'{title} {link}'
-                status = api.update_status(status=tweet)  # noqa F841
-                # send_mail(f'mnmnwag: posted tweet {status["id_str"]} [eom]', '', None, [settings.ADMINS[0][1]])
-        tracker.save()
+                        if 'micro' in post.tags.names():
+                            title = post.micropost_title
+                        else:
+                            title = post.title
+                    link = post.full_url
+                    tweet = f'{title} {link}'
+                    status = api.update_status(status=tweet)  # noqa F841
+                    # send_mail(f'mnmnwag: posted tweet {status["id_str"]} [eom]', '', None, [settings.ADMINS[0][1]])
+            tracker.save()

@@ -415,6 +415,11 @@ class ModernPost(BasePage, BlogPost):
         ('raw_HTML', blocks.RawHTMLBlock(required=False)),
     ], use_json_field=True)
 
+    do_not_tweet = models.BooleanField(
+        default=False,
+        verbose_name='Do not tweet',
+        help_text='Do not automatically generate a tweet about this post.',
+    )
     tweet_title = models.TextField(
         blank=True,
         max_length=256,
@@ -426,7 +431,10 @@ class ModernPost(BasePage, BlogPost):
         FieldPanel('has_comments_enabled'),
     ]
 
-    promote_panels = [FieldPanel('tweet_title')] + Page.promote_panels
+    promote_panels = [
+        FieldPanel('do_not_tweet'),
+        FieldPanel('tweet_title'),
+    ] + Page.promote_panels
 
     search_fields = Page.search_fields + [
         index.SearchField('title'),
