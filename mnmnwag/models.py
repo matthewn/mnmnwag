@@ -346,6 +346,15 @@ class BlogPost(models.Model, BlogSidebar):
     def page_message(self):
         return self.get_parent().specific.page_message
 
+    @property
+    def post_date(self):
+        if self.first_published_at:
+            return self.first_published_at
+        elif self.latest_revision:
+            return self.latest_revision.created_at
+        else:
+            return dt.datetime.now()
+
     class Meta:
         abstract = True
 
