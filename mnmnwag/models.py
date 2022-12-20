@@ -16,6 +16,8 @@ from wagtail.admin.panels import (
 )
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail import blocks
+from wagtail.blocks import ListBlock
+from wagtail.blocks.list_block import ListValue
 from wagtail.fields import RichTextField, StreamField
 from wagtail.models import Page
 from wagtail.models.collections import Collection
@@ -33,7 +35,7 @@ from django_comments.moderation import CommentModerator
 from django_comments_xtd.moderation import moderator
 from honeypot.decorators import honeypot_equals
 
-from .blocks import ImageBlock, MediaBlock, SlidesBlock
+from .blocks import ImageBlock, MediaBlock, SlideBlock, SlidesBlock
 from .utils import get_elided_page_range
 
 import datetime as dt
@@ -216,6 +218,9 @@ class GalleryPage(BasePage):
                     'alt_text': self.common_alt_text,
                 }
                 slides_block.append(slide_block)
+            # as of Wagtail 4.1, we must cast explicitly to a ListValue
+            # containing a ListBlock of SlideBlocks -- YUCK! :(
+            slides_block = ListValue(ListBlock(SlideBlock()), values=slides_block)
             self.body.append(('slides', {'slides': slides_block}))
 
             self.import_collection = None
