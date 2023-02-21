@@ -63,7 +63,7 @@ INSTALLED_APPS = [
     'honeypot',
     'typogrify',
     # 'wagtailcache',
-    'wagtailfontawesome',  # req'd by wagtailcomments_xtd
+    # 'wagtailfontawesome',  # req'd by wagtailcomments_xtd
     'wagtailmedia',
 ]
 
