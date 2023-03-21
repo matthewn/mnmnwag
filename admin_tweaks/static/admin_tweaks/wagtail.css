@@ -5,15 +5,10 @@
   --w-color-primary-lightness: 17%;
 }
 
-/*
- * the following no longer works in Wagtail 4 :( :( :(
- * there does not appear to be any way to re-implement at this time :(
- *
-.fieldname-danger textarea,
-.fieldname-raw_HTML textarea,
-.model-legacypost #id_body,
-.model-legacypost #id_old_path {
+input[value='danger'] ~ section textarea,
+input[value='raw_HTML'] ~ section textarea,
+textarea#id_body,
+input#id_old_path {
   font-family: monospace;
   font-size: .9rem;
 }
-*/
