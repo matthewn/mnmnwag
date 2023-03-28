@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'modelcluster',
     'taggit',
 
+    'madprops',
     'mnmnwag',
     'subs',
 
