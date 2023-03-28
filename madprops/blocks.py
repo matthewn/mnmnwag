@@ -1,3 +1,4 @@
+from django.utils.safestring import mark_safe
 from wagtail.blocks import (
     CharBlock,
     ChoiceBlock,
@@ -42,7 +43,7 @@ class MyStreamBlock(StreamBlock):
     danger = RawHTMLBlock(label='DANGER!', required=False)
 
 
-class InfoLinksValue(StructValue):
+class PropValues(StructValue):
     def info_links_list(self):
         i = []
         links = self.get('info_links')
@@ -57,6 +58,19 @@ class InfoLinksValue(StructValue):
             if title:
                 i.append({'title': title, 'url': link})
         return i
+
+    def rectext(self):
+        rec = self.get('recommendation')
+        if rec == 'yes' or rec == 'no':
+            intro = 'You Should Vote:'
+            text = rec
+        elif rec == 'nopos':
+            intro = mark_safe('<i>Mad Props</i> takes no position on this measure.')
+            text = ''
+        elif rec == 'noadv':
+            intro = mark_safe('<i>Mad Props</i> takes no position on this advisory measure.')
+            text = ''
+        return {'intro': intro, 'text': text}
 
 
 class PropBlock(StructBlock):
@@ -74,7 +88,7 @@ class PropBlock(StructBlock):
     class Meta:
         icon = 'doc-full'
         template = 'madprops/blocks/prop_block.html'
-        value_class = InfoLinksValue
+        value_class = PropValues
 
 
 class MadPropsStreamBlock(MyStreamBlock):

@@ -12,7 +12,7 @@
                 <a href="{{ item.url }}" target="_blank" rel="noopener noreferrer">{{ item.title }}</a>
             {% endfor %}
         </ul>
-        <div class="proprec">You Should Vote: <span class="{{ value.recommendation }}">{{ value.recommendation }}</span></div>
+        <div class="proprec">{{ value.rectext.intro }} <span class="{{ value.recommendation }}">{{ value.rectext.text }}</span></div>
     </header>
 
     {% capture as content silent %}
