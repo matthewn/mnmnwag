@@ -1,0 +1,47 @@
+@font-face {
+  font-family: cartogothicstdbook;
+  font-style: normal;
+  font-weight: normal;
+  src: url('/static/fonts/cartogothicstd-book-webfont.eot');
+  src: local('¿'), url('/static/fonts/cartogothicstd-book-webfont.woff') format('woff'), url('/static/fonts/cartogothicstd-book-webfont.ttf') format('truetype'), url('/static/fonts/cartogothicstd-book-webfont.svg#webfontissvhuvy') format('svg');
+}
+
+@font-face {
+  font-family: cartogothicstditalic;
+  font-style: normal;
+  font-weight: normal;
+  src: url('/static/fonts/cartogothicstd-italic-webfont.eot');
+  src: local('¿'), url('/static/fonts/cartogothicstd-italic-webfont.woff') format('woff'), url('/static/fonts/cartogothicstd-italic-webfont.ttf') format('truetype'), url('/static/fonts/cartogothicstd-italic-webfont.svg#webfontvz7nhmtg') format('svg');
+}
+
+@font-face {
+  font-family: cartogothicstdbold;
+  font-style: normal;
+  font-weight: normal;
+  src: url('/static/fonts/cartogothicstd-bold-webfont.eot');
+  src: local('¿'), url('/static/fonts/cartogothicstd-bold-webfont.woff') format('woff'), url('/static/fonts/cartogothicstd-bold-webfont.ttf') format('truetype'), url('/static/fonts/cartogothicstd-bold-webfont.svg#webfontxg7opwym') format('svg');
+}
+
+@font-face {
+  font-family: cartogothicstdbolditalic;
+  font-style: normal;
+  font-weight: normal;
+  src: url('/static/fonts/cartogothicstd-bolditalic-webfont.eot');
+  src: local('¿'), url('/static/fonts/cartogothicstd-bolditalic-webfont.woff') format('woff'), url('/static/fonts/cartogothicstd-bolditalic-webfont.ttf') format('truetype'), url('/static/fonts/cartogothicstd-bolditalic-webfont.svg#webfontxsbxupzt') format('svg');
+}
+
+@font-face {
+  font-family: leaguegothicregular;
+  font-style: normal;
+  font-weight: normal;
+  src: url('/static/fonts/league_gothic-webfont.eot');
+  src: local('☺'), url('/static/fonts/league_gothic-webfont.woff') format('woff'), url('/static/fonts/league_gothic-webfont.ttf') format('truetype'), url('/static/fonts/league_gothic-webfont.svg#webfontpm5earbj') format('svg');
+}
+
+@font-face {
+  font-family: hominisnormal;
+  font-style: normal;
+  font-weight: normal;
+  src: url('/static/fonts/hominis-webfont.eot');
+  src: local('☺'), url('/static/fonts/hominis-webfont.ttf') format('truetype'), url('/static/fonts/hominis-webfont.svg#webfontukxcoqom') format('svg');
+}
