@@ -1,4 +1,4 @@
-{% extends "mnmnwag/base.html" %}
+{% extends "madprops/base.html" %}
 
 {% load capture_tags %}
 {% load typefixes %}
@@ -10,7 +10,7 @@
 
 {% block content %}
 
-    {# <h2>{{ page.title }}</h2> #}
+    <h2>{{ page.title }}</h2>
 
     <div class="page-body type-{{ page.content_type.model }} slug-{{ page.slug }}">
         {# add page_id and block_id to block context (req'd by ImageBlock and SlidesBlock) #}

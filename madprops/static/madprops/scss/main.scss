@@ -1,0 +1,40 @@
+// dimensions
+$content-max-width: 820px;
+$site-max-width: 1000px;
+
+body {
+  display: flex;
+  flex-direction: column;
+  // font-family: cartogothicstdbook;
+  font-family: OpenSans, sans-serif;
+  min-height: 100vh;
+  transition: all .25s;
+
+  .constrainer {
+    height: 100%;
+    margin: 0 auto;
+    max-width: $site-max-width;
+  }
+}
+
+a, a:link, a:visited {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+h1, .h1 { font-size: 2rem; }
+h2, .h2 { font-size: 1.75rem; }
+h3, .h3 { font-size: 1.5rem; }
+h4, .h4 { font-size: 1.25rem; }
+
+header,
+#navbar,
+main > * {
+  margin-bottom: 2rem;
+}
+
+#header {
+  font-family: hominisnormal, serif;
+}

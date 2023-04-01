@@ -1,0 +1,94 @@
+{% spaceless %}
+{% load compress %}
+{% load get_theme_class %}
+{% load navigation_tags %}
+{% load static %}
+{% load typefixes %}
+{% load wagtailcore_tags %}
+{% load wagtailuserbar %}
+{% endspaceless %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            {% spaceless %}
+            {% block title %}{% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}{% endblock %}
+            {% block title_suffix %}{% endblock %}
+            {% endspaceless %}
+        </title>
+        {# <meta name="description" content=""> #}
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        {# TODO: replace with modern icons #}
+        <link rel="shortcut icon" href="{% static 'madprops/img/favicon.ico' %}" type="image/vnd.microsoft.icon" />
+
+        {# <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favs/apple-touch-icon.png' %}"> #}
+        {# <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favs/favicon-32x32.png' %}"> #}
+        {# <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favs/favicon-16x16.png' %}"> #}
+        {# <link rel="manifest" href="{% static 'img/favs/site.webmanifest' %}"> #}
+
+            <link rel="stylesheet" type="text/css" href="{% static 'madprops/css/font_faces.css' %}">
+        {% compress css %}
+            <link rel="stylesheet" type="text/css" href="{% static 'css/vendor/minireset.min.css' %}">
+            <link rel="stylesheet" type="text/css" href="{% static 'css/vendor/unpoly.min.css' %}">
+            <link rel="stylesheet" type="text/x-scss" href="{% static 'madprops/scss/main.scss' %}">
+        {% endcompress %}
+
+        {% block extra_css %}
+            {# override this in templates to add extra stylesheets #}
+        {% endblock %}
+    </head>
+
+    <body class="{% get_theme_class %} {% block body_class %}{% endblock %}">
+
+        <header id="header">
+            <div class="constrainer">
+                <h1>Mad Props</h1>
+            </div>
+        </header>
+
+        <section id="navbar">
+            <div class="constrainer">
+                <nav aria-label="primary site navigation">
+                    <ul role="menubar">
+                        {% get_site_root as site_root %}
+                        {% top_menu parent=site_root calling_page=self %}
+                    </ul>
+                </nav>
+            </div>
+        </section>
+
+        <section id="content" class="{% block content_class %}{% endblock %}">
+            <div class="constrainer">
+                <main {% if page.slug %}class="slug-{{ page.slug }}"{% endif %}>
+                    {% block content %}{% endblock %}
+                </main>
+            </div>
+        </section>
+
+        <footer id="footer">
+            <div class="constrainer">
+                <p>
+                    footer goes here
+                </p>
+            </div>
+            {% wagtailuserbar 'bottom-left' %}
+            <div class="fake wagtail-userbar-items"></div>
+        </footer>
+
+        {% compress js %}
+            <script src="{% static 'js/vendor/unpoly.min.js' %}"></script>
+            <script src="{% static 'js/cookies.js' %}"></script>
+            {# <script src="{% static 'js/theme_picker.js' %}"></script> #}
+            {# <script src="{% static 'js/main.js' %}"></script> #}
+        {% endcompress %}
+
+        {# TODO: enable goatcounter for madprops #}
+        {# <script data-goatcounter="https://mahnamahna.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script> #}
+
+        {% block extra_js %}
+            {# override this in templates to add extra javascript #}
+        {% endblock %}
+    </body>
+</html>
