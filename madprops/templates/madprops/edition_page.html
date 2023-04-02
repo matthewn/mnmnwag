@@ -12,6 +12,21 @@
 
     <h2>{{ page.title }}</h2>
 
+    <p><b>CHEAT SHEET</b></p>
+    <ul class="leaders">
+        {% for row in page.cheat_sheet %}
+            <li>
+                <span><a href="#{{ row.prop_number }}" title="{{ row.prop_title }}">Prop {{ row.prop_number }}</a></span>
+                <span class="proprec">
+                    {% if row.recommendation == 'yes' %}Yes{% endif %}
+                    {% if row.recommendation == 'no' %}No{% endif %}
+                    {% if row.recommendation == 'noadv' %}No Position{% endif %}
+                    {% if row.recommendation == 'nopos' %}No Position{% endif %}
+                </span>
+            </li>
+        {% endfor %}
+    </ul>
+
     <div class="page-body type-{{ page.content_type.model }} slug-{{ page.slug }}">
         {# add page_id and block_id to block context (req'd by ImageBlock and SlidesBlock) #}
         {% capture as content silent %}

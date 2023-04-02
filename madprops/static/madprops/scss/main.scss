@@ -38,3 +38,30 @@ main > * {
 #header {
   font-family: hominisnormal, serif;
 }
+
+ul.leaders {
+  list-style: none;
+  max-width: 40em;
+  overflow-x: hidden;
+  padding: 0;
+  width: 100%;
+  li::before {
+    content:
+      '. . . . . . . . . . . . . . . . . . . . '
+      '. . . . . . . . . . . . . . . . . . . . '
+      '. . . . . . . . . . . . . . . . . . . . '
+      '. . . . . . . . . . . . . . . . . . . . ';
+    float: left;
+    white-space: nowrap;
+    width: 0;
+  }
+  span:first-child {
+    background: white;
+    padding-right: .33em;
+  }
+  span + span {
+    background: white;
+    float: right;
+    padding-left: .33em;
+  }
+}
