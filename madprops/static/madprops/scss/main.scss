@@ -1,16 +1,21 @@
+// colors
+$fg-color: #000;
+$bg-color: #feffed;
+
 // dimensions
 $content-max-width: 820px;
-$site-max-width: 1000px;
+$site-max-width: 45rem;
 
 body {
+  background-color: $bg-color;
+  color: $fg-color;
   display: flex;
   flex-direction: column;
-  // font-family: cartogothicstdbook;
-  font-family: OpenSans, sans-serif;
+  font-family: Merriweather, serif;
   min-height: 100vh;
   transition: all .25s;
 
-  .constrainer {
+  > .constrainer {
     height: 100%;
     margin: 0 auto;
     max-width: $site-max-width;
@@ -36,7 +41,36 @@ main > * {
 }
 
 #header {
-  font-family: hominisnormal, serif;
+  text-align: center;
+  h1 {
+    font-family: hominisnormal, serif;
+    font-size: 3rem;
+  }
+  #site-slogan {
+    font-family: LeagueGothicRegular, sans-serif;
+    font-size: 1.75rem;
+  }
+  > div {
+    display: inline-block;
+    margin-right: 70px;
+  }
+  > img {
+    position: relative;
+    top: 2rem;
+  }
+}
+
+#navbar {
+  border-bottom: 1px solid $fg-color;
+  border-top: 1px solid $fg-color;
+  font-size: 1.25rem;
+  margin: 3rem 0;
+  padding: .5rem;
+  width: 100%;
+  ul {
+    display: flex;
+    justify-content: space-around;
+  }
 }
 
 ul.leaders {
