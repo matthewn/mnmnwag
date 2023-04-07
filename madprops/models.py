@@ -6,6 +6,17 @@ from mnmnwag.models import BasePage
 from .blocks import MadPropsStreamBlock
 
 
+class SimplePage(BasePage):
+    body = StreamField(
+        MadPropsStreamBlock(),
+        use_json_field=True,
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel('body'),
+    ]
+
+
 class EditionPage(BasePage):
     body = StreamField(
         MadPropsStreamBlock(),
@@ -34,6 +45,7 @@ class HomePage(BasePage):
     The HomePage simply returns the latest published Edition.
     """
     max_count = 1
+    subpage_types = [SimplePage, EditionPage]
     template = 'madprops/edition_page.html'
 
     def get_context(self, request, *args, **kwargs):
@@ -44,6 +56,7 @@ class HomePage(BasePage):
             .first()
         )
         context = latest_edition.get_context(request, *args, **kwargs)
+        context['theres_no_place_like_home'] = True
         return context
 
 

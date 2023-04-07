@@ -71,6 +71,36 @@ main > * {
     display: flex;
     justify-content: space-around;
   }
+  a {
+    &, &:visited {
+      color: $fg-color;
+    }
+    line-height: 1.75rem;
+    position: relative;
+    text-decoration: none;
+    &.active {
+      top: -3px;
+      &::before,
+      &::after {
+        display: inline-block;
+        font-size: 1.65rem;
+        position: relative;
+        text-decoration: none;
+        top: 3px;
+      }
+      &::before {
+        content: '⏵';
+        left: -3px;
+      }
+      &::after {
+        content: '⏴';
+        left: 3px;
+      }
+    }
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 ul.leaders {
