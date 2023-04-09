@@ -1,0 +1,43 @@
+#navbar {
+  border-bottom: 1px solid $fg-color;
+  border-top: 1px solid $fg-color;
+  margin: 3rem 0 2rem;
+  padding: .45rem .5rem .2rem;
+  width: 100%;
+  ul {
+    display: flex;
+    justify-content: space-around;
+  }
+  a {
+    &, &:visited {
+      color: $fg-color;
+    }
+    line-height: 1.35rem;
+    position: relative;
+    text-decoration: none;
+    &.active {
+      font-weight: $semibold;
+      top: -2px;
+      &::before,
+      &::after {
+        display: inline-block;
+        font-size: 1.25rem;
+        font-weight: normal;
+        position: relative;
+        text-decoration: none;
+        top: 2px;
+      }
+      &::before {
+        content: '⏵';
+        left: -3px;
+      }
+      &::after {
+        content: '⏴';
+        left: 3px;
+      }
+    }
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

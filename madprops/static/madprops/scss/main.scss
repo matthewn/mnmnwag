@@ -10,6 +10,11 @@ $site-max-width: 45rem;
 $light: 300;
 $semibold: 600;
 
+@import 'header';
+@import 'navbar';
+@import 'leaders';
+@import 'footer';
+
 body {
   background-color: $bg-color;
   color: $fg-color;
@@ -38,79 +43,10 @@ h2, .h2 { font-size: 1.65rem; }
 h3, .h3 { font-size: 1.5rem; }
 h4, .h4 { font-size: 1.25rem; }
 
-header,
-#navbar,
-main > * {
-  margin-bottom: 2rem;
-}
-
-#header {
-  text-align: center;
-  h1 {
-    font-family: hominisnormal, serif;
-  }
-  #site-slogan {
-    font-family: LeagueGothicRegular, sans-serif;
-    font-size: 1.75rem;
-    margin-top: .5rem;
-  }
-  > div {
-    display: inline-block;
-    margin-right: 70px;
-    position: relative;
-    top: .75rem;
-  }
-  > img {
-    position: relative;
-    top: 2rem;
-  }
-}
-
-#navbar {
-  border-bottom: 1px solid $fg-color;
-  border-top: 1px solid $fg-color;
-  margin: 3rem 0;
-  padding: .45rem .5rem .2rem;
-  width: 100%;
-  ul {
-    display: flex;
-    justify-content: space-around;
-  }
-  a {
-    &, &:visited {
-      color: $fg-color;
-    }
-    line-height: 1.35rem;
-    position: relative;
-    text-decoration: none;
-    &.active {
-      font-weight: $semibold;
-      top: -2px;
-      &::before,
-      &::after {
-        display: inline-block;
-        font-size: 1.25rem;
-        font-weight: normal;
-        position: relative;
-        text-decoration: none;
-        top: 2px;
-      }
-      &::before {
-        content: '⏵';
-        left: -3px;
-      }
-      &::after {
-        content: '⏴';
-        left: 3px;
-      }
-    }
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-}
-
 main {
+  > * {
+    margin-bottom: 2rem;
+  }
   line-height: 1.5;
   h2 {
     font-variant: small-caps;
@@ -196,33 +132,6 @@ article.prop {
   margin: 0 0 2rem 2.5rem;
   min-width: 20%;
   padding: .75rem 1rem 1rem;
-}
-
-ul.leaders {
-  list-style: none;
-  max-width: 40em;
-  overflow-x: hidden;
-  padding: 0;
-  width: 100%;
-  li::before {
-    content:
-      '. . . . . . . . . . . . . . . . . . . . '
-      '. . . . . . . . . . . . . . . . . . . . '
-      '. . . . . . . . . . . . . . . . . . . . '
-      '. . . . . . . . . . . . . . . . . . . . ';
-    float: left;
-    white-space: nowrap;
-    width: 0;
-  }
-  span:first-child {
-    background: white;
-    padding-right: .33em;
-  }
-  span + span {
-    background: white;
-    float: right;
-    padding-left: .33em;
-  }
 }
 
 span.yes, span.no {
