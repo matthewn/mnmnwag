@@ -27,6 +27,8 @@ class MyStreamBlock(StreamBlock):
             'ol',
             'ul',
             'blockquote',
+            'yes',
+            'no',
             'bold',
             'italic',
             'superscript',
