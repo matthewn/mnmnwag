@@ -15,13 +15,12 @@ ul.leaders {
     width: 0;
   }
   span:first-child {
-    background: white;
+    background: $bg-color;
     padding-right: .33em;
   }
   span + span {
-    background: white;
+    background: $bg-color;
     float: right;
     padding-left: .33em;
   }
 }
-

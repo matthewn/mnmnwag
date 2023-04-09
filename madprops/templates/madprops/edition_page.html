@@ -24,7 +24,7 @@
         <ul class="leaders">
             {% for row in page.cheat_sheet %}
                 <li>
-                    <span><a href="#{{ row.prop_number }}" title="{{ row.prop_title }}">Prop {{ row.prop_number }}</a></span>
+                    <span><a href="#prop{{ row.prop_number }}" title="{{ row.prop_title }}">Prop {{ row.prop_number }}</a></span>
                     <span class="proprec">
                         {% if row.recommendation == 'yes' %}Yes{% endif %}
                         {% if row.recommendation == 'no' %}No{% endif %}
