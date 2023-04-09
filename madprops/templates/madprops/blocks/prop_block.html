@@ -2,16 +2,18 @@
 {% load wagtailcore_tags %}
 {% load typefixes %}
 
-<article id="prop{{ value.prop_number }}">
+<article class="prop" id="prop{{ value.prop_number }}">
 
     <header>
-        <h3 class="propnumber">Proposition&nbsp;{{ value.prop_number }}</h3>
-        <h3 class="proptitle">{{ value.prop_title }}</h3>
-        <ul class="proplink">
+        <h3>
+            <div class="propnumber">Proposition&nbsp;{{ value.prop_number }}</div>
+            <div class="proptitle">{{ value.prop_title }}</div>
+        </h3>
+        <ul class="proplink">(
             {% for item in value.info_links_list %}
                 <li><a href="{{ item.url }}" target="_blank" rel="noopener noreferrer">{{ item.title }}</a></li>
             {% endfor %}
-        </ul>
+        )</ul>
         <div class="proprec">{{ value.rectext.intro }} <span class="{{ value.recommendation }}">{{ value.rectext.text }}</span></div>
     </header>
 
