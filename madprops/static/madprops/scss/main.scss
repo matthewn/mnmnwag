@@ -1,23 +1,25 @@
-// colors
-$fg-color: #000;
-$bg-color: #feffed;
-
-// dimensions
-$content-max-width: 820px;
-$site-max-width: 45rem;
-
-// weights
-$light: 300;
-$semibold: 600;
-
 @import 'header';
 @import 'navbar';
 @import 'leaders';
 @import 'footer';
 
+:root {
+  // colors
+  --fg-color: #000;
+  --bg-color: #feffed;
+
+  // dimensions
+  --content-max-width: 820px;
+  --site-max-width: 45rem;
+
+  // weights
+  --light: 300;
+  --semibold: 600;
+}
+
 body {
-  background-color: $bg-color;
-  color: $fg-color;
+  background-color: var(--bg-color);
+  color: var(--fg-color);
   display: flex;
   flex-direction: column;
   font-family: Merriweather, serif;
@@ -27,15 +29,18 @@ body {
   > .constrainer {
     height: 100%;
     margin: 0 auto;
-    max-width: $site-max-width;
+    max-width: var(--site-max-width);
   }
 }
 
 a, a:link, a:visited {
   text-decoration: none;
 }
-a:hover {
+a:hover:not(.invisible) {
   text-decoration: underline;
+}
+a.invisible {
+  color: var(--fg-color);
 }
 
 h1, .h1 { font-size: 3rem; }
@@ -44,10 +49,11 @@ h3, .h3 { font-size: 1.5rem; }
 h4, .h4 { font-size: 1.25rem; }
 
 main {
+  line-height: 1.5;
+  margin: 0 2rem;
   > * {
     margin-bottom: 2rem;
   }
-  line-height: 1.5;
   h2 {
     font-variant: small-caps;
     font-weight: bold;
@@ -125,7 +131,7 @@ article.prop {
   .proprec {
     text-transform: uppercase;
   }
-  border: 1px solid $fg-color;
+  border: 1px solid var(--fg-color);
   float: right;
   font-family: OpenSansCondensed, sans-serif;
   font-weight: bold;

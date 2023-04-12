@@ -44,14 +44,15 @@
     <body class="{% get_theme_class %} {% block body_class %}{% endblock %}">
 
         <div class="constrainer">
-
-            <header id="header">
-                <div>
-                    <h1>Mad Props</h1>
-                    <div id="site-slogan">your independent guide to California's ballot initiatives</div>
-                </div>
-                <img src="{% static 'madprops/img/propster_logo.jpg' %}" alt="old-timey rendering of California's flag">
-            </header>
+            <a class="invisible" href="/">
+                <header id="header">
+                    <div>
+                        <h1>Mad Props</h1>
+                        <div id="site-slogan">your independent guide to California's ballot initiatives</div>
+                    </div>
+                    <img src="{% static 'madprops/img/propster_logo.jpg' %}" alt="old-timey rendering of California's flag">
+                </header>
+            </a>
 
             <section id="navbar">
                 <div class="constrainer">

@@ -15,11 +15,11 @@ ul.leaders {
     width: 0;
   }
   span:first-child {
-    background: $bg-color;
+    background: var(--bg-color);
     padding-right: .33em;
   }
   span + span {
-    background: $bg-color;
+    background: var(--bg-color);
     float: right;
     padding-left: .33em;
   }
