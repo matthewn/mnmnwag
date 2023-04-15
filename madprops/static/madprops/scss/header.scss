@@ -11,13 +11,20 @@
   }
   > div {
     display: inline-block;
-    margin-right: 70px;
-    position: relative;
-    top: .75rem;
+    &:first-child {
+      margin-right: 70px;
+      position: relative;
+      top: .75rem;
+    }
   }
-  > img {
+  img {
     max-width: 210px;
     position: relative;
     top: 2rem;
   }
+}
+
+body.theme-light .logo-dark,
+body.theme-dark .logo-light {
+  display: none !important;
 }
