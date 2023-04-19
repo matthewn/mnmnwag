@@ -38,9 +38,9 @@ const getTheme = function() {
 
 const changeTheme = function(event) {
     event.preventDefault();
-    let className = prefix + this.textContent.toLowerCase();
+    let className = prefix + this.getAttribute('data-theme');
     setTheme(className);
-    up.proxy.clear();  // clear unpoly cache
+    up.cache.clear();
 };
 
 
