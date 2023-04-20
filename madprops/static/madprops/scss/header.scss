@@ -12,7 +12,9 @@
   > div {
     display: inline-block;
     &:first-child {
-      margin-right: 70px;
+      @include media(desktop) {
+        margin-right: 70px;
+      }
       position: relative;
       top: .75rem;
     }

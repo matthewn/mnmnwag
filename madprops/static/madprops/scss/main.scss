@@ -1,3 +1,4 @@
+@import 'mixins';
 @import 'header';
 @import 'navbar';
 @import 'leaders';
@@ -11,8 +12,7 @@
   --visited-link-color: purple;
 
   // dimensions
-  --content-max-width: 820px;
-  --site-max-width: 45rem;
+  --content-max-width: 720px;
 
   // weights
   --light: 300;
@@ -45,7 +45,7 @@ body {
   > .constrainer {
     height: 100%;
     margin: 0 auto;
-    max-width: var(--site-max-width);
+    max-width: var(--content-max-width);
   }
 }
 
