@@ -4,7 +4,7 @@
 
 const body = function() { return document.getElementsByTagName('body')[0]; };
 const picker = '#theme-picker';
-const links = '#theme-picker li a';
+const links = '#theme-picker a';
 const prefix = 'theme-';
 
 

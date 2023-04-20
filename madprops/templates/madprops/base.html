@@ -61,17 +61,15 @@
                         <ul role="menubar">
                             {% get_site_root as site_root %}
                             {% mad_props_nav home=site_root calling_page=self %}
+                            <li id="theme-picker">
+                                <div class="light"><a title="switch to light mode" data-theme="light" href="/theme/light"><img id="theme-icon" src="https://www.uplooder.net/img/image/2/addf703a24a12d030968858e0879b11e/moon.svg" alt="moon icon"></a></div>
+                                <div class="dark"><a title="switch to dark mode" data-theme="dark" href="/theme/dark"><img id="theme-icon" src="https://www.uplooder.net/img/image/55/7aa9993fc291bc170abea048589896cf/sun.svg" alt="sun icon"></a></div>
+                            </li>
                         </ul>
                     </nav>
                 </div>
             </section>
 
-            <div id="theme-picker">
-                <ul>
-                    <li class="light"><a title="switch to light mode" data-theme="light" href="/theme/light"><img id="theme-icon" src="https://www.uplooder.net/img/image/2/addf703a24a12d030968858e0879b11e/moon.svg" alt="moon icon"></a></li>
-                    <li class="dark"><a title="switch to dark mode" data-theme="dark" href="/theme/dark"><img id="theme-icon" src="https://www.uplooder.net/img/image/55/7aa9993fc291bc170abea048589896cf/sun.svg" alt="sun icon"></a></li>
-                </ul>
-            </div>
 
             <section id="content" class="{% block content_class %}{% endblock %}">
                 <div class="constrainer">

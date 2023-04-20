@@ -26,12 +26,12 @@ body {
     --link-color: #87cefa;  // light sky blue
     --visited-link-color: #b768a2;  // pearly purple
     #theme-picker {
-      li.light { display: block; }
+      .light { display: block; }
     }
   }
   &.theme-light {
     #theme-picker {
-      li.dark { display: block; }
+      .dark { display: block; }
     }
   }
   background-color: var(--bg-color);
@@ -72,11 +72,7 @@ h3, .h3 { font-size: 1.5rem; }
 h4, .h4 { font-size: 1.25rem; }
 
 #theme-picker {
-  float: right;
-  position: relative;
-  right: .5rem;
-  top: -1.5rem;
-  li { display: none; }
+  .dark, .light { display: none; }
 }
 
 main {
