@@ -89,7 +89,7 @@ class MahnaCommentForm(XtdCommentForm):
             name=data['name'],
             email=data['email'],
             ip_address=get_client_ip(request),
-            related_post=page,
+            related_page=page,
             submit_date=dt.datetime.fromtimestamp(
                 data['timestamp'],
                 ZoneInfo(settings.TIME_ZONE)

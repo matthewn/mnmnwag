@@ -1,0 +1,37 @@
+{% load comments %}
+{% load comments_xtd %}
+
+<section id="comments">
+    {% get_comment_count for page as comment_count %}
+    <h3>Mad Props Readers Speak!</h3>
+    {# <div> #}
+    {#     {% if comment_count %} #}
+    {#         {{ comment_count }} #}
+    {#     {% endif %} #}
+    {#     Comment{{ comment_count|pluralize:",s" }} #}
+    {# </div> #}
+    {% if comment_count %}
+        <div class="comments-tree">
+            {% render_xtdcomment_tree for page %}
+        </div>
+    {% endif %}
+    <div class="comment-form-container">
+        {% if page.has_comments_enabled %}
+            <div class="comment-form-container">
+                <div class="h4">Sound off! Speak your mind!<br>No signup required.</div>
+                <details>
+                    <summary>Comments Policy</summary>
+                    <ul>
+                        <li>One of the ways this site is old-school web is that it encourages comments! Perhaps you think the Mad Propster’s got it all wrong? You are welcome to give other <i>Mad Props</i> readers a chance to consider your view right here.</li>
+                        <li>That said, <b>all comments are moderated</b>.</li>
+                        <li>Comments are <b><i>not</i></b> moderated based on viewpoint. They are moderated solely for civility.</li>
+                        <li>The Mad Propster is only one person, so please be patient waiting for your comment to appear on the site.</li>
+                    </ul>
+                </details>
+                {% render_comment_form for page %}
+            </div>
+        {% else %}
+            <div>Commenting is disabled for this post.</div>
+        {% endif %}
+    </div>
+</section>

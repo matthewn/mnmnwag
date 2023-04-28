@@ -12,7 +12,7 @@
   --visited-link-color: purple;
 
   // dimensions
-  --content-max-width: 720px;
+  --content-max-width: 45rem;
 
   // weights
   --light: 300;
@@ -89,6 +89,7 @@ main {
   a, a:link, a:visited {
     text-decoration: underline;
   }
+  li { list-style: disc; }
   p {
     &.posted {
       font-size: .9rem;
@@ -173,4 +174,88 @@ span.yes, span.no {
   font-weight: 800;
   line-height: 0;
   text-transform: uppercase;
+}
+
+#comments {
+  border: 1px solid var(--fg-color);
+  margin: 3rem auto 2rem;
+  max-width: 35rem;
+  padding: 1.5rem;
+  fieldset { border: none; }
+  h3 {
+    font-weight: var(--semibold);
+  }
+  h3, .h4 {
+    margin: 1rem auto;
+    text-align: center;
+  }
+  h5 {
+    font-size: .85rem;
+    font-style: italic;
+  }
+  summary, details, label, label + span {
+    font-size: .75rem;
+  }
+  summary {
+    cursor: pointer;
+    font-size: .75rem;
+    margin: .5rem 0 .5rem -2rem;
+    text-transform: uppercase;
+  }
+  details {
+    font-size: .9rem;
+    margin: 0 0 .5rem 2rem;
+    ul {
+      margin: .5rem 0 .75rem;
+    }
+  }
+  label {
+    text-transform: uppercase;
+  }
+  input[type='checkbox'] + label {
+    text-transform: none;
+  }
+  .row {
+    margin: .5rem 0;
+  }
+  input[type='text'],
+  textarea {
+    font-size: 1.15rem;
+    margin: .25rem 0;
+    width: 100%;
+  }
+  textarea {
+    max-height: 10rem;
+  }
+  .comment-container {
+    display: flex;
+    margin: 1.5rem 0 1rem;
+  }
+  .comment-form-container {
+    margin-bottom: 3rem;
+  }
+  .gravatar {
+    flex: 0 0 4rem;
+    padding: 0 1rem 1rem 0;
+  }
+  .comment-content {
+    .content {
+      margin: .5rem 0;
+    }
+  }
+  .comments-tree {
+    margin: 2rem 0 3rem;
+  }
+  .moderation-message {
+    margin-top: 3rem;
+  }
+}
+.has-danger,
+.has-error {
+  label {
+    color: red;
+  }
+  input[type='text'] {
+    border: 1px solid red;
+  }
 }

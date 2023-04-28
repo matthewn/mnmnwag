@@ -5,6 +5,7 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 
+{% load wagtailcore_tags %}
 
 {% block body_class %}template-madpropsedition{% endblock %}
 
@@ -14,12 +15,12 @@
 
     <h2>{{ page.title }}</h2>
 
-    <p class="posted">
+    <header class="posted">
         Posted by <a href="/about">the Mad Propster</a> on
         {{ page.first_published_at|date:"F j, Y" }}
-    </p>
+    </header>
 
-    <div class="cheatsheet">
+    <aside class="cheatsheet">
         <h3>Cheat Sheet</h3>
         <ul class="leaders">
             {% for row in page.cheat_sheet %}
@@ -34,9 +35,9 @@
                 </li>
             {% endfor %}
         </ul>
-    </div>
+    </aside>
 
-    <div class="page-body type-{{ page.content_type.model }} slug-{{ page.slug }}">
+    <section class="page-body type-{{ page.content_type.model }} slug-{{ page.slug }}">
         {# add page_id and block_id to block context (req'd by ImageBlock and SlidesBlock) #}
         {% capture as content silent %}
             {% for block in page.body %}
@@ -51,7 +52,9 @@
             {% endfor %}
         {% endcapture %}
         {{ content|typefixes }}
-    </div>
+    </section>
+
+    {% include "madprops/comments.html" %}
 
 </article>
 

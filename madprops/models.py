@@ -1,8 +1,12 @@
+from django.db import models
+
 from wagtail.models import Page
 from wagtail.fields import StreamField
 from wagtail.admin.panels import FieldPanel
 
-from mnmnwag.models import BasePage
+from django_comments_xtd.moderation import moderator
+
+from mnmnwag.models import BasePage, BlogPostModerator
 from .blocks import MadPropsStreamBlock
 
 
@@ -22,9 +26,14 @@ class EditionPage(BasePage):
         MadPropsStreamBlock(),
         use_json_field=True,
     )
+    has_comments_enabled = models.BooleanField(
+        default=True,
+        verbose_name='Comments enabled',
+    )
 
     content_panels = Page.content_panels + [
         FieldPanel('body'),
+        FieldPanel('has_comments_enabled'),
     ]
 
     def cheat_sheet(self):
@@ -38,6 +47,12 @@ class EditionPage(BasePage):
                 }
                 data.append(row)
         return data
+
+    def get_absolute_url(self):
+        """
+        Returns an absolute URL for the page. (Required by django_comments_xtd.)
+        """
+        return self.full_url
 
 
 class HomePage(BasePage):
@@ -80,3 +95,10 @@ class ArchivesPage(BasePage):
             .order_by('-first_published_at')[1:]
         )
         return context
+
+
+class EditionModerator(BlogPostModerator):
+    pass
+
+
+moderator.register(EditionPage, EditionModerator)
