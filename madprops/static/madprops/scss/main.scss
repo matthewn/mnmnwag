@@ -253,6 +253,11 @@ span.yes, span.no {
   .comments-tree {
     margin: 2rem 0 3rem;
   }
+  .disabled {
+    font-weight: var(--semibold);
+    margin-top: 3rem;
+    text-align: center;
+  }
   .moderation-message {
     margin-top: 3rem;
   }
