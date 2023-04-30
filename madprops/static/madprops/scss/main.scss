@@ -43,9 +43,12 @@ body {
   transition: all .25s;
 
   > .constrainer {
+    display: flex;
+    flex-direction: column;
     height: 100%;
     margin: 0 auto;
     max-width: var(--content-max-width);
+    min-height: 100vh;
   }
 }
 
@@ -73,6 +76,10 @@ h4, .h4 { font-size: 1.25rem; }
 
 #theme-picker {
   .dark, .light { display: none; }
+}
+
+#content {
+  flex: 1;  // makes sticky footer happen
 }
 
 main {
