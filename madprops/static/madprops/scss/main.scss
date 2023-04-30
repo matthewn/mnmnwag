@@ -36,10 +36,8 @@ body {
   }
   background-color: var(--bg-color);
   color: var(--fg-color);
-  display: flex;
   flex-direction: column;
   font-family: Merriweather, serif;
-  min-height: 100vh;
   transition: all .25s;
 
   > .constrainer {
