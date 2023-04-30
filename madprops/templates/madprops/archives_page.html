@@ -29,4 +29,12 @@
         {{ content|typefixes }}
     </div>
 
+    <div id="archives">
+        <ul>
+            {% for edition in editions %}
+                <li><a href="{% pageurl edition %}">{{ edition.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
 {% endblock %}

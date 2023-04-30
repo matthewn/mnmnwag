@@ -14,6 +14,16 @@ def mad_props_nav(context, home, calling_page=None):
         ):
             menuitem.title = 'Current Edition'
             menuitem.active = context.get('theres_no_place_like_home')
+        elif (
+            menuitem.get_content_type().model == 'archivespage'
+        ):
+            menuitem.active = (
+                calling_page.url_path.startswith(menuitem.url_path)
+                if calling_page else False
+            ) or (
+                calling_page.content_type.model == 'editionpage'
+                and not context.get('theres_no_place_like_home')
+            )
         else:
             menuitem.active = (
                 calling_page.url_path.startswith(menuitem.url_path)

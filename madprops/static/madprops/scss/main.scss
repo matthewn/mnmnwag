@@ -266,3 +266,13 @@ span.yes, span.no {
     border: 1px solid red;
   }
 }
+
+#archives {
+  margin-bottom: 5rem;
+  text-align: center;
+  li {
+    font-size: 1.35rem;
+    list-style: none;
+    margin-bottom: 2rem;
+  }
+}
