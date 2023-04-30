@@ -77,6 +77,7 @@ class HomePage(BasePage):
 class ArchivesPage(BasePage):
     body = StreamField(
         MadPropsStreamBlock(),
+        blank=True,
         use_json_field=True,
     )
 
