@@ -115,7 +115,7 @@
   font-family: OpenSans;
   font-style: italic;
   font-weight: 600;
-  src: url('/static/madprops/fonts/OpenSans-Semibolditalic.ttf') format('truetype');
+  src: url('/static/madprops/fonts/OpenSans-SemiboldItalic.ttf') format('truetype');
 }
 @font-face {
   font-family: OpenSans;
