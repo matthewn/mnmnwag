@@ -4,7 +4,7 @@
 
 const body = function() { return document.getElementsByTagName('body')[0]; };
 const picker = '#theme-picker';
-const links = '#theme-picker li a';
+const links = '#theme-picker a';
 const prefix = 'theme-';
 
 
@@ -38,9 +38,9 @@ const getTheme = function() {
 
 const changeTheme = function(event) {
     event.preventDefault();
-    let className = prefix + this.textContent.toLowerCase();
+    let className = prefix + this.getAttribute('data-theme');
     setTheme(className);
-    up.proxy.clear();  // clear unpoly cache
+    up.cache.clear();
 };
 
 

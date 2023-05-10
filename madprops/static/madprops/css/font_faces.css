@@ -1,0 +1,143 @@
+@font-face {
+  font-family: hominisnormal;
+  font-style: normal;
+  font-weight: normal;
+  src: url('/static/madprops/fonts/hominis-webfont.eot');
+  src: local('☺'), url('/static/madprops/fonts/hominis-webfont.ttf') format('truetype'), url('/static/madprops/fonts/hominis-webfont.svg#webfontukxcoqom') format('svg');
+}
+
+@font-face {
+  font-family: LeagueGothicRegular;
+  font-style: normal;
+  font-weight: normal;
+  src: url('/static/madprops/fonts/LeagueGothic-Regular.otf') format('opentype');
+}
+
+@font-face {
+  font-family: Merriweather;
+  font-style: normal;
+  font-weight: 300;
+  src: url('/static/madprops/fonts/Merriweather-Light.otf') format('opentype');
+}
+@font-face {
+  font-family: Merriweather;
+  font-style: italic;
+  font-weight: 300;
+  src: url('/static/madprops/fonts/Merriweather-LightItalic.otf') format('opentype');
+}
+@font-face {
+  font-family: Merriweather;
+  font-style: normal;
+  font-weight: 400;
+  src: url('/static/madprops/fonts/Merriweather-Regular.otf') format('opentype');
+}
+@font-face {
+  font-family: Merriweather;
+  font-style: italic;
+  font-weight: 400;
+  src: url('/static/madprops/fonts/Merriweather-Italic.otf') format('opentype');
+}
+@font-face {
+  font-family: Merriweather;
+  font-style: normal;
+  font-weight: 700;
+  src: url('/static/madprops/fonts/Merriweather-Bold.otf') format('opentype');
+}
+@font-face {
+  font-family: Merriweather;
+  font-style: italic;
+  font-weight: 700;
+  src: url('/static/madprops/fonts/Merriweather-BoldItalic.otf') format('opentype');
+}
+@font-face {
+  font-family: Merriweather;
+  font-style: normal;
+  font-weight: 900;
+  src: url('/static/madprops/fonts/Merriweather-Black.otf') format('opentype');
+}
+@font-face {
+  font-family: Merriweather;
+  font-style: italic;
+  font-weight: 900;
+  src: url('/static/madprops/fonts/Merriweather-BlackItalic.otf') format('opentype');
+}
+
+@font-face {
+  font-family: OpenSansCondensed;
+  font-style: normal;
+  font-weight: 300;
+  src: url('/static/madprops/fonts/OpenSans-CondLight.ttf') format('truetype');
+}
+@font-face {
+  font-family: OpenSansCondensed;
+  font-style: italic;
+  font-weight: 300;
+  src: url('/static/madprops/fonts/OpenSans-CondLightItalic.ttf') format('truetype');
+}
+@font-face {
+  font-family: OpenSansCondensed;
+  font-style: normal;
+  font-weight: 700;
+  src: url('/static/madprops/fonts/OpenSans-CondBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: OpenSans;
+  font-style: normal;
+  font-weight: 300;
+  src: url('/static/madprops/fonts/OpenSans-Light.ttf') format('truetype');
+}
+@font-face {
+  font-family: OpenSans;
+  font-style: italic;
+  font-weight: 300;
+  src: url('/static/madprops/fonts/OpenSans-LightItalic.ttf') format('truetype');
+}
+@font-face {
+  font-family: OpenSans;
+  font-style: normal;
+  font-weight: 400;
+  src: url('/static/madprops/fonts/OpenSans-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: OpenSans;
+  font-style: italic;
+  font-weight: 400;
+  src: url('/static/madprops/fonts/OpenSans-Italic.ttf') format('truetype');
+}
+@font-face {
+  font-family: OpenSans;
+  font-style: normal;
+  font-weight: 600;
+  src: url('/static/madprops/fonts/OpenSans-Semibold.ttf') format('truetype');
+}
+@font-face {
+  font-family: OpenSans;
+  font-style: italic;
+  font-weight: 600;
+  src: url('/static/madprops/fonts/OpenSans-Semibolditalic.ttf') format('truetype');
+}
+@font-face {
+  font-family: OpenSans;
+  font-style: normal;
+  font-weight: 700;
+  src: url('/static/madprops/fonts/OpenSans-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: OpenSans;
+  font-style: italic;
+  font-weight: 700;
+  src: url('/static/madprops/fonts/OpenSans-BoldItalic.ttf') format('truetype');
+}
+@font-face {
+  font-family: OpenSans;
+  font-style: normal;
+  font-weight: 800;
+  src: url('/static/madprops/fonts/OpenSans-ExtraBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: OpenSans;
+  font-style: italic;
+  font-weight: 800;
+  src: url('/static/madprops/fonts/OpenSans-ExtraBoldItalic.ttf') format('truetype');
+}

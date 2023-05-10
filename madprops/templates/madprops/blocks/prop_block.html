@@ -1,0 +1,34 @@
+{% load capture_tags %}
+{% load wagtailcore_tags %}
+{% load typefixes %}
+
+<article class="prop" id="prop{{ value.prop_number }}">
+
+    <header>
+        <h3>
+            <div class="propnumber">Proposition&nbsp;{{ value.prop_number }}</div>
+            <div class="proptitle">{{ value.prop_title }}</div>
+        </h3>
+        <ul class="proplink">(
+            {% for item in value.info_links_list %}
+                <li><a href="{{ item.url }}" target="_blank" rel="noopener noreferrer">{{ item.title }}</a></li>
+            {% endfor %}
+        )</ul>
+        <div class="proprec">{{ value.rectext.intro }} <span class="{{ value.recommendation }}">{{ value.rectext.text }}</span></div>
+    </header>
+
+    {% capture as content silent %}
+        {% for block in value.writeup %}
+            {% if block.block_type != "danger" %}
+                <div class="block-{{ block.block_type }}">
+                    {% include_block block with page_id=page.id block_id=block.id|slice:'0:7' %}
+                </div>
+            {% else %}
+                {# danger blocks don't get the typical wrapper divs #}
+                {% include_block block|typefixes %}
+            {% endif %}
+        {% endfor %}
+    {% endcapture %}
+    {{ content|typefixes }}
+
+</article>

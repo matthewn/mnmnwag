@@ -675,7 +675,7 @@ moderator.register(ModernPost, BlogPostModerator)
 # ···························································
 
 class RejectedComment(models.Model):
-    related_post = models.ForeignKey(ModernPost, on_delete=models.CASCADE)
+    related_page = models.ForeignKey(Page, on_delete=models.CASCADE)
     submit_date = models.DateTimeField()
     name = models.CharField(max_length=50)
     email = models.EmailField()

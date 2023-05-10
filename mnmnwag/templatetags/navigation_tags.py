@@ -1,4 +1,4 @@
-"""Lifed from the wagtail bakerydemo; provides context-aware menu items."""
+"""Lifted from the wagtail bakerydemo; provides context-aware menu items."""
 
 from django import template
 from wagtail.models import Site

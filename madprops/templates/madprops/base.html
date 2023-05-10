@@ -1,0 +1,106 @@
+{% spaceless %}
+{% load compress %}
+{% load get_theme_class %}
+{% load navigation_tags %}
+{% load mad_nav_tags %}
+{% load static %}
+{% load typefixes %}
+{% load wagtailcore_tags %}
+{% load wagtailuserbar %}
+{% endspaceless %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            {% spaceless %}
+            {% block title %}{% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}{% endblock %}
+            {% block title_suffix %}{% endblock %}
+            {% endspaceless %}
+        </title>
+        {# <meta name="description" content=""> #}
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        {# TODO: replace with modern icons #}
+        <link rel="shortcut icon" href="{% static 'madprops/img/favicon.ico' %}" type="image/vnd.microsoft.icon" />
+
+        {# <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favs/apple-touch-icon.png' %}"> #}
+        {# <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favs/favicon-32x32.png' %}"> #}
+        {# <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favs/favicon-16x16.png' %}"> #}
+        {# <link rel="manifest" href="{% static 'img/favs/site.webmanifest' %}"> #}
+
+        {% compress css %}
+            <link rel="stylesheet" type="text/css" href="{% static 'madprops/css/font_faces.css' %}">
+            <link rel="stylesheet" type="text/css" href="{% static 'css/vendor/minireset.min.css' %}">
+            <link rel="stylesheet" type="text/css" href="{% static 'css/vendor/unpoly.min.css' %}">
+            <link rel="stylesheet" type="text/x-scss" href="{% static 'madprops/scss/main.scss' %}">
+        {% endcompress %}
+
+        {% block extra_css %}
+            {# override this in templates to add extra stylesheets #}
+        {% endblock %}
+    </head>
+
+    <body class="{% get_theme_class %} {% block body_class %}{% endblock %}">
+
+        <div class="constrainer">
+            <a class="invisible" href="/">
+                <header id="header">
+                    <div>
+                        <h1>Mad Props</h1>
+                        <div id="site-slogan">your independent guide to California's ballot initiatives</div>
+                    </div>
+                    <div class="logo-light"><img src="{% static 'madprops/img/mad_props_logo.svg' %}" alt="monochrome rendering of part of California's flag"></div>
+                    <div class="logo-dark"><img src="{% static 'madprops/img/mad_props_logo_dark.svg' %}" alt="monochrome rendering of part of California's flag"></div>
+                </header>
+            </a>
+
+            <section id="navbar">
+                <div class="constrainer">
+                    <nav aria-label="primary site navigation">
+                        <ul role="menubar">
+                            {% get_site_root as site_root %}
+                            {% mad_props_nav home=site_root calling_page=self %}
+                            <li id="theme-picker">
+                                <div class="light"><a title="switch to light mode" data-theme="light" href="/theme/light"><img id="theme-icon" src="https://www.uplooder.net/img/image/2/addf703a24a12d030968858e0879b11e/moon.svg" alt="moon icon"></a></div>
+                                <div class="dark"><a title="switch to dark mode" data-theme="dark" href="/theme/dark"><img id="theme-icon" src="https://www.uplooder.net/img/image/55/7aa9993fc291bc170abea048589896cf/sun.svg" alt="sun icon"></a></div>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </section>
+
+
+            <section id="content" class="{% block content_class %}{% endblock %}">
+                <div class="constrainer">
+                    <main {% if page.slug %}class="slug-{{ page.slug }}"{% endif %}>
+                        {% block content %}{% endblock %}
+                    </main>
+                </div>
+            </section>
+
+            <footer id="footer">
+                <div class="constrainer">
+                    <p>© {% now "Y" %} <a href="/about">the Mad Propster</a>. All rights reserved.</p>
+                </div>
+                {% wagtailuserbar 'bottom-left' %}
+                <div class="fake wagtail-userbar-items"></div>
+            </footer>
+
+        </div>
+
+        {% compress js %}
+            <script src="{% static 'js/vendor/unpoly.min.js' %}"></script>
+            <script src="{% static 'js/cookies.js' %}"></script>
+            <script src="{% static 'js/theme_picker.js' %}"></script>
+            {# <script src="{% static 'js/main.js' %}"></script> #}
+        {% endcompress %}
+
+        {# TODO: enable goatcounter for madprops #}
+        {# <script data-goatcounter="https://mahnamahna.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script> #}
+
+        {% block extra_js %}
+            {# override this in templates to add extra javascript #}
+        {% endblock %}
+    </body>
+</html>

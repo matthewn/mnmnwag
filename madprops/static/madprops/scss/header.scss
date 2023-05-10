@@ -1,0 +1,32 @@
+#header {
+  margin-bottom: 2rem;
+  text-align: center;
+  h1 {
+    font-family: hominisnormal, serif;
+  }
+  #site-slogan {
+    font-family: LeagueGothicRegular, sans-serif;
+    font-size: 1.75rem;
+    margin-top: .5rem;
+  }
+  > div {
+    display: inline-block;
+    &:first-child {
+      @include media(desktop) {
+        margin-right: 70px;
+      }
+      position: relative;
+      top: .75rem;
+    }
+  }
+  img {
+    max-width: 210px;
+    position: relative;
+    top: 2rem;
+  }
+}
+
+body.theme-light .logo-dark,
+body.theme-dark .logo-light {
+  display: none !important;
+}

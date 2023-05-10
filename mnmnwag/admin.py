@@ -7,7 +7,7 @@ from .models import RejectedComment, TweetsTracker
 class RejectedCommentAdmin(admin.ModelAdmin):
     list_display = (
         'id',
-        'related_post',
+        'related_page',
         'submit_date',
         'ip_address',
         'name',

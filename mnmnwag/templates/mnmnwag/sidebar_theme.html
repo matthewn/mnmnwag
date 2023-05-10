@@ -4,9 +4,9 @@
             <h4>Site Colors</h4>
         </summary>
         <ul>
-            <li><a {% if 'light' in theme_class %}class="current" {% endif %}href="/theme/light">Light</a></li>
-            <li><a {% if 'dark' in theme_class %}class="current" {% endif %}href="/theme/dark">Dark</a></li>
-            <li><a {% if 'retro' in theme_class %}class="current" {% endif %}href="/theme/retro">Retro</a></li>
+            <li><a data-theme="light" {% if 'light' in theme_class %}class="current" {% endif %}href="/theme/light">Light</a></li>
+            <li><a data-theme="dark" {% if 'dark' in theme_class %}class="current" {% endif %}href="/theme/dark">Dark</a></li>
+            <li><a data-theme="retro" {% if 'retro' in theme_class %}class="current" {% endif %}href="/theme/retro">Retro</a></li>
         </ul>
     </details>
 </div>

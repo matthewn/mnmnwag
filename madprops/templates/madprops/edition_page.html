@@ -1,0 +1,61 @@
+{% extends "madprops/base.html" %}
+
+{% load capture_tags %}
+{% load typefixes %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
+{% load wagtailcore_tags %}
+
+{% block body_class %}template-madpropsedition{% endblock %}
+
+{% block content %}
+
+<article class="edition">
+
+    <h2>{{ page.title }}</h2>
+
+    <header class="posted">
+        Posted by <a href="/about">the Mad Propster</a> on
+        {{ page.first_published_at|date:"F j, Y" }}
+    </header>
+
+    <aside class="cheatsheet">
+        <h3>Cheat Sheet</h3>
+        <ul class="leaders">
+            {% for row in page.cheat_sheet %}
+                <li>
+                    <span><a href="#prop{{ row.prop_number }}" title="{{ row.prop_title }}">Prop {{ row.prop_number }}</a></span>
+                    <span class="proprec">
+                        {% if row.recommendation == 'yes' %}Yes{% endif %}
+                        {% if row.recommendation == 'no' %}No{% endif %}
+                        {% if row.recommendation == 'noadv' %}No Position{% endif %}
+                        {% if row.recommendation == 'nopos' %}No Position{% endif %}
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
+    </aside>
+
+    <section class="page-body type-{{ page.content_type.model }} slug-{{ page.slug }}">
+        {# add page_id and block_id to block context (req'd by ImageBlock and SlidesBlock) #}
+        {% capture as content silent %}
+            {% for block in page.body %}
+                {% if block.block_type != "danger" %}
+                    <div class="block-{{ block.block_type }}">
+                        {% include_block block with page_id=page.id block_id=block.id|slice:'0:7' %}
+                    </div>
+                {% else %}
+                    {# danger blocks don't get the typical wrapper divs #}
+                    {% include_block block|typefixes %}
+                {% endif %}
+            {% endfor %}
+        {% endcapture %}
+        {{ content|typefixes }}
+    </section>
+
+    {% include "madprops/comments.html" %}
+
+</article>
+
+{% endblock %}
