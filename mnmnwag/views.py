@@ -22,7 +22,7 @@ def theme_picker(request, chosen_theme):
             destination = request.META['HTTP_HOST'] + '/blog'
         else:
             destination = request.META['HTTP_HOST']
-    response = HttpResponseRedirect('//' + destination)
+    response = HttpResponseRedirect(destination)
     if chosen_theme in ('light', 'dark', 'retro'):
         theme_class = f'theme-{chosen_theme}'
         expires = dt.datetime.now(tz=dt.timezone.utc) + dt.timedelta(days=365)
