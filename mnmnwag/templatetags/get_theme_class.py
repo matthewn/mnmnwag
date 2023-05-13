@@ -10,9 +10,9 @@ def get_theme_class(context):
 
     Use stored value if cookie is set, otherwise provide default value.
     """
-    request = context['request']
     try:
-        theme = request.COOKIES['themeClass']
+        request = context['request']
+        theme = request.COOKIES.get('themeClass') or 'theme-light'
     except KeyError:
         theme = 'theme-light'  # default theme
     return theme
