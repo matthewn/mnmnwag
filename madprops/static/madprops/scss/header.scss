@@ -19,14 +19,10 @@
       top: .75rem;
     }
   }
-  img {
-    max-width: 210px;
+  svg {
+    height: auto;
     position: relative;
     top: 2rem;
+    width: 210px;
   }
-}
-
-body.theme-light .logo-dark,
-body.theme-dark .logo-light {
-  display: none !important;
 }

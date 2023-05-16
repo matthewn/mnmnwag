@@ -50,8 +50,9 @@
                         <h1>Mad Props</h1>
                         <div id="site-slogan">your independent guide to California's ballot initiatives</div>
                     </div>
-                    <div class="logo-light"><img src="{% static 'madprops/img/mad_props_logo.svg' %}" alt="monochrome rendering of part of California's flag"></div>
-                    <div class="logo-dark"><img src="{% static 'madprops/img/mad_props_logo_dark.svg' %}" alt="monochrome rendering of part of California's flag"></div>
+                    <div class="logo">
+                        {% include 'madprops/logo.html' %}
+                    </div>
                 </header>
             </a>
 
@@ -69,7 +70,6 @@
                     </nav>
                 </div>
             </section>
-
 
             <section id="content" class="{% block content_class %}{% endblock %}">
                 <div class="constrainer">
