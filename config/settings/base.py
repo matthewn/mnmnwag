@@ -48,7 +48,7 @@ INSTALLED_APPS = [
 
     'antispam',
     'antispam.akismet',
-    # 'cachalot',  # incompatible with Django 4.2 :(
+    'cachalot',
     'capture_tag',
     # 'comments_wagtail_xtd',  # broken since wagtail 4.0
     'compressor',
