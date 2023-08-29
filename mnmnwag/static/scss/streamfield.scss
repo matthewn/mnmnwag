@@ -42,6 +42,11 @@
 
 .block-slides {
   margin-bottom: 1rem;
+  .slide-homebrew {
+    img {
+      max-width: 49%;  // fix for mobile; make 2 cols happen at 360px, etc.
+    }
+  }
 }
 
 // boilerplate for responsive wagtail embeds
