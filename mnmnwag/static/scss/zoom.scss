@@ -20,10 +20,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    max-height: calc(100vh - 3rem);
+    max-height: calc(100dvh - 3rem);
   }
   img {
-    max-height: calc(100vh - 3rem);
+    max-height: calc(100dvh - 3rem);
   }
   .parent-link {
     margin-bottom: 5px;
