@@ -112,6 +112,11 @@ article.edition {
     // border: 1px solid blue;
     margin-bottom: 1rem;
   }
+  .page-body {
+    .block-paragraph p {
+      margin-bottom: 1.5rem;
+    }
+  }
 }
 article.prop {
   margin-top: 2rem;
