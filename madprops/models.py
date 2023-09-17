@@ -54,26 +54,6 @@ class EditionPage(BasePage):
         return self.full_url
 
 
-class HomePage(BasePage):
-    """
-    The HomePage simply returns the latest published Edition.
-    """
-    max_count = 1
-    subpage_types = [SimplePage, EditionPage]
-    template = 'madprops/edition_page.html'
-
-    def get_context(self, request, *args, **kwargs):
-        latest_edition = (
-            EditionPage.objects.live()
-            .public()
-            .order_by('-first_published_at')
-            .first()
-        )
-        context = latest_edition.get_context(request, *args, **kwargs)
-        context['theres_no_place_like_home'] = True
-        return context
-
-
 class ArchivesPage(BasePage):
     body = StreamField(
         MadPropsStreamBlock(),
@@ -94,6 +74,26 @@ class ArchivesPage(BasePage):
             .public()
             .order_by('-first_published_at')[1:]
         )
+        return context
+
+
+class HomePage(BasePage):
+    """
+    The HomePage simply returns the latest published Edition.
+    """
+    max_count = 1
+    subpage_types = [ArchivesPage, SimplePage, EditionPage]
+    template = 'madprops/edition_page.html'
+
+    def get_context(self, request, *args, **kwargs):
+        latest_edition = (
+            EditionPage.objects.live()
+            .public()
+            .order_by('-first_published_at')
+            .first()
+        )
+        context = latest_edition.get_context(request, *args, **kwargs)
+        context['theres_no_place_like_home'] = True
         return context
 
 
