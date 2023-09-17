@@ -1,0 +1,6 @@
+// we are hitting some wackass django-compressor issue where the first import after
+// mixins.scss gets mangled. having spent way too much time trying to track this down,
+// we're just rolling with it for now. here, chew on this, bug:
+#bogus {
+  display: unset;
+}
