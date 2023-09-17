@@ -95,6 +95,9 @@ main {
     text-decoration: underline;
   }
   li { list-style: disc; }
+  .block-paragraph p {
+    margin-bottom: 1.5rem;
+  }
   p {
     &.posted {
       font-size: .9rem;
@@ -111,11 +114,6 @@ article.edition {
   .page-body > * {
     // border: 1px solid blue;
     margin-bottom: 1rem;
-  }
-  .page-body {
-    .block-paragraph p {
-      margin-bottom: 1.5rem;
-    }
   }
   .block-prop + :not(.block-prop):last-child {
     // style outro paragraphs
