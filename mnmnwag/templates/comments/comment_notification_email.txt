@@ -14,7 +14,7 @@ Email address: {{ comment.user_email }}
 
 Publish or delete this comment here:
 
-{{ request.scheme }}://{{ request.get_host }}{% url 'admin:django_comments_xtd_xtdcomment_change' comment.xtd_comment.id %}
+https://{{ request.get_host }}{% url 'admin:django_comments_xtd_xtdcomment_change' comment.xtd_comment.id %}
 
 
 Thanks for being there,
