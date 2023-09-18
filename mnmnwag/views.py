@@ -13,6 +13,31 @@ import os
 import sys
 
 
+def handler404(request, exception, template_name='404.html'):
+    if 'madprops' in request.get_host():
+        context = {
+            'override_base': 'madprops/base.html',
+            'msg': 'We don’t have that here.',
+        }
+    else:
+        context = {'msg': 'NO CAN FIND, MAHN.'}
+    response = render(request, template_name, context)
+    response.status_code = 404
+    return response
+
+
+def handler500(request, *args, **argv):
+    if 'madprops' in request.get_host():
+        context = {
+            'override_base': 'madprops/base.html',
+        }
+    else:
+        context = {}
+    response = render(request, '500.html', context)
+    response.status_code = 500
+    return response
+
+
 def theme_picker(request, chosen_theme):
     try:
         destination = request.META['HTTP_REFERER']

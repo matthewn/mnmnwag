@@ -53,6 +53,8 @@ urlpatterns = [
     #    url(r'^pages/', include(wagtail_urls)),
 ]
 
+handler404 = 'mnmnwag.views.handler404'
+handler500 = 'mnmnwag.views.handler500'
 
 if settings.DEBUG:
     from django.conf.urls.static import static

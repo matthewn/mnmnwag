@@ -1,4 +1,4 @@
-{% extends "mnmnwag/base.html" %}
+{% extends override_base|default:"mnmnwag/base.html" %}
 
 {% block title %}500{% endblock %}
 {% block body_class %}template-500{% endblock %}
@@ -7,4 +7,3 @@
     <h2 style="font-size: 4rem; margin: 2rem 0 3rem; text-align: center;"><b>500</b></h2>
     <h3 style="font-size: 3rem; text-align: center;">Damn. The website's broke.</h3>
 {% endblock %}
-/html>

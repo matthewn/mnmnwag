@@ -1,5 +1,6 @@
 from django import template
 from wagtail.models import Page, Site
+from madprops.models import ArchivesPage, EditionPage
 
 register = template.Library()
 
@@ -18,10 +19,11 @@ def mad_props_nav(context, home, calling_page=None):
             menuitem.get_content_type().model == 'archivespage'
         ):
             menuitem.active = (
-                calling_page.url_path.startswith(menuitem.url_path)
-                if calling_page else False
+                # this catches the ArchivesPage itself
+                isinstance(calling_page, ArchivesPage)
             ) or (
-                calling_page.content_type.model == 'editionpage'
+                # this catches old EditionPages
+                isinstance(calling_page, EditionPage)
                 and not context.get('theres_no_place_like_home')
             )
         else:
