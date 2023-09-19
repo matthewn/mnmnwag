@@ -122,7 +122,7 @@ article.edition {
   }
   .block-prop + :not(.block-prop):last-child {
     // style outro paragraphs
-    border-top: 1px solid green;
+    border-top: 1px solid var(--fg-color);
     margin-top: 3rem;
     padding-top: 3rem;
   }
