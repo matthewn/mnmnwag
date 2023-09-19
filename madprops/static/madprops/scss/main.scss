@@ -113,11 +113,9 @@ main {
 
 article.edition {
   > * {
-    // border: 1px solid green;
     margin-bottom: 1.5rem;
   }
   .page-body > * {
-    // border: 1px solid blue;
     margin-bottom: 1rem;
   }
   .block-prop + :not(.block-prop):last-child {
@@ -130,7 +128,6 @@ article.edition {
 article.prop {
   margin-top: 2rem;
   > * {
-    // border: 1px solid red;
     margin-bottom: 1rem;
   }
   header {
