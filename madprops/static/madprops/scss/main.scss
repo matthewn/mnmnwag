@@ -96,9 +96,13 @@ main {
     text-decoration: underline;
   }
   li { list-style: disc; }
+  .block-paragraph blockquote,
   .block-paragraph p,
   ul {
     margin-bottom: 1.5rem;
+  }
+  blockquote {
+    margin-left: 3rem;
   }
   p {
     &.posted {
