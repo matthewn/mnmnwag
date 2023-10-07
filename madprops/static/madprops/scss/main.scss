@@ -172,15 +172,6 @@ article.prop {
 }
 
 .cheatsheet {
-  h3 {
-    font-variant: small-caps;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-  .proprec {
-    text-transform: uppercase;
-  }
   border: 1px solid var(--fg-color);
   float: right;
   font-family: OpenSansCondensed, sans-serif;
@@ -188,6 +179,18 @@ article.prop {
   margin: 0 0 2rem 2.5rem;
   min-width: 20%;
   padding: .75rem 1rem 1rem;
+  h3 {
+    font-variant: small-caps;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  ul {
+    margin-bottom: 0;
+  }
+  .proprec {
+    text-transform: uppercase;
+  }
 }
 
 span.yes, span.no {
