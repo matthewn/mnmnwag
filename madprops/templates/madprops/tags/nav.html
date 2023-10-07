@@ -2,11 +2,13 @@
 {% for menuitem in menuitems %}
     <li>
         <a href="{% pageurl menuitem %}" class="{% if menuitem.active %}active{% endif %}" role="menuitem" up-nav-link>
-            {% if menuitem.seo_title %}
-                {{ menuitem.seo_title }}
-            {% else %}
-                {{ menuitem.title }}
-            {% endif %}
+            <span>
+                {% if menuitem.seo_title %}
+                    {{ menuitem.seo_title }}
+                {% else %}
+                    {{ menuitem.title }}
+                {% endif %}
+            </span>
         </a>
     </li>
 {% endfor %}

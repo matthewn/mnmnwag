@@ -17,22 +17,20 @@
     text-align: center;
   }
   a {
-    &, &:visited {
-      color: var(--fg-color);
-    }
     line-height: 1.35rem;
     position: relative;
     text-decoration: none;
+    &, &:visited {
+      color: var(--fg-color);
+    }
     &.active {
       font-weight: var(--semibold);
-      top: -2px;
       &::before,
       &::after {
         font-size: 1.25rem;
         font-weight: normal;
         position: relative;
-        text-decoration: none;
-        top: 2px;
+        top: 1px; // it really does make a difference :P
       }
       &::before {
         content: '⏵';
@@ -49,7 +47,9 @@
       }
     }
     &:hover {
-      text-decoration: underline;
+      span {
+        border-bottom: 1px solid var(--fg-color);
+      }
     }
   }
 }
