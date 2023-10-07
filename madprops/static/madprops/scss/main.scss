@@ -293,6 +293,9 @@ span.yes, span.no {
 #archives {
   margin-bottom: 5rem;
   text-align: center;
+  ul {
+    padding: 0;
+  }
   li {
     font-size: 1.35rem;
     list-style: none;
