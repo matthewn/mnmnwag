@@ -26,7 +26,7 @@
             {% for row in page.cheat_sheet %}
                 <li>
                     <span><a href="#prop{{ row.prop_number }}" title="{{ row.prop_title }}">Prop {{ row.prop_number }}</a></span>
-                    <span class="proprec">
+                    <span class="proprec {{ row.recommendation }}">
                         {% if row.recommendation == 'yes' %}Yes{% endif %}
                         {% if row.recommendation == 'no' %}No{% endif %}
                         {% if row.recommendation == 'noadv' %}No Position{% endif %}

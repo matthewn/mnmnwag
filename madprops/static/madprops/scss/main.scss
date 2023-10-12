@@ -96,10 +96,20 @@ main {
     text-decoration: underline;
   }
   li { list-style: disc; }
-  .block-paragraph blockquote,
-  .block-paragraph p,
-  ul {
-    margin-bottom: 1.5rem;
+  .block-paragraph {
+    blockquote, p, ul {
+      margin-bottom: 1.5rem;
+    }
+  }
+  .block-paragraph,
+  .block-prop {
+    span.yes, span.no {
+      font-family: OpenSans, sans-serif;
+      font-size: 1.2em;
+      font-weight: 800;
+      line-height: 0;
+      text-transform: uppercase;
+    }
   }
   blockquote {
     margin-left: 3rem;
@@ -188,17 +198,10 @@ article.prop {
   ul {
     margin-bottom: 0;
   }
-  .proprec {
+  .proprec.no,
+  .proprec.yes {
     text-transform: uppercase;
   }
-}
-
-span.yes, span.no {
-  font-family: OpenSans, sans-serif;
-  font-size: 1.2em;
-  font-weight: 800;
-  line-height: 0;
-  text-transform: uppercase;
 }
 
 #comments {
