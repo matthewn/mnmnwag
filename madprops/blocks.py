@@ -2,7 +2,6 @@ from django.utils.safestring import mark_safe
 from wagtail.blocks import (
     CharBlock,
     ChoiceBlock,
-    IntegerBlock,
     ListBlock,
     RichTextBlock,
     RawHTMLBlock,
@@ -78,7 +77,7 @@ class PropValues(StructValue):
 
 
 class PropBlock(StructBlock):
-    prop_number = IntegerBlock()
+    prop_number = CharBlock()
     prop_title = CharBlock()
     info_links = ListBlock(URLBlock)
     recommendation = ChoiceBlock(choices=[
