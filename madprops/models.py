@@ -37,6 +37,8 @@ class EditionPage(BasePage):
         FieldPanel('first_published_at'),
     ]
 
+    subpage_types = []
+
     def cheat_sheet(self):
         return [
             {
