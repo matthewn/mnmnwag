@@ -10,8 +10,8 @@
         {% else %}
             {{ page.owner.username }}
         {% endif %}
-        {{ post.post_date|date:"j F Y" }}
-        <span>at {{ post.post_date|date:"g:i a" }}</span>
+        {{ post.specific.post_date|date:"j F Y" }}
+        <span>at {{ post.specific.post_date|date:"g:i a" }}</span>
     </div>
 
     {% if post.specific.tagged_items.all %}
