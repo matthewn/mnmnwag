@@ -1,28 +1,28 @@
 #header {
-    margin-bottom: 2rem;
-    text-align: center;
-    h1 {
-      font-family: hominisnormal, serif;
-    }
-    #site-slogan {
-      font-family: LeagueGothicRegular, sans-serif;
-      font-size: 1.75rem;
-      margin-top: .5rem;
-    }
-    > div {
-      display: inline-block;
-      &:first-child {
-        @include media(desktop) {
-          margin-right: 70px;
-        }
-        position: relative;
-        top: .75rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  h1 {
+    font-family: hominisnormal, serif;
+  }
+  #site-slogan {
+    font-family: LeagueGothicRegular, sans-serif;
+    font-size: 1.75rem;
+    margin-top: .5rem;
+  }
+  > div {
+    display: inline-block;
+    &:first-child {
+      @include media(desktop) {
+        margin-right: 70px;
       }
-    }
-    svg {
-      height: auto;
       position: relative;
-      top: 2rem;
-      width: 210px;
+      top: .75rem;
     }
   }
+  svg {
+    height: auto;
+    position: relative;
+    top: 2rem;
+    width: 210px;
+  }
+}
