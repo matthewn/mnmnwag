@@ -20,6 +20,10 @@
   --semibold: 600;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   &.theme-dark {
     --fg-color: #feffed;
