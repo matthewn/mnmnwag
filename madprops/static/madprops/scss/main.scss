@@ -326,12 +326,9 @@ article.prop {
 #backtotop {
   bottom: 1rem;
   display: block;
-  font-size: 3rem;
-  line-height: 5rem;
   opacity: 0;
   position: fixed;
   right: 1rem;
-  text-align: center;
   transition: opacity .5s ease;
   a, a:link, a:visited {
     background-color: var(--bg-color);
@@ -340,10 +337,13 @@ article.prop {
     color: var(--link-color);
     display: block;
     height: 3rem;
+    text-align: center;
     width: 3rem;
   }
-  a:hover {
-    text-decoration: none;
+  svg {
+    position: relative;
+    top: .33rem;
+    width: 75%;
   }
   &.visible {
     opacity: 1;

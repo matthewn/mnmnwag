@@ -27,16 +27,23 @@
       color: var(--fg-color);
     }
     &.active {
-      font-weight: var(--semibold);
+      @include media(mobile) {
+        font-variant: small-caps;
+        font-weight: 900;
+      }
+      font-weight: bold;
       &::before,
       &::after {
+        @include media(mobile) {
+          display: none;
+        }
         font-size: 1.25rem;
-        font-weight: normal;
+        font-weight: 900;
         position: relative;
         top: 1px; // it really does make a difference :P
       }
       &::before {
-        content: '⏵';
+        content: '>';
         left: -3px;
         &:first-child, &:nth-child(3) {
           @include media(mobile) {
@@ -45,7 +52,7 @@
         }
       }
       &::after {
-        content: '⏴';
+        content: '<';
         left: 3px;
       }
     }
