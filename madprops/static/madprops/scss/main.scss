@@ -189,6 +189,10 @@ article.prop {
 }
 
 .cheatsheet {
+  @include media(tiny) {
+    float: none;
+    margin: unset;
+  }
   border: 1px solid var(--fg-color);
   float: right;
   font-family: OpenSansCondensed, sans-serif;
