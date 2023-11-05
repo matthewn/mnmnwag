@@ -102,13 +102,17 @@
                 <div class="fake wagtail-userbar-items"></div>
             </footer>
 
+            <div id="backtotop">
+                <a title="back to top" aria-label="back to top" href="#content">⌃</a>
+            </div>
+
         </div>
 
         {% compress js %}
             <script src="{% static 'js/vendor/unpoly.min.js' %}"></script>
             <script src="{% static 'js/cookies.js' %}"></script>
             <script src="{% static 'js/theme_picker.js' %}"></script>
-            {# <script src="{% static 'js/main.js' %}"></script> #}
+            <script src="{% static 'madprops/js/main.js' %}"></script>
         {% endcompress %}
 
         {# TODO: enable goatcounter for madprops #}
