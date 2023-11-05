@@ -1,4 +1,7 @@
 #navbar {
+  @include media(tiny) {
+    font-size: .9rem;
+  }
   border-bottom: 1px solid var(--fg-color);
   border-top: 1px solid var(--fg-color);
   margin: 1.75rem 0 2.75rem;

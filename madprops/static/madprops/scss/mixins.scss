@@ -3,6 +3,10 @@
     @media (max-width: 720px) {
       @content;
     }
+  } @else if $breakpoint == 'tiny' {
+    @media (max-width: 340px) {
+      @content;
+    }
   } @else if $breakpoint == 'desktop' {
     @media (min-width: 720.01px) {
       @content;
