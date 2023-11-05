@@ -5,6 +5,9 @@
     font-family: hominisnormal, serif;
   }
   #site-slogan {
+    @include media(mobile) {
+      padding: 0 .5rem;
+    }
     font-family: LeagueGothicRegular, sans-serif;
     font-size: 1.75rem;
     margin-top: .5rem;
