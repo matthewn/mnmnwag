@@ -1,5 +1,3 @@
-console.log('FUCK YOU');
-
 const backtotop = document.getElementById('backtotop');
 
 function toggleBacktotopVisibility() {
