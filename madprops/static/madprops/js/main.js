@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 const backtotop = document.getElementById('backtotop');
 
 function toggleBacktotopVisibility() {
@@ -12,3 +14,5 @@ function toggleBacktotopVisibility() {
 }
 
 window.addEventListener('scroll', toggleBacktotopVisibility);
+
+up.log.config.banner = false;
