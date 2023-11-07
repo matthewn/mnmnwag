@@ -62,3 +62,12 @@ const markCurrentTheme = function() {
         }
     });
 };
+
+
+// on page load, if no theme cookie, switch to dark mode if preferred
+document.addEventListener('DOMContentLoaded', function() {
+    if (getCookie('themeClass') === '') {
+        const prefersDarkTheme = window.matchMedia('(prefers-color-scheme: dark)');
+        if (prefersDarkTheme.matches) { setTheme('theme-dark'); }
+    }
+});
