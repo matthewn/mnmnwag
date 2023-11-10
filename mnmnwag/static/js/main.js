@@ -33,27 +33,27 @@ up.log.config.banner = false;
 
 // up-blog-link refreshes mainbar in /blog section
 up.macro('[up-blog-link]', function(link) {
-    link.setAttribute('up-target', '#content .blog, .wagtail-userbar-items');
+    link.setAttribute('up-target', '#content .blog, #wagtail-unpoly');
     link.setAttribute('up-transition', 'cross-fade');
     link.setAttribute('up-scroll', '#header');
 });
 
 // up-content-link refreshes entire content section
 up.macro('[up-content-link]', function(link) {
-    link.setAttribute('up-target', '#content, .wagtail-userbar-items');
+    link.setAttribute('up-target', '#content, #wagtail-unpoly');
     link.setAttribute('up-transition', 'cross-fade');
     link.setAttribute('up-scroll', '#header');
 });
 
 // up-content-link w/o a scroll to top -- used on comment links
 up.macro('[up-content-link-notop]', function(link) {
-    link.setAttribute('up-target', '#content, .wagtail-userbar-items');
+    link.setAttribute('up-target', '#content, #wagtail-unpoly');
     link.setAttribute('up-transition', 'cross-fade');
 });
 
 // up-nav-link refreshes entire content section + navbar
 up.macro('[up-nav-link]', function(link) {
-    link.setAttribute('up-target', '#navbar, #content, .wagtail-userbar-items');
+    link.setAttribute('up-target', '#navbar, #content, #wagtail-unpoly');
     link.setAttribute('up-transition', 'cross-fade');
     link.setAttribute('up-scroll', '#header');
 });
