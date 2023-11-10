@@ -52,7 +52,7 @@ class PropValues(StructValue):
         links = self.get('info_links')
         for link in links:
             title = ''
-            if 'voterguide' in link:
+            if 'voterguide' in link or 'vigarchive' in link:
                 title = 'Voter Information Guide'
             elif 'ballotpedia' in link:
                 title = 'Ballotpedia'
