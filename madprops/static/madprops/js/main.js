@@ -23,14 +23,14 @@ up.log.config.banner = false;
 
 // up-nav-link refreshes entire content section + navbar
 up.macro('[up-nav-link]', function(link) {
-    link.setAttribute('up-target', '#navbar, #content, .wagtail-userbar-items');
+    link.setAttribute('up-target', '#navbar, #content, #wagtail-unpoly');
     link.setAttribute('up-transition', 'cross-fade');
     link.setAttribute('up-scroll', '#header');
 });
 
 // up-content-link refreshes entire content section
 up.macro('[up-content-link]', function(link) {
-    link.setAttribute('up-target', '#content, .wagtail-userbar-items');
+    link.setAttribute('up-target', '#content, #wagtail-unpoly');
     link.setAttribute('up-transition', 'cross-fade');
     link.setAttribute('up-scroll', '#header');
 });
