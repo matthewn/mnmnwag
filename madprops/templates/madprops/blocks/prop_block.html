@@ -15,6 +15,9 @@
             {% endfor %}
         )</ul>
         <div class="proprec">{{ value.rectext.intro }} <span class="{{ value.recommendation }}">{{ value.rectext.text }}</span></div>
+        {% if value.result %}
+            <div class="propresult {{ value.result }}">This proposition was: <span>{{ value.result }}</span></div>
+        {% endif %}
     </header>
 
     {% capture as content silent %}

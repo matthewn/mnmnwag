@@ -65,7 +65,7 @@ class PropValues(StructValue):
     def rectext(self):
         rec = self.get('recommendation')
         if rec == 'yes' or rec == 'no':
-            intro = 'You Should Vote:'
+            intro = 'You should vote:'
             text = rec
         elif rec == 'nopos':
             intro = mark_safe('<i>Mad Props</i> takes no position on this measure.')
@@ -79,6 +79,10 @@ class PropValues(StructValue):
 class PropBlock(StructBlock):
     prop_number = CharBlock()
     prop_title = CharBlock()
+    result = ChoiceBlock(choices=[
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+    ], required=False)
     info_links = ListBlock(URLBlock)
     recommendation = ChoiceBlock(choices=[
         ('yes', 'Yes'),

@@ -110,6 +110,7 @@ main {
   }
   .block-paragraph,
   .block-prop {
+    .propresult span,
     span.yes, span.no {
       font-family: OpenSans, sans-serif;
       font-size: 1.2em;
@@ -183,10 +184,16 @@ article.prop {
         }
       }
     }
-    .proprec {
-      .yes, .no {
-        padding-left: .25rem;
-      }
+    .proprec .yes,
+    .proprec .no,
+    .propresult span {
+      padding-left: .25rem;
+    }
+    .propresult.approved span {
+      color: limegreen;
+    }
+    .propresult.rejected span {
+      color: crimson;
     }
   }
 }
