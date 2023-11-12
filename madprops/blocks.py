@@ -79,10 +79,6 @@ class PropValues(StructValue):
 class PropBlock(StructBlock):
     prop_number = CharBlock()
     prop_title = CharBlock()
-    result = ChoiceBlock(choices=[
-        ('approved', 'Approved'),
-        ('rejected', 'Rejected'),
-    ], required=False)
     info_links = ListBlock(URLBlock)
     recommendation = ChoiceBlock(choices=[
         ('yes', 'Yes'),
@@ -90,6 +86,10 @@ class PropBlock(StructBlock):
         ('nopos', 'No position'),
         ('noadv', 'No position (advisory measure)')
     ])
+    result = ChoiceBlock(choices=[
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+    ], required=False)
     writeup = MyStreamBlock()
 
     class Meta:
