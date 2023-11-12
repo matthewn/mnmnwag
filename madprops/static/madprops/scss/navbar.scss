@@ -45,11 +45,6 @@
       &::before {
         content: '>';
         left: -3px;
-        &:first-child, &:nth-child(3) {
-          @include media(mobile) {
-            margin-left: -1.5rem;
-          }
-        }
       }
       &::after {
         content: '<';
