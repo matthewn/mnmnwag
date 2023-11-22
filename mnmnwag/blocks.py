@@ -6,10 +6,13 @@ from wagtail.blocks import (
     CharBlock,
     ChoiceBlock,
     ListBlock,
+    RawHTMLBlock,
     RichTextBlock,
+    StreamBlock,
     StructBlock,
     URLBlock,
 )
+from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtailmedia.blocks import AbstractMediaChooserBlock
 
@@ -89,3 +92,94 @@ class MediaBlock(AbstractMediaChooserBlock):
             '\n', "<source{0}>",
             [[flatatt(s)] for s in value.sources]
         ))
+
+
+class LoadedStreamBlock(StreamBlock):
+    heading = CharBlock(classname='full title')
+    paragraph = RichTextBlock(
+        features=[
+            'h3',
+            'h4',
+            'h5',
+            'ol',
+            'ul',
+            'blockquote',
+            'bold',
+            'italic',
+            'superscript',
+            'subscript',
+            'strikethrough',
+            'code',
+            'link',
+            'image',
+            'document-link',
+        ],
+    )
+    image = ImageBlock()
+    slides = SlidesBlock()
+    embed = EmbedBlock()
+    media = MediaBlock(icon='media')
+    raw_HTML = RawHTMLBlock(required=False)
+    danger = RawHTMLBlock(label='DANGER!', required=False)
+
+
+class ModernPostStreamBlock(StreamBlock):
+    heading = CharBlock(classname='full title')
+    teaser = RichTextBlock(
+        features=[
+            'ol',
+            'ul',
+            'blockquote',
+            'bold',
+            'italic',
+            'superscript',
+            'subscript',
+            'strikethrough',
+            'code',
+            'link',
+            'image',
+            'document-link',
+        ],
+    )
+    paragraph = RichTextBlock(
+        features=[
+            'ol',
+            'ul',
+            'blockquote',
+            'bold',
+            'italic',
+            'superscript',
+            'subscript',
+            'strikethrough',
+            'code',
+            'link',
+            'image',
+            'document-link',
+        ],
+    )
+    image = ImageBlock()
+    slides = SlidesBlock()
+    embed = EmbedBlock()
+    media = MediaBlock(icon='media')
+    raw_HTML = RawHTMLBlock(required=False)
+
+
+class GalleryStreamBlock(StreamBlock):
+    heading = CharBlock(classname='full title')
+    paragraph = RichTextBlock(
+        features=[
+            'blockquote',
+            'bold',
+            'italic',
+            'superscript',
+            'subscript',
+            'strikethrough',
+            'link',
+            'image',
+            'document-link',
+        ],
+    )
+    slides = SlidesBlock()
+    embed = EmbedBlock()
+    media = MediaBlock(icon='media')
+    raw_HTML = RawHTMLBlock(required=False)

@@ -14,8 +14,6 @@ from wagtail.embeds.blocks import EmbedBlock
 from mnmnwag.blocks import ImageBlock, MediaBlock
 
 
-# this class is intended to be moved to the mnmnwag app
-# and be imported from there
 class MyStreamBlock(StreamBlock):
     heading = CharBlock(classname='full title')
     paragraph = RichTextBlock(
