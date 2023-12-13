@@ -31,8 +31,12 @@ $light-blue: #93c5d0;
 $light-yellow: #ffffe0;
 $purple: #551a8b;
 
+:root {
+  --link-color: #0e79b2;
+}
 
 body.theme-light {
+  --link-color: #0e79b2;
   background-color: $white;
   color: $jet;
   a, a:link, a:visited { color: $star-command-blue; }
@@ -91,6 +95,7 @@ body.theme-light {
 }
 
 body.theme-dark {
+  --link-color: #b8f3ff;
   background-color: $black;
   color: $platinum;
   a, a:link, a:visited { color: $blizzard-blue; }
@@ -154,6 +159,7 @@ body.theme-dark {
 }
 
 body.theme-retro {
+  --link-color: #0df;
   background-color: $black;
   color: $green;
   a, a:link, a:visited { color: $aqua; }

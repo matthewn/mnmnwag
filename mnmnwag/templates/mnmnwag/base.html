@@ -73,6 +73,32 @@
                     <ul role="menubar">
                         {% get_site_root as site_root %}
                         {% top_menu parent=site_root calling_page=self %}
+                        <li id="theme-picker">
+                            <div class="light">
+                                <a title="switch to light mode" data-theme="light" href="/theme/light">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 32 32" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <desc>retro TTY icon</desc>
+                                        <path fill="var(--link-color)" d="M16 4c-3.895 0-7.191.715-9.406 1.375A5.033 5.033 0 0 0 3 10.188V13c0 1.094.906 2 2 2h4c1.094 0 2-.906 2-2v-2.625c.188-.086.227-.121.781-.281c.91-.266 2.301-.531 4.219-.531c1.918 0 3.309.265 4.219.53c.554.16.593.196.781.282V13c0 1.094.906 2 2 2h4c1.094 0 2-.906 2-2v-2.813a5.037 5.037 0 0 0-3.594-4.812A33.415 33.415 0 0 0 16 4m0 2c3.648 0 6.77.664 8.844 1.281A3.015 3.015 0 0 1 27 10.188V13h-4V9.125l-.5-.281s-.637-.371-1.719-.688C19.7 7.84 18.11 7.562 16 7.562s-3.7.278-4.781.594c-1.082.317-1.719.688-1.719.688l-.5.281V13H5v-2.813c0-1.34.863-2.523 2.156-2.906A31.497 31.497 0 0 1 16 6m-6 11a1.999 1.999 0 1 0 0 4a1.999 1.999 0 1 0 0-4m6 0a1.999 1.999 0 1 0 0 4a1.999 1.999 0 1 0 0-4m6 0a1.999 1.999 0 1 0 0 4a1.999 1.999 0 1 0 0-4m-12 6a1.999 1.999 0 1 0 0 4a1.999 1.999 0 1 0 0-4m6 0a1.999 1.999 0 1 0 0 4a1.999 1.999 0 1 0 0-4m6 0a1.999 1.999 0 1 0 0 4a1.999 1.999 0 1 0 0-4"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                            <div class="dark">
+                                <a title="switch to dark mode" data-theme="dark" href="/theme/dark">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--link-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <desc>sun icon</desc>
+                                        <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                                    </svg>
+                                </a>
+                            </div>
+                            <div class="retro">
+                                <a title="switch to retro mode" data-theme="retro" href="/theme/retro">
+                                    <svg role="img" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--link-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <desc>moon icon</desc>
+                                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -82,7 +108,6 @@
             <div class="constrainer">
                 {% if page.content_type.model == 'blogindex' or page.content_type.model == 'modernpost' or page.content_type.model == 'legacypost' %}
                     <aside>
-                        {% include "mnmnwag/sidebar_theme.html" %}
                         {% include "mnmnwag/sidebar_subscribe.html" %}
                         {% include "mnmnwag/sidebar_archives.html" %}
                         {% include "mnmnwag/sidebar_blogroll.html" %}
