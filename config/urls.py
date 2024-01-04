@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.conf.urls import include
-from django.urls import path
 from django.contrib import admin
+from django.urls import path
+from django.views.generic.base import TemplateView
 
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail import urls as wagtail_urls
@@ -17,6 +18,10 @@ from subs.views import sub_create, sub_confirm, sub_remove
 
 
 urlpatterns = [
+    path(
+        'robots.txt',
+        TemplateView.as_view(template_name='robots.txt', content_type='text/plain'),
+    ),
     path('dja/', admin.site.urls),
     path('cms/', include(wagtailadmin_urls)),
     path('documents/', include(wagtaildocs_urls)),
