@@ -6,7 +6,7 @@ authors = ["Matthew Newton <matthewn@alum.berkeley.edu>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-django = "^4.2"
+django = "*"
 wagtail = "*"
 django-dbbackup = "*"
 django-debugtools = "*"

@@ -169,17 +169,17 @@ files = [
 
 [[package]]
 name = "django"
-version = "4.2.8"
+version = "5.0.1"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.10"
 files = [
-    {file = "Django-4.2.8-py3-none-any.whl", hash = "sha256:6cb5dcea9e3d12c47834d32156b8841f533a4493c688e2718cafd51aa430ba6d"},
-    {file = "Django-4.2.8.tar.gz", hash = "sha256:d69d5e36cc5d9f4eb4872be36c622878afcdce94062716cf3e25bcedcb168b62"},
+    {file = "Django-5.0.1-py3-none-any.whl", hash = "sha256:f47a37a90b9bbe2c8ec360235192c7fddfdc832206fcf618bb849b39256affc1"},
+    {file = "Django-5.0.1.tar.gz", hash = "sha256:8c8659665bc6e3a44fefe1ab0a291e5a3fb3979f9a8230be29de975e57e8f854"},
 ]
 
 [package.dependencies]
-asgiref = ">=3.6.0,<4"
+asgiref = ">=3.7.0,<4"
 sqlparse = ">=0.3.1"
 tzdata = {version = "*", markers = "sys_platform == \"win32\""}
 
@@ -233,17 +233,17 @@ Django = ">=3.2"
 
 [[package]]
 name = "django-cachalot"
-version = "2.6.1"
+version = "2.6.2"
 description = "Caches your Django ORM queries and automatically invalidates them."
 optional = false
 python-versions = "*"
 files = [
-    {file = "django-cachalot-2.6.1.tar.gz", hash = "sha256:6772d2d2cc2efa8b6484b242567a5a01847f8e1e8c8ef59a7b9a367b2edfa929"},
-    {file = "django_cachalot-2.6.1-py3-none-any.whl", hash = "sha256:442ad5321e646ce33ec7825c289476373b8926d23b4c1b8b9659879306e44748"},
+    {file = "django-cachalot-2.6.2.tar.gz", hash = "sha256:1ea598845d0dd522173274bf2659ba3d962b3c69309874bf1fc73838fb1cd39c"},
+    {file = "django_cachalot-2.6.2-py3-none-any.whl", hash = "sha256:40bb42f4cca185f59d28b4cd9155426f620f0d16210619d62058f095f8f2a14b"},
 ]
 
 [package.dependencies]
-Django = ">=3.2,<4.3"
+Django = ">=3.2,<5.1"
 
 [[package]]
 name = "django-capture-tag"
@@ -258,13 +258,13 @@ files = [
 
 [[package]]
 name = "django-comments-xtd"
-version = "2.9.11"
+version = "2.9.13"
 description = "Django Comments Framework extension app with thread support, follow up notifications and email confirmations."
 optional = false
 python-versions = "*"
 files = [
-    {file = "django-comments-xtd-2.9.11.tar.gz", hash = "sha256:3ee460bc757402c3e8f276bb0b457ecfbabaf94b08b2561fb6da6fb548abfbfe"},
-    {file = "django_comments_xtd-2.9.11-py3-none-any.whl", hash = "sha256:b2b67acaf81e64d22b9cdda435686d7a239bfa4119f057af0216d942ac1ea4c6"},
+    {file = "django-comments-xtd-2.9.13.tar.gz", hash = "sha256:0d91e3cc76eae6f30e83b12fb09708e5407664d9daa7b9c1101d7377897f7b42"},
+    {file = "django_comments_xtd-2.9.13-py3-none-any.whl", hash = "sha256:b289b6754d6618fb29e4279c6a1c6a270bc9495e161c42193d8b6216a4884802"},
 ]
 
 [package.dependencies]
@@ -445,13 +445,13 @@ Django = ">=3.2"
 
 [[package]]
 name = "django-modelcluster"
-version = "6.1"
+version = "6.2.1"
 description = "Django extension to allow working with 'clusters' of models as a single unit, independently of the database"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "django-modelcluster-6.1.tar.gz", hash = "sha256:3b1791638046c73ae7415327cf54bfa0adad9d89d342a5b86d0ec29a2504e067"},
-    {file = "django_modelcluster-6.1-py2.py3-none-any.whl", hash = "sha256:8ce72635db4b90b34993afda5021ed8676ef94f1d4c607466d0f8d3f676c5b64"},
+    {file = "django-modelcluster-6.2.1.tar.gz", hash = "sha256:3f53d47e1af7aec5e238724be16bbebdac9c518e4788b31429e773dcd8e8ea49"},
+    {file = "django_modelcluster-6.2.1-py2.py3-none-any.whl", hash = "sha256:725c005de22191165b690ea05588b1c702ac34b1e9cd8a8b26fadc2a35fcd337"},
 ]
 
 [package.dependencies]
@@ -459,7 +459,7 @@ django = ">=3.2"
 pytz = ">=2022.4"
 
 [package.extras]
-taggit = ["django-taggit (>=2.0)"]
+taggit = ["django-taggit (>=3.1)"]
 
 [[package]]
 name = "django-permissionedforms"
@@ -678,27 +678,28 @@ six = "*"
 
 [[package]]
 name = "libsass"
-version = "0.22.0"
+version = "0.23.0"
 description = "Sass for Python: A straightforward binding of libsass for Python."
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.8"
 files = [
-    {file = "libsass-0.22.0-cp36-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:f1efc1b612299c88aec9e39d6ca0c266d360daa5b19d9430bdeaffffa86993f9"},
-    {file = "libsass-0.22.0-cp37-abi3-macosx_10_15_x86_64.whl", hash = "sha256:081e256ab3c5f3f09c7b8dea3bf3bf5e64a97c6995fd9eea880639b3f93a9f9a"},
-    {file = "libsass-0.22.0-cp37-abi3-win32.whl", hash = "sha256:89c5ce497fcf3aba1dd1b19aae93b99f68257e5f2026b731b00a872f13324c7f"},
-    {file = "libsass-0.22.0-cp37-abi3-win_amd64.whl", hash = "sha256:65455a2728b696b62100eb5932604aa13a29f4ac9a305d95773c14aaa7200aaf"},
-    {file = "libsass-0.22.0.tar.gz", hash = "sha256:3ab5ad18e47db560f4f0c09e3d28cf3bb1a44711257488ac2adad69f4f7f8425"},
+    {file = "libsass-0.23.0-cp38-abi3-macosx_11_0_x86_64.whl", hash = "sha256:34cae047cbbfc4ffa832a61cbb110f3c95f5471c6170c842d3fed161e40814dc"},
+    {file = "libsass-0.23.0-cp38-abi3-macosx_14_0_arm64.whl", hash = "sha256:ea97d1b45cdc2fc3590cb9d7b60f1d8915d3ce17a98c1f2d4dd47ee0d9c68ce6"},
+    {file = "libsass-0.23.0-cp38-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:4a218406d605f325d234e4678bd57126a66a88841cb95bee2caeafdc6f138306"},
+    {file = "libsass-0.23.0-cp38-abi3-win32.whl", hash = "sha256:31e86d92a5c7a551df844b72d83fc2b5e50abc6fbbb31e296f7bebd6489ed1b4"},
+    {file = "libsass-0.23.0-cp38-abi3-win_amd64.whl", hash = "sha256:a2ec85d819f353cbe807432d7275d653710d12b08ec7ef61c124a580a8352f3c"},
+    {file = "libsass-0.23.0.tar.gz", hash = "sha256:6f209955ede26684e76912caf329f4ccb57e4a043fd77fe0e7348dd9574f1880"},
 ]
 
 [[package]]
 name = "markdown2"
-version = "2.4.11"
+version = "2.4.12"
 description = "A fast and complete Python implementation of Markdown"
 optional = false
 python-versions = ">=3.5, <4"
 files = [
-    {file = "markdown2-2.4.11-py2.py3-none-any.whl", hash = "sha256:2fff5d8e9283218797c5db0e9caad14c4307839919297c5be6ae507d4eeaddbc"},
-    {file = "markdown2-2.4.11.tar.gz", hash = "sha256:c04841d0f9df37457396b9d73c54846ddb097a73e7eb7c81d1589e0bba566cda"},
+    {file = "markdown2-2.4.12-py2.py3-none-any.whl", hash = "sha256:98f47591006f0ace0644cbece03fed6f3845513286f6c6e9f8bcf6a575174e2c"},
+    {file = "markdown2-2.4.12.tar.gz", hash = "sha256:1bc8692696954d597778e0e25713c14ca56d87992070dedd95c17eddaf709204"},
 ]
 
 [package.extras]
@@ -1279,13 +1280,13 @@ test = ["pytest"]
 
 [[package]]
 name = "setuptools"
-version = "69.0.2"
+version = "69.0.3"
 description = "Easily download, build, install, upgrade, and uninstall Python packages"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "setuptools-69.0.2-py3-none-any.whl", hash = "sha256:1e8fdff6797d3865f37397be788a4e3cba233608e9b509382a2777d25ebde7f2"},
-    {file = "setuptools-69.0.2.tar.gz", hash = "sha256:735896e78a4742605974de002ac60562d286fa8051a7e2299445e8e8fbb01aa6"},
+    {file = "setuptools-69.0.3-py3-none-any.whl", hash = "sha256:385eb4edd9c9d5c17540511303e39a147ce2fc04bc55289c322b9e5904fe2c05"},
+    {file = "setuptools-69.0.3.tar.gz", hash = "sha256:be1af57fc409f93647f2e8e4573a142ed38724b8cdd389706a867bb4efcf1e78"},
 ]
 
 [package.extras]
@@ -1391,13 +1392,13 @@ files = [
 
 [[package]]
 name = "tzdata"
-version = "2023.3"
+version = "2023.4"
 description = "Provider of IANA time zone data"
 optional = false
 python-versions = ">=2"
 files = [
-    {file = "tzdata-2023.3-py2.py3-none-any.whl", hash = "sha256:7e65763eef3120314099b6939b5546db7adce1e7d6f2e179e3df563c70511eda"},
-    {file = "tzdata-2023.3.tar.gz", hash = "sha256:11ef1e08e54acb0d4f95bdb1be05da659673de4acbd21bf9c69e94cc5e907a3a"},
+    {file = "tzdata-2023.4-py2.py3-none-any.whl", hash = "sha256:aa3ace4329eeacda5b7beb7ea08ece826c28d761cda36e747cfbf97996d39bf3"},
+    {file = "tzdata-2023.4.tar.gz", hash = "sha256:dd54c94f294765522c77399649b4fefd95522479a664a0cec87f41bebc6148c9"},
 ]
 
 [[package]]
@@ -1520,4 +1521,4 @@ testing = ["Pillow (>=9.1.0,<11.0.0)", "Wand (>=0.6,<1.0)", "black (==22.3.0)", 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "2c93de30fe09b9f2f547ce0c77b6d3e74132d6ff3aac790736bd3512e88deca0"
+content-hash = "7564198bfe525f991fc845086a2663635549562de82e65c593f326d6b6b81a35"

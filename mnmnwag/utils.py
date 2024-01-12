@@ -1,6 +1,6 @@
 def get_client_ip(request):
     # https://stackoverflow.com/a/4581997
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    x_forwarded_for = request.headers.get('x-forwarded-for')
     if x_forwarded_for:
         ip = x_forwarded_for.split(',')[0]
     else:

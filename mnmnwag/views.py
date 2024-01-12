@@ -40,13 +40,13 @@ def handler500(request, *args, **argv):
 
 def theme_picker(request, chosen_theme):
     try:
-        destination = request.META['HTTP_REFERER']
+        destination = request.headers['referer']
     except KeyError:
         site = Site.find_for_request(request)
         if site.is_default_site:
-            destination = request.META['HTTP_HOST'] + '/blog'
+            destination = request.headers['host'] + '/blog'
         else:
-            destination = request.META['HTTP_HOST']
+            destination = request.headers['host']
     response = HttpResponseRedirect(destination)
     if chosen_theme in ('light', 'dark', 'retro'):
         theme_class = f'theme-{chosen_theme}'
