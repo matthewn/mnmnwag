@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.core.mail import send_mail
-from django.db import IntegrityError
 from django.template.response import TemplateResponse
 
 from .models import Subscription
@@ -15,10 +14,7 @@ def sub_create(request):
         nope = request.POST.get('nope')
         yep = request.POST.get('yep')
         if nope is None and yep == 'on':
-            try:
-                sub = Subscription.objects.create(email=request.POST['email'])
-            except IntegrityError:
-                sub = Subscription.objects.get(email=request.POST['email'])
+            sub, created = Subscription.objects.get_or_create(email=request.POST['email'])
             send_confirmation_email(request, sub)
             send_mail(f'mnmnwag: sub requested by {sub.email} [eom]', '', None, [settings.ADMINS[0][1]])
             context['email'] = sub.email
