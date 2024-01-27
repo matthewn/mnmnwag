@@ -1,0 +1,36 @@
+.template-feedsindex {
+  h2 {
+    margin-bottom: 1.5rem;
+  }
+  #feeds-form {
+    margin: 1rem 0 1.5rem;
+  }
+  .taglist {
+    @include media(desktop) {
+      column-count: 5;
+    }
+    line-height: 2;
+    margin-bottom: 1.5rem;
+    input {
+      height: 20px;
+      margin-right: 5px;
+      position: relative;
+      top: 2px;
+      width: 20px;
+    }
+  }
+  #result {
+    a {
+      font-size: 1.5rem;
+    }
+    button {
+      margin: 1.5rem 0;
+    }
+    overflow-x: hidden;
+  }
+  .copied {
+    font-size: 1.25rem;
+    font-weight: $semibold;
+    margin-left: .5rem;
+  }
+}

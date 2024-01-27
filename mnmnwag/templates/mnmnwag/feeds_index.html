@@ -1,0 +1,62 @@
+{% extends "mnmnwag/base.html" %}
+
+{% load capture_tags %}
+{% load typefixes %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
+
+{% block body_class %}template-complexpage template-feedsindex{% endblock %}
+
+{% block content %}
+
+    <h2>{{ page.title }}</h2>
+
+    <div class="page-body type-{{ page.content_type.model }} slug-{{ page.slug }}">
+        {# add page_id and block_id to block context (req'd by ImageBlock and SlidesBlock) #}
+        {% capture as content silent %}
+            {% for block in page.body %}
+                {% if block.block_type != "danger" %}
+                    <div class="block-{{ block.block_type }}">
+                        {% include_block block with page_id=page.id block_id=block.id|slice:'0:7' %}
+                    </div>
+                {% else %}
+                    {# danger blocks don't get the typical wrapper divs #}
+                    {% include_block block|typefixes %}
+                {% endif %}
+            {% endfor %}
+        {% endcapture %}
+        {{ content|typefixes }}
+
+        <div id="refresh">
+            <a href="javascript:document.querySelectorAll('input[type=&quot;checkbox&quot;]').forEach(box => box.checked = true);">
+                select all
+            </a>&nbsp;&nbsp;
+            <a href="javascript:document.querySelectorAll('input[type=&quot;checkbox&quot;]').forEach(box => box.checked = false);">
+                select none
+            </a>
+
+            <form id="feeds-form" action="." method="post" up-target="#refresh">
+                {% csrf_token %}
+                <div class="taglist">
+                    {% for tag in tags %}
+                        <div class="tag">
+                            <input type="checkbox" id="tag-{{ tag.name }}" name="feeds" value="{{ tag.id }}"{% if tag.checked %} checked{% endif %}>
+                            <label for="tag-{{ tag.name }}"><a href="{{ tag.path }}">{{ tag.name }}</a></label>
+                        </div>
+                    {% endfor %}
+                </div>
+                <input type="submit" value="get feed link" style-as-button>
+            </form>
+
+            {% if result %}
+                <div id="result">
+                    <div>{{ result }}</div>
+                    <button style-as-button onClick="navigator.clipboard.writeText('{{ url }}'); document.getElementById('copied1').textContent='Copied!';">copy to clipboard</button>
+                    <span class="copied" id="copied1"></span>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

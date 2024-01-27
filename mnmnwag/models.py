@@ -3,7 +3,9 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.db import models
+from django.utils.html import format_html
 from django.template import loader
+from django.urls import reverse
 from django.utils import timezone
 
 from modelcluster.fields import ParentalKey
@@ -499,6 +501,41 @@ class BlogIndex(RoutablePageMixin, BasePage, BlogSidebar):
         except TagDescription.DoesNotExist:
             pass
         return self.serve(request, *args, **kwargs)
+
+
+# ···························································
+# THE RSS FEEDS INDEX
+# ···························································
+
+class FeedsIndex(ComplexPage):
+    max_count = 1
+
+    def get_context(self, request):
+        context = super().get_context(request)
+        b = BlogIndex.objects.get()
+        tags = Tag.objects.exclude(
+            mnmnwag_posttag_items__isnull=True
+        ).exclude(id=20).order_by('name')  # exclude 'from-blosxom'
+        feed_ids = []
+
+        if feed_ids := request.POST.getlist('feeds'):
+            feed_ids_arg = str([int(f) for f in feed_ids])[1:-1].replace(" ", "")
+            path = reverse('feed_tags', args=(feed_ids_arg,))
+            url = f'{request.scheme}://{request.get_host()}{path}'
+            context['url'] = url
+            context['result'] = format_html(f'<a href="{path}">{url}</a>')
+
+        context['tags'] = [{
+            'id': t.id,
+            'name': t.name,
+            'path': b.get_url_parts()[2] + b.reverse_subpage(
+                'posts_by_tag',
+                args=(t.name,)
+            ),
+            'checked': True if str(t.id) in feed_ids else False,
+        } for t in tags]
+
+        return context
 
 
 # ···························································

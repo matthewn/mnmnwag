@@ -46,6 +46,7 @@ urlpatterns = [
     path('rsvp/<int:event_id>/<guest_uuid>/', event_page),
     path('djrichtextfield/', include('djrichtextfield.urls')),
 
+    path('blog/feed/<str:tag_ids>/', LatestEntriesFeed(), name='feed_tags'),
     path('blog/feed/', LatestEntriesFeed(), name='feed'),
 
     # For anything not caught by a more specific rule above, hand over to
