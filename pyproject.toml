@@ -34,6 +34,7 @@ seevooplay = "^1.0.5"
 django-antispam = "^1.0.3"
 django-crequest = "^2018.5.11"
 num2words = "^0.5.12"
+wagtail-footnotes = "^0.10.0"
 
 [tool.poetry.dev-dependencies]
 

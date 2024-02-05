@@ -34,6 +34,13 @@ textarea {
   font-family: $mono-stack;
 }
 
+.annotation-toggle {
+  span {
+    font-family: $sans-stack;
+    font-variant: small-caps;
+  }
+}
+
 .force-sans {
   font-family: $sans-stack;
 }

@@ -7,7 +7,7 @@ from wagtail.blocks import (
     ChoiceBlock,
     ListBlock,
     RawHTMLBlock,
-    RichTextBlock,
+    # RichTextBlock,
     StreamBlock,
     StructBlock,
     URLBlock,
@@ -15,6 +15,7 @@ from wagtail.blocks import (
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtailmedia.blocks import AbstractMediaChooserBlock
+from wagtail_footnotes.blocks import RichTextBlockWithFootnotes as RichTextBlock
 
 
 class FloatChoices(models.IntegerChoices):
@@ -136,6 +137,7 @@ class ModernPostStreamBlock(StreamBlock):
             'subscript',
             'strikethrough',
             'code',
+            'footnotes',
             'link',
             'image',
             'document-link',
@@ -152,6 +154,7 @@ class ModernPostStreamBlock(StreamBlock):
             'subscript',
             'strikethrough',
             'code',
+            'footnotes',
             'link',
             'image',
             'document-link',

@@ -3,6 +3,9 @@
 // DEPENDENCIES: ./cookies.js, ./theme_picker.js, ../vendor/unpoly.js
 
 document.addEventListener('DOMContentLoaded', function() {
+    // let the stylesheet know we've got js
+    document.body.classList.remove('nojs');
+
     // console splash
     console.log('\nwe were talking\nabout the love that’s grown so cold\nand the people who gain the world and lose their soul\nthey don’t know\nthey can’t see\nare you one of them?\n\n— George Harrison\n\n');
 

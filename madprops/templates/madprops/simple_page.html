@@ -27,6 +27,7 @@
             {% endfor %}
         {% endcapture %}
         {{ content|typefixes }}
+        {% include "wagtail_footnotes/includes/footnotes.html" %}
     </div>
 
 {% endblock %}

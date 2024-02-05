@@ -4,6 +4,7 @@
 @import 'navbar';
 @import 'footer';
 @import 'leaders';
+@import '../../../../mnmnwag/static/scss/annotations';
 
 :root {
   // colors
@@ -71,6 +72,16 @@ a.invisible {
   // hide hover underline on header link
   color: var(--fg-color);
 }
+.madprops a[id^='footnote-source'] {
+  font-weight: var(--semibold);
+  padding: 0 2px 0 0;
+  span {
+    font-family: OpenSans, sans-serif;
+    font-size: 120%;
+    font-variant: small-caps;
+    line-height: 1;
+  }
+}
 
 h1, .h1 { font-size: 3rem; }
 h2, .h2 { font-size: 1.65rem; }
@@ -89,7 +100,7 @@ main {
   @include media(mobile) {
     margin: 0 1rem;
   }
-  line-height: 1.5;
+  line-height: 1.6;
   margin: 0 2rem;
   > * {
     margin-bottom: 2rem;
@@ -357,5 +368,17 @@ article.prop {
   }
   &.visible {
     opacity: 1;
+  }
+}
+
+#footnotes {
+  ol {
+    margin: 0 1rem;
+    li {
+      list-style: decimal;
+    }
+  }
+  a.footnote-link-back {
+    top: 0;
   }
 }

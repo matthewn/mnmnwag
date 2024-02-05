@@ -3,7 +3,6 @@ from wagtail.blocks import (
     CharBlock,
     ChoiceBlock,
     ListBlock,
-    RichTextBlock,
     RawHTMLBlock,
     StreamBlock,
     StructBlock,
@@ -11,6 +10,7 @@ from wagtail.blocks import (
     URLBlock,
 )
 from wagtail.embeds.blocks import EmbedBlock
+from wagtail_footnotes.blocks import RichTextBlockWithFootnotes as RichTextBlock
 from mnmnwag.blocks import ImageBlock, MediaBlock
 
 
@@ -28,10 +28,9 @@ class MyStreamBlock(StreamBlock):
             'no',
             'bold',
             'italic',
-            'superscript',
-            'subscript',
             'strikethrough',
             'code',
+            'footnotes',
             'link',
             'image',
             'document-link',

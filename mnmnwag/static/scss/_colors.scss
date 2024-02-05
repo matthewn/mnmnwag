@@ -32,11 +32,13 @@ $light-yellow: #ffffe0;
 $purple: #551a8b;
 
 :root {
-  --link-color: #0e79b2;
+  --fg-color: #{$jet};
+  --link-color: #{$star-command-blue};
 }
 
 body.theme-light {
-  --link-color: #0e79b2;
+  --fg-color: #{$jet};
+  --link-color: #{$star-command-blue};
   background-color: $white;
   color: $jet;
   a, a:link, a:visited { color: $star-command-blue; }
@@ -95,7 +97,8 @@ body.theme-light {
 }
 
 body.theme-dark {
-  --link-color: #b8f3ff;
+  --fg-color: #{$platinum};
+  --link-color: #{$blizzard-blue};
   background-color: $black;
   color: $platinum;
   a, a:link, a:visited { color: $blizzard-blue; }
@@ -159,7 +162,8 @@ body.theme-dark {
 }
 
 body.theme-retro {
-  --link-color: #0df;
+  --fg-color: #{$green};
+  --link-color: #{$aqua};
   background-color: $black;
   color: $green;
   a, a:link, a:visited { color: $aqua; }

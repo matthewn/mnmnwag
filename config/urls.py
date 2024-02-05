@@ -10,6 +10,8 @@ from wagtail.documents import urls as wagtaildocs_urls
 
 from search import views as search_views
 
+from wagtail_footnotes import urls as footnotes_urls
+
 from mnmnwag.feeds import LatestEntriesFeed
 from mnmnwag.views import theme_picker, zoom_image, zoom_old, zoom_slide
 
@@ -27,7 +29,7 @@ urlpatterns = [
     path('documents/', include(wagtaildocs_urls)),
 
     path('comments/', include('django_comments_xtd.urls')),
-
+    path("footnotes/", include(footnotes_urls)),
     path('__reload__/', include('django_browser_reload.urls')),
 
     path('search/', search_views.search, name='search'),

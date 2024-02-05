@@ -14,6 +14,7 @@ from taggit.models import Tag, TaggedItemBase
 
 from wagtail.admin.panels import (
     FieldPanel,
+    InlinePanel,
     MultiFieldPanel,
 )
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
@@ -370,6 +371,7 @@ class ModernPost(BasePage, BlogPost):
 
     content_panels = Page.content_panels + [
         FieldPanel('body'),
+        InlinePanel('footnotes', label='Footnotes', classname='collapsed'),
         FieldPanel('tags'),
         FieldPanel('has_comments_enabled'),
     ]

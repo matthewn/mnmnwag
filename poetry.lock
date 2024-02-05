@@ -1462,6 +1462,24 @@ docs = ["Sphinx (>=1.5.2)", "myst-parser (==0.18.1)", "pyenchant (>=3.1.1,<4)", 
 testing = ["Jinja2 (>=3.0,<3.2)", "azure-mgmt-cdn (>=12.0,<13.0)", "azure-mgmt-frontdoor (>=1.0,<1.1)", "black (==22.3.0)", "boto3 (>=1.28,<2)", "coverage (>=3.7.0)", "curlylint (==0.13.1)", "django-pattern-library (>=0.7,<0.8)", "djhtml (==1.5.2)", "doc8 (==0.8.1)", "factory-boy (>=3.2)", "freezegun (>=0.3.8)", "polib (>=1.1,<2.0)", "python-dateutil (>=2.7)", "pytz (>=2014.7)", "ruff (==0.0.290)", "semgrep (==1.40.0)", "tblib (>=2.0,<3.0)"]
 
 [[package]]
+name = "wagtail-footnotes"
+version = "0.10.0"
+description = "Add footnotes to rich text in your Wagtail pages"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "wagtail_footnotes-0.10.0-py3-none-any.whl", hash = "sha256:fefdf0c5c25e7bea261c2f96c8f0bdc4a9209810b299074e97f4a6a20e452d62"},
+    {file = "wagtail_footnotes-0.10.0.tar.gz", hash = "sha256:c3a05b90e015b5a9e3796a0a35faecc0a43a70de77493ae1ca936c822fbcada5"},
+]
+
+[package.dependencies]
+Django = ">=3.2"
+Wagtail = ">=4.1"
+
+[package.extras]
+testing = ["black (==23.7.0)", "coverage[toml] (>=7.2,<8.0)", "pre-commit (>=3.3.0,<4)", "ruff (==0.0.280)", "tox (>=4.6.4,<5)"]
+
+[[package]]
 name = "wagtailmedia"
 version = "0.14.5"
 description = "A Wagtail module for audio and video files."
@@ -1531,4 +1549,4 @@ testing = ["Pillow (>=9.1.0,<11.0.0)", "Wand (>=0.6,<1.0)", "black (==22.3.0)", 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "7564198bfe525f991fc845086a2663635549562de82e65c593f326d6b6b81a35"
+content-hash = "bdaf13ae6ed6ba04a799e7f3ea53617f309661b6d440a51b4469042619c67d67"

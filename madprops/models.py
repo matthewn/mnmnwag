@@ -2,7 +2,7 @@ from django.db import models
 
 from wagtail.models import Page
 from wagtail.fields import StreamField
-from wagtail.admin.panels import FieldPanel
+from wagtail.admin.panels import FieldPanel, InlinePanel
 
 from django_comments_xtd.moderation import moderator
 
@@ -18,6 +18,7 @@ class SimplePage(BasePage):
 
     content_panels = Page.content_panels + [
         FieldPanel('body'),
+        InlinePanel('footnotes', label='Footnotes', classname='collapsed'),
     ]
 
 
@@ -33,6 +34,7 @@ class EditionPage(BasePage):
 
     content_panels = Page.content_panels + [
         FieldPanel('body'),
+        InlinePanel('footnotes', label='Footnotes', classname='collapsed'),
         FieldPanel('has_comments_enabled'),
         FieldPanel('first_published_at'),
     ]

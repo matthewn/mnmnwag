@@ -52,6 +52,7 @@
             {% endfor %}
         {% endcapture %}
         {{ content|typefixes }}
+        {% include "wagtail_footnotes/includes/footnotes.html" %}
     </section>
 
     {% include "madprops/comments.html" %}

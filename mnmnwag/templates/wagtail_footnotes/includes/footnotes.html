@@ -1,0 +1,16 @@
+{% load wagtailcore_tags %}
+{% load typefixes %}
+
+{% if page.footnotes_list %}
+    <div class="footnotes" id="footnotes">
+        <h3 id="footnote-label" class="force-sans">Notes</h3>
+        <ol>
+            {% for footnote in page.footnotes_list %}
+                <li id="footnote-{{ forloop.counter }}">
+                    {{ footnote.text|richtext|typefixes }}
+                    <a href="#footnote-source-{{ forloop.counter }}" class="footnote-link-back" aria-label="Back to content" title="back to content">↩</a>
+                </li>
+            {% endfor %}
+        </ol>
+    </div>
+{% endif %}

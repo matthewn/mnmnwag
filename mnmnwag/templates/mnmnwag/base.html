@@ -38,7 +38,7 @@
         {% endblock %}
     </head>
 
-    <body class="{% get_theme_class %} {% block body_class %}{% endblock %}">
+    <body class="nojs {% get_theme_class %} {% block body_class %}{% endblock %}">
 
         <header id="header">
 
@@ -141,6 +141,7 @@
             <script src="{% static 'js/vendor/unpoly.min.js' %}"></script>
             <script src="{% static 'js/vendor/highlight.pack.js' %}"></script>
             <script src="{% static 'js/vendor/swiped-events.min.js' %}"></script>
+            <script src="{% static 'js/annotations.js' %}"></script>
             <script src="{% static 'js/cookies.js' %}"></script>
             <script src="{% static 'js/theme_picker.js' %}"></script>
             <script src="{% static 'js/main.js' %}"></script>

@@ -1,5 +1,9 @@
 /* eslint-disable no-undef */
 
+document.addEventListener('DOMContentLoaded', function() {
+    document.body.classList.remove('nojs');
+});
+
 const backtotop = document.getElementById('backtotop');
 
 function toggleBacktotopVisibility() {

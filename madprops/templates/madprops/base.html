@@ -42,7 +42,7 @@
         {% endblock %}
     </head>
 
-    <body class="{% get_theme_class %} {% block body_class %}{% endblock %}">
+    <body class="nojs madprops {% get_theme_class %} {% block body_class %}{% endblock %}">
 
         <div class="constrainer">
             <a class="invisible" href="/" up-nav-link>
@@ -119,6 +119,7 @@
 
         {% compress js %}
             <script src="{% static 'js/vendor/unpoly.min.js' %}"></script>
+            <script src="{% static 'js/annotations.js' %}"></script>
             <script src="{% static 'js/cookies.js' %}"></script>
             <script src="{% static 'js/theme_picker.js' %}"></script>
             <script src="{% static 'madprops/js/main.js' %}"></script>
