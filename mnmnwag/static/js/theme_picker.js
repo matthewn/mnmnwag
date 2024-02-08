@@ -40,7 +40,7 @@ const changeTheme = function(event) {
     event.preventDefault();
     let className = prefix + this.getAttribute('data-theme');
     setTheme(className);
-    up.cache.clear();
+    up.cache.expire();
 };
 
 
