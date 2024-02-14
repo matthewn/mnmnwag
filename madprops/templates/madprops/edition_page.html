@@ -13,6 +13,25 @@
 
 <article class="edition">
 
+    {% if theres_no_place_like_home %}
+        {% with settings.madprops.HomePageBannerMessage.body as banner %}
+            {% if banner %}
+                <div id="home-banner">
+                    {% for block in banner %}
+                        {% if block.block_type != "danger" %}
+                            <div class="block-{{ block.block_type }}">
+                                {% include_block block|typefixes %}
+                            </div>
+                        {% else %}
+                            {# danger blocks don't get the typical wrapper divs #}
+                            {% include_block block|typefixes %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    {% endif %}
+
     <h2>{{ page.title }}</h2>
 
     <header class="posted">

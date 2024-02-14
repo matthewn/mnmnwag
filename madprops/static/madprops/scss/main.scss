@@ -96,6 +96,18 @@ h4, .h4 { font-size: 1.25rem; }
   flex: 1;  // makes sticky footer happen
 }
 
+#home-banner {
+  border: 2px solid var(--fg-color);
+  border-radius: 3px;
+  font-size: 1.8rem;
+  margin: 1rem 0 5rem;
+  padding: 2rem;
+  text-align: center;
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
 main {
   @include media(mobile) {
     margin: 0 1rem;

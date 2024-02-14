@@ -3,6 +3,8 @@ from django.db import models
 from wagtail.models import Page
 from wagtail.fields import StreamField
 from wagtail.admin.panels import FieldPanel, InlinePanel
+from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
+
 
 from django_comments_xtd.moderation import moderator
 
@@ -99,6 +101,19 @@ class HomePage(BasePage):
         context = latest_edition.get_context(request, *args, **kwargs)
         context['theres_no_place_like_home'] = True
         return context
+
+
+@register_setting(icon='globe')
+class HomePageBannerMessage(BaseSiteSetting):
+    body = StreamField(
+        MadPropsStreamBlock(),
+        blank=True,
+        use_json_field=True,
+    )
+
+    panels = [
+        FieldPanel('body'),
+    ]
 
 
 class EditionModerator(BlogPostModerator):
