@@ -70,7 +70,7 @@ body #content .comment-form-container {
     }
     .has-danger,
     .has-error {
-      input {
+      input, textarea {
         border: 2px solid $red;
       }
     }
