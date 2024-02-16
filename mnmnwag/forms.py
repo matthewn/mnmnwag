@@ -10,6 +10,7 @@ from .models import RejectedComment
 from .utils import get_client_ip
 
 import datetime as dt
+import re
 
 
 class MahnaCommentForm(XtdCommentForm):
@@ -60,6 +61,10 @@ class MahnaCommentForm(XtdCommentForm):
         )
 
     def clean_comment(self):
+        # block cyrillic characters in 'message' field
+        # https://stackoverflow.com/a/61792465/546468
+        if bool(re.search('[а-яА-Я]', self.cleaned_data['comment'])):
+            raise forms.ValidationError('Spam detected', code='spam-protection')
         # run comment through akismet before accepting
         # https://django-antispam.readthedocs.io/en/latest/usage.html#akismet
         request = CrequestMiddleware.get_request()
