@@ -9,6 +9,8 @@
 
 {% block body_class %}template-madpropsedition{% endblock %}
 
+{% block title %}{% if theres_no_place_like_home %}Current Edition{% elif self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}{% endblock %}
+
 {% block content %}
 
 <article class="edition">
