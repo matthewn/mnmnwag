@@ -143,7 +143,9 @@ main {
     }
   }
   blockquote {
+    border-left: 1px dashed var(--fg-color);
     margin-left: 3rem;
+    padding-left: 1rem;
   }
   p {
     &.posted {
