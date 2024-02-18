@@ -65,7 +65,12 @@ function toggleAnnotation(ev) {
     // event handler for the annotation marker links
     // toggles display of the annotation
     ev.preventDefault();
-    let link = ev.target.parentNode;
+    let link;
+    if (ev.target.tagName === 'A') {
+        link = ev.target;  // target was hit with keyboard Enter
+    } else {
+        link = ev.target.parentNode;  // target was hit with mouse
+    }
     let ann = link.nextElementSibling;
     let sup = link.querySelector('sup');
     let span = link.querySelector('span');
