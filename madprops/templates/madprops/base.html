@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8" />
+        <meta charset="utf-8">
         <title>
             {% spaceless %}
             Mad Props - 
@@ -21,22 +21,21 @@
         </title>
         <meta name="description" content="Your 100% indepdendent guide to California's ballot initiatives.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <meta property="og:image" content="https://madprops.info/static/madprops/img/mad_props_logo.png">
+        <meta property="og:image:width" content="1978">
+        <meta property="og:image:height" content="1200">
         {# TODO: replace with modern icons #}
-        <link rel="shortcut icon" href="{% static 'madprops/img/favicon.ico' %}" type="image/vnd.microsoft.icon" />
-
+        <link rel="shortcut icon" href="{% static 'madprops/img/favicon.ico' %}" type="image/vnd.microsoft.icon">
         {# <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favs/apple-touch-icon.png' %}"> #}
         {# <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favs/favicon-32x32.png' %}"> #}
         {# <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favs/favicon-16x16.png' %}"> #}
         {# <link rel="manifest" href="{% static 'img/favs/site.webmanifest' %}"> #}
-
         {% compress css %}
             <link rel="stylesheet" type="text/css" href="{% static 'madprops/css/font_faces.css' %}">
             <link rel="stylesheet" type="text/css" href="{% static 'css/vendor/minireset.min.css' %}">
             <link rel="stylesheet" type="text/css" href="{% static 'css/vendor/unpoly.min.css' %}">
             <link rel="stylesheet" type="text/x-scss" href="{% static 'madprops/scss/main.scss' %}">
         {% endcompress %}
-
         {% block extra_css %}
             {# override this in templates to add extra stylesheets #}
         {% endblock %}
