@@ -1,3 +1,5 @@
+from zoneinfo import ZoneInfo
+
 from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
@@ -31,7 +33,6 @@ from wagtail.snippets.models import register_snippet
 
 from wagtailmedia.models import Media, AbstractMedia
 
-from dateutil import tz
 from django_comments.moderation import CommentModerator
 from django_comments_xtd.moderation import moderator
 from honeypot.decorators import honeypot_equals
@@ -411,7 +412,7 @@ class ModernPost(BasePage, BlogPost):
         mnmnwag/management/commands/send_tweets.py.
         """
         if self.is_micro:
-            home_zone = tz.gettz(settings.TIME_ZONE)
+            home_zone = ZoneInfo(settings.TIME_ZONE)
             try:
                 post_date = self.first_published_at.astimezone(home_zone).strftime('%Y-%m-%d %I:%M %p')
             except AttributeError:

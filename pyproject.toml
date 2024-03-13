@@ -2,7 +2,7 @@
 name = "mnmnwag"
 version = "3.2"
 description = ""
-authors = ["Matthew Newton <matthewn@alum.berkeley.edu>"]
+authors = ["Matthew Newton <matthewn@mahnamahna.net>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -12,7 +12,6 @@ django-dbbackup = "*"
 django-debugtools = "*"
 django-extensions = "*"
 werkzeug = "*"
-python-dateutil = "*"
 django-compressor = "*"
 django-libsass = "*"
 django-capture-tag = "*"
