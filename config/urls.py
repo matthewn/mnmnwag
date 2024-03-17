@@ -15,7 +15,7 @@ from wagtail_footnotes import urls as footnotes_urls
 from mnmnwag.feeds import LatestEntriesFeed
 from mnmnwag.views import theme_picker, zoom_image, zoom_old, zoom_slide
 
-from seevooplay.views import email_guests, event_page
+from seevooplay.views import email_guests, event_page, resend_page
 from subs.views import sub_create, sub_confirm, sub_remove
 
 
@@ -44,6 +44,7 @@ urlpatterns = [
     path('sub/<str:uuid>/remove', sub_remove, name='sub_remove'),
 
     path('dja/email_guests/<int:event_id>/', email_guests, name='email_guests'),
+    path('rsvp/', resend_page, name='resend'),
     path('rsvp/<int:event_id>/', event_page, name='invitation'),
     path('rsvp/<int:event_id>/<guest_uuid>/', event_page),
     path('djrichtextfield/', include('djrichtextfield.urls')),
