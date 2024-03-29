@@ -2,18 +2,20 @@ Greetings!
 
 There is new content at {{ host }}!
 {% for post in posts %}
-    {% if 'micro' in post.tags.names %}micropost{% else %}{{ post.title }}{% endif %}
-    {% for tag in post.tags.names %}#{{ tag }} {% endfor %}
+    {% if 'micro' in post.tags.names %}micropost{% else %}{{ post.title|safe }}{% endif %}
+    {% for tag in post.tags.names %}#{{ tag|safe }} {% endfor %}
     {{ post.full_url }}
 {% endfor %}
-
-To unsubscribe from these notifications, follow this link:
-
-http://{{ host }}{% url 'sub_remove' uuid=uuid %}
-
 
 Thanks for reading,
 
   -- the lonely notification bot at {{ host }}
+
+
+
+
+To UNSUBSCRIBE from these notifications, follow this link:
+
+http://{{ host }}{% url 'sub_remove' uuid=uuid %}
 
 
