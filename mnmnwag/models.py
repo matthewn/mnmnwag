@@ -24,7 +24,7 @@ from wagtail.blocks import ListBlock
 from wagtail.blocks.list_block import ListValue
 from wagtail.fields import RichTextField, StreamField
 from wagtail.models import Page
-from wagtail.models.collections import Collection
+from wagtail.models.media import Collection
 from wagtail.rich_text import RichText
 from wagtail.images import get_image_model
 from wagtail.images.models import Image, AbstractImage, AbstractRendition
