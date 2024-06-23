@@ -5,6 +5,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.db import models
+from django.db.models.functions import Lower
 from django.utils.html import format_html
 from django.template import loader
 from django.urls import reverse
@@ -242,7 +243,7 @@ class TagDescription(models.Model):
 class BlogSidebar():
     def archives_by_tag(self):
         top = ['micro', 'snapshot']
-        post_tags = PostTag.tags_for(Page).order_by('name')
+        post_tags = PostTag.tags_for(Page).order_by(Lower('name'))
         bottom_tags = []
         top_tags = []
         for tag in post_tags:
@@ -289,7 +290,7 @@ class BlogSidebar():
         idx = self.get_idx_obj()
         href = idx.url + idx.reverse_subpage('posts_by_tag', kwargs={'tag': tag})
         # ideally this would be in a template somewhere
-        content = f'<li><a href="{href}" up-target="#header, #content .blog" up-transition="cross-fade">#{tag}</a> ({count})</li>'
+        content = f'<li><a href="{href}" up-target="#header, #content .blog" up-transition="cross-fade">#{tag.name}</a> ({count})</li>'
         return content
 
     def get_idx_obj(self):
