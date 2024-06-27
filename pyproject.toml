@@ -34,6 +34,7 @@ django-antispam = "*"
 django-crequest = "*"
 num2words = "*"
 wagtail-footnotes = "*"
+wand = "^0.6.13"
 
 [tool.poetry.dev-dependencies]
 
