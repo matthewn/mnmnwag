@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     'antispam.akismet',
     'cachalot',
     'capture_tag',
-    # 'comments_wagtail_xtd',  # broken since wagtail 4.0
     'compressor',
     'crequest',
     'dbbackup',
@@ -64,9 +63,10 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_markdown2',
     'honeypot',
+    'likes',
+    'secretballot',
     'typogrify',
     # 'wagtailcache',
-    # 'wagtailfontawesome',  # req'd by wagtailcomments_xtd
     'wagtailmedia',
     'wagtail_footnotes',
 ]
@@ -86,6 +86,7 @@ MIDDLEWARE = [
     'django_browser_reload.middleware.BrowserReloadMiddleware',
     'crequest.middleware.CrequestMiddleware',
     'extlinks.middleware.RewriteExternalLinksMiddleware',
+    'likes.middleware.SecretBallotUserIpUseragentMiddleware',
 ]
 
 TEMPLATES = [
@@ -262,6 +263,12 @@ DJRICHTEXTFIELD_CONFIG = {
             ['fullscreen']
         ]
     }
+}
+
+
+# django-secretballot / django-likes
+SECRETBALLOT_FOR_MODELS = {
+    'wagtailcore.Page': {},
 }
 
 

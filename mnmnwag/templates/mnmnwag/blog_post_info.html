@@ -1,41 +1,52 @@
 {% load comments %}
 {# {% load comments_xtd %} #}
+{% load likes_inclusion_tags %}
 {% load wagtailcore_tags %}
 
 <section class="post-info">
-    <div class="post-date">
-        posted by
-        {% if page.owner.username == 'matthewn' or not page.owner.username %}
-            <div class="mahna">/\/\/\/</div>
-        {% else %}
-            {{ page.owner.username }}
-        {% endif %}
-        {{ post.specific.post_date|date:"j F Y" }}
-        <span>at {{ post.specific.post_date|date:"g:i a" }}</span>
-    </div>
-
-    {% if post.specific.tagged_items.all %}
-        <div class="post-tags">
-            {% for item in post.specific.tagged_items.all|dictsort:"tag" %}
-                <a href="/blog/tag/{{ item.tag.slug }}" up-content-link>#{{ item.tag.name }}</a>&nbsp;
-            {% endfor %}
+    <div>
+        <div class="post-by">
+            posted by
+            {% if page.owner.username == 'matthewn' or not page.owner.username %}
+                <div class="mahna">/\/\/\/</div>
+            {% else %}
+                {{ page.owner.username }}
+            {% endif %}
         </div>
-    {% endif %}
+        <div class="post-date">
+            {{ post.specific.post_date|date:"j F Y" }}
+            <span>at {{ post.specific.post_date|date:"g:i a" }}</span>
+        </div>
 
-    {% if page.content_type.model == 'blogindex' or is_search_page %}
-        {% get_comment_count for post.specific as comment_count %}
-        {% if comment_count > 0 or post.specific.has_comments_enabled %}
-            <div class="post-comments">
-                <a href="{% pageurl post %}#comments" up-content-link-notop>
-                {% if comment_count %}
-                    {{ comment_count }} comment{{ comment_count|pluralize }}
-                {% else %}
-                    {% if post.specific.has_comments_enabled %}
-                        leave a comment
-                    {% endif %}
-                {% endif %}
-                </a>
+        {% if post.specific.tagged_items.all %}
+            <div class="post-tags">
+                {% for item in post.specific.tagged_items.all|dictsort:"tag" %}
+                    <a href="/blog/tag/{{ item.tag.slug }}" up-content-link>#{{ item.tag.name }}</a>&nbsp;
+                {% endfor %}
             </div>
         {% endif %}
+
+        {% if page.content_type.model == 'blogindex' or is_search_page %}
+            {% get_comment_count for post.specific as comment_count %}
+            {% if comment_count > 0 or post.specific.has_comments_enabled %}
+                <div class="post-comments">
+                    <a href="{% pageurl post %}#comments" up-content-link-notop>
+                    {% if comment_count %}
+                        {{ comment_count }} comment{{ comment_count|pluralize }}
+                    {% else %}
+                        {% if post.specific.has_comments_enabled %}
+                            leave a comment
+                        {% endif %}
+                    {% endif %}
+                    </a>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    {% if post.content_type.model == 'modernpost' %}
+        <div class="post-likes">
+            {% likes post %}
+        </div>
     {% endif %}
 </section>

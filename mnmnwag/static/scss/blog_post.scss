@@ -27,27 +27,41 @@
   }
 
   .post-info {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    line-height: 1.6;
     > div {
       margin-bottom: .25rem;
     }
     .post-date span {
       white-space: nowrap;
     }
+    .likes {
+      font-size: 1.25rem;
+      font-style: normal;
+      line-height: 1;
+      text-align: center;
+      img {
+        transform: scaleX(-1);
+        width: 2rem;
+      }
+      .liker:hover {
+        text-decoration: none;
+        img {
+          transform: scaleX(-1) scale(1.1);
+        }
+      }
+    }
     @include media(desktop) {
+      .post-by, .post-date {
+        display: inline-block;
+      }
       .post-date {
         white-space: nowrap;
       }
       .post-comments {
         white-space: nowrap;
-      }
-      > div {
-        display: inline-block;
-        &:not(:first-child)::before {
-          content: '∘';
-          float: left;
-          height: 100%;
-          margin-right: .5rem;
-        }
       }
     }
   }

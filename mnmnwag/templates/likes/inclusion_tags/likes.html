@@ -1,0 +1,18 @@
+{% load i18n %}
+{% load static %}
+
+{% if likes_enabled %}
+    <div class="likes">
+        <div>
+            {% if can_vote %}
+                <a class="liker" title="{% trans "Like this" %}" aria-label="{% trans "Like this" %}" href="{% url "like" content_type content_obj.id 1 %}" rel="nofollow" up-target=".likes">
+                    <img src="{% static 'img/thumbs_up.svg' %}">
+                </a>
+            {% else %}
+                <img src="{% static 'img/thumbs_up.svg' %}">
+            {% endif %}
+        </div>
+        <div>{{ content_obj.vote_total }}</div>
+        {# {% trans "Like" %}{{ content_obj.vote_total|pluralize }} #}
+    </div>
+{% endif %}

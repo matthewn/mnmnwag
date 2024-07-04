@@ -363,6 +363,17 @@ files = [
 ]
 
 [[package]]
+name = "django-etc"
+version = "1.4.0"
+description = "Tiny stuff for Django that won't fit into separate apps."
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-etc-1.4.0.tar.gz", hash = "sha256:fa7dbcdba5d0dd3b42eac54463fe24a9e1202a1492ecbf50ed0bc1555074af8f"},
+    {file = "django_etc-1.4.0-py3-none-any.whl", hash = "sha256:61aee75a97ef868830260de86f2a69896992776c325624c46827c831101cbd9f"},
+]
+
+[[package]]
 name = "django-extensions"
 version = "3.2.3"
 description = "Extensions for Django"
@@ -418,6 +429,28 @@ files = [
 [package.dependencies]
 django-compressor = ">=1.3"
 libsass = ">=0.7.0,<1"
+
+[[package]]
+name = "django-likes"
+version = "2.0.3"
+description = "Django app providing view interface to django-secretballot."
+optional = false
+python-versions = "*"
+files = []
+develop = false
+
+[package.dependencies]
+django-secretballot = ">=2.0.0"
+
+[package.extras]
+develop = ["django", "pytest", "pytest-django", "tox"]
+test = ["pytest", "pytest-cov", "pytest-django"]
+
+[package.source]
+type = "git"
+url = "https://github.com/matthewn/django-likes"
+reference = "django5"
+resolved_reference = "e2a3ecc0242702ef12d948eb2a77074cda0aebbd"
 
 [[package]]
 name = "django-markdown2"
@@ -491,6 +524,24 @@ files = [
     {file = "django-richtextfield-1.6.2.tar.gz", hash = "sha256:7efe9c397437922ed6ca3071b7a54db5bf8ebfa4ced7172dfb0b7472df66b0c4"},
     {file = "django_richtextfield-1.6.2-py3-none-any.whl", hash = "sha256:56b7404f52ae9a313bcbdb4c47aea16e5fa26a48539c1221e3de39186ee839bf"},
 ]
+
+[[package]]
+name = "django-secretballot"
+version = "2.0.0"
+description = "Django anonymous voting application."
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-secretballot-2.0.0.tar.gz", hash = "sha256:5c1d6ebc3078514ada31fba32ed03a790df93911e436986dca53b607ce544aac"},
+    {file = "django_secretballot-2.0.0-py3-none-any.whl", hash = "sha256:932a2d7cbbf6b4c059f093a885ea04e9daa2cc8c1f2f02ab9b5ccd19cb006463"},
+]
+
+[package.dependencies]
+django-etc = ">=1.2.0"
+
+[package.extras]
+develop = ["django", "pytest", "pytest-django", "tox"]
+test = ["pytest", "pytest-cov", "pytest-django"]
 
 [[package]]
 name = "django-taggit"
@@ -1554,4 +1605,4 @@ wand = ["Wand (>=0.6,<1.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "66d457436acfc8e35c94dc37fa22f1edfa3b14d6cf39443d4d9d7d991c6974c4"
+content-hash = "6dd884d3d341714b8c655299919a770e5d5fd1996c5711ef181ceac221c95173"

@@ -28,6 +28,8 @@ urlpatterns = [
     path('cms/', include(wagtailadmin_urls)),
     path('documents/', include(wagtaildocs_urls)),
 
+    path('likes/', include('likes.urls')),
+
     path('comments/', include('django_comments_xtd.urls')),
     path("footnotes/", include(footnotes_urls)),
     path('__reload__/', include('django_browser_reload.urls')),

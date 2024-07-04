@@ -14,6 +14,7 @@ django-extensions = "*"
 werkzeug = "*"
 django-compressor = "*"
 django-libsass = "*"
+django-likes = { git = "https://github.com/matthewn/django-likes", branch = "django5" }
 django-capture-tag = "*"
 django-typogrify = { git = "https://github.com/matthewn/django-typogrify", branch = "django40" }
 django-comments-xtd = "*"
