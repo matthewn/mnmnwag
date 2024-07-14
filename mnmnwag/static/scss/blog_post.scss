@@ -4,16 +4,11 @@
   }
 
   &.micro {
-    &.on-index:not(.snapshot) {
+    &:not(.snapshot) {
       // position the asterism
       > header {
         float: left;
         margin: .25rem .5rem 0 0;
-      }
-    }
-    &:not(.on-index) {
-      > header {
-        display: none;
       }
     }
   }
