@@ -44,7 +44,7 @@
         {% endif %}
     </div>
 
-    {% if post.content_type.model == 'modernpost' %}
+    {% if post.first_published_at and post.content_type.model == 'modernpost' %}
         <div class="post-likes">
             {% likes post %}
         </div>
