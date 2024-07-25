@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.safestring import mark_safe
 from wagtail.models import Page, Site
@@ -64,6 +64,8 @@ def zoom_image(request, page_id, image_id):
     """
     "Zoom" (on-page popup, really) an image, given an ID.
     """
+    if 'mahnamahna' not in request.get_host():
+        raise Http404
     page = Page.objects.get(id=page_id)
     img = CustomImage.objects.get(id=image_id)
     return render(request, 'mnmnwag/zoom.html', {
@@ -80,6 +82,8 @@ def zoom_slide(request, page_id, block_id, pos):
     block_id is the 1st 8 digits of the uuid of the SlidesBlock to reference
     pos ('position') is a zero-based index of the slide to display
     """
+    if 'mahnamahna' not in request.get_host():
+        raise Http404
     page = Page.objects.get(id=page_id)
     body = page.specific.body
     block = [b for b in body if b.id[0:7] == block_id][0]

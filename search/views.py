@@ -1,6 +1,7 @@
 # this is mostly taken from the wagtail bakerydemo
 
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.http import Http404
 from django.shortcuts import render
 
 from wagtail.models import Page
@@ -8,6 +9,8 @@ from wagtail.contrib.search_promotions.models import Query
 
 
 def search(request):
+    if 'mahnamahna' not in request.get_host():
+        raise Http404
     search_query = request.GET.get('query', None)
     page = request.GET.get('page', 1)
 

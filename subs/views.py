@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core.mail import send_mail
+from django.http import Http404
 from django.template.response import TemplateResponse
 
 from .models import Subscription
@@ -7,6 +8,8 @@ from .utils import send_confirmation_email
 
 
 def sub_create(request):
+    if 'mahnamahna' not in request.get_host():
+        raise Http404
     context = {'page_message': 'oooh! a new subscriber!'}
     if request.method == 'POST':
         # check our homegrown checkbox captcha fields
@@ -22,6 +25,8 @@ def sub_create(request):
 
 
 def sub_confirm(request, uuid):
+    if 'mahnamahna' not in request.get_host():
+        raise Http404
     sub = Subscription.objects.get(id=uuid)
     sub.is_active = True
     sub.save()
@@ -38,6 +43,8 @@ def sub_confirm(request, uuid):
 
 
 def sub_remove(request, uuid):
+    if 'mahnamahna' not in request.get_host():
+        raise Http404
     sub = Subscription.objects.get(id=uuid)
     sub.is_active = False
     sub.save()
