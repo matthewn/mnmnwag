@@ -177,6 +177,7 @@ WAGTAIL_SITE_NAME = "mnmnwag"
 WAGTAILEMBEDS_RESPONSIVE_HTML = True
 WAGTAILIMAGES_IMAGE_MODEL = 'mnmnwag.CustomImage'
 WAGTAILMEDIA_MEDIA_MODEL = 'mnmnwag.CustomMedia'
+WAGTAILIMAGES_MAX_UPLOAD_SIZE = 20 * 1024 * 1024  # 20MB
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
