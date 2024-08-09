@@ -390,13 +390,13 @@ Django = ">=3.2"
 
 [[package]]
 name = "django-filter"
-version = "24.2"
+version = "24.3"
 description = "Django-filter is a reusable Django application for allowing users to filter querysets dynamically."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "django-filter-24.2.tar.gz", hash = "sha256:48e5fc1da3ccd6ca0d5f9bb550973518ce977a4edde9d2a8a154a7f4f0b9f96e"},
-    {file = "django_filter-24.2-py3-none-any.whl", hash = "sha256:df2ee9857e18d38bed203c8745f62a803fa0f31688c9fe6f8e868120b1848e48"},
+    {file = "django_filter-24.3-py3-none-any.whl", hash = "sha256:c4852822928ce17fb699bcfccd644b3574f1a2d80aeb2b4ff4f16b02dd49dc64"},
+    {file = "django_filter-24.3.tar.gz", hash = "sha256:d8ccaf6732afd21ca0542f6733b11591030fa98669f8d15599b358e24a2cd9c3"},
 ]
 
 [package.dependencies]
@@ -404,17 +404,17 @@ Django = ">=4.2"
 
 [[package]]
 name = "django-honeypot"
-version = "1.2.0"
+version = "1.2.1"
 description = "Django honeypot field utilities"
 optional = false
 python-versions = "<4.0,>=3.8"
 files = [
-    {file = "django_honeypot-1.2.0-py3-none-any.whl", hash = "sha256:53dd5f8dd96ef1bb7e31b5514c0dc2caae9577e78ebdf03ca4e0f304a7422aba"},
-    {file = "django_honeypot-1.2.0.tar.gz", hash = "sha256:25fca02e786aec26649bd13b37a95c846e09ab3cfc10f28db2f7dfaa77b9b9c6"},
+    {file = "django_honeypot-1.2.1-py3-none-any.whl", hash = "sha256:fdabe4ded66b6db25d04af2446de3bf7cb047cb5db097a864c8c97b081ef736f"},
+    {file = "django_honeypot-1.2.1.tar.gz", hash = "sha256:ab5c2aad214d86def2f00f6a79aa14f171db7301ac8712f20dc21a83dd5d6413"},
 ]
 
 [package.dependencies]
-Django = ">=3.2,<5.1"
+Django = ">=3.2,<5.2"
 
 [[package]]
 name = "django-libsass"
@@ -1537,13 +1537,13 @@ zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
 name = "wagtail"
-version = "6.1.3"
+version = "6.2"
 description = "A Django content management system."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "wagtail-6.1.3-py3-none-any.whl", hash = "sha256:b6c4d5705adf51a5e49ea416032dd0a6534588fc31c5c9a95f698e6ddec0a203"},
-    {file = "wagtail-6.1.3.tar.gz", hash = "sha256:8f4908ab1b6b963a8aa7adf8f0ec738cd1dc79b9816c6d5f59018f600a404378"},
+    {file = "wagtail-6.2-py3-none-any.whl", hash = "sha256:9898b3f3a25fbf4cbcea34a8884b4aed7bc957b3877a3e1bd994e072452f5fae"},
+    {file = "wagtail-6.2.tar.gz", hash = "sha256:59086e8ca181b10f274b113924500504ded6fc16824c1976f37c3cbddd100d24"},
 ]
 
 [package.dependencies]
@@ -1553,7 +1553,7 @@ Django = ">=4.2,<6.0"
 django-filter = ">=23.3,<25"
 django-modelcluster = ">=6.2.1,<7.0"
 django-permissionedforms = ">=0.1,<1.0"
-django-taggit = ">=4.0,<5.1"
+django-taggit = ">=5.0,<5.1"
 django-treebeard = ">=4.5.1,<5.0"
 djangorestframework = ">=3.15.1,<4.0"
 draftjs-exporter = ">=2.1.5,<6.0"
@@ -1566,7 +1566,7 @@ telepath = ">=0.3.1,<1"
 Willow = {version = ">=1.8.0,<2", extras = ["heif"]}
 
 [package.extras]
-docs = ["Sphinx (>=1.5.2)", "myst-parser (==2.0.0)", "pyenchant (>=3.1.1,<4)", "sphinx-autobuild (>=0.6.0)", "sphinx-copybutton (>=0.5,<1.0)", "sphinx-wagtail-theme (==6.3.0)", "sphinxcontrib-spelling (>=7,<8)"]
+docs = ["Sphinx (>=7.0)", "myst-parser (==2.0.0)", "pyenchant (>=3.1.1,<4)", "sphinx-autobuild (>=0.6.0)", "sphinx-copybutton (>=0.5,<1.0)", "sphinx-wagtail-theme (==6.3.0)", "sphinxcontrib-spelling (>=7,<8)"]
 testing = ["Jinja2 (>=3.0,<3.2)", "azure-mgmt-cdn (>=12.0,<13.0)", "azure-mgmt-frontdoor (>=1.0,<1.1)", "boto3 (>=1.28,<2)", "coverage (>=3.7.0)", "curlylint (==0.13.1)", "django-pattern-library (>=0.7)", "djhtml (==3.0.6)", "doc8 (==0.8.1)", "factory-boy (>=3.2)", "freezegun (>=0.3.8)", "polib (>=1.1,<2.0)", "python-dateutil (>=2.7)", "pytz (>=2014.7)", "ruff (==0.1.5)", "semgrep (==1.40.0)", "tblib (>=2.0,<3.0)"]
 
 [[package]]
