@@ -221,13 +221,13 @@ django = "*"
 
 [[package]]
 name = "django-browser-reload"
-version = "1.13.0"
+version = "1.15.0"
 description = "Automatically reload your browser in development."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "django_browser_reload-1.13.0-py3-none-any.whl", hash = "sha256:5c1705eb29f0b72808b702484f10a8d5da9cd9243e55ab81446cb697e96b3e8c"},
-    {file = "django_browser_reload-1.13.0.tar.gz", hash = "sha256:4e3507c10518f4c7439588aaed2f0c21b503878ecea7b18893f1e635e0cbe3ab"},
+    {file = "django_browser_reload-1.15.0-py3-none-any.whl", hash = "sha256:55b72335568b988e3a2beddb1703db6951516355925d3fc9c587f0bbd9e8efaa"},
+    {file = "django_browser_reload-1.15.0.tar.gz", hash = "sha256:ed094386c587a95ff4f34a0d302ecd58f15e919784c4c76a97f7cb977446104c"},
 ]
 
 [package.dependencies]
@@ -236,17 +236,17 @@ django = ">=3.2"
 
 [[package]]
 name = "django-cachalot"
-version = "2.6.2"
+version = "2.6.3"
 description = "Caches your Django ORM queries and automatically invalidates them."
 optional = false
 python-versions = "*"
 files = [
-    {file = "django-cachalot-2.6.2.tar.gz", hash = "sha256:1ea598845d0dd522173274bf2659ba3d962b3c69309874bf1fc73838fb1cd39c"},
-    {file = "django_cachalot-2.6.2-py3-none-any.whl", hash = "sha256:40bb42f4cca185f59d28b4cd9155426f620f0d16210619d62058f095f8f2a14b"},
+    {file = "django_cachalot-2.6.3-py3-none-any.whl", hash = "sha256:a37d38e29e35c93945cd372888a21ab82115d6b0c334a6f8bc43a450abfdf0b5"},
+    {file = "django_cachalot-2.6.3.tar.gz", hash = "sha256:d1235111236ef2bfcc32337774eb620694bba8d49dd10a652d96aa8a1991a3be"},
 ]
 
 [package.dependencies]
-Django = ">=3.2,<5.1"
+Django = ">=3.2,<5.2"
 
 [[package]]
 name = "django-capture-tag"
@@ -665,13 +665,13 @@ files = [
 
 [[package]]
 name = "gunicorn"
-version = "22.0.0"
+version = "23.0.0"
 description = "WSGI HTTP Server for UNIX"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "gunicorn-22.0.0-py3-none-any.whl", hash = "sha256:350679f91b24062c86e386e198a15438d53a7a8207235a78ba1b53df4c4378d9"},
-    {file = "gunicorn-22.0.0.tar.gz", hash = "sha256:4a0b436239ff76fb33f11c07a16482c521a7e09c1ce3cc293c2330afe01bec63"},
+    {file = "gunicorn-23.0.0-py3-none-any.whl", hash = "sha256:ec400d38950de4dfd418cff8328b2c8faed0edb0d517d3394e457c317908ca4d"},
+    {file = "gunicorn-23.0.0.tar.gz", hash = "sha256:f014447a0101dc57e294f6c18ca6b40227a4c90e9bdb586042628030cba004ec"},
 ]
 
 [package.dependencies]
@@ -1435,13 +1435,13 @@ files = [
 
 [[package]]
 name = "soupsieve"
-version = "2.5"
+version = "2.6"
 description = "A modern CSS selector implementation for Beautiful Soup."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "soupsieve-2.5-py3-none-any.whl", hash = "sha256:eaa337ff55a1579b6549dc679565eac1e3d000563bcb1c8ab0d0fefbc0c2cdc7"},
-    {file = "soupsieve-2.5.tar.gz", hash = "sha256:5663d5a7b3bfaeee0bc4372e7fc48f9cff4940b3eec54a6451cc5299f1097690"},
+    {file = "soupsieve-2.6-py3-none-any.whl", hash = "sha256:e72c4ff06e4fb6e4b5a9f0f55fe6e81514581fca1515028625d0f299c602ccc9"},
+    {file = "soupsieve-2.6.tar.gz", hash = "sha256:e2e68417777af359ec65daac1057404a3c8a5455bb8abc36f1a9866ab1a51abb"},
 ]
 
 [[package]]
@@ -1571,13 +1571,13 @@ testing = ["Jinja2 (>=3.0,<3.2)", "azure-mgmt-cdn (>=12.0,<13.0)", "azure-mgmt-f
 
 [[package]]
 name = "wagtail-footnotes"
-version = "0.11.0"
+version = "0.12.0"
 description = "Add footnotes to rich text in your Wagtail pages"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "wagtail_footnotes-0.11.0-py3-none-any.whl", hash = "sha256:c00adb49a1ebcd459592888bbef1492299c8f559e6634176be77415c442e85ec"},
-    {file = "wagtail_footnotes-0.11.0.tar.gz", hash = "sha256:724baad3d577b57e0f148fa40a22780613733dd49d7dd7b200c793cc6bd42a15"},
+    {file = "wagtail_footnotes-0.12.0-py3-none-any.whl", hash = "sha256:49bdc8e5f0ca4a35f69220ba7181dfd84dc6433026fc1d3ea14459d4e6865e62"},
+    {file = "wagtail_footnotes-0.12.0.tar.gz", hash = "sha256:1790d4cf9ff05bd2c2aa2ccdfeef6b8acafec2a747c9e04261ca4ff7d2de9aa5"},
 ]
 
 [package.dependencies]
