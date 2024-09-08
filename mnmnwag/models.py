@@ -295,8 +295,38 @@ class BlogSidebar():
 
     def get_idx_obj(self):
         # NOTE! This code assumes there will only ever be one BlogIndex page.
-        # (there must be a better way to do this...)
         return BlogIndex.objects.get()
+
+    def stats(self):
+        content = '<ul>'
+        now = timezone.now()
+
+        # next line returns publish dates rounded (and deduped) to previous monday;
+        post_weeks = [d for d in ModernPost.objects.dates('first_published_at', 'week')]
+        post_weeks.reverse()
+        streak_weeks = 0
+        for count, value in enumerate(post_weeks):
+            next_value = post_weeks[count + 1]
+            if count == 0 and (now.date() - value).days < 7:
+                streak_weeks += 1
+            if (value - next_value).days == 7:
+                streak_weeks += 1
+            else:
+                break
+
+        recent_posts_count = ModernPost.objects.filter(
+            first_published_at__gte=(now - dt.timedelta(days=30))
+        ).count()
+        year_posts_count = ModernPost.objects.filter(
+            first_published_at__gte=dt.datetime(now.year, 1, 1)
+        ).count()
+
+        if streak_weeks > 1:
+            content += f'<li><b>STREAK!</b> New posts for <b>{streak_weeks}</b> consecutive weeks</li>'
+        content += f'<li><b>{recent_posts_count}</b> posts in the last 30 days</li>'
+        content += f'<li><b>{year_posts_count}</b> posts this year</li>'
+        content += '</ul>'
+        return content
 
 
 # ···························································

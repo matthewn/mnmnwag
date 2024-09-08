@@ -1,0 +1,13 @@
+{% load typefixes %}
+{% load wagtailcore_tags %}
+
+{% if page.blogroll %}
+    <div id="stats">
+        <details open>
+            <summary>
+                <h4>Blogstats</h4>
+            </summary>
+            {{ page.stats|richtext|typefixes }}
+        </details>
+    </div>
+{% endif %}
