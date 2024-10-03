@@ -1,6 +1,9 @@
 from django import template
 from django.template.defaultfilters import stringfilter
+from django.utils.safestring import mark_safe
 from typogrify.templatetags.typogrify_tags import smartypants, typogrify
+
+from mnmnwag.utils import get_site
 
 import re
 
@@ -45,3 +48,15 @@ def typefixes_minimal(text):
 
     text = alumyears(text)
     return text
+
+
+@register.filter
+@stringfilter
+def namecloak(text):
+    site = get_site()
+    if site == 'mnmnwag':
+        return mark_safe(
+            text.replace('Matthew Newton', r'<span class="mahna">/\/\/\/</span>')
+        )
+    if site == 'madprops':
+        return text.replace('Matthew Newton', 'The Mad Propster')

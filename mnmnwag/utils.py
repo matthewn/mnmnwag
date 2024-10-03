@@ -1,3 +1,7 @@
+from wagtail.models import Site
+from crequest.middleware import CrequestMiddleware
+
+
 def get_client_ip(request):
     # https://stackoverflow.com/a/4581997
     x_forwarded_for = request.headers.get('x-forwarded-for')
@@ -41,3 +45,12 @@ def get_elided_page_range(num_pages, page_range, *, number=1, on_each_side=2, on
         yield from range(num_pages - on_ends + 1, num_pages + 1)
     else:
         yield from range(number + 1, num_pages + 1)
+
+
+def get_site():
+    request = CrequestMiddleware.get_request()
+    current_site = Site.find_for_request(request)
+    if current_site.site_name == 'mahna mahna .net':
+        return 'mnmnwag'
+    if current_site.site_name == 'Mad Props':
+        return 'madprops'

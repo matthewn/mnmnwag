@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load comments %}
 {% load comments_xtd %}
+{% load typefixes %}
 
 {% block title %}Comment reply{% endblock %}
 
@@ -15,7 +16,7 @@
                     <h5>
                         <b>
                             {% if comment.url and not comment.is_removed %}<a href="{{ comment.url }}" target="_new">{% endif %}
-                                {{ comment.name }}
+                                {{ comment.name|namecloak }}
                             {% if comment.url %}</a>{% endif %}
                         </b>
                         had this to say on
@@ -29,9 +30,11 @@
             </div>
         </article>
     </div>
-    <h2>Reply to comment</h2>
-    <div class="comment-form-container reply-form-container c{{comment.id}}">
-        {% include "comments/form.html" %}
+    <div class="reply-form-container">
+        <h4>Reply to {{ comment.name|namecloak }}</h4>
+        <div class="comment-form-container c{{comment.id}}">
+            {% include "comments/form.html" %}
+        </div>
     </div>
 </div>
 {% endblock %}
