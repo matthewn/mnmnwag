@@ -22,11 +22,11 @@
                     </div>
                 {% else %}
                     {# danger blocks don't get the typical wrapper divs #}
-                    {% include_block block|typefixes %}
+                    {% include_block block %}
                 {% endif %}
             {% endfor %}
         {% endcapture %}
-        {{ content|typefixes }}
+        {{ content|typefixes_minimal }}
     </div>
 
 {% endblock %}
