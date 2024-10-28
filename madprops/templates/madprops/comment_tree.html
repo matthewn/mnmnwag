@@ -12,8 +12,7 @@
             <div class="h5">
                 <b>
                     {% if item.comment.url and not item.comment.is_removed %}<a href="{{ item.comment.url }}" target="_new">{% endif %}
-                    {{ item.comment.name|namecloak }}
-                    {% if item.comment.url %}</a>{% endif %}
+                    {{ item.comment.name|namecloak }}{% if item.comment.url %}</a>{% endif %}
                 </b> had this to say on
                 <a class="permalink" title="permalink for this comment" href="{% get_comment_permalink item.comment %}">
                     {{ item.comment.submit_date|date:"j F Y" }}
