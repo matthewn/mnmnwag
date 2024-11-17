@@ -20,7 +20,7 @@ django-typogrify = { git = "https://github.com/matthewn/django-typogrify", branc
 django-comments-xtd = "*"
 django-debug-toolbar = "*"
 django-markdown2 = "*"
-psycopg2 = "*"
+psycopg = "*"
 wagtailmedia = "*"
 tweepy = "*"
 django-cachalot = "*"
