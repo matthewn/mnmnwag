@@ -3,8 +3,12 @@
     blockquote,
     p,
     ul,
-    ol {
+    ol,
+    summary {
       margin-bottom: 1rem;
+    }
+    summary {
+      cursor: pointer;
     }
     blockquote {
       padding-left: 2rem;
