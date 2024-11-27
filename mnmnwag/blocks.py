@@ -110,6 +110,7 @@ class LoadedStreamBlock(StreamBlock):
             'superscript',
             'subscript',
             'strikethrough',
+            'kbd'
             'code',
             'link',
             'image',
@@ -126,40 +127,24 @@ class LoadedStreamBlock(StreamBlock):
 
 class ModernPostStreamBlock(StreamBlock):
     heading = CharBlock(classname='full title')
-    teaser = RichTextBlock(
-        features=[
-            'ol',
-            'ul',
-            'blockquote',
-            'bold',
-            'italic',
-            'superscript',
-            'subscript',
-            'strikethrough',
-            'code',
-            'footnotes',
-            'link',
-            'image',
-            'document-link',
-        ],
-    )
-    paragraph = RichTextBlock(
-        features=[
-            'ol',
-            'ul',
-            'blockquote',
-            'bold',
-            'italic',
-            'superscript',
-            'subscript',
-            'strikethrough',
-            'code',
-            'footnotes',
-            'link',
-            'image',
-            'document-link',
-        ],
-    )
+    my_features = [
+        'ol',
+        'ul',
+        'blockquote',
+        'bold',
+        'italic',
+        'superscript',
+        'subscript',
+        'strikethrough',
+        'kbd',
+        'code',
+        'footnotes',
+        'link',
+        'image',
+        'document-link',
+    ]
+    teaser = RichTextBlock(features=my_features)
+    paragraph = RichTextBlock(features=my_features)
     image = ImageBlock()
     slides = SlidesBlock()
     embed = EmbedBlock()
