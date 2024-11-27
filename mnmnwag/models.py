@@ -413,6 +413,10 @@ class ModernPost(BasePage, BlogPost):
         FieldPanel('tweet_title'),
     ] + Page.promote_panels
 
+    settings_panels = Page.settings_panels + [
+        FieldPanel('first_published_at'),
+    ]
+
     search_fields = Page.search_fields + [
         index.SearchField('title'),
         index.SearchField('body'),
