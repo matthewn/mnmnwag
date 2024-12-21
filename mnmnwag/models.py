@@ -252,11 +252,11 @@ class TagDescription(models.Model):
         FieldPanel('description'),
     ]
 
-    def __str__(self):
-        return self.tag.name
-
     class Meta:
         ordering = ['tag__name']
+
+    def __str__(self):
+        return self.tag.name
 
 
 class BlogSidebar():
@@ -360,6 +360,9 @@ class BlogPost(models.Model, BlogSidebar):
     )
     tags = ClusterTaggableManager(through=PostTag, blank=True)
 
+    class Meta:
+        abstract = True
+
     def get_absolute_url(self):
         """
         Returns an absolute URL for the page. (Required by django_comments_xtd.)
@@ -377,9 +380,6 @@ class BlogPost(models.Model, BlogSidebar):
             return self.latest_revision.created_at
         else:
             return dt.datetime.now()
-
-    class Meta:
-        abstract = True
 
 
 class LegacyPost(BasePage, BlogPost):
