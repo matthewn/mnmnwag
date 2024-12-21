@@ -573,7 +573,7 @@ class FeedsIndex(ComplexPage):
 
     def get_context(self, request):
         context = super().get_context(request)
-        b = BlogIndex.objects.get()
+        idx = get_blog_index()
         tags = Tag.objects.exclude(
             mnmnwag_posttag_items__isnull=True
         ).exclude(id=20).order_by('name')  # exclude 'from-blosxom'
@@ -589,7 +589,7 @@ class FeedsIndex(ComplexPage):
         context['tags'] = [{
             'id': t.id,
             'name': t.name,
-            'path': b.get_url_parts()[2] + b.reverse_subpage(
+            'path': idx.get_url_parts()[2] + idx.reverse_subpage(
                 'posts_by_tag',
                 args=(t.name,)
             ),
