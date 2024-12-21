@@ -51,6 +51,25 @@ import pyexiv2
 import re
 
 
+# module-level cached values
+_blog_index = None
+_blogroll = None
+
+
+def get_blog_index():
+    global _blog_index
+    if _blog_index is None:
+        _blog_index = BlogIndex.objects.get()
+    return _blog_index
+
+
+def get_blogroll():
+    global _blogroll
+    if _blogroll is None:
+        _blogroll = BasicPage.objects.get(title='Blogroll').body
+    return _blogroll
+
+
 # ···························································
 # CUSTOM BASE PAGE MODEL AND MISC PAGE(S)
 # ···························································
@@ -241,6 +260,10 @@ class TagDescription(models.Model):
 
 
 class BlogSidebar():
+    """
+    Include me on any Page class that needs the blog sidebar.
+    (The template knows what to do with these goodies.)
+    """
     def archives_by_tag(self):
         top = ['micro', 'snapshot']
         post_tags = PostTag.tags_for(Page).order_by(Lower('name'))
@@ -261,7 +284,7 @@ class BlogSidebar():
         return content
 
     def archives_by_year(self):
-        idx = self.get_idx_obj()
+        idx = get_blog_index()
         years = [d.year for d in Page.objects.dates('first_published_at', 'year')]
         years.reverse()
         content = '<ul>'
@@ -281,23 +304,20 @@ class BlogSidebar():
         content += '</ul>'
         return content
 
-    def blogroll(self):
-        page = BasicPage.objects.get(title='Blogroll')
-        return page.body
+    @staticmethod
+    def blogroll():
+        return get_blogroll()
 
     def get_tag_link_li(self, tag):
         count = PostTag.objects.filter(tag=tag).count()
-        idx = self.get_idx_obj()
+        idx = get_blog_index()
         href = idx.url + idx.reverse_subpage('posts_by_tag', kwargs={'tag': tag})
         # ideally this would be in a template somewhere
         content = f'<li><a href="{href}" up-target="#header, #content .blog" up-transition="cross-fade">#{tag.name}</a> ({count})</li>'
         return content
 
-    def get_idx_obj(self):
-        # NOTE! This code assumes there will only ever be one BlogIndex page.
-        return BlogIndex.objects.get()
-
-    def stats(self):
+    @staticmethod
+    def stats():
         content = '<ul>'
         now = timezone.now()
 
