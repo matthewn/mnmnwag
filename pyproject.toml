@@ -5,7 +5,7 @@ description = ""
 authors = ["Matthew Newton <matthewn@mahnamahna.net>"]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.11"
 django = "~5"
 wagtail = "*"
 django-dbbackup = "*"
@@ -27,7 +27,7 @@ django-cachalot = "*"
 django-browser-reload = "*"
 pywatchman = "*"
 django-honeypot = "*"
-pyexiv2 = "2.8.1"
+pyexiv2 = "*"
 gunicorn = "*"
 setproctitle = "*"
 seevooplay = "*"
