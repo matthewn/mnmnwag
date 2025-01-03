@@ -8,6 +8,7 @@ from django.db import models
 from django.db.models.functions import Lower
 from django.utils.html import format_html
 from django.template import loader
+from django.template.defaultfilters import pluralize
 from django.urls import reverse
 from django.utils import timezone
 
@@ -343,8 +344,8 @@ class BlogSidebar():
 
         if streak_weeks > 1:
             content += f'<li><b>STREAK!</b> New posts for <b>{streak_weeks}</b> consecutive weeks</li>'
-        content += f'<li><b>{recent_posts_count}</b> posts in the last 30 days</li>'
-        content += f'<li><b>{year_posts_count}</b> posts this year</li>'
+        content += f'<li><b>{recent_posts_count}</b> post{pluralize(recent_posts_count)} in the last 30 days</li>'
+        content += f'<li><b>{year_posts_count}</b> post{pluralize(year_posts_count)} this year</li>'
         content += '</ul>'
         return content
 
