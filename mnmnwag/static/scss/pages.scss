@@ -158,7 +158,8 @@ main.slug-home-page {
 
 // about page: two-column treatment for desktop only
 @include media(desktop) {
-  .page-body.slug-about {
+  .page-body.slug-about,
+  .page-body.slug-mn50 {
     display: table;
     .column {
       display: table-cell;
