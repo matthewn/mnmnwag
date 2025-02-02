@@ -52,23 +52,16 @@ import pyexiv2
 import re
 
 
-# module-level cached values
+# module-level cached value
 _blog_index = None
-_blogroll = None
 
 
 def get_blog_index():
+    # this value NEVER changes, so we only want to look it up once
     global _blog_index
     if _blog_index is None:
         _blog_index = BlogIndex.objects.get()
     return _blog_index
-
-
-def get_blogroll():
-    global _blogroll
-    if _blogroll is None:
-        _blogroll = BasicPage.objects.get(title='Blogroll').body
-    return _blogroll
 
 
 # ···························································
@@ -307,7 +300,7 @@ class BlogSidebar():
 
     @staticmethod
     def blogroll():
-        return get_blogroll()
+        return BasicPage.objects.get(title='Blogroll').body
 
     def get_tag_link_li(self, tag):
         count = PostTag.objects.filter(tag=tag).count()
