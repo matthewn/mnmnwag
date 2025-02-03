@@ -23,7 +23,7 @@
     align-items: center;
     display: flex;
     justify-content: space-between;
-    line-height: 1.6;
+    line-height: $normal-line-height;
     > div {
       margin-bottom: .25rem;
     }

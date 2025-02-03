@@ -13,7 +13,6 @@ $semibold: 600;   // Raleway uses this
 
 h2, .h2 {
   font-family: $sans-stack;
-  font-size: 1.6rem;
 }
 
 h3, .h3 {
@@ -176,7 +175,7 @@ body {
       ol,
       details {
         font-size: 1.25rem;
-        line-height: 1.6;
+        line-height: $normal-line-height;
       }
       blockquote {
         font-style: italic;
