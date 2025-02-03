@@ -7,7 +7,7 @@
             {% if not post.specific.is_micro %}
                 <h3 class="post-title">{{ post.title|typefixes }}</h3>
             {% else %}
-                ⁂
+                <span class="asterism">⁂</span>
             {% endif %}
         </a>
     {% else %}

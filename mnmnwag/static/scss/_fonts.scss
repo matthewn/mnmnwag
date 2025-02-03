@@ -1,6 +1,6 @@
 // font stacks
-$sans-stack: Raleway, sans-serif;
-$serif-stack: Alegreya, serif;
+$sans-stack: 'Raleway', sans-serif;
+$serif-stack: 'Alegreya', serif;
 $mono-stack: 'Nanum Gothic Coding', monospace;
 
 // font weights
@@ -39,6 +39,14 @@ textarea {
     font-family: $sans-stack;
     font-variant: small-caps;
   }
+}
+
+.asterism {
+  // Raleway does not have the asterism, so we force Alegreya
+  // to prevent a fallback to system fonts
+  font-family: $serif-stack;
+  position: relative;
+  top: 2px;
 }
 
 .force-sans {
