@@ -47,7 +47,7 @@ function processFootnotes(el) {
         link.insertAdjacentElement('afterend', annotation);
 
         let span = document.createElement('span');
-        span.textContent = '☓ hide note';
+        span.textContent = 'hide note';
 
         link.setAttribute('aria-label', 'Show note');
         link.setAttribute('title', 'show note');

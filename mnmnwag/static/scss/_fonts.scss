@@ -36,6 +36,12 @@ textarea {
 
 .annotation-toggle {
   span {
+    &::before {
+      content: '×';
+      font-size: 2rem;
+      line-height: 0;
+      margin-right: .45rem;
+    }
     font-family: $sans-stack;
     font-variant: small-caps;
   }
