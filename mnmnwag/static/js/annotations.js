@@ -49,7 +49,7 @@ function processFootnotes(el) {
         let span = document.createElement('span');
         span.textContent = 'hide note';
 
-        link.setAttribute('aria-label', 'Show note');
+        link.setAttribute('aria-label', 'show note');
         link.setAttribute('title', 'show note');
         link.classList.add('annotation-toggle');
         link.appendChild(document.createTextNode(' '));
