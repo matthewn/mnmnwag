@@ -405,14 +405,14 @@ class ModernPost(BasePage, BlogPost):
         use_json_field=True,
     )
 
-    do_not_tweet = models.BooleanField(
+    toot_this = models.BooleanField(
         default=False,
-        verbose_name='Do not tweet',
-        help_text='Do not automatically generate a tweet about this post.',
+        verbose_name='Toot this',
+        help_text='Automatically generate a tweet about this post.',
     )
-    tweet_title = models.TextField(
+    toot_text = models.TextField(
         blank=True,
-        max_length=256,
+        max_length=477,
     )
 
     content_panels = Page.content_panels + [
@@ -423,8 +423,8 @@ class ModernPost(BasePage, BlogPost):
     ]
 
     promote_panels = [
-        FieldPanel('do_not_tweet'),
-        FieldPanel('tweet_title'),
+        FieldPanel('toot_this'),
+        FieldPanel('toot_text'),
     ] + Page.promote_panels
 
     settings_panels = Page.settings_panels + [
@@ -767,8 +767,8 @@ class SingletonModel(models.Model):
         return obj
 
 
-class TweetsTracker(SingletonModel):
+class TootsTracker(SingletonModel):
     last_run_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name_plural = 'Tweets job tracker'
+        verbose_name_plural = 'Toots job tracker'

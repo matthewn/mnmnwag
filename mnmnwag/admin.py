@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import RejectedComment, TweetsTracker
+from .models import RejectedComment, TootsTracker
 
 
 @admin.register(RejectedComment)
@@ -23,8 +23,8 @@ class RejectedCommentAdmin(admin.ModelAdmin):
         return False
 
 
-@admin.register(TweetsTracker)
-class TweetsTrackerAdmin(admin.ModelAdmin):
+@admin.register(TootsTracker)
+class TootsTrackerAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'last_run_at')
     readonly_fields = ('last_run_at',)
 
