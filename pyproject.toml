@@ -22,7 +22,6 @@ django-debug-toolbar = "*"
 django-markdown2 = "*"
 psycopg = "*"
 wagtailmedia = "*"
-tweepy = "*"
 django-cachalot = "*"
 django-browser-reload = "*"
 pywatchman = "*"
@@ -36,6 +35,7 @@ django-crequest = "*"
 num2words = "*"
 wagtail-footnotes = "*"
 wand = "^0.6.13"
+mastodon-py = "^1.8.1"
 
 [tool.poetry.dev-dependencies]
 

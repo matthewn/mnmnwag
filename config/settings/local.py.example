@@ -32,4 +32,7 @@ MANAGERS = (('Firstname Lastname', 'user@example.org'),)
 COMMENTS_XTD_FROM_EMAIL = 'bot@example.org'
 
 
-# Override settings here
+MASTODON_AUTH_KEYS = {
+    'access_token': 'YOUR_MASTODON_ACCESS_TOKEN',
+    'api_base_url': 'YOUR_MASTODON_API_BASE_URL',  # e.g., 'https://mastodon.social'
+}
