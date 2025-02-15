@@ -408,7 +408,7 @@ class ModernPost(BasePage, BlogPost):
     toot_this = models.BooleanField(
         default=False,
         verbose_name='Toot this',
-        help_text='Automatically generate a tweet about this post.',
+        help_text='Automatically generate a toot about this post.',
     )
     toot_text = models.TextField(
         blank=True,
