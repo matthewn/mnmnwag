@@ -458,7 +458,7 @@ class ModernPost(BasePage, BlogPost):
         """
         Return a generic title for a micropost.
         These are used in mnmnwag/feeds.py and
-        mnmnwag/management/commands/send_tweets.py.
+        mnmnwag/management/commands/send_toots.py.
         """
         if self.is_micro:
             home_zone = ZoneInfo(settings.TIME_ZONE)
@@ -466,7 +466,11 @@ class ModernPost(BasePage, BlogPost):
                 post_date = self.first_published_at.astimezone(home_zone).strftime('%Y-%m-%d %I:%M %p')
             except AttributeError:
                 # post is not yet published
-                post_date = self.latest_revision.created_at.astimezone(home_zone).strftime('%Y-%m-%d %I:%M %p')
+                try:
+                    post_date = self.latest_revision.created_at.astimezone(home_zone).strftime('%Y-%m-%d %I:%M %p')
+                except AttributeError:
+                    # post does not yet have a draft
+                    post_date = dt.datetime.now(home_zone).strftime('%Y-%m-%d %I:%M %p')
             return f'micropost ({post_date})'
         else:
             return self.title
