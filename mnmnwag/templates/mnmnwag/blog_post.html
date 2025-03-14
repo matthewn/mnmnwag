@@ -22,6 +22,12 @@
 						{% with body.0 as block %}
 							{% include "mnmnwag/blog_post_block.html" %}
 						{% endwith %}
+                        {# if 2nd block is raw_HTML, display that too #}
+                        {% if body.1.block_type == 'raw_HTML' %}
+                            {% with body.1 as block %}
+                                {% include "mnmnwag/blog_post_block.html" %}
+                            {% endwith %}
+                        {% endif %}
 						<a class="read-more" href="{% pageurl post %}" up-content-link>read full post &raquo;</a>
 					{# if 1st block is image, 2nd block is teaser, display those + 'read more' #}
 					{% elif body.0.block_type == 'image' and body.1.block_type == 'teaser' %}
