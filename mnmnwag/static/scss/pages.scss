@@ -136,6 +136,9 @@ main.slug-home-page {
     h3 + .block-paragraph {
       display: grid;
       grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+      p {
+        padding: 0 .25rem;
+      }
     }
     .serif {
       font-family: $serif-stack;
