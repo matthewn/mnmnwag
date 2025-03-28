@@ -29,8 +29,8 @@
                             {% endwith %}
                         {% endif %}
 						<a class="read-more" href="{% pageurl post %}" up-content-link>read full post &raquo;</a>
-					{# if 1st block is image, 2nd block is teaser, display those + 'read more' #}
-					{% elif body.0.block_type == 'image' and body.1.block_type == 'teaser' %}
+					{# if 1st block is image or slides, 2nd block is teaser, display those + 'read more' #}
+					{% elif body.0.block_type == 'image' or body.0.block_type == 'slides' and body.1.block_type == 'teaser' %}
 						{% with body.0 as block %}
 							{% include "mnmnwag/blog_post_block.html" %}
 						{% endwith %}
