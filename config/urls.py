@@ -2,7 +2,7 @@ from django.conf import settings
 from django.urls import include
 from django.contrib import admin
 from django.urls import path
-from django.views.generic.base import TemplateView
+from django.views.generic.base import RedirectView, TemplateView
 
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail import urls as wagtail_urls
@@ -23,6 +23,13 @@ urlpatterns = [
     path(
         'robots.txt',
         TemplateView.as_view(template_name='robots.txt', content_type='text/plain'),
+    ),
+    path(
+        'favicon.ico',
+        RedirectView.as_view(
+            url=settings.STATIC_URL + 'img/favs/favicon-32x32.png',
+            permanent=True,
+        ),
     ),
     path('dja/', admin.site.urls),
     path('cms/', include(wagtailadmin_urls)),
