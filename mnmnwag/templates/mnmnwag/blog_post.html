@@ -19,24 +19,30 @@
                 {% elif post.content_type.model == 'modernpost' %}
 					{# if 1st block is teaser, display that + 'read more' #}
 					{% if body.0.block_type == 'teaser' %}
-						{% with body.0 as block %}
-							{% include "mnmnwag/blog_post_block.html" %}
-						{% endwith %}
-                        {# if 2nd block is raw_HTML, display that too #}
-                        {% if body.1.block_type == 'raw_HTML' %}
-                            {% with body.1 as block %}
+						{% capture as content silent %}
+                            {% with body.0 as block %}
                                 {% include "mnmnwag/blog_post_block.html" %}
                             {% endwith %}
-                        {% endif %}
+                            {# if 2nd block is raw_HTML, display that too #}
+                            {% if body.1.block_type == 'raw_HTML' %}
+                                {% with body.1 as block %}
+                                    {% include "mnmnwag/blog_post_block.html" %}
+                                {% endwith %}
+                            {% endif %}
+						{% endcapture %}
+						{{ content|typefixes }}
 						<a class="read-more" href="{% pageurl post %}" up-content-link>read full post &raquo;</a>
 					{# if 1st block is image or slides, 2nd block is teaser, display those + 'read more' #}
 					{% elif body.0.block_type == 'image' or body.0.block_type == 'slides' and body.1.block_type == 'teaser' %}
-						{% with body.0 as block %}
-							{% include "mnmnwag/blog_post_block.html" %}
-						{% endwith %}
-						{% with body.1 as block %}
-							{% include "mnmnwag/blog_post_block.html" %}
-						{% endwith %}
+						{% capture as content silent %}
+                            {% with body.0 as block %}
+                                {% include "mnmnwag/blog_post_block.html" %}
+                            {% endwith %}
+                            {% with body.1 as block %}
+                                {% include "mnmnwag/blog_post_block.html" %}
+                            {% endwith %}
+						{% endcapture %}
+						{{ content|typefixes }}
 						<a class="read-more" href="{% pageurl post %}" up-content-link>read full post &raquo;</a>
 					{# else truncate at 160 chars, display 'read more' if needed #}
 					{% else %}
