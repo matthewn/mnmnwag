@@ -52,11 +52,11 @@ main.slug-home-page {
   text-align: center;
 }
 
-#exhibition {
+.exhibition {
   margin-top: 3rem;
   position: relative;
 
-  > .block-image:first-child {
+  .block-image {
     figure {
       width: 100%;
     }
@@ -71,35 +71,19 @@ main.slug-home-page {
   }
 
   .overlay {
-    @include media(desktop) {
-      left: 7%;
-      max-width: 44%;
-      top: 12%;
-      transform: translateY(-12%);
-    }
+    // @include media(desktop) {
+    // }
     a {
       color: $blizzard-blue;
     }
-    h3 + .block-paragraph {
-      display: grid;
-      grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-    }
-    .serif {
-      font-family: $serif-stack;
-    }
-    h3 {
-      margin: 1.5rem auto;
-      text-wrap: balance;
-    }
-    @include cut-corners(3rem, 3rem, 3rem, 3rem);
+    @include cut-corners(.75rem, .75rem, .75rem, .75rem);
     background-color: rgba(121, 140, 147, .85);
-    border-radius: 4px;
     color: $white;
     font-family: $sans-stack;
     left: 50%;
-    padding: 2rem 4rem;
+    padding: .5rem 1.5rem;
     position: absolute;
-    top: 10%;
+    top: 50%;
     transform: translateX(-50%);
   }
 }
