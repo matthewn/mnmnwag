@@ -55,10 +55,15 @@ textarea {
   top: 2px;
 }
 
+.force-mono {
+  font-family: $mono-stack;
+}
+
 .force-sans {
   font-family: $sans-stack;
 }
 
+.force-serif,
 .mahna {
   font-family: $serif-stack;
 }
