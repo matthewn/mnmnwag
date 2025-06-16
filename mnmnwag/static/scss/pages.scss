@@ -80,13 +80,21 @@ main.slug-home-page {
     background-color: rgba(121, 140, 147, .85);
     color: $white;
     font-family: $sans-stack;
+    font-weight: bold;
     left: 50%;
     padding: .5rem 1.5rem;
     position: absolute;
     top: 50%;
     transform: translateX(-50%);
   }
+  h3 {
+    font-size: 1.85rem;
+  }
 }
+body.theme-light .overlay {
+  background-color: rgba(171, 190, 197, .85);
+}
+
 
 
 #archives {
