@@ -63,13 +63,13 @@ test = ["Pillow", "numpy", "pytest"]
 
 [[package]]
 name = "certifi"
-version = "2025.4.26"
+version = "2025.6.15"
 description = "Python package for providing Mozilla's CA Bundle."
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 files = [
-    {file = "certifi-2025.4.26-py3-none-any.whl", hash = "sha256:30350364dfe371162649852c63336a15c70c6510c2ad5015b21c2345311805f3"},
-    {file = "certifi-2025.4.26.tar.gz", hash = "sha256:0a816057ea3cdefcef70270d2c515e4506bbc954f417fa5ade2021213bb8f0c6"},
+    {file = "certifi-2025.6.15-py3-none-any.whl", hash = "sha256:2e0c7ce7cb5d8f8634ca55d2ba7e6ec2689a2fd6537d8dec1296a477a4910057"},
+    {file = "certifi-2025.6.15.tar.gz", hash = "sha256:d747aa5a8b9bbbb1bb8c22bb13e22bd1f18e9796defa16bab421f7f7a317323b"},
 ]
 
 [[package]]
@@ -197,13 +197,13 @@ files = [
 
 [[package]]
 name = "django"
-version = "5.2.1"
+version = "5.2.3"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "django-5.2.1-py3-none-any.whl", hash = "sha256:a9b680e84f9a0e71da83e399f1e922e1ab37b2173ced046b541c72e1589a5961"},
-    {file = "django-5.2.1.tar.gz", hash = "sha256:57fe1f1b59462caed092c80b3dd324fd92161b620d59a9ba9181c34746c97284"},
+    {file = "django-5.2.3-py3-none-any.whl", hash = "sha256:c517a6334e0fd940066aa9467b29401b93c37cec2e61365d663b80922542069d"},
+    {file = "django-5.2.3.tar.gz", hash = "sha256:335213277666ab2c5cac44a792a6d2f3d58eb79a80c14b6b160cd4afc3b75684"},
 ]
 
 [package.dependencies]
@@ -573,13 +573,13 @@ test = ["pytest", "pytest-cov", "pytest-django"]
 
 [[package]]
 name = "django-stubs-ext"
-version = "5.2.0"
+version = "5.2.1"
 description = "Monkey-patching and extensions for django-stubs"
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "django_stubs_ext-5.2.0-py3-none-any.whl", hash = "sha256:b27ae0aab970af4894ba4e9b3fcd3e03421dc8731516669659ee56122d148b23"},
-    {file = "django_stubs_ext-5.2.0.tar.gz", hash = "sha256:00c4ae307b538f5643af761a914c3f8e4e3f25f4e7c6d7098f1906c0d8f2aac9"},
+    {file = "django_stubs_ext-5.2.1-py3-none-any.whl", hash = "sha256:98fb0646f1a1ef07708eec5f6f7d27523f12c0c8714abae8db981571ff957588"},
+    {file = "django_stubs_ext-5.2.1.tar.gz", hash = "sha256:fc0582cb3289306c43ce4a0a15af86922ce1dbec3c19eab80980ee70c04e0392"},
 ]
 
 [package.dependencies]
@@ -1235,17 +1235,19 @@ files = [
 
 [[package]]
 name = "pywatchman"
-version = "2.0.0"
+version = "3.0.0"
 description = "Watchman client for Python"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pywatchman-2.0.0-cp310-cp310-macosx_14_0_arm64.whl", hash = "sha256:a8b531a9276c1dc8897510824cbb3290e4a5775793889758020593aedb97015b"},
-    {file = "pywatchman-2.0.0-cp311-cp311-macosx_14_0_arm64.whl", hash = "sha256:44217f0a38f40e64f975bd13eed91c73a076c0fb7e9e9908b96917389f53371e"},
-    {file = "pywatchman-2.0.0-cp312-cp312-macosx_14_0_arm64.whl", hash = "sha256:51c2b4c72bea6b9fd90caf20759f5bc47febf0fd27bf2f247b87c66e2f6bab02"},
-    {file = "pywatchman-2.0.0-cp38-cp38-macosx_14_0_arm64.whl", hash = "sha256:ed905338952db01f6506104295a3176adf0d8c2575e4f00505cb123ae09a2755"},
-    {file = "pywatchman-2.0.0-cp39-cp39-macosx_14_0_arm64.whl", hash = "sha256:4183ea206be46cb45d48f59ef7540b849582798ccd51ce54e1e400237b7dbf43"},
-    {file = "pywatchman-2.0.0.tar.gz", hash = "sha256:25354d9e3647f94411a4c13e510c83a1ceecc17977b0525ba41b16e7019c7b0c"},
+    {file = "pywatchman-3.0.0-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:91f521ed0b4e64433ccf8f57bdd9ce7da8722cd1acc54a5e9f715acd86bf3ec5"},
+    {file = "pywatchman-3.0.0-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:b652304404b47fc5ca0b9b29f70334b0455c155425934dcb8365e66da2c543d3"},
+    {file = "pywatchman-3.0.0-cp312-cp312-macosx_10_13_universal2.whl", hash = "sha256:4f69c49a72e81f1d24733ff5c9dda451404c542edb1efafdb77fd43c7c1a8df9"},
+    {file = "pywatchman-3.0.0-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:c15484b7d20c007f5b3c7781dddf5acb2c8a8f6440925e3e512b7e194b05dda9"},
+    {file = "pywatchman-3.0.0-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:79eac1371ba3f5e33a8a94438956380656dd66316225acc3cda42ca598008986"},
+    {file = "pywatchman-3.0.0-cp38-cp38-macosx_11_0_arm64.whl", hash = "sha256:64875a9cc2a3e16402c2a267aa94ea755af8ff7e2bfeaf250d7e0285efdf98c0"},
+    {file = "pywatchman-3.0.0-cp39-cp39-macosx_11_0_arm64.whl", hash = "sha256:302c04c71950c4e0fde17a593029b552ac0a9ada6b967ea0ca25701f47d7f254"},
+    {file = "pywatchman-3.0.0.tar.gz", hash = "sha256:efd32a17391a5872118c55041da71a20960e46ba4b73440c24efac287eea911e"},
 ]
 
 [[package]]
@@ -1306,18 +1308,18 @@ files = [
 
 [[package]]
 name = "requests"
-version = "2.32.3"
+version = "2.32.4"
 description = "Python HTTP for Humans."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "requests-2.32.3-py3-none-any.whl", hash = "sha256:70761cfe03c773ceb22aa2f671b4757976145175cdfca038c02654d061d6dcc6"},
-    {file = "requests-2.32.3.tar.gz", hash = "sha256:55365417734eb18255590a9ff9eb97e9e1da868d4ccd6402399eaf68af20a760"},
+    {file = "requests-2.32.4-py3-none-any.whl", hash = "sha256:27babd3cda2a6d50b30443204ee89830707d396671944c998b5975b031ac2b2c"},
+    {file = "requests-2.32.4.tar.gz", hash = "sha256:27d0316682c8a29834d3264820024b62a36942083d52caf2f14c0591336d3422"},
 ]
 
 [package.dependencies]
 certifi = ">=2017.4.17"
-charset-normalizer = ">=2,<4"
+charset_normalizer = ">=2,<4"
 idna = ">=2.5,<4"
 urllib3 = ">=1.21.1,<3"
 
@@ -1541,12 +1543,13 @@ files = [
 
 [[package]]
 name = "smartypants"
-version = "2.0.1"
+version = "2.0.2"
 description = "Python with the SmartyPants"
 optional = false
 python-versions = "*"
 files = [
-    {file = "smartypants-2.0.1-py2.py3-none-any.whl", hash = "sha256:8db97f7cbdf08d15b158a86037cd9e116b4cf37703d24e0419a0d64ca5808f0d"},
+    {file = "smartypants-2.0.2-py2.py3-none-any.whl", hash = "sha256:9471578606e8ee0740065bf8771f55fec8c83313cb98c5d1c1864ddd389d0f3a"},
+    {file = "smartypants-2.0.2.tar.gz", hash = "sha256:39d64ce1d7cc6964b698297bdf391bc12c3251b7f608e6e55d857cd7c5f800c6"},
 ]
 
 [[package]]
@@ -1591,13 +1594,13 @@ docs = ["mkdocs (>=1.1,<1.2)", "mkdocs-material (>=6.2,<6.3)"]
 
 [[package]]
 name = "typing-extensions"
-version = "4.13.2"
-description = "Backported and Experimental Type Hints for Python 3.8+"
+version = "4.14.0"
+description = "Backported and Experimental Type Hints for Python 3.9+"
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 files = [
-    {file = "typing_extensions-4.13.2-py3-none-any.whl", hash = "sha256:a439e7c04b49fec3e5d3e2beaa21755cadbbdc391694e28ccdd36ca4a1408f8c"},
-    {file = "typing_extensions-4.13.2.tar.gz", hash = "sha256:e6c81219bd689f51865d9e372991c540bda33a0379d5573cddb9a3a23f7caaef"},
+    {file = "typing_extensions-4.14.0-py3-none-any.whl", hash = "sha256:a1514509136dd0b477638fc68d6a91497af5076466ad0fa6c338e44e359944af"},
+    {file = "typing_extensions-4.14.0.tar.gz", hash = "sha256:8676b788e32f02ab42d9e7c61324048ae4c6d844a399eebace3d4979d75ceef4"},
 ]
 
 [[package]]
@@ -1630,13 +1633,13 @@ zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
 name = "wagtail"
-version = "7.0"
+version = "7.0.1"
 description = "A Django content management system."
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "wagtail-7.0-py3-none-any.whl", hash = "sha256:6a254ef84a740689dd844aabc5254828ecb62840257721e639929cb0e1a2b3c1"},
-    {file = "wagtail-7.0.tar.gz", hash = "sha256:7c267ead43da3aa9469f233b111624aa1a508a5840f1ddda72d104957fdb3426"},
+    {file = "wagtail-7.0.1-py3-none-any.whl", hash = "sha256:92439c50a919826a4ce8c85bdaf3ed0e436d29598bb2954b4fca5f312b969666"},
+    {file = "wagtail-7.0.1.tar.gz", hash = "sha256:cfc5c37738f98cae380a15252f5676604f6c61554bef1a3791e34de1e703beec"},
 ]
 
 [package.dependencies]
