@@ -2,6 +2,9 @@ User-Agent: *
 Disallow: /xyzzy/
 
 User-Agent: *
+Disallow: /fridge/
+
+User-Agent: *
 Disallow: /trap
 
 
