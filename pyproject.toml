@@ -34,8 +34,8 @@ django-antispam = "*"
 django-crequest = "*"
 num2words = "*"
 wagtail-footnotes = "*"
-wand = "^0.6.13"
-mastodon-py = "^1.8.1"
+wand = "*"
+mastodon-py = "*"
 
 [tool.poetry.dev-dependencies]
 

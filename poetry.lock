@@ -884,13 +884,13 @@ files = [
 
 [[package]]
 name = "mastodon-py"
-version = "1.8.1"
+version = "2.0.1"
 description = "Python wrapper for the Mastodon API"
 optional = false
 python-versions = "*"
 files = [
-    {file = "Mastodon.py-1.8.1-py2.py3-none-any.whl", hash = "sha256:22bc7e060518ef2eaa69d911cde6e4baf56bed5ea0dd407392c49051a7ac526a"},
-    {file = "Mastodon.py-1.8.1.tar.gz", hash = "sha256:4a64cb94abadd6add73e4b8eafdb5c466048fa5f638284fd2189034104d4687e"},
+    {file = "mastodon_py-2.0.1-py3-none-any.whl", hash = "sha256:5bb543ecbd7526bd50675d5d617ec04caa6b10d4002454cbf5641ad612723455"},
+    {file = "mastodon_py-2.0.1.tar.gz", hash = "sha256:f0a9cf59071347c7ff2ee49487d2520ca661f349f369b68845bdf3e43db1fff3"},
 ]
 
 [package.dependencies]
@@ -900,12 +900,13 @@ python-dateutil = "*"
 python-magic = {version = "*", markers = "platform_system != \"Windows\""}
 python-magic-bin = {version = "*", markers = "platform_system == \"Windows\""}
 requests = ">=2.4.2"
-six = "*"
 
 [package.extras]
 blurhash = ["blurhash (>=1.1.4)"]
-test = ["blurhash (>=1.1.4)", "cryptography (>=1.6.0)", "http-ece (>=1.0.5)", "pytest", "pytest-cov", "pytest-mock", "pytest-runner", "pytest-vcr", "pytz", "requests-mock", "vcrpy"]
-webpush = ["cryptography (>=1.6.0)", "http-ece (>=1.0.5)"]
+docs = ["sphinx-rtd-theme"]
+test = ["pytest", "pytest-cov", "pytest-mock", "pytest-retry", "pytest-vcr", "pytz", "requests-mock", "vcrpy"]
+test-old = ["pytest", "pytest-cov", "pytest-mock", "pytest-vcr", "pytz", "requests-mock", "vcrpy"]
+webpush = ["cryptography (>=1.6.0)", "http_ece (>=1.0.5)"]
 
 [[package]]
 name = "num2words"
@@ -1616,13 +1617,13 @@ files = [
 
 [[package]]
 name = "urllib3"
-version = "2.4.0"
+version = "2.5.0"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "urllib3-2.4.0-py3-none-any.whl", hash = "sha256:4e16665048960a0900c702d4a66415956a584919c03361cac9f1df5c5dd7e813"},
-    {file = "urllib3-2.4.0.tar.gz", hash = "sha256:414bc6535b787febd7567804cc015fee39daab8ad86268f1310a9250697de466"},
+    {file = "urllib3-2.5.0-py3-none-any.whl", hash = "sha256:e6b01673c0fa6a13e374b50871808eb3bf7046c4b125b216f6bf1cc604cff0dc"},
+    {file = "urllib3-2.5.0.tar.gz", hash = "sha256:3fc47733c7e419d4bc3f6b3dc2b4f890bb743906a30d56ba4a5bfa4bbff92760"},
 ]
 
 [package.extras]
@@ -1763,4 +1764,4 @@ wand = ["Wand (>=0.6,<1.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "3503f6ee8acbb9b4b519f488e75e4376627f7080112e6fc117980845d87fa863"
+content-hash = "a6812e58a0ea2a644713d63a8b7cc6378e85af5278e04c3eb86426e5e476f561"
