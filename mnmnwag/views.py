@@ -144,7 +144,7 @@ def show_info(request):
     """
     content = f'<br>Python version: {sys.version}'
     content += f'<br>REMOTE_ADDR: {request.META.get("REMOTE_ADDR")}'
-    content += f'<br>HTTP_X_FORWARDED_FOR: {request.META.get("HTTP_X_FORWARDED_FOR")}'
+    content += f'<br>HTTP_X_FORWARDED_FOR: {request.headers.get("x-forwarded-for")}'
     content += f'<br>CLIENT_IP: {get_client_ip(request)}'
     return render(request, 'mnmnwag/showview.html', {
         'title': 'information!',
