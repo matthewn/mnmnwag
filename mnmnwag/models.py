@@ -1,5 +1,3 @@
-from zoneinfo import ZoneInfo
-
 from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
@@ -15,6 +13,7 @@ from django.utils import timezone
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import Tag, TaggedItemBase
+from zoneinfo import ZoneInfo
 
 from wagtail.admin.panels import (
     FieldPanel,
