@@ -1,44 +1,47 @@
-[tool.poetry]
+[project]
 name = "mnmnwag"
 version = "3.2"
 description = ""
-authors = ["Matthew Newton <matthewn@mahnamahna.net>"]
+authors = [{ name = "Matthew Newton", email = "matthewn@mahnamahna.net" }]
+requires-python = "~=3.11"
+dependencies = [
+    "django>=5,<6",
+    "wagtail",
+    "django-antispam",
+    "django-browser-reload",
+    "django-cachalot",
+    "django-capture-tag",
+    "django-comments-xtd",
+    "django-compressor",
+    "django-crequest",
+    "django-dbbackup",
+    "django-debug-toolbar",
+    "django-debugtools",
+    "django-extensions",
+    "django-honeypot",
+    "django-libsass",
+    "django-likes",
+    "django-markdown2",
+    "django-typogrify",
+    "gunicorn",
+    "mastodon-py",
+    "num2words",
+    "psycopg",
+    "pyexiv2",
+    "pywatchman",
+    "seevooplay",
+    "setproctitle",
+    "wagtail-footnotes",
+    "wagtailmedia",
+    "wand",
+    "werkzeug",
+]
 
-[tool.poetry.dependencies]
-python = "^3.11"
-django = "~5"
-wagtail = "*"
-django-dbbackup = "*"
-django-debugtools = "*"
-django-extensions = "*"
-werkzeug = "*"
-django-compressor = "*"
-django-libsass = "*"
+[dependency-groups]
+dev = []
+
+[tool.uv]
+
+[tool.uv.sources]
 django-likes = { git = "https://github.com/matthewn/django-likes", branch = "django5" }
-django-capture-tag = "*"
 django-typogrify = { git = "https://github.com/matthewn/django-typogrify", branch = "django40" }
-django-comments-xtd = "*"
-django-debug-toolbar = "*"
-django-markdown2 = "*"
-psycopg = "*"
-wagtailmedia = "*"
-django-cachalot = "*"
-django-browser-reload = "*"
-pywatchman = "*"
-django-honeypot = "*"
-pyexiv2 = "*"
-gunicorn = "*"
-setproctitle = "*"
-seevooplay = "*"
-django-antispam = "*"
-django-crequest = "*"
-num2words = "*"
-wagtail-footnotes = "*"
-wand = "*"
-mastodon-py = "*"
-
-[tool.poetry.dev-dependencies]
-
-[build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
