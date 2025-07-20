@@ -7,6 +7,7 @@ from .models import BlogIndex, PostTag
 class LatestEntriesFeed(Feed):
     feed_type = Atom1Feed
     title = 'mahnamahna.net/blog'
+    author_name = r'/\/\/\/'
 
     def link(self, obj):
         link = '/blog/feed'
@@ -50,6 +51,9 @@ class LatestEntriesFeed(Feed):
             return item.specific.micropost_title
         else:
             return item.title
+
+    def item_author_name(self):
+        return self.author_name
 
     def item_description(self, item):
         """
