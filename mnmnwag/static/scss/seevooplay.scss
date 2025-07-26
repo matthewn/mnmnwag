@@ -12,6 +12,9 @@
   ul {
     margin-left: 0;
   }
+  ul.messages {
+    list-style: none;
+  }
 
   #id_extra_guests {
     margin: 0 .5rem;
