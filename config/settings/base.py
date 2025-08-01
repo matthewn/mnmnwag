@@ -55,7 +55,6 @@ INSTALLED_APPS = [
     'compressor',
     'crequest',
     'dbbackup',
-    # 'debug_toolbar',
     'debugtools',
     'django_browser_reload',
     'django_comments_xtd',  # 1 (do not reorder)
@@ -82,7 +81,6 @@ MIDDLEWARE = [
 
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 
-    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django_browser_reload.middleware.BrowserReloadMiddleware',
     'crequest.middleware.CrequestMiddleware',
     'extlinks.middleware.RewriteExternalLinksMiddleware',
