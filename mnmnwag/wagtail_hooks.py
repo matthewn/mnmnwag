@@ -1,6 +1,18 @@
 from wagtail import hooks
+from wagtail.admin.menu import MenuItem
 from wagtail.admin.rich_text.converters.html_to_contentstate import InlineStyleElementHandler
 import wagtail.admin.rich_text.editors.draftail.features as draftail_features
+
+
+@hooks.register('register_admin_menu_item')
+def register_add_subpage_menu_item():
+    return MenuItem(
+        'New blog post',
+        '/cms/pages/4/add_subpage/',
+        name='new-blogpost',
+        icon_name='plus',
+        order=1,
+    )
 
 
 @hooks.register('register_rich_text_features')
