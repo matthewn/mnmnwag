@@ -1,10 +1,13 @@
-User-Agent: *
+User-agent: *
+Disallow: /likes/
+
+User-agent: *
 Disallow: /xyzzy/
 
-User-Agent: *
+User-agent: *
 Disallow: /fridge/
 
-User-Agent: *
+User-agent: *
 Disallow: /trap
 
 
