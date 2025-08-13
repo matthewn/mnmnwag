@@ -1,0 +1,8 @@
+{% load typefixes %}
+{% load wagtailcore_tags %}
+
+{% if page.get_slogan %}
+    <div id="slogan">
+        {{ page.get_slogan|richtext|typefixes }}
+    </div>
+{% endif %}

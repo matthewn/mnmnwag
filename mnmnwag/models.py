@@ -9,6 +9,7 @@ from django.template import loader
 from django.template.defaultfilters import pluralize
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.html import strip_tags
 
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -64,7 +65,7 @@ def get_blog_index():
 
 
 # ···························································
-# CUSTOM BASE PAGE MODEL AND MISC PAGE(S)
+# CUSTOM BASE PAGE MODEL AND MISC PAGES/SNIPPETS
 # ···························································
 
 class BasePage(Page):
@@ -210,6 +211,31 @@ class GalleryPage(BasePage):
         return super(GalleryPage, self).save_revision(**kwargs)
 
 
+@register_snippet
+class Slogan(models.Model):
+    text = RichTextField(
+        features=[
+            'bold',
+            'italic',
+            'strikethrough',
+            'link',
+        ],
+    )
+    is_active = models.BooleanField(default=True)
+
+    panels = [
+        FieldPanel('text'),
+        FieldPanel('is_active'),
+    ]
+
+    class Meta:
+        ordering = ['-id']
+
+    def __str__(self):
+        active = ' (active)' if self.is_active is True else ''
+        return f'{strip_tags(self.text)}{active}'
+
+
 # ···························································
 # SUPPORTING CLASSES: TAGS AND SIDEBAR ELEMENTS
 # ···························································
@@ -257,6 +283,15 @@ class BlogSidebar():
     Include me on any Page class that needs the blog sidebar.
     (The template knows what to do with these goodies.)
     """
+    @staticmethod
+    def get_slogan():
+        return (
+            Slogan.objects.filter(is_active=True)
+            .order_by('?')
+            .values_list('text', flat=True)
+            .first()
+        )
+
     def archives_by_tag(self):
         top = ['micro', 'snapshot']
         post_tags = PostTag.tags_for(Page).order_by(Lower('name'))

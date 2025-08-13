@@ -34,6 +34,11 @@ textarea {
   font-family: $mono-stack;
 }
 
+#slogan {
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
 .annotation-toggle {
   span {
     &::before {
