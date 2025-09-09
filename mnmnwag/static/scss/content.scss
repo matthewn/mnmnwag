@@ -13,6 +13,9 @@
     blockquote {
       display: flow-root;
       padding-left: 2rem;
+      p:last-child {
+        margin-bottom: 0;
+      }
     }
     code:only-child {
       overflow-x: scroll;
