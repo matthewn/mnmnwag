@@ -11,6 +11,7 @@
       cursor: pointer;
     }
     blockquote {
+      display: flow-root;
       padding-left: 2rem;
     }
     code:only-child {
