@@ -160,6 +160,12 @@ STORAGES = {
     "staticfiles": {
         "BACKEND": 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage',
     },
+    "dbbackup": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "OPTIONS": {
+            "location": os.path.join(BASE_DIR, 'private', 'db'),
+        }
+    },
 }
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -197,7 +203,6 @@ AKISMET_TEST_MODE = False
 
 
 # django-comments(-xtd)
-
 COMMENTS_APP = 'django_comments_xtd'
 COMMENTS_XTD_CONFIRM_EMAIL = False
 COMMENTS_XTD_FORM_CLASS = 'mnmnwag.forms.MahnaCommentForm'
@@ -205,7 +210,6 @@ COMMENTS_XTD_MAX_THREAD_LEVEL = 8
 
 
 # django-compressor
-
 COMPRESS_ENABLED = True
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),
@@ -213,32 +217,25 @@ COMPRESS_PRECOMPILERS = (
 
 
 # django-dbbackup
-
-DBBACKUP_CLEANUP_KEEP = 60
+DBBACKUP_CLEANUP_KEEP = 15
 DBBACKUP_FILENAME_TEMPLATE = 'mnmnwag-{datetime}.sql'
-DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
-DBBACKUP_STORAGE_OPTIONS = {'location': os.path.join(BASE_DIR, 'private', 'db')}
 
 
 # django-debug-toolbar
-
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
 
 # django-honeypot
-
 HONEYPOT_FIELD_NAME = 'homepage'
 
 
 # django-libsass
-
 LIBSASS_OUTPUT_STYLE = 'compressed'
 
 
 # django-richtextfield (for seevooplay)
-
 DJRICHTEXTFIELD_CONFIG = {
     'js': [
         '//cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1/trumbowyg.min.js',
@@ -274,6 +271,5 @@ SECRETBALLOT_FOR_MODELS = {
 
 
 # extlinks
-
 EXTLINKS_IGNORE_DOMAINS = ['www.mahnamahna.net', 'www.madprops.info']
 EXTLINKS_TEMPLATES_WHITELIST = ['mnmnwag', 'madprops']
