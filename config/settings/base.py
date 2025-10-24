@@ -14,6 +14,10 @@ INSTALLED_APPS = [
     'admin_tweaks',
     'search',
 
+    'mnmnwag',  # mnmnwag takes template precedence over madprops
+    'madprops',
+    'subs',
+
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.contrib.search_promotions',
@@ -32,10 +36,6 @@ INSTALLED_APPS = [
 
     'modelcluster',
     'taggit',
-
-    'mnmnwag',  # mnmnwag takes template precedence over madprops
-    'madprops',
-    'subs',
 
     'djrichtextfield',  # required for seevooplay
     'seevooplay',
