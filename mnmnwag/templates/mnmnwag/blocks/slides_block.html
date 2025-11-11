@@ -1,5 +1,6 @@
 {% load wagtailimages_tags %}
 {% load wagtailcore_tags %}
+{% load prefix %}
 {% load static %}
 {% load typefixes %}
 
@@ -17,11 +18,12 @@
     {# (homebrew version provides a js-free, full-roundtrips gallery fallback) #}
     {% if is_gallery %}
         {% image slide.image original as original_image %}
+        {% prefix as this_prefix %}
         <picture class="slide-gallery" style="display: none;">
-            <a href="{{ original_image.url }}" data-sub-html=".c{{ forloop.counter }}">
+            <a href="{{ original_image.url }}" data-sub-html=".{{ this_prefix }}{{ forloop.counter }}">
                 <img src="{{ small_image.file.url }}" alt="{% if slide.alt_text %}thumbnail for {{ slide.alt_text }}{% endif %}">
             </a>
-            <div class="c{{ forloop.counter }}" style="display: none;">{{ slide.caption|richtext|typefixes_minimal }}</div>
+            <div class="{{ this_prefix }}{{ forloop.counter }}" style="display: none;">{{ slide.caption|richtext|typefixes_minimal }}</div>
         </picture>
     {% endif %}
 
