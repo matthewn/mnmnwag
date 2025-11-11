@@ -163,15 +163,42 @@ class GalleryPage(BasePage):
         FieldPanel('first_published_at'),
     ]
 
-    def get_exif_description(self, image):
+    def get_img_description(self, image):
         """
-        Return an image's EXIF ImageDescription or None.
+        Return an image's embedded description/caption.
+            Checks in priority order:
+            1. IPTC Caption
+            2. XMP Embedded Description
+            3. Exif User Comment
+            4. Exif ImageDescription
         """
         f = image.file.file.open()
         i = pyexiv2.ImageData(f.read())
-        exif_desc = i.read_exif().get('Exif.Image.ImageDescription')
+        exif_data = i.read_exif()
+        iptc_data = i.read_iptc()
+        xmp_data = i.read_xmp()
+        description = None
+
+        iptc_caption = iptc_data.get('Iptc.Application2.Caption')
+        if iptc_caption:
+            description = iptc_caption
+
+        if not description:
+            xmp_desc = xmp_data.get('Xmp.dc.description')
+            if xmp_desc:
+                description = xmp_desc
+
+        if not description:
+            user_comment = exif_data.get('Exif.Photo.UserComment')
+            if user_comment:
+                description = user_comment
+
+        if not description:
+            description = exif_data.get('Exif.Image.ImageDescription')
+
+        print(f'description: {description}')
         i.close()
-        return exif_desc
+        return description
 
     @property
     def page_message(self):
@@ -191,7 +218,7 @@ class GalleryPage(BasePage):
             slides_block = []
             for image in images:
                 # check for EXIF ImageDescription, prefer over common_caption
-                exif_desc = self.get_exif_description(image)
+                exif_desc = self.get_img_description(image)
                 caption = exif_desc or self.common_caption
                 slide_block = {
                     'image': image,
