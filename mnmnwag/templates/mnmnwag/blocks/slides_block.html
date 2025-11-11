@@ -21,7 +21,7 @@
         {% prefix as this_prefix %}
         <picture class="slide-gallery" style="display: none;">
             <a href="{{ original_image.url }}" data-sub-html=".{{ this_prefix }}{{ forloop.counter }}">
-                <img src="{{ small_image.file.url }}" alt="{% if slide.alt_text %}thumbnail for {{ slide.alt_text }}{% endif %}">
+                <img src="{{ small_image.file.url }}" alt="{% if slide.alt_text %}thumbnail for {{ slide.alt_text }}{% endif %}" loading="lazy">
             </a>
             <div class="{{ this_prefix }}{{ forloop.counter }}" style="display: none;">{{ slide.caption|richtext|typefixes_minimal }}</div>
         </picture>
