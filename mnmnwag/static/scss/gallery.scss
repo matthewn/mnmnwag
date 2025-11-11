@@ -25,9 +25,9 @@
   }
 }
 
-#lg-download-1 {
-  &:hover { color: #fff; }
-  color: #999;
+[id^="lg-download-"]{
+  &:hover { color: #fff !important; }
+  color: #999 !important;
 }
 
 .lg-img-wrap {
