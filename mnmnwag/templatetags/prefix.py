@@ -1,14 +1,30 @@
 from django import template
-
-import secrets
-import string
+from threading import local
 
 register = template.Library()
+_thread_state = local()
 
 
-@register.simple_tag
-def prefix():
+@register.simple_tag(takes_context=True)
+def prefix(context, scope='c'):
     """
-    Return e.g. "acwk-" or "ctbc-" as a reusable prefix for HTML class names.
+    Returns a sequential string suitable for use as an HTML class or ID.
+    Scopes are independent within a request, e.g.:
+
+        {% prefix "a" %} → a1, a2, ...
+        {% prefix "b" %} → b1, b2, ...
+
+    The counters reset each request.
     """
-    return ''.join(secrets.choice(string.ascii_lowercase) for _ in range(4)) + '-'
+    request = context.get('request')
+    target = request if request is not None else _thread_state
+
+    # get or create a dict of counters for this request/thread
+    counters = getattr(target, '_prefix_counters', None)
+    if counters is None:
+        counters = {}
+        setattr(target, '_prefix_counters', counters)
+
+    # increment the counter for this scope
+    counters[scope] = counters.get(scope, 0) + 1
+    return f'{scope}{counters[scope]}-'
