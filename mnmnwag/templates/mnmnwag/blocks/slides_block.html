@@ -11,7 +11,7 @@
     {% image slide.image fill-180x180 as small_image %}
     <picture class="slide-homebrew">
         <a href="{% url 'zoom_slide' page_id=page_id block_id=block_id pos=forloop.counter0 %}" up-layer="new modal" up-history="true" up-animation="fade-in">
-            <img src="{{ small_image.file.url }}" alt="{% if slide.alt_text %}thumbnail for {{ slide.alt_text }}{% endif %}">
+            <img src="{{ small_image.file.url }}" alt="{% if slide.alt_text %}thumbnail for {{ slide.alt_text }}{% endif %}" loading="lazy">
         </a>
     </picture>
 
