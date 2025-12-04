@@ -10,6 +10,9 @@ Disallow: /fridge/
 User-agent: *
 Disallow: /trap
 
+User-agent: AhrefsBot
+Disallow: /
+
 User-agent: SemrushBot
 Disallow: /
 
