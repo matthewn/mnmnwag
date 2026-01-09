@@ -551,10 +551,10 @@ class BlogIndex(RoutablePageMixin, BasePage, BlogSidebar):
     ]
 
     def get_posts(self):
-        return Page.objects.descendant_of(self).live().order_by('-first_published_at')
+        return Page.objects.descendant_of(self).live().public().order_by('-first_published_at')
 
     def get_modern_posts(self):
-        return ModernPost.objects.descendant_of(self).live().order_by('-first_published_at')
+        return ModernPost.objects.descendant_of(self).live().public().order_by('-first_published_at')
 
     def paginate_posts(self, request, posts):
         paginator = Paginator(posts, 20)

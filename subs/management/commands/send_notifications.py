@@ -10,7 +10,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         tracker = SubscriptionsTracker.load()
-        posts = ModernPost.objects.live().filter(
+        posts = ModernPost.objects.live().public().filter(
             first_published_at__gte=tracker.last_run_at
         )
         if posts:
