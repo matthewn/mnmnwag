@@ -170,6 +170,18 @@ body {
       }
 
       // THE "SIDEBAR"
+      #us-flag {
+        display: inline-block;
+        filter: saturate(40%) opacity(80%) brightness(1.1);
+        line-height: 0;
+        transform: scaleY(-1);
+        width: 75%;
+        svg {
+          display: block;
+          height: auto;
+          width: 100%;
+        }
+      }
       > aside {
         @include media(desktop) {
           flex-grow: 1;
