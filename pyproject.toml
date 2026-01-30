@@ -22,7 +22,7 @@ dependencies = [
     "django-libsass",
     "django-likes",
     "django-markdown2",
-    "django-typogrify",
+    "typogrify",
     "gunicorn",
     "mastodon-py",
     "num2words",
@@ -35,6 +35,7 @@ dependencies = [
     "wagtailmedia",
     "wand",
     "werkzeug",
+    "jinja2>=3.1.6",
 ]
 
 [dependency-groups]
@@ -44,4 +45,3 @@ dev = []
 
 [tool.uv.sources]
 django-likes = { git = "https://github.com/matthewn/django-likes", branch = "django5" }
-django-typogrify = { git = "https://github.com/matthewn/django-typogrify", branch = "django40" }

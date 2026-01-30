@@ -36,9 +36,7 @@ def typefixes(text):
 def typefixes_minimal(text):
     """
     A version of the typefixes filter that only applies smartypants instead of
-    the whole typogrify suite of fixes, thus avoiding more problematic filters
-    like number_suffix, which breaks lightgallery (the js library we use on
-    GalleryPages).
+    the whole typogrify suite of fixes.
     """
     # unescape characters from wagtail richtext filter
     text = text.replace('&quot;', '"')
