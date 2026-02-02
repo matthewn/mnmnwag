@@ -152,13 +152,16 @@ body {
         ol,
         ul {
           margin-left: 3rem;
-          li {
-            margin-bottom: 1rem;
-          }
         }
-
         ul {
           list-style: disc;
+        }
+        ul ul {
+          list-style: circle;
+          margin-top: 1rem;
+        }
+        li {
+          margin-bottom: 1rem;
         }
 
         &.blog {

@@ -5,7 +5,7 @@
     {% if page.content_type.model == 'blogindex' or is_search_page %}
         <a href="{% pageurl post %}" {% if is_search_page %}up-nav-link{% else %}up-blog-link{% endif %}>
             {% if not post.specific.is_micro %}
-                <h3 class="post-title">{{ post.title|typefixes }}</h3>
+                <h3 class="post-title">{{ post.title|typefixes_minimal }}</h3>
             {% else %}
                 <span class="asterism">⁂</span>
             {% endif %}
@@ -13,7 +13,7 @@
     {% else %}
         <a href="{% pageurl post %}">
             {% if not post.specific.is_micro %}
-                <h2 class="post-title">{{ post.title|typefixes }}</h2>
+                <h2 class="post-title">{{ post.title|typefixes_minimal }}</h2>
             {% else %}
                 ⁂
             {% endif %}
