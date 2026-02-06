@@ -28,7 +28,7 @@ def typefixes(text):
 
     text = typogrify(text)
     text = alumyears(text)
-    return text
+    return mark_safe(text)
 
 
 @register.filter(is_safe=True)
@@ -45,7 +45,7 @@ def typefixes_minimal(text):
     text = smartypants(text)
 
     text = alumyears(text)
-    return text
+    return mark_safe(text)
 
 
 @register.filter
