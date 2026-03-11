@@ -354,7 +354,10 @@ class BlogSidebar():
 
     @staticmethod
     def blogroll():
-        return BasicPage.objects.get(title='Blogroll').body
+        try:
+            return BasicPage.objects.get(title='Blogroll').body
+        except BasicPage.DoesNotExist:
+            return None
 
     def get_tag_link_li(self, tag):
         count = PostTag.objects.filter(tag=tag).count()
