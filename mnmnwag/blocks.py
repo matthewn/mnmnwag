@@ -110,7 +110,7 @@ class LoadedStreamBlock(StreamBlock):
             'superscript',
             'subscript',
             'strikethrough',
-            'kbd'
+            'kbd',
             'code',
             'link',
             'image',
