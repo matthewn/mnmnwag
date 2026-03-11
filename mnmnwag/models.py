@@ -11,6 +11,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.html import strip_tags
 
+from functools import lru_cache
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import Tag, TaggedItemBase
@@ -52,16 +53,9 @@ import pyexiv2
 import re
 
 
-# module-level cached value
-_blog_index = None
-
-
+@lru_cache(maxsize=1)
 def get_blog_index():
-    # this value NEVER changes, so we only want to look it up once
-    global _blog_index
-    if _blog_index is None:
-        _blog_index = BlogIndex.objects.get()
-    return _blog_index
+    return BlogIndex.objects.get()
 
 
 # ···························································
