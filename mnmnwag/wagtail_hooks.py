@@ -28,7 +28,7 @@ def register_kbd_feature(features):
         'label': 'K',
         'description': 'Kbd',
         'style': {
-            'background-color': 'rgba(27, 31, 35, 0.05',
+            'background-color': 'rgba(27, 31, 35, 0.05)',
             'font-family': 'Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, sans-serif',
             'font-size': '85%',
             'margin': '0px',
