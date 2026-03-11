@@ -58,3 +58,4 @@ def namecloak(text):
         )
     if site == 'madprops':
         return text.replace('Matthew Newton', 'The Mad Propster')
+    return text
