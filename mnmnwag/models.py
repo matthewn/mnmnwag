@@ -196,7 +196,6 @@ class GalleryPage(BasePage):
         if not description:
             description = exif_data.get('Exif.Image.ImageDescription')
 
-        print(f'description: {description}')
         i.close()
         return description
 
