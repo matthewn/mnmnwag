@@ -79,7 +79,7 @@ def zoom_slide(request, page_id, block_id, pos):
     Display one slide from a SlidesBlock in a Page.
 
     page_id is the id of a Page containing one or more SlidesBlocks
-    block_id is the 1st 8 digits of the uuid of the SlidesBlock to reference
+    block_id is the 1st 7 characters of the uuid of the SlidesBlock to reference
     pos ('position') is a zero-based index of the slide to display
     """
     if 'mahnamahna' not in request.get_host():
