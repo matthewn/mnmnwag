@@ -1,14 +1,14 @@
 ul.pager {
   align-items: stretch;
   display: flex;
-  font-family: $mono-stack;
+  font-family: var(--mono-stack);
   font-size: .94rem;
   font-weight: normal;
   list-style: none !important;
   margin: 3rem 0 4rem !important;
   width: 100%;
   .pager-pages {
-    @include media(mobile) {
+    @media (width < 920px) {
       width: 100%;
     }
     display: flex;

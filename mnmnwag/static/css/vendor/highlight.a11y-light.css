@@ -1,7 +1,7 @@
 .theme-light {
 
   code.hljs {
-    border: 1px dashed $jet !important;
+    border: 1px dashed var(--jet) !important;
   }
 
   /* a11y-light theme */

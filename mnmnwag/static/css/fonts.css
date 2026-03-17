@@ -1,18 +1,9 @@
-// font stacks
-$sans-stack: 'Raleway', sans-serif;
-$serif-stack: 'Alegreya', serif;
-$mono-stack: 'Nanum Gothic Coding', monospace;
-
-// font weights
-$medium: 500;     // Alegreya uses this
-$semibold: 600;   // Raleway uses this
-
 [style-as-button] {
   font-size: 1rem;
 }
 
 h2, .h2 {
-  font-family: $sans-stack;
+  font-family: var(--sans-stack);
   font-size: 1.6rem;
 }
 
@@ -26,12 +17,12 @@ h4, .h4 {
 
 code, kbd, samp {
   font-size: 1rem;
-  font-weight: $semibold;
+  font-weight: var(--semibold);
 }
 
 input[type='text'],
 textarea {
-  font-family: $mono-stack;
+  font-family: var(--mono-stack);
 }
 
 #slogan {
@@ -47,34 +38,34 @@ textarea {
       line-height: 0;
       margin-right: .45rem;
     }
-    font-family: $sans-stack;
+    font-family: var(--sans-stack);
     font-variant: small-caps;
   }
 }
 
 .asterism {
-  // Raleway does not have the asterism, so we force Alegreya
-  // to prevent a fallback to system fonts
-  font-family: $serif-stack;
+  /* Raleway does not have the asterism, so we force Alegreya
+     to prevent a fallback to system fonts */
+  font-family: var(--serif-stack);
   position: relative;
   top: 2px;
 }
 
 .force-mono {
-  font-family: $mono-stack;
+  font-family: var(--mono-stack);
 }
 
 .force-sans {
-  font-family: $sans-stack;
+  font-family: var(--sans-stack);
 }
 
 .force-serif,
 .mahna {
-  font-family: $serif-stack;
+  font-family: var(--serif-stack);
 }
 
 .post-title {
-  font-weight: $semibold;
+  font-weight: var(--semibold);
 }
 
 .post-info {
@@ -85,9 +76,9 @@ textarea {
 }
 
 .read-more {
-  font-family: $sans-stack;
+  font-family: var(--sans-stack);
   font-size: 1.15rem;
-  font-weight: $semibold;
+  font-weight: var(--semibold);
   letter-spacing: .2rem;
   text-transform: lowercase;
 }
@@ -109,7 +100,7 @@ textarea {
   > details {
     summary {
       font-size: .75rem;
-      font-weight: $semibold;
+      font-weight: var(--semibold);
       text-transform: uppercase;
     }
     li {
@@ -120,7 +111,7 @@ textarea {
     label,
     label + span {
       font-size: .75rem;
-      font-weight: $semibold;
+      font-weight: var(--semibold);
     }
     label {
       text-transform: uppercase;
@@ -138,15 +129,15 @@ textarea {
 }
 
 
-// MAIN LAYOUT FROM _layouts.scss DUPLICATED (mostly) HERE
+/* MAIN LAYOUT (see layout.css) */
 body {
-  font-family: $serif-stack;
+  font-family: var(--serif-stack);
 
   #header {
-    font-family: $sans-stack;
+    font-family: var(--sans-stack);
     font-size: 2rem;
     #site-logo {
-      font-family: $mono-stack;
+      font-family: var(--mono-stack);
       font-size: 4rem;
       letter-spacing: -.12em;
     }
@@ -156,29 +147,30 @@ body {
   }
 
   #navbar {
-    font-family: $sans-stack;
+    font-family: var(--sans-stack);
     #page-message {
-      font-weight: $semibold;
+      font-weight: var(--semibold);
     }
     nav {
       font-size: 1.1rem;
       a.active,
       a.up-active {
-        font-weight: $semibold;
+        font-weight: var(--semibold);
       }
     }
   }
 
   #content {
     .constrainer > aside {
-      font-family: $sans-stack;
+      font-family: var(--sans-stack);
       h4, .h4 {
         font-size: 1rem;
         text-transform: uppercase;
       }
     }
 
-    .constrainer main.blog,  // maintains style during unpoly transition
+    /* maintains style during unpoly transition */
+    .constrainer main.blog,
     .constrainer > main {
       p,
       blockquote,
@@ -186,7 +178,7 @@ body {
       ol,
       details {
         font-size: 1.25rem;
-        line-height: $normal-line-height;
+        line-height: var(--normal-line-height);
       }
       blockquote {
         font-style: italic;
@@ -197,13 +189,13 @@ body {
 
       header,
       footer {
-        font-family: $sans-stack;
+        font-family: var(--sans-stack);
       }
     }
   }
 
   > footer {
-    font-family: $sans-stack;
+    font-family: var(--sans-stack);
   }
 }
 
@@ -215,6 +207,6 @@ form.subs {
 
 #stats {
   b {
-    font-weight: $semibold;
+    font-weight: var(--semibold);
   }
 }

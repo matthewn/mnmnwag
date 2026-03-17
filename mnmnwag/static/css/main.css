@@ -1,0 +1,67 @@
+/*
+ * mnmnwag breakpoints:
+ *   desktop: width >= 920px
+ *   mobile:  width < 920px
+ *   tiny:    width <= 399px
+ */
+
+:root {
+  /* layout */
+  --content-max-width: 820px;
+  --site-max-width: 1200px;
+  --std-padding: 2.5rem 2.5rem 3rem 2.5rem;
+  --std-padding-short: .8rem 2.5rem .8rem 2.5rem;
+  --std-padding-mobile: 2.5rem 1rem 3rem;
+  --std-padding-mobile-short: 1rem;
+
+  /* typography */
+  --sans-stack: 'Raleway', sans-serif;
+  --serif-stack: 'Alegreya', serif;
+  --mono-stack: 'Nanum Gothic Coding', monospace;
+  --medium: 500;
+  --semibold: 600;
+  --normal-line-height: 1.55;
+
+  /* named colors (coolors.co) */
+  --white: #fffff8; /* baby powder */
+  --black: #000807; /* rich black (FOGRA39) */
+  --dark-grey: #333;
+
+  /* light theme */
+  --azure: azure;
+  --jet: #333138;
+  --manatee: #a2a3bb;
+  --red: #a34054; /* amaranth purple */
+  --star-command-blue: #0e79b2;
+
+  /* dark theme */
+  --blizzard-blue: #b8f3ff;
+  --dark-blue: #181f41; /* space cadet */
+  --dark-cyan: #368f8b;
+  --ming: #246a73;
+  --platinum: #e0e0e0;
+
+  /* retro theme */
+  --aqua: #0df; /* sky blue (crayola) */
+  --dark-green: #040; /* lincoln green */
+  --green: #0f0;
+  --sheen-green: #ad0;
+
+  /* active theme defaults */
+  --fg-color: var(--jet);
+  --link-color: var(--star-command-blue);
+}
+
+body {
+  transition: all .25s;
+}
+
+a, a:link, a:visited {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+picture > a:hover {
+  text-decoration: none;
+}

@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 // DEPENDENCIES: ./cookies.js, ./theme_picker.js, ../vendor/unpoly.js
 
 document.addEventListener('DOMContentLoaded', function() {

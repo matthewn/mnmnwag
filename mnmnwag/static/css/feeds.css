@@ -6,7 +6,7 @@
     margin: 1rem 0 1.5rem;
   }
   .taglist {
-    @include media(desktop) {
+    @media (width >= 920px) {
       column-count: 5;
     }
     line-height: 2;
@@ -30,7 +30,7 @@
   }
   .copied {
     font-size: 1.25rem;
-    font-weight: $semibold;
+    font-weight: var(--semibold);
     margin-left: .5rem;
   }
 }

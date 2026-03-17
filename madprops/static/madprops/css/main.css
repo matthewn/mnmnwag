@@ -1,22 +1,21 @@
-@import 'mixins';
-@import 'bogus';
-@import 'header';
-@import 'navbar';
-@import 'footer';
-@import 'leaders';
-@import 'annotations';
+/*
+ * madprops breakpoints:
+ *   desktop: width > 720px
+ *   mobile:  width <= 720px
+ *   tiny:    width <= 340px
+ */
 
 :root {
-  // colors
+  /* colors */
   --fg-color: #000;
-  --bg-color: #feffed;  // ivory
+  --bg-color: #feffed;  /* ivory */
   --link-color: blue;
   --visited-link-color: purple;
 
-  // dimensions
+  /* dimensions */
   --content-max-width: 45rem;
 
-  // weights
+  /* weights */
   --light: 300;
   --semibold: 600;
 }
@@ -28,9 +27,9 @@ html {
 body {
   &.theme-dark {
     --fg-color: #feffed;
-    --bg-color: #2e2525;  // raisin black
-    --link-color: #87cefa;  // light sky blue
-    --visited-link-color: #be79ac;  // opera mauve
+    --bg-color: #2e2525;  /* raisin black */
+    --link-color: #87cefa;  /* light sky blue */
+    --visited-link-color: #be79ac;  /* opera mauve */
     #theme-picker {
       .light { display: block; }
     }
@@ -69,7 +68,7 @@ a:hover:not(.invisible) {
   text-decoration: underline;
 }
 a.invisible {
-  // hide hover underline on header link
+  /* hide hover underline on header link */
   color: var(--fg-color);
 }
 .madprops a[id^='footnote-source'] {
@@ -93,7 +92,7 @@ h4, .h4 { font-size: 1.25rem; }
 }
 
 #content {
-  flex: 1;  // makes sticky footer happen
+  flex: 1;  /* makes sticky footer happen */
 }
 
 #home-banner {
@@ -109,11 +108,11 @@ h4, .h4 { font-size: 1.25rem; }
 }
 
 main {
-  @include media(mobile) {
-    margin: 0 1rem;
-  }
   line-height: 1.6;
   margin: 0 2rem;
+  @media (width <= 720px) {
+    margin: 0 1rem;
+  }
   > * {
     margin-bottom: 2rem;
   }
@@ -146,7 +145,7 @@ main {
     border-left: 1px dashed var(--fg-color);
     margin-left: 3rem;
     padding-left: 1rem;
-    @include media(mobile) {
+    @media (width <= 720px) {
       margin-left: 2rem;
     }
   }
@@ -172,7 +171,7 @@ article.edition {
     margin-bottom: 1rem;
   }
   .block-prop + :not(.block-prop):last-child {
-    // style outro paragraphs
+    /* style outro paragraphs */
     border-top: 1px solid var(--fg-color);
     margin-top: 3rem;
     padding-top: 3rem;
@@ -227,15 +226,15 @@ article.prop {
 }
 
 .cheatsheet {
-  @include media(tiny) {
-    float: none;
-    margin: unset;
-  }
   border: 1px solid var(--fg-color);
   float: right;
   font-family: OpenSansCondensed, sans-serif;
   font-weight: bold;
   margin: 0 0 2rem 2.5rem;
+  @media (width <= 340px) {
+    float: none;
+    margin: unset;
+  }
   min-width: 20%;
   padding: .75rem 1rem 1rem;
   h3 {

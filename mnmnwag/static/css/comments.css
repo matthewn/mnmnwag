@@ -54,7 +54,7 @@ body #content .comment-form-container {
   }
   label,
   label + span {
-    font-family: $sans-stack;
+    font-family: var(--sans-stack);
   }
   h4,
   .error-message {
@@ -74,7 +74,7 @@ body #content .comment-form-container {
     .has-danger,
     .has-error {
       input, textarea {
-        border: 2px solid $red;
+        border: 2px solid var(--red);
       }
     }
     .row {

@@ -1,0 +1,220 @@
+body.theme-light {
+  --fg-color: var(--jet);
+  --link-color: var(--star-command-blue);
+  background-color: var(--white);
+  color: var(--jet);
+  a, a:link, a:visited { color: var(--star-command-blue); }
+  > header {
+    border-bottom: 2px solid var(--manatee);
+    color: var(--black);
+    a, a:link, a:visited { color: var(--jet); }
+    a:hover { color: var(--star-command-blue); }
+  }
+  > #navbar > .constrainer {
+    border-bottom: 2px solid var(--manatee);
+    border-left: 2px solid var(--manatee);
+    border-right: 2px solid var(--manatee);
+  }
+  #content > .constrainer {
+    > aside { background-color: var(--azure); }
+    > main { color: var(--jet); }
+  }
+  > footer {
+    border-top: 2px solid var(--manatee);
+  }
+
+  ul.pager .pager-item {
+    border-color: var(--white);
+    &.active {
+      border-color: var(--black);
+    }
+    &:hover {
+      border-color: var(--red);
+    }
+  }
+
+  #content .block-image .float img {
+    border: 1px solid var(--jet);
+  }
+
+  input[type='text'],
+  textarea {
+    border: 1px dashed var(--jet) !important;
+  }
+  [style-as-button] {
+    background-color: var(--jet);
+    color: var(--white);
+  }
+  up-modal-content {
+    background-color: var(--white);
+  }
+  up-modal-dismiss {
+    color: var(--star-command-blue);
+  }
+  up-progress-bar {
+    background-color: var(--star-command-blue);
+  }
+
+  .wagtail-userbar__item a { color: #aaa; }
+
+  .likes {
+    img {
+      filter: invert(17%) sepia(10%) saturate(598%) hue-rotate(216deg) brightness(92%) contrast(88%);
+    }
+    .liker img {
+      filter: invert(38%) sepia(75%) saturate(929%) hue-rotate(166deg) brightness(87%) contrast(92%);
+    }
+  }
+}
+
+body.theme-dark {
+  --fg-color: var(--platinum);
+  --link-color: var(--blizzard-blue);
+  background-color: var(--black);
+  color: var(--platinum);
+  a, a:link, a:visited { color: var(--blizzard-blue); }
+  > header {
+    background-color: var(--dark-blue);
+    border-bottom: 2px solid var(--ming);
+    a, a:link, a:visited { color: var(--platinum); }
+    a:hover { color: var(--blizzard-blue); }
+  }
+  > #navbar > .constrainer {
+    border-bottom: 2px solid var(--ming);
+    border-left: 2px solid var(--ming);
+    border-right: 2px solid var(--ming);
+  }
+  #content > .constrainer {
+    > aside {
+      background-color: var(--ming);
+      [style-as-button] {
+        background-color: var(--dark-blue);
+        color: var(--platinum);
+      }
+    }
+    > main {
+      background-color: var(--dark-blue);
+      color: var(--platinum);
+    }
+  }
+  > footer {
+    border-top: 2px solid var(--ming);
+  }
+
+  ul.pager .pager-item {
+    border-color: var(--dark-blue);
+    &.active {
+      border-color: var(--ming);
+    }
+    &:hover {
+      border-color: var(--dark-cyan);
+    }
+  }
+
+  input[type='text'],
+  textarea {
+    background-color: var(--dark-grey);
+    color: var(--platinum);
+    &::placeholder { color: var(--platinum); }
+  }
+  [style-as-button] {
+    background-color: var(--ming);
+    color: var(--white);
+  }
+  up-modal-content {
+    background-color: var(--black);
+  }
+  up-modal-dismiss {
+    color: var(--blizzard-blue);
+  }
+  up-progress-bar {
+    background-color: var(--blizzard-blue);
+  }
+  .likes {
+    img {
+      filter: invert(96%) sepia(0%) saturate(5234%) hue-rotate(156deg) brightness(88%) contrast(107%);
+    }
+    .liker img {
+      filter: invert(100%) sepia(31%) saturate(4727%) hue-rotate(168deg) brightness(101%) contrast(101%);
+    }
+  }
+}
+
+body.theme-retro {
+  --fg-color: var(--green);
+  --link-color: var(--aqua);
+  background-color: var(--black);
+  color: var(--green);
+  a, a:link, a:visited { color: var(--aqua); }
+  a:hover { color: var(--sheen-green); }
+  > header {
+    background-color: var(--black);
+    border-bottom: 2px solid var(--green);
+    a, a:link, a:visited { color: var(--aqua); }
+    a:hover { color: var(--sheen-green); }
+  }
+  > #navbar > .constrainer {
+    border-bottom: 2px solid var(--green);
+    border-left: 2px solid var(--green);
+    border-right: 2px solid var(--green);
+    color: var(--sheen-green);
+    nav {
+      a, a:link, a:visited { color: var(--aqua); }
+      a:hover { color: var(--sheen-green); }
+    }
+  }
+  #content > .constrainer {
+    > aside {
+      background-color: var(--dark-green);
+      [style-as-button] {
+        background-color: var(--black);
+        color: var(--sheen-green);
+      }
+    }
+    > main { color: var(--green); }
+  }
+  > footer {
+    border-top: 2px solid var(--green);
+  }
+
+  ul.pager .pager-item {
+    border-color: var(--black);
+    &.active {
+      border-color: var(--green);
+    }
+    &:hover {
+      border-color: var(--sheen-green);
+    }
+  }
+
+  input[type='text'],
+  textarea {
+    background-color: var(--dark-grey);
+    color: var(--sheen-green);
+    &::placeholder { color: var(--sheen-green); }
+  }
+  [style-as-button] {
+    background-color: var(--dark-green);
+    color: var(--sheen-green);
+  }
+  up-modal-content {
+    background-color: var(--black);
+  }
+  up-modal-dismiss {
+    color: var(--aqua);
+    &:hover {
+      color: var(--sheen-green);
+    }
+  }
+  up-progress-bar {
+    background-color: var(--sheen-green);
+  }
+  .likes {
+    img {
+      filter: invert(65%) sepia(73%) saturate(5438%) hue-rotate(89deg) brightness(131%) contrast(112%);
+    }
+    .liker img {
+      filter: invert(62%) sepia(75%) saturate(1559%) hue-rotate(143deg) brightness(102%) contrast(105%);
+    }
+  }
+}

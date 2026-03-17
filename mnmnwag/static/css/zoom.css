@@ -36,8 +36,8 @@
     position: relative;
   }
   figcaption {
-    background-color: rgba(0, 0, 0, .5);
-    bottom: 5px;  // applies to fullpage version
+    background-color: rgb(0 0 0 / 0.5);
+    bottom: 5px;  /* applies to fullpage version */
     margin: 0 !important;
     padding: .35rem 1rem;
     position: absolute;
@@ -45,10 +45,9 @@
     text-wrap: balance;
     width: 100%;
     p {
-      color: $white;
+      color: var(--white);
       font-size: 1rem !important;
       margin: 0 !important;
-      // max-height: 5rem;
       overflow-y: auto;
     }
   }
@@ -71,7 +70,7 @@
 up-modal-content {
   .zoom.slide {
     figcaption {
-      bottom: 0;  // applies to modal version
+      bottom: 0; /* applies to modal version */
     }
   }
   .parent-link {

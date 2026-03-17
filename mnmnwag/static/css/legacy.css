@@ -1,7 +1,7 @@
 .blog-post.legacy {
   > div {
     font-size: 1.25rem;
-    line-height: $normal-line-height;
+    line-height: var(--normal-line-height);
     blockquote {
       margin: 1rem 0 1rem 2rem;
       padding-left: 0 !important;

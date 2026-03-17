@@ -18,7 +18,7 @@
     text-wrap: balance;
   }
 
-  @include media(tiny) {
+  @media (width <= 399px) {
     .block-slides img {
       max-width: 48%;
     }
@@ -35,7 +35,7 @@
 }
 
 .lg-sub-html {
-  font-family: $serif-stack;
+  font-family: var(--serif-stack);
   font-size: 1.2rem !important;
   line-height: 1.3;
   text-shadow: 0 0 10px #000;

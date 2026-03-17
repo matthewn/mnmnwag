@@ -1,5 +1,5 @@
 #navbar {
-  @include media(tiny) {
+  @media (width <= 340px) {
     font-size: .9rem;
   }
   border-bottom: 1px solid var(--fg-color);
@@ -11,7 +11,7 @@
     align-items: center;
     display: flex;
     justify-content: space-between;
-    @include media(desktop) {
+    @media (width > 720px) {
       padding-left: 2rem;
     }
   }
@@ -27,20 +27,20 @@
       color: var(--fg-color);
     }
     &.active {
-      @include media(mobile) {
+      @media (width <= 720px) {
         font-variant: small-caps;
         font-weight: 900;
       }
       font-weight: bold;
       &::before,
       &::after {
-        @include media(mobile) {
+        @media (width <= 720px) {
           display: none;
         }
         font-size: 1.25rem;
         font-weight: 900;
         position: relative;
-        top: 1px; // it really does make a difference :P
+        top: 1px; /* it really does make a difference :P */
       }
       &::before {
         content: '>';

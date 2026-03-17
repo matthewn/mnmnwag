@@ -5,7 +5,7 @@
 
   &.micro {
     &:not(.snapshot) {
-      // position the asterism
+      /* position the asterism */
       > header {
         float: left;
         margin: .25rem .5rem 0 0;
@@ -23,7 +23,7 @@
     align-items: center;
     display: flex;
     justify-content: space-between;
-    line-height: $normal-line-height;
+    line-height: var(--normal-line-height);
     > div {
       margin-bottom: .25rem;
     }
@@ -46,7 +46,7 @@
         }
       }
     }
-    @include media(desktop) {
+    @media (width >= 920px) {
       .post-by, .post-date {
         display: inline-block;
       }

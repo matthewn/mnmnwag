@@ -13,7 +13,7 @@
   figure {
     display: table;
     &.float {
-      @include media(desktop) {
+      @media (width >= 920px) {
         max-width: 40%;
         img {
           max-height: unset;
@@ -30,7 +30,7 @@
     }
   }
   img {
-    @include media(desktop) {
+    @media (width >= 920px) {
       max-height: 95vh;
     }
   }
@@ -44,13 +44,13 @@
   margin-bottom: 1rem;
   .slide-homebrew {
     img {
-      max-width: 49%;  // fix for mobile; make 2 cols happen at 360px, etc.
+      max-width: 49%;  /* fix for mobile; make 2 cols happen at 360px, etc. */
     }
   }
 }
 
-// boilerplate for responsive wagtail embeds
-// https://docs.wagtail.io/en/latest/topics/writing_templates.html#responsive-embeds
+/* boilerplate for responsive wagtail embeds
+   https://docs.wagtail.io/en/latest/topics/writing_templates.html#responsive-embeds */
 .responsive-object {
   position: relative;
 }

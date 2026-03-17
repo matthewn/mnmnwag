@@ -211,9 +211,6 @@ COMMENTS_XTD_MAX_THREAD_LEVEL = 8
 
 # django-compressor
 COMPRESS_ENABLED = True
-COMPRESS_PRECOMPILERS = (
-    ('text/x-scss', 'django_libsass.SassCompiler'),
-)
 
 
 # django-dbbackup
@@ -229,10 +226,6 @@ INTERNAL_IPS = [
 
 # django-honeypot
 HONEYPOT_FIELD_NAME = 'homepage'
-
-
-# django-libsass
-LIBSASS_OUTPUT_STYLE = 'compressed'
 
 
 # django-richtextfield (for seevooplay)

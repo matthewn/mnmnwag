@@ -1,16 +1,9 @@
-$std-padding: 2.5rem 2.5rem 3rem 2.5rem;
-$std-padding-short: .8rem 2.5rem .8rem 2.5rem;
-
-$std-padding-mobile: 2.5rem 1rem 3rem;
-$std-padding-mobile-short: 1rem;
-
 [style-as-button] {
   border: none;
   padding: .5rem 1rem;
 }
 
-// for text we want read by screen readers,
-// but never seen onscreen
+/* for text we want read by screen readers, but never seen onscreen */
 [only-heard] {
   display: block;
   height: 0;
@@ -41,65 +34,71 @@ body {
   .constrainer {
     height: 100%;
     margin: 0 auto;
-    max-width: $site-max-width;
+    max-width: var(--site-max-width);
   }
 
   #header {
-    @include media(desktop) {
+    @media (width >= 920px) {
       padding-top: 1rem;
     }
-    @include media(mobile) {
+    @media (width < 920px) {
       padding-bottom: 1rem;
       text-align: center;
     }
     .constrainer {
-      @include media(mobile) {
-        padding: $std-padding-mobile-short;
+      padding: var(--std-padding-short);
+      @media (width < 920px) {
+        padding: var(--std-padding-mobile-short);
       }
-      padding: $std-padding-short;
     }
     a:hover { text-decoration: none; }
     #site-header {
-      @include media(mobile) {
-        flex-direction: column;
-      }
       align-items: baseline;
       display: flex;
       justify-content: space-between;
+      @media (width < 920px) {
+        flex-direction: column;
+      }
     }
     #site-logo {
-      @include mobile-full-width;
+      @media (width < 920px) {
+        width: 100%;
+      }
     }
     #site-name {
-      @include mobile-full-width;
       position: relative;
-      top: 5px;  // MAGIC NUMBER!
+      top: 5px;  /* MAGIC NUMBER! */
+      @media (width < 920px) {
+        width: 100%;
+      }
     }
   }
 
   #navbar {
     .constrainer {
-      @include media(mobile) {
-        flex-direction: column-reverse;
-        padding: $std-padding-mobile-short;
-        text-align: center;
-      }
       align-items: baseline;
       display: flex;
       justify-content: space-between;
-      padding: $std-padding-short;
+      padding: var(--std-padding-short);
+      @media (width < 920px) {
+        flex-direction: column-reverse;
+        padding: var(--std-padding-mobile-short);
+        text-align: center;
+      }
     }
     a.active:hover {
       text-decoration: none;
     }
     #page-message {
-      @include mobile-full-width;
+      @media (width < 920px) {
+        width: 100%;
+      }
     }
     nav {
-      @include media(desktop) {
-        min-width: 322px;  // MAGIC NUMBER!
+      @media (width >= 920px) {
+        min-width: 322px;  /* MAGIC NUMBER! */
       }
-      @include media(mobile) {
+      @media (width < 920px) {
         margin-bottom: 1rem;
         width: 100%;
       }
@@ -121,28 +120,29 @@ body {
   }
 
   #content {
-    @include media(desktop) {
+    flex-grow: 1;
+    @media (width >= 920px) {
       display: flex;
       flex-direction: column;
     }
-    flex-grow: 1;
 
     .constrainer {
-      @include media(desktop) {
+      display: flex;
+      flex-direction: column-reverse;
+      @media (width >= 920px) {
         align-items: stretch;
         flex-direction: row-reverse;
         flex-grow: 1;
         width: 100%;
       }
-      display: flex;
-      flex-direction: column-reverse;
 
-      main.blog,  // maintains style during unpoly transition
+      /* maintains style during unpoly transition */
+      main.blog,
       > * {
-        @include media(mobile) {
-          padding: $std-padding-mobile;
+        padding: var(--std-padding);
+        @media (width < 920px) {
+          padding: var(--std-padding-mobile);
         }
-        padding: $std-padding;
       }
 
       > main {
@@ -165,22 +165,22 @@ body {
         }
 
         &.blog {
-          @include media(desktop) {
-            max-width: $content-max-width;
+          @media (width >= 920px) {
+            max-width: var(--content-max-width);
             width: 100%;
           }
         }
       }
 
-      // THE "SIDEBAR"
+      /* THE "SIDEBAR" */
       > aside {
-        @include media(desktop) {
-          flex-grow: 1;
-          min-width: 295px; // wide enough for "archives by keyword" to fit
-          text-align: left;
-        }
         text-align: center;
         transition: all .25s;
+        @media (width >= 920px) {
+          flex-grow: 1;
+          min-width: 295px; /* wide enough for "archives by keyword" to fit */
+          text-align: left;
+        }
         > * {
           margin-bottom: 2rem;
         }
@@ -206,10 +206,10 @@ body {
   > footer {
     text-align: center;
     .constrainer {
-      @include media(mobile) {
-        padding: $std-padding-mobile;
+      padding: var(--std-padding);
+      @media (width < 920px) {
+        padding: var(--std-padding-mobile);
       }
-      padding: $std-padding;
     }
   }
 }
