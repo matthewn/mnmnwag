@@ -8,8 +8,8 @@ DEBUG = False
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/tmp/WAGTAIL_CACHE',
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',
         'KEY_PREFIX': 'wagtailcache',
         'TIMEOUT': 900,  # 15 minutes (in seconds)
     }

@@ -36,6 +36,7 @@ dependencies = [
     "wand",
     "werkzeug",
     "jinja2>=3.1.6",
+    "redis",
     "wagtail-cache>=3.0.0",
 ]
 
