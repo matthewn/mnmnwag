@@ -4,7 +4,7 @@ DEBUG = False
 
 
 # Django cache settings
-# https://docs.djangoproject.com/en/2.2/topics/cache/
+# https://docs.djangoproject.com/en/5.2/topics/cache/
 
 CACHES = {
     'default': {
@@ -18,5 +18,6 @@ CACHES = {
 
 # wagtailcache middleware entries
 
-# MIDDLEWARE.insert(0, 'wagtailcache.cache.UpdateCacheMiddleware')  # noqa: 405
-# MIDDLEWARE.append('wagtailcache.cache.FetchFromCacheMiddleware')  # noqa: 405
+MIDDLEWARE.insert(0, 'wagtailcache.cache.UpdateCacheMiddleware')  # noqa: F405
+MIDDLEWARE.insert(1, 'mnmnwag.middleware.ThemeClassCacheMiddleware')  # noqa: F405
+MIDDLEWARE.append('wagtailcache.cache.FetchFromCacheMiddleware')  # noqa: F405

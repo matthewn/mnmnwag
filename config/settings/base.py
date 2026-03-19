@@ -65,7 +65,7 @@ INSTALLED_APPS = [
     'likes',
     'secretballot',
     'typogrify',
-    # 'wagtailcache',
+    'wagtailcache',
     'wagtailmedia',
     'wagtail_footnotes',
 ]

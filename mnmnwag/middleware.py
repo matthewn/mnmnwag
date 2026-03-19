@@ -1,3 +1,25 @@
+from django.utils.cache import patch_vary_headers
+
+
+class ThemeClassCacheMiddleware:
+    """
+    Normalize the themeClass cookie into a request header so that
+    wagtailcache can vary its cache keys on theme without varying on
+    all cookies (which would make caching useless).
+    """
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        theme = request.COOKIES.get('themeClass', 'theme-light')
+        request.META['HTTP_X_THEME_CLASS'] = theme
+
+        response = self.get_response(request)
+        patch_vary_headers(response, ['X-Theme-Class'])
+        return response
+
+
 class AddUnpolyHeadersMiddleware(object):
     """
     Django reimplementation of

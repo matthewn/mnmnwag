@@ -675,6 +675,7 @@ dependencies = [
     { name = "setproctitle" },
     { name = "typogrify" },
     { name = "wagtail" },
+    { name = "wagtail-cache" },
     { name = "wagtail-footnotes" },
     { name = "wagtailmedia" },
     { name = "wand" },
@@ -710,6 +711,7 @@ requires-dist = [
     { name = "setproctitle" },
     { name = "typogrify" },
     { name = "wagtail" },
+    { name = "wagtail-cache", specifier = ">=3.0.0" },
     { name = "wagtail-footnotes" },
     { name = "wagtailmedia" },
     { name = "wand" },
@@ -1191,6 +1193,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/59/cf/c707a97e68d3edba40d1706457cc32f3c7679aa72dc43a4470cf58bca6f8/wagtail-7.3.tar.gz", hash = "sha256:81c3449652b17341fc794d65bdd208ae9e15f21743e8a6ca6bc2ce2e7b7312ce", size = 6859380, upload-time = "2026-02-03T12:16:43.707Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/79/5d/63694054535c99b04a476512810f5d254e6de440fc7d14696e93b9f43c7f/wagtail-7.3-py3-none-any.whl", hash = "sha256:519c84c47bccc2e42182a3879c6efe9f34d7233239b2899a99139ae3e17c5266", size = 9475481, upload-time = "2026-02-03T12:16:41.244Z" },
+]
+
+[[package]]
+name = "wagtail-cache"
+version = "3.0.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "wagtail" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/03/de/30e9441b66e9f679198ff5046b6bb6fa3dffe5e1a8268ac5b0847356ab89/wagtail_cache-3.0.0.tar.gz", hash = "sha256:a12b9f7dbd41b560b7fa77be08a6c7ab292536e37296dc910275b99c198ddd1e", size = 12318, upload-time = "2025-07-09T22:18:59.137Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/19/92/1c83f4c93e015034666ac192a7e7716236c9595331a8db45fa7b43d159ea/wagtail_cache-3.0.0-py3-none-any.whl", hash = "sha256:2bbb8d1bc5c4c9d7755113c0c8b91b3ec8a0c90bd560ef62aab99698961114fa", size = 14981, upload-time = "2025-07-09T22:18:57.637Z" },
 ]
 
 [[package]]
