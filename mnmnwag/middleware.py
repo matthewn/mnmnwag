@@ -1,4 +1,28 @@
+from django.core.cache import cache
+from django.http import HttpResponse
 from django.utils.cache import patch_vary_headers
+
+LIKES_RATE_LIMIT = 5  # max likes per IP per hour
+
+
+class LikeRateLimitMiddleware:
+    """
+    Rate-limit requests to /likes/ by IP address.
+    Allows up to LIKES_RATE_LIMIT requests per IP per rolling hour.
+    """
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        if request.path.startswith('/likes/'):
+            ip = request.META.get('REMOTE_ADDR', '')
+            cache_key = f'likes_rl:{ip}'
+            cache.add(cache_key, 0, 3600)
+            count = cache.incr(cache_key)
+            if count > LIKES_RATE_LIMIT:
+                return HttpResponse('Too Many Requests', status=429)
+        return self.get_response(request)
 
 
 class ThemeClassCacheMiddleware:

@@ -89,6 +89,7 @@ MIDDLEWARE = [
     'crequest.middleware.CrequestMiddleware',
     'extlinks.middleware.RewriteExternalLinksMiddleware',
     'likes.middleware.SecretBallotUserIpUseragentMiddleware',
+    'mnmnwag.middleware.LikeRateLimitMiddleware',
 ]
 
 TEMPLATES = [
