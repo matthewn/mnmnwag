@@ -5,10 +5,11 @@ from django.utils.cache import patch_vary_headers
 LIKES_RATE_LIMIT = 5  # max likes per IP per hour
 
 
-class LikeRateLimitMiddleware:
+class LikesGuardMiddleware:
     """
-    Rate-limit requests to /likes/ by IP address.
-    Allows up to LIKES_RATE_LIMIT requests per IP per rolling hour.
+    Guard /likes/ requests:
+    - Reject sessions that have not viewed a blog page.
+    - Rate-limit by IP address to LIKES_RATE_LIMIT requests per hour.
     """
 
     def __init__(self, get_response):
@@ -16,6 +17,8 @@ class LikeRateLimitMiddleware:
 
     def __call__(self, request):
         if request.path.startswith('/likes/'):
+            if not request.session.get('has_viewed_blog'):
+                return HttpResponse('Forbidden', status=403)
             ip = request.META.get('REMOTE_ADDR', '')
             cache_key = f'likes_rl:{ip}'
             cache.add(cache_key, 0, 3600)

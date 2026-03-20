@@ -404,6 +404,15 @@ class BlogSidebar():
 # BLOG POSTS: LEGACY (FROM DRUPAL) AND MODERN (WAGTAIL)
 # ···························································
 
+class BlogPageMixin:
+    """
+    Mark the session as having viewed a blog page, to allow liking.
+    """
+    def serve(self, request, *args, **kwargs):
+        request.session['has_viewed_blog'] = True
+        return super().serve(request, *args, **kwargs)
+
+
 class BlogPost(models.Model, BlogSidebar):
     has_comments_enabled = models.BooleanField(
         default=True,
@@ -433,7 +442,7 @@ class BlogPost(models.Model, BlogSidebar):
             return dt.datetime.now()
 
 
-class LegacyPost(BasePage, BlogPost):
+class LegacyPost(BlogPageMixin, BasePage, BlogPost):
     body = models.TextField()
     old_path = models.CharField(max_length=64)
 
@@ -456,7 +465,7 @@ class LegacyPost(BasePage, BlogPost):
     subpage_types = []
 
 
-class ModernPost(BasePage, BlogPost):
+class ModernPost(BlogPageMixin, BasePage, BlogPost):
     body = StreamField(
         ModernPostStreamBlock(),
         use_json_field=True,
@@ -537,7 +546,7 @@ class ModernPost(BasePage, BlogPost):
 # THE BLOG INDEX
 # ···························································
 
-class BlogIndex(RoutablePageMixin, BasePage, BlogSidebar):
+class BlogIndex(BlogPageMixin, RoutablePageMixin, BasePage, BlogSidebar):
     page_message = RichTextField()
     max_count = 1
     subpage_types = ['ModernPost']
