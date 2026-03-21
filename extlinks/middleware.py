@@ -16,8 +16,10 @@ class RewriteExternalLinksMiddleware(object):
 
     Rewrite:
         <a href="http://www.example.com">
+        <a class="foo" href="http://www.example.com">
     To:
         <a target="_blank" href="http://www.example.com">
+        <a class="foo" target="_blank" href="http://www.example.com">
     """
 
     def __init__(self, get_response):
