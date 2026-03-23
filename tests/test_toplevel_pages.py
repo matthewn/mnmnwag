@@ -10,5 +10,5 @@ def test_mnmnwag_page_renders(read_only_db, url):
 
 @pytest.mark.parametrize("url", ["/", "/manifesto/", "/archives/"])
 def test_madprops_page_renders(read_only_db, url):
-    response = Client(SERVER_NAME="madprops.localhost").get(url)
+    response = Client(SERVER_NAME="www.madprops.info").get(url)
     assert response.status_code == 200
