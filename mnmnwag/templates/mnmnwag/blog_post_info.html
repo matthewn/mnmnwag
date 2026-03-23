@@ -1,6 +1,7 @@
 {% load comments %}
 {# {% load comments_xtd %} #}
 {% load likes_inclusion_tags %}
+{% load navigation_tags %}
 {% load wagtailcore_tags %}
 
 <section class="post-info">
@@ -46,7 +47,7 @@
 
     {% if post.first_published_at and post.content_type.model == 'modernpost' %}
         <div class="post-likes">
-            {% likes post %}
+            {% likes post|as_page %}
         </div>
     {% endif %}
 </section>

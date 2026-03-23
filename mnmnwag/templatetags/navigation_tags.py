@@ -1,7 +1,7 @@
-"""Lifted from the wagtail bakerydemo; provides context-aware menu items."""
+"""Most of this is lifted from the wagtail bakerydemo; provides context-aware menu items."""
 
 from django import template
-from wagtail.models import Site
+from wagtail.models import Page, Site
 
 register = template.Library()
 
@@ -72,3 +72,15 @@ def top_menu_children(context, parent, calling_page=None):
         # required by the pageurl tag that we want to use within this template
         'request': context['request'],
     }
+
+
+@register.filter
+def as_page(obj):
+    """
+    Cast any Wagtail page subclass to a plain Page. Used with {% likes %} to
+    ensure votes are stored against wagtailcore.page. (This really belongs
+    elsewhere, but it seemed silly to create a new file for a 3 line function.)
+    """
+    if type(obj) is Page:
+        return obj
+    return Page.objects.get(pk=obj.pk)
