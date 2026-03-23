@@ -6,6 +6,10 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 SITE_ID = 1
 ROOT_URLCONF = 'config.urls'
+
+MIGRATION_MODULES = {
+    'secretballot': 'secretballot_fix',
+}
 WSGI_APPLICATION = 'config.wsgi.application'
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10_000  # rec'd by Wagtail 6.4
