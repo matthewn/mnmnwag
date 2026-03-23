@@ -2,7 +2,7 @@ from django.core.cache import cache
 from django.http import HttpResponse
 from django.utils.cache import patch_vary_headers
 
-LIKES_RATE_LIMIT = 5  # max likes per IP per hour
+LIKES_RATE_LIMIT = 10  # max likes per IP per hour
 
 
 class LikesGuardMiddleware:
