@@ -12,7 +12,11 @@ def get_theme_class(context):
     """
     try:
         request = context['request']
-        theme = request.COOKIES.get('themeClass') or 'theme-light'
+        theme = (
+            request.META.get('HTTP_X_THEME_CLASS')
+            or request.COOKIES.get('themeClass')
+            or 'theme-light'
+        )
     except KeyError:
         theme = 'theme-light'  # default theme
     return theme
