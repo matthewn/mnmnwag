@@ -53,3 +53,4 @@ DJANGO_SETTINGS_MODULE = "config.settings.local"
 
 [tool.uv.sources]
 django-likes = { git = "https://github.com/matthewn/django-likes", branch = "django5" }
+seevooplay = { git = "https://github.com/matthewn/seevooplay", branch = "two" }
