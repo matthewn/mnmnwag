@@ -733,7 +733,7 @@ requires-dist = [
     { name = "pyexiv2" },
     { name = "pywatchman" },
     { name = "redis" },
-    { name = "seevooplay", git = "https://github.com/matthewn/seevooplay?branch=two" },
+    { name = "seevooplay" },
     { name = "setproctitle" },
     { name = "typogrify" },
     { name = "wagtail" },
@@ -1105,7 +1105,7 @@ wheels = [
 [[package]]
 name = "seevooplay"
 version = "2.0.1"
-source = { git = "https://github.com/matthewn/seevooplay?branch=two#bf4fbaa1bf7af4076ef3b7b1ec9ca6ea7d8643b7" }
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
     { name = "django-model-utils" },
@@ -1114,6 +1114,10 @@ dependencies = [
     { name = "pillow" },
     { name = "shortuuid" },
     { name = "whitenoise" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/c5/ff/31d1bccd26a18b9ccda6f6bf43fec6f214d24d10fe8b7ad64958e72eac80/seevooplay-2.0.1.tar.gz", hash = "sha256:4a71a613cf48ddb6526e64edef4ee17c88106c10253ca55f5e0271ebc26a9ab8", size = 78732, upload-time = "2026-04-03T20:48:39.845Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/0c/bd/c3f6b2b3815cc25c21031f0d99a664f052397adeb588fa4f0077cc56a273/seevooplay-2.0.1-py3-none-any.whl", hash = "sha256:ffe994963cfb3a29b3c87e42635589a8b270070de2d486beb4a3617145615e93", size = 48546, upload-time = "2026-04-03T20:48:41.152Z" },
 ]
 
 [[package]]
