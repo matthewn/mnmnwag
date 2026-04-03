@@ -1104,7 +1104,7 @@ wheels = [
 
 [[package]]
 name = "seevooplay"
-version = "2.0.1"
+version = "2.0.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
@@ -1115,9 +1115,9 @@ dependencies = [
     { name = "shortuuid" },
     { name = "whitenoise" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c5/ff/31d1bccd26a18b9ccda6f6bf43fec6f214d24d10fe8b7ad64958e72eac80/seevooplay-2.0.1.tar.gz", hash = "sha256:4a71a613cf48ddb6526e64edef4ee17c88106c10253ca55f5e0271ebc26a9ab8", size = 78732, upload-time = "2026-04-03T20:48:39.845Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/62/6c/8c1bef37cb808b58ac009c5e6c661714a090c68210048705acc89bd100f5/seevooplay-2.0.2.tar.gz", hash = "sha256:89981f015b58400de454ffe9da14899eecbabaad9ef9275041ea36a2744814fe", size = 78826, upload-time = "2026-04-03T21:22:56.939Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/0c/bd/c3f6b2b3815cc25c21031f0d99a664f052397adeb588fa4f0077cc56a273/seevooplay-2.0.1-py3-none-any.whl", hash = "sha256:ffe994963cfb3a29b3c87e42635589a8b270070de2d486beb4a3617145615e93", size = 48546, upload-time = "2026-04-03T20:48:41.152Z" },
+    { url = "https://files.pythonhosted.org/packages/bd/bc/7367ddb289e40e53d2a2d5681e9536fd48eeecefa499373c05ba7f4463f4/seevooplay-2.0.2-py3-none-any.whl", hash = "sha256:f42d246c96916facb79902ad22c9970798e54271ba4522108dfe704a219dcabe", size = 49215, upload-time = "2026-04-03T21:22:57.956Z" },
 ]
 
 [[package]]
