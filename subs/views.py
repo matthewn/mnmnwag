@@ -1,6 +1,9 @@
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
+from django.core.validators import validate_email
 from django.http import Http404
+from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
 
 from .models import Subscription
@@ -17,17 +20,26 @@ def sub_create(request):
         nope = request.POST.get('nope')
         yep = request.POST.get('yep')
         if nope is None and yep == 'on':
-            sub, created = Subscription.objects.get_or_create(email=request.POST['email'])
-            send_confirmation_email(request, sub)
-            send_mail(f'mnmnwag: sub requested by {sub.email} [eom]', '', None, [settings.ADMINS[0][1]])
-            context['email'] = sub.email
+            email = request.POST.get('email', '')
+            try:
+                validate_email(email)
+            except ValidationError:
+                context['error'] = 'Please enter a valid email address.'
+            else:
+                sub, created = Subscription.objects.get_or_create(email=email)
+                if created or not sub.is_active:
+                    send_confirmation_email(request, sub)
+                    send_mail(f'mnmnwag: sub requested by {sub.email} [eom]', '', None, [settings.ADMINS[0][1]])
+                else:
+                    context['already_active'] = True
+                context['email'] = sub.email
     return TemplateResponse(request, 'subs/create.html', context)
 
 
 def sub_confirm(request, uuid):
     if 'mahnamahna' not in request.get_host():
         raise Http404
-    sub = Subscription.objects.get(id=uuid)
+    sub = get_object_or_404(Subscription, id=uuid)
     sub.is_active = True
     sub.save()
     send_mail(f'mnmnwag: sub confirmed for {sub.email} [eom]', '', None, [settings.ADMINS[0][1]])
@@ -45,7 +57,7 @@ def sub_confirm(request, uuid):
 def sub_remove(request, uuid):
     if 'mahnamahna' not in request.get_host():
         raise Http404
-    sub = Subscription.objects.get(id=uuid)
+    sub = get_object_or_404(Subscription, id=uuid)
     sub.is_active = False
     sub.save()
     return TemplateResponse(

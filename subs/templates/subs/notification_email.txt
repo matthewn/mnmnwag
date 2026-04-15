@@ -16,6 +16,6 @@ Thanks for reading,
 
 To UNSUBSCRIBE from these notifications, follow this link:
 
-http://{{ host }}{% url 'sub_remove' uuid=uuid %}
+{{ protocol }}://{{ host }}{% url 'sub_remove' uuid=uuid %}
 
 

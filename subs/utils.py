@@ -13,7 +13,7 @@ def send_confirmation_email(request, subscription):
         'email': subscription.email,
         'uuid': subscription.id,
         'host': host,
-        'protocol': request.META['wsgi.url_scheme'],
+        'protocol': request.scheme,
     }
     body = template.render(context)
     send_mail(f'please confirm your subscription for {host}', body, None, (subscription.email,))
@@ -22,7 +22,9 @@ def send_confirmation_email(request, subscription):
 def send_notifications(posts):
     template = get_template('subs/notification_email.txt')
     subs = Subscription.objects.filter(is_active=True)
-    host = urlparse(posts.first().full_url).netloc
+    parsed_url = urlparse(posts.first().full_url)
+    host = parsed_url.netloc
+    protocol = parsed_url.scheme
     if posts.count() > 1:
         subject = 'new posts on mahnamahna.net'
     else:
@@ -32,6 +34,7 @@ def send_notifications(posts):
             'posts': posts,
             'uuid': sub.id,
             'host': host,
+            'protocol': protocol,
         }
         body = template.render(context)
         send_mail(subject, body, None, (sub.email,))

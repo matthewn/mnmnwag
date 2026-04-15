@@ -48,8 +48,8 @@ urlpatterns = [
     # path('showinfo/', show_info, name='show_info'),
 
     path('sub/create', sub_create, name='sub_create'),
-    path('sub/<str:uuid>/confirm', sub_confirm, name='sub_confirm'),
-    path('sub/<str:uuid>/remove', sub_remove, name='sub_remove'),
+    path('sub/<uuid:uuid>/confirm', sub_confirm, name='sub_confirm'),
+    path('sub/<uuid:uuid>/remove', sub_remove, name='sub_remove'),
 
     path('events/', include('seevooplay.urls')),
 
