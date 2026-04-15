@@ -9,11 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // fix firefox android edge case (theme missing on initial page load)
     if (getCookie('themeClass').length > 0) setTheme(getCookie('themeClass'));
-
-    // if no theme chosen, but OS wants dark mode, give user the dark theme
-    if ( (getCookie('themeClass') == '') && (window.matchMedia('(prefers-color-scheme: dark)').matches) ) {
-        setTheme('theme-dark');
-    }
 });
 
 // hook up swipe events, courtesy of swiped-events.js

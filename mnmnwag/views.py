@@ -3,7 +3,7 @@ from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.safestring import mark_safe
-from wagtail.models import Page, Site
+from wagtail.models import Page
 
 from .models import CustomImage
 from .utils import get_client_ip
@@ -42,11 +42,7 @@ def theme_picker(request, chosen_theme):
     try:
         destination = request.headers['referer']
     except KeyError:
-        site = Site.find_for_request(request)
-        if site.is_default_site:
-            destination = request.headers['host'] + '/blog'
-        else:
-            destination = request.headers['host']
+        destination = f'{request.scheme}://{request.headers["host"]}'
     response = HttpResponseRedirect(destination)
     if chosen_theme in ('light', 'dark', 'retro'):
         theme_class = f'theme-{chosen_theme}'
@@ -56,6 +52,7 @@ def theme_picker(request, chosen_theme):
             value=theme_class,
             expires=expires,
             samesite='strict',
+            secure=not settings.DEBUG,
         )
     return response
 

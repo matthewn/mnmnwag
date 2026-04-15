@@ -1,16 +1,13 @@
-/* eslint-disable no-undef */
-
 // DEPENDENCIES: ./cookies.js, ../vendor/unpoly.js
 
-const body = function() { return document.getElementsByTagName('body')[0]; };
-const picker = '#theme-picker';
 const links = '#theme-picker a';
 const prefix = 'theme-';
 
 
 // on return to page via back button, enable cookied theme (if it exists)
 up.on('up:location:changed', function() {
-    if (getCookie('themeClass').length > 0) setTheme(getCookie('themeClass'));
+    const cookied = getCookie('themeClass');
+    if (cookied.length > 0) setTheme(cookied);
 });
 
 
@@ -21,15 +18,8 @@ up.compiler(links, function(link) {
 });
 
 
-// use unpoly to call markCurrentTheme()
-// (both on initial page load & after subsequent AJAX calls)
-up.compiler(picker, function() {
-    markCurrentTheme();
-});
-
-
 const getTheme = function() {
-    for (let className of body().classList.values()) {
+    for (let className of document.body.classList.values()) {
         if (className.startsWith(prefix))
             return className.replace(prefix, '');
     }
@@ -45,22 +35,10 @@ const changeTheme = function(event) {
 
 
 const setTheme = function(className) {
-    body().classList.remove(prefix + getTheme());
-    body().classList.add(className);
+    const current = getTheme();
+    if (current) document.body.classList.remove(prefix + current);
+    document.body.classList.add(className);
     setCookie('themeClass', className);
-    markCurrentTheme();
-};
-
-
-const markCurrentTheme = function() {
-    let currentTheme = getTheme();
-    [].forEach.call(document.querySelectorAll(links), function(link) {
-        if (link.textContent.toLowerCase() === currentTheme) {
-            link.classList.add('current');
-        } else {
-            link.classList.remove('current');
-        }
-    });
 };
 
 

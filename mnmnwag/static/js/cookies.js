@@ -4,7 +4,8 @@
 
 const setCookie = (name, value, days = 365, path = '/') => {
     const expires = new Date(Date.now() + days * 864e5).toUTCString();
-    document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=' + path + '; samesite=strict';
+    const secure = location.protocol === 'https:' ? '; secure' : '';
+    document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=' + path + '; samesite=strict' + secure;
 };
 
 
