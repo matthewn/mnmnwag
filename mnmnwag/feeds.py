@@ -57,14 +57,23 @@ class LatestEntriesFeed(Feed):
 
     def item_description(self, item):
         """
-        Render body with 'page_id' and 'block_id' in block contexts.
-        (They are required by ImageBlock and SlidesBlock.)
+        Render body with 'page_id', 'block_id', and 'page' in block contexts.
+        page_id and block_id are required by ImageBlock and SlidesBlock;
+        page is required by RichTextBlockWithFootnotes to resolve footnote tags.
         """
+        from django.template.loader import get_template
+
+        page = item.specific
         body = ''
-        context = {'page_id': item.id}
-        for block in item.specific.body:
+        context = {'page_id': page.id, 'page': page}
+        for block in page.body:
             context['block_id'] = block.id[0:7]
             body += block.render(context)
+
+        if getattr(page, 'footnotes_list', None):
+            template = get_template('wagtail_footnotes/includes/footnotes.html')
+            body += template.render({'page': page})
+
         return body
 
     def item_link(self, item):
