@@ -10,9 +10,11 @@ up.compiler('#footnotes', function(el) {
     // if note specified in URL fragment identifier, open it
     let frag = window.location.hash.slice(1);
     if (frag) {
-        let marker = document.getElementById(frag.replace('footnote-', 'footnote-source-'));
+        // modern form is `footnote-N-M`; legacy `footnote-N` falls back to the first reference
+        let [, n, m = '1'] = frag.split('-');
+        let marker = document.getElementById(`footnote-source-${n}-${m}`);
         if (marker) {
-            marker.querySelector('sup').click();
+            marker.click();
             // override browser's pre-JS fragment scroll (Firefox fix)
             marker.scrollIntoView({ block: 'start' });
         }
@@ -25,26 +27,34 @@ function processFootnotes(el) {
     // gather up the footnotes, move them to their new positions, and slap an
     // event handler on the marker links
     for (let li of el.querySelectorAll('li[id]')) {
-        let annotation = document.createElement('span');
-        annotation.setAttribute('id', li.id);
-        annotation.className = 'annotation';
+        // wagtail-footnotes references have IDs like footnote-source-{N}-{M};
+        // a footnote may be cited multiple times, so attach an annotation to each
+        let n = li.id.replace('footnote-', '');
+        let links = document.querySelectorAll(`[id^="footnote-source-${n}-"]`);
+        let paragraphs = li.querySelectorAll('p');
 
-        li.querySelectorAll('p').forEach((paragraph) => {
-            annotation.appendChild(paragraph.cloneNode(true));
+        links.forEach((link) => {
+            let annotation = document.createElement('span');
+            annotation.className = 'annotation';
+
+            paragraphs.forEach((paragraph) => {
+                annotation.appendChild(paragraph.cloneNode(true));
+            });
+
+            link.insertAdjacentElement('afterend', annotation);
+
+            let span = document.createElement('span');
+            span.textContent = 'hide note';
+
+            // rewrite href to the pretty form so copy-link captures this specific reference
+            link.setAttribute('href', '#' + link.id.replace('footnote-source-', 'footnote-'));
+            link.setAttribute('aria-label', 'show note');
+            link.setAttribute('title', 'show note');
+            link.classList.add('annotation-toggle');
+            link.appendChild(document.createTextNode(' '));
+            link.appendChild(span);
+            link.addEventListener('click', toggleAnnotation);
         });
-
-        let link = document.getElementById(li.id.replace('footnote-', 'footnote-source-'));
-        link.insertAdjacentElement('afterend', annotation);
-
-        let span = document.createElement('span');
-        span.textContent = 'hide note';
-
-        link.setAttribute('aria-label', 'show note');
-        link.setAttribute('title', 'show note');
-        link.classList.add('annotation-toggle');
-        link.appendChild(document.createTextNode(' '));
-        link.appendChild(span);
-        link.addEventListener('click', toggleAnnotation);
     }
 
     el.remove();
@@ -67,7 +77,7 @@ function toggleAnnotation(ev) {
         link.setAttribute('aria-label', 'show note');
         link.setAttribute('title', 'show note');
         ann.classList.remove('expanded');
-        setTimeout(() => { ann.classList.remove('displayed'); }, 300);
+        setTimeout(() => { ann.classList.remove('displayed'); }, 300);  // matches .annotation max-height transition
 
     } else {  // OPEN
 
