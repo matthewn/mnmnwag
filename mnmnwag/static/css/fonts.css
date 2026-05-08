@@ -2,7 +2,7 @@
   font-size: 1rem;
 }
 
-h2, .h2 {
+h2:not(.slug-home-page h2), .h2 {
   font-family: var(--sans-stack);
   font-size: 1.6rem;
 }
