@@ -162,11 +162,8 @@ body.theme-light .overlay {
         width: 60%;
       }
     }
-    .block-image figure.float {
-      max-width: unset;
-      img {
-        max-height: unset;
-      }
+    .block-image figure {
+      max-width: 90%
     }
   }
 }
