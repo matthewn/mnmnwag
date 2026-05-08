@@ -92,6 +92,7 @@ class BasicPage(BasePage):
     body = RichTextField(
         blank=True,
         features=[
+            'h2',
             'h3',
             'h4',
             'h5',

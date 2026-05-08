@@ -99,6 +99,7 @@ class LoadedStreamBlock(StreamBlock):
     heading = CharBlock(classname='full title')
     paragraph = RichTextBlock(
         features=[
+            'h2',
             'h3',
             'h4',
             'h5',
