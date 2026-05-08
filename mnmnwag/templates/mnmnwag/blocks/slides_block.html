@@ -11,7 +11,7 @@
     {% image slide.image fill-180x180 as small_image %}
     <picture class="slide-homebrew">
         <a href="{% url 'zoom_slide' page_id=page_id block_id=block_id pos=forloop.counter0 %}" up-layer="new modal" up-history="true" up-animation="fade-in">
-            <img src="{{ small_image.file.url }}" alt="{% if slide.alt_text %}thumbnail for {{ slide.alt_text }}{% endif %}" loading="lazy">
+            <img src="{{ small_image.file.url }}" alt="thumbnail link to full image" loading="lazy">
         </a>
     </picture>
 
@@ -22,7 +22,7 @@
         {% image slide.image original as original_image %}
         <picture class="slide-gallery" style="display: none;">
             <a href="{{ original_image.url }}" data-sub-html=".{{ this_prefix }}{{ forloop.counter }}">
-                <img src="{{ small_image.file.url }}" alt="{% if slide.alt_text %}thumbnail for {{ slide.alt_text }}{% endif %}" loading="lazy">
+                <img src="{{ small_image.file.url }}" alt="thumbnail link to full image" loading="lazy">
             </a>
             <div class="{{ this_prefix }}{{ forloop.counter }}" style="display: none;">{{ slide.caption|richtext|typefixes_minimal }}</div>
         </picture>
