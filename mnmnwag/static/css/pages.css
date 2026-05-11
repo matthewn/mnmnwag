@@ -167,3 +167,36 @@ body.theme-light .overlay {
     }
   }
 }
+
+
+/* resume page */
+main.slug-resume {
+  figure {
+    max-width: 175px !important;
+    @media (width < 920px) {
+      margin: 0 auto;
+    }
+    @media (width >= 920px) {
+      margin-top: -2rem;
+    }
+  }
+  h2 {
+    font-family: var(--sans-stack);
+    font-size: 1.85rem;
+  }
+  details {
+    margin-top: 2rem;
+    h3 {
+      font-size: 1.25rem;
+      margin: 1.5rem 0 1.5rem 2rem;
+    }
+    > :nth-child(2) {
+      margin-top: 1.5rem;
+    }
+  }
+  summary {
+    font-family: var(--sans-stack);
+    font-size: 1.6rem;
+    font-variant: small-caps;
+  }
+}
