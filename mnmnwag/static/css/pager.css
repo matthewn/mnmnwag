@@ -1,5 +1,5 @@
 ul.pager {
-  align-items: stretch;
+  align-items: center;
   display: flex;
   font-family: var(--mono-stack);
   font-size: .94rem;
@@ -7,14 +7,6 @@ ul.pager {
   list-style: none !important;
   margin: 3rem 0 4rem !important;
   width: 100%;
-  .pager-pages {
-    @media (width < 920px) {
-      width: 100%;
-    }
-    display: flex;
-    flex-grow: 1;
-    justify-content: center;
-  }
   .pager-item:not(.dots) {
     border: 2px solid;
     border-radius: 50%;
@@ -40,10 +32,11 @@ ul.pager {
     }
   }
   .pager-prev {
+    margin-right: auto;
     .arrow { margin-right: .5rem; }
   }
   .pager-next {
-    text-align: right;
+    margin-left: auto;
     .arrow { margin-left: .5rem; }
   }
 }
