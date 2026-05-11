@@ -6,13 +6,13 @@
         <div>
             {% if can_vote %}
                 <a class="liker" title="{% trans "Like this" %}" aria-label="{% trans "Like this" %}" href="{% url "like" content_type content_obj.id 1 %}" rel="nofollow" up-target=".likes">
-                    <img src="{% static 'img/thumbs_up.svg' %}">
+                    <img src="{% static 'img/thumbs_up.svg'%}" alt="thumbs-up icon">
                 </a>
             {% else %}
-                <img src="{% static 'img/thumbs_up.svg' %}">
+                <img src="{% static 'img/thumbs_up.svg'%}" alt="thumbs-up icon">
             {% endif %}
         </div>
-        <div>{{ content_obj.vote_total }}</div>
+        <div>{{ content_obj.vote_total }}</div><div class="sr-only"> likes</div>
         {# {% trans "Like" %}{{ content_obj.vote_total|pluralize }} #}
     </div>
 {% endif %}
