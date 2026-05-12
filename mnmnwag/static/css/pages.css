@@ -1,7 +1,6 @@
 /* one-off page layout tweaks */
 
 main.slug-home-page {
-  align-items: center;
   display: flex;
 }
 #home {
