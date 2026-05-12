@@ -21,3 +21,25 @@ CACHES = {
 MIDDLEWARE.insert(0, 'wagtailcache.cache.UpdateCacheMiddleware')  # noqa: F405
 MIDDLEWARE.insert(1, 'mnmnwag.middleware.ThemeClassCacheMiddleware')  # noqa: F405
 MIDDLEWARE.append('wagtailcache.cache.FetchFromCacheMiddleware')  # noqa: F405
+
+
+# Send django.request errors to stderr so gunicorn captures tracebacks.
+# Django's default console handler is gated by DEBUG=True, so without this
+# unhandled 500s are silent unless ADMINS + mail_admins is configured.
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+    },
+}
