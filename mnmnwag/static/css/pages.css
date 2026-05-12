@@ -173,6 +173,20 @@ main.slug-resume {
   .page-body {
     margin: 0 auto;
     max-width: 102ch;
+    position: relative;
+  }
+  #pdf {
+    font-family: var(--sans-stack);
+    font-variant: small-caps;
+    @media (width < 920px) {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    @media (width >= 920px) {
+      position: absolute;
+      right: 50px;
+      top: 1rem;
+    }
   }
   figure {
     max-width: 175px !important;
@@ -186,6 +200,7 @@ main.slug-resume {
   h2 {
     font-family: var(--sans-stack);
     font-size: 1.85rem;
+    margin-bottom: 1rem;
   }
   details {
     margin-top: 2rem;
