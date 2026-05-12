@@ -171,6 +171,10 @@ body.theme-light .overlay {
 
 /* resume page */
 main.slug-resume {
+  .page-body {
+    margin: 0 auto;
+    max-width: 102ch;
+  }
   figure {
     max-width: 175px !important;
     @media (width < 920px) {
