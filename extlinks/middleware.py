@@ -36,6 +36,9 @@ class RewriteExternalLinksMiddleware(object):
         if not templates_whitelist:
             return response
 
+        if response.template_name is None:
+            return response
+
         if not any(path in response.template_name for path in templates_whitelist):
             return response
 
