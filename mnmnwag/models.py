@@ -612,14 +612,11 @@ class BlogIndex(BlogPageMixin, RoutablePageMixin, BasePage, BlogSidebar):
 
     @route(r'^tag/(?P<tag>[-\w]+)/$')
     def posts_by_tag(self, request, tag, *args, **kwargs):
-        # the Wagtail docs say we should be able to filter posts by tag with something like:
-        # self.get_posts().filter(tags__name=tag)
-        # but we get errors about a missing id column when we do that, so instead...
-        post_tags = PostTag.objects.filter(tag__slug=tag.lower())
-        post_ids = [item.content_object_id for item in post_tags]
+        # 'tags__slug' would fail because base Page has no 'tags'; 'tagged_items'
+        # is PostTag.content_object's reverse manager and works on any Page qs
         self.posts = self.paginate_posts(
             request,
-            self.get_posts().filter(id__in=post_ids),
+            self.get_posts().filter(tagged_items__tag__slug=tag.lower()),
         )
         self.index_title = f'Posts tagged #{tag}'
         try:

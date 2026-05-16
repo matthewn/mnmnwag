@@ -1,7 +1,7 @@
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Atom1Feed
 from taggit.models import Tag
-from .models import BlogIndex, PostTag
+from .models import BlogIndex
 
 
 class LatestEntriesFeed(Feed):
@@ -40,10 +40,8 @@ class LatestEntriesFeed(Feed):
         index = BlogIndex.objects.get()
         posts = index.get_modern_posts()
         if obj:
-            # mimics logic in BlogIndex.posts_by_tag()
-            post_tags = PostTag.objects.filter(tag__id__in=obj)
-            post_ids = [item.content_object_id for item in post_tags]
-            posts = posts.filter(id__in=post_ids)
+            # distinct() collapses duplicates from posts matching multiple tags
+            posts = posts.filter(tagged_items__tag__in=obj).distinct()
         return posts[:15]
 
     def item_title(self, item):
