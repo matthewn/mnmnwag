@@ -34,7 +34,11 @@ class ZoomChoices(models.IntegerChoices):
 class ImageBlock(StructBlock):
     image = ImageChooserBlock()
     caption = RichTextBlock(required=False, features=['bold', 'italic', 'link'])
-    alt_text = CharBlock(required=False, max_length=256)
+    alt_text = CharBlock(
+        required=False,
+        max_length=256,
+        help_text="If blank, site will attempt to use the image's description."
+    )
     link = URLBlock(required=False)
     float = ChoiceBlock(
         blank=False,
@@ -53,8 +57,12 @@ class ImageBlock(StructBlock):
 
 class SlideBlock(StructBlock):
     image = ImageChooserBlock()
-    caption = RichTextBlock(required=False, features=['bold', 'italic', 'link'])
-    alt_text = CharBlock(required=False, max_length=256)
+    caption = RichTextBlock(required=False, features=["bold", "italic", "link"])
+    alt_text = CharBlock(
+        required=False,
+        max_length=256,
+        help_text="If blank, site will attempt to use the image's description.",
+    )
 
 
 class SlidesBlock(StructBlock):
