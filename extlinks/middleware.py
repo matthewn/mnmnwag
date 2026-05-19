@@ -54,3 +54,11 @@ class RewriteExternalLinksMiddleware(object):
                     new_link = match.replace(' href=', ' target="_blank" href=')
                     content = content.replace(match, new_link, 1)
         response.content = content
+        # Wagtail's admin preview pre-renders the response before
+        # process_template_response middleware runs, so by the time we
+        # get here, Content-Length has already been set by an earlier
+        # CommonMiddleware pass. After mutating the body we must clear it
+        # so the outer CommonMiddleware recomputes a correct value;
+        # otherwise the browser truncates the body to the stale length.
+        if response.has_header('Content-Length'):
+            del response['Content-Length']
