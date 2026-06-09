@@ -4,6 +4,8 @@ from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.db import models
 from django.db.models.functions import Lower
+from django.http import HttpResponsePermanentRedirect
+from django.shortcuts import get_object_or_404
 from django.utils.html import format_html
 from django.template import loader
 from django.template.defaultfilters import pluralize
@@ -430,11 +432,34 @@ class BlogPost(models.Model, BlogSidebar):
         """
         return self.full_url
 
+    def get_url_parts(self, *args, **kwargs):
+        # canonical post URL is date-prefixed: /blog/YYYY/MM/<slug>/
+        # (unpublished drafts have no date, so fall back to the tree URL)
+        parts = super().get_url_parts(*args, **kwargs)
+        if parts is None or not self.first_published_at:
+            return parts
+        site_id, root_url, page_path = parts
+        d = self.first_published_at
+        prefix = page_path[:-len(self.slug) - 1]
+        return site_id, root_url, f'{prefix}{d.year}/{d.month:02d}/{self.slug}/'
+
+    def serve(self, request, *args, **kwargs):
+        # canonicalize a post's legacy slug-only URL to its date-prefixed form.
+        # Use get_url(request), not .url: in this multi-site DB .url returns an
+        # absolute URL, which never equals request.path -> every request would
+        # redirect (cross-origin in dev, an infinite loop in prod).
+        canonical = self.get_url(request)
+        if request.path != canonical:
+            return HttpResponsePermanentRedirect(canonical)
+        return super().serve(request, *args, **kwargs)
+
     def page_message(self):
         return self.get_parent().specific.page_message
 
     @property
     def post_date(self):
+        # used only by blog_post_info.html: a display date that falls back to
+        # something meaningful if the post has not yet been published
         if self.first_published_at:
             return self.first_published_at
         elif self.latest_revision:
@@ -443,7 +468,7 @@ class BlogPost(models.Model, BlogSidebar):
             return dt.datetime.now()
 
 
-class LegacyPost(BlogPageMixin, BasePage, BlogPost):
+class LegacyPost(BlogPost, BlogPageMixin, BasePage):
     body = models.TextField()
     old_path = models.CharField(max_length=64)
 
@@ -466,7 +491,7 @@ class LegacyPost(BlogPageMixin, BasePage, BlogPost):
     subpage_types = []
 
 
-class ModernPost(BlogPageMixin, BasePage, BlogPost):
+class ModernPost(BlogPost, BlogPageMixin, BasePage):
     body = StreamField(
         ModernPostStreamBlock(),
         use_json_field=True,
@@ -557,7 +582,7 @@ class BlogIndex(BlogPageMixin, RoutablePageMixin, BasePage, BlogSidebar):
     ]
 
     def get_posts(self):
-        return Page.objects.descendant_of(self).live().public().order_by('-first_published_at')
+        return Page.objects.descendant_of(self).live().public().specific().order_by('-first_published_at')
 
     def get_modern_posts(self):
         return ModernPost.objects.descendant_of(self).live().public().order_by('-first_published_at')
@@ -624,6 +649,12 @@ class BlogIndex(BlogPageMixin, RoutablePageMixin, BasePage, BlogSidebar):
         except TagDescription.DoesNotExist:
             pass
         return self.serve(request, *args, **kwargs)
+
+    @route(r'^(?P<year>20\d\d)/(?P<month>0[1-9]|1[0-2])/(?P<slug>[-\w]+)/$')
+    def post_by_date_and_slug(self, request, year, month, slug, *args, **kwargs):
+        # serve a post from its canonical, date-prefixed URL
+        post = get_object_or_404(self.get_children().live(), slug=slug)
+        return post.specific.serve(request)
 
 
 # ···························································

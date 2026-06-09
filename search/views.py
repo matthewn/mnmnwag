@@ -16,7 +16,7 @@ def search(request):
 
     # Search
     if search_query:
-        search_results = Page.objects.live().public().search(search_query)
+        search_results = Page.objects.live().public().specific().search(search_query)
 
         # Log the query so Wagtail can suggest promoted results
         Query.get(search_query).add_hit()
