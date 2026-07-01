@@ -1,6 +1,9 @@
+from taggit.models import Tag
 from wagtail import hooks
 from wagtail.admin.menu import MenuItem
 from wagtail.admin.rich_text.converters.html_to_contentstate import InlineStyleElementHandler
+from wagtail.snippets.models import register_snippet
+from wagtail.snippets.views.snippets import SnippetViewSet
 import wagtail.admin.rich_text.editors.draftail.features as draftail_features
 
 
@@ -53,3 +56,14 @@ def register_kbd_feature(features):
         feature_name,
         db_conversion
     )
+
+
+class TagViewSet(SnippetViewSet):
+    model = Tag
+    icon = 'tag'
+    list_display = ['name', 'slug']
+    list_per_page = 1000
+    ordering = ['name']
+
+
+register_snippet(TagViewSet)
