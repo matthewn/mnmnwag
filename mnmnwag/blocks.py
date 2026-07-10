@@ -121,6 +121,7 @@ class LoadedStreamBlock(StreamBlock):
             'strikethrough',
             'kbd',
             'code',
+            'footnotes',
             'link',
             'image',
             'document-link',

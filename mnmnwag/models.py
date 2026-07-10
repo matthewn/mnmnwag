@@ -100,6 +100,7 @@ class ComplexPage(BasePage):
             FieldPanel('show_page_title'),
             FieldPanel('constrict_content_width'),
         ]),
+        InlinePanel('footnotes', label='Footnotes', classname='collapsed'),
     ]
 
 
