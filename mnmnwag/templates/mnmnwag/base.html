@@ -130,7 +130,7 @@
                 {% if page.content_type.model == 'blogindex' or page.content_type.model == 'modernpost' or page.content_type.model == 'legacypost' %}
                     <main class="blog">
                 {% else %}
-                    <main {% if page.slug %}class="slug-{{ page.slug }}"{% endif %}>
+                    <main class="{% if page.slug %}slug-{{ page.slug }}{% endif %}{% if page.constrict_content_width %} constricted{% endif %}">
                 {% endif %}
                     {% block content %}{% endblock %}
                 </main>

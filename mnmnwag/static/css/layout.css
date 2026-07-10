@@ -142,6 +142,16 @@ body {
         width: 100%;
       }
 
+      main > h2:first-child {
+        margin-bottom: 2rem;
+      }
+      main.constricted {
+        > * {
+          margin: 0 auto;
+          max-width: 850px;
+        }
+      }
+
       /* maintains style during unpoly transition */
       main.blog,
       > * {

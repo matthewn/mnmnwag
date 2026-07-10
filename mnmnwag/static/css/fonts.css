@@ -6,6 +6,9 @@ h2:not(.slug-home-page h2), .h2 {
   font-family: var(--sans-stack);
   font-size: 1.6rem;
 }
+#content main > h2:first-child {
+  font-size: 1.85rem;
+}
 
 h3, .h3 {
   font-size: 1.45rem;

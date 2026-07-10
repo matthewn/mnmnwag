@@ -21,6 +21,7 @@ from zoneinfo import ZoneInfo
 
 from wagtail.admin.panels import (
     FieldPanel,
+    FieldRowPanel,
     InlinePanel,
     MultiFieldPanel,
 )
@@ -83,10 +84,22 @@ class ComplexPage(BasePage):
         use_json_field=True,
     )
     page_message = RichTextField()
+    show_page_title = models.BooleanField(
+        default=False,
+        help_text='Make the <h2> page title visible on this page.',
+    )
+    constrict_content_width = models.BooleanField(
+        default=False,
+        help_text='Constrict the content area to a comfortable width for reading.',
+    )
 
     content_panels = Page.content_panels + [
         FieldPanel('page_message'),
         FieldPanel('body'),
+        FieldRowPanel([
+            FieldPanel('show_page_title'),
+            FieldPanel('constrict_content_width'),
+        ]),
     ]
 
 
