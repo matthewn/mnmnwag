@@ -1,7 +1,8 @@
 """
 Tests for the custom ImageBlock and its template (mnmnwag/blocks/image_block.html).
 
-The block exposes six fields -- image, alt_text, caption, link, float, zoom --
+The block exposes seven fields -- image, alt_text, caption, link, float, zoom,
+max_width --
 and the template branches on most of them. These tests render the block the way
 Wagtail does when loading stored content (`to_python` from the StreamField JSON)
 and assert the resulting markup.
@@ -30,6 +31,7 @@ def render_block(
     link="",
     float_=FloatChoices.NONE.value,
     zoom=ZoomChoices.ON.value,
+    max_width="",
 ):
     """Render ImageBlock as Wagtail does when loading stored content.
 
@@ -44,6 +46,7 @@ def render_block(
         "link": link,
         "float": float_,
         "zoom": zoom,
+        "max_width": max_width,
     })
     return block.render(value, context={"page_id": 1})
 
@@ -123,6 +126,33 @@ def test_float_none_has_no_float_class(test_image):
     html = render_block(test_image, float_=FloatChoices.NONE.value)
     assert "<figure>" in html
     assert "float" not in html
+
+
+# ---------------------------------------------------------------------------
+# max_width
+# ---------------------------------------------------------------------------
+
+def test_max_width_sets_custom_property(test_image):
+    # any valid CSS max-width value is passed through verbatim
+    html = render_block(test_image, max_width="30%")
+    assert '<figure style="--max-width: 30%;">' in html
+
+
+def test_max_width_pixels(test_image):
+    html = render_block(test_image, max_width="320px")
+    assert "--max-width: 320px;" in html
+
+
+def test_max_width_coexists_with_float(test_image):
+    html = render_block(test_image, float_=FloatChoices.LEFT.value, max_width="20rem")
+    assert '<figure class="float left" style="--max-width: 20rem;">' in html
+
+
+def test_no_max_width_leaves_figure_unstyled(test_image):
+    # existing blocks (no max_width) must render with no style attribute
+    html = render_block(test_image, max_width="")
+    assert "style=" not in html
+    assert "--max-width" not in html
 
 
 # ---------------------------------------------------------------------------

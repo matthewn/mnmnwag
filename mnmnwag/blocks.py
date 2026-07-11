@@ -49,6 +49,14 @@ class ImageBlock(StructBlock):
         choices=ZoomChoices.choices,
         default=ZoomChoices.ON,
     )
+    max_width = CharBlock(
+        required=False,
+        max_length=32,
+        help_text=(
+            'Optional maximum width, as any valid CSS max-width value '
+            '(e.g. "30%", "320px", "20rem"). Leave blank for the default.'
+        ),
+    )
 
     class Meta:
         icon = 'image'
