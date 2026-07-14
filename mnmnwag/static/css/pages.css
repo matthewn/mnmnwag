@@ -175,26 +175,33 @@ main.slug-resume {
     max-width: 102ch;
     position: relative;
   }
-  #pdf {
+  svg {
+    height: 1.25rem;
+    margin-right: .25rem;
+    position: relative;
+    top: 2px;
+    width: 1.25rem;
+  }
+  #links {
     font-family: var(--sans-stack);
-    font-variant: small-caps;
-    @media (width < 920px) {
-      margin-bottom: 2rem;
-      text-align: center;
+    text-align: center;
+    > div {
+      margin: 1rem 0;
     }
     @media (width >= 920px) {
-      position: absolute;
-      right: 50px;
-      top: 1rem;
+      display: flex;
+      width: 100%;
+      > div {
+          flex: 1;
+        }
+      }
     }
   }
   figure {
+    margin-top: 2rem !important;;
     max-width: 175px !important;
     @media (width < 920px) {
       margin: 0 auto;
-    }
-    @media (width >= 920px) {
-      margin-top: -2rem;
     }
   }
   h2 {
