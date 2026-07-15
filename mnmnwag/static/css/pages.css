@@ -113,13 +113,6 @@ body.theme-light .overlay {
   }
 
   .overlay {
-    @media (width >= 920px) {
-      left: unset;
-      max-width: 44%;
-      right: 6%;
-      top: 50%;
-      transform: translateY(-50%);
-    }
     a {
       color: var(--blizzard-blue);
     }
@@ -146,6 +139,13 @@ body.theme-light .overlay {
     position: absolute;
     top: 10%;
     transform: translateX(-50%);
+    @media (width >= 920px) {
+      left: unset;
+      max-width: 44%;
+      right: 16%;
+      top: 65%;
+      transform: translateY(-65%);
+    }
   }
 }
 
