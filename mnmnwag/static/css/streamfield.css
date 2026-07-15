@@ -12,13 +12,25 @@
   }
   figure {
     display: table;
-    /* honor an optional per-image max_width; falls back to the default (none)
-       when the block sets no --max-width, so existing images are unchanged */
     max-width: var(--max-width, none);
+    &.float:where(.px-width) {
+      @media (width < 920px) {
+        img {
+          max-height: unset;
+        }
+        &.left {
+          float: left;
+          margin: .5rem 3rem .5rem 0;
+        }
+        &.right {
+          float: right;
+          margin: .5rem 0 .5rem 3rem;
+        }
+      }
+    }
     &.float {
       @media (width >= 920px) {
         max-width: var(--max-width, 40%);
-        /* when a custom width is given, let the floated figure shrink to it */
         width: var(--max-width);
         img {
           max-height: unset;

@@ -3,7 +3,7 @@
 {% load static %}
 {% load typefixes %}
 
-<figure{% if value.float == 1 %} class="float left"{% endif %}{% if value.float == 2 %} class="float right"{% endif %}{% if value.max_width %} style="--max-width: {{ value.max_width }};"{% endif %}>
+<figure class="{% if value.float == 1 %}float left {% endif %}{% if value.float == 2 %}float right {% endif %}{% if value.max_width and '%' not in value.max_width %}px-width{% endif %}"{% if value.max_width %} style="--max-width: {{ value.max_width }};"{% endif %}>
     <picture>
         {% image value.image width-800 as small_image %}
 
