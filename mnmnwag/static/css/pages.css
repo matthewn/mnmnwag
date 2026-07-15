@@ -192,8 +192,7 @@ main.slug-resume {
       display: flex;
       width: 100%;
       > div {
-          flex: 1;
-        }
+        flex: 1;
       }
     }
   }
