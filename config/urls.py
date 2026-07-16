@@ -14,6 +14,7 @@ from wagtail_footnotes import urls as footnotes_urls
 
 from mnmnwag.feeds import LatestEntriesFeed
 from mnmnwag.views import theme_picker, zoom_image, zoom_old, zoom_slide
+# from mnmnwag.views import force403, force500
 
 from subs.views import sub_create, sub_confirm, sub_remove
 
@@ -45,6 +46,8 @@ urlpatterns = [
     path('slide/<int:page_id>/<str:block_id>/<int:pos>', zoom_slide, name='zoom_slide'),
     path('zoom/old/<path:image_path>', zoom_old, name='zoom_old'),
     path('theme/<str:chosen_theme>', theme_picker, name='theme_picker'),
+    # path('force403/', force403, name='force403'),
+    # path('force500/', force500, name='force500'),
     # path('showinfo/', show_info, name='show_info'),
 
     path('sub/create', sub_create, name='sub_create'),
@@ -59,6 +62,7 @@ urlpatterns = [
     path('', include(wagtail_urls)),
 ]
 
+handler403 = 'mnmnwag.views.handler403'
 handler404 = 'mnmnwag.views.handler404'
 handler500 = 'mnmnwag.views.handler500'
 

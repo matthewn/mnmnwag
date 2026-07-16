@@ -26,6 +26,16 @@ def handler404(request, exception, template_name='404.html'):
     return response
 
 
+def handler403(request, exception, template_name='403.html'):
+    if 'madprops' in request.get_host():
+        context = {'override_base': 'madprops/base.html'}
+    else:
+        context = {}
+    response = render(request, template_name, context)
+    response.status_code = 403
+    return response
+
+
 def handler500(request, *args, **argv):
     if 'madprops' in request.get_host():
         context = {
@@ -148,3 +158,11 @@ def show_info(request):
         'page_message': 'information!',
         'content': mark_safe(content),
     })
+
+
+# def force403(request):
+#     raise PermissionDenied
+
+
+# def force500(request):
+#     raise Exception('Deliberate 500 for testing the error page.')
