@@ -12,7 +12,15 @@
   }
   figure {
     display: table;
-    max-width: var(--max-width, none);
+    /* px-based max_width is honored at every viewport; a %-based max_width is
+       only honored on desktop (like float, it's dropped on mobile) */
+    max-width: none;
+    &.px-width {
+      max-width: var(--max-width);
+    }
+    @media (width >= 920px) {
+      max-width: var(--max-width, none);
+    }
     &.float:where(.px-width) {
       @media (width < 920px) {
         img {
