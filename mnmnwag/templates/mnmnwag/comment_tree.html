@@ -9,7 +9,7 @@
     <div class="gravatar">{{ item.comment.user_email|xtd_comment_gravatar }}</div>
     <div class="comment-content">
         <header>
-            <h5>
+            <h4 class="h5">
                 <b>
                     {% if item.comment.url and not item.comment.is_removed %}<a href="{{ item.comment.url }}" target="_new">{% endif %}{{ item.comment.name|namecloak }}{% if item.comment.url %}</a>{% endif %}
                 </b> had this to say on
@@ -35,7 +35,7 @@
                 {#         {% endif %} #}
                 {#     {% endif %} #}
                 {# </span> #}
-            </h5>
+            </h4>
         </header>
         {% if item.comment.is_removed %}
             <div class="content"><i>This comment has been removed.</i></div>
