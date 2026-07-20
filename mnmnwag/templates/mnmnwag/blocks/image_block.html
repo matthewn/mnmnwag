@@ -9,13 +9,13 @@
 
         {% if value.link %}
             <a href="{{ value.link }}">
-        {% elif value.zoom == 1 %}
+        {% elif value.zoom == 1 and page_id %}
             <a href="{% url 'zoom_image' page_id=page_id image_id=value.image.id %}" up-layer="new modal" up-history="true" up-class="zoom">
         {% endif %}
 
         <img src="{{ small_image.file.url }}" alt="{{ value.alt_text|default:value.image.description }}">
 
-        {% if value.link or value.zoom == 1 %}
+        {% if value.link or value.zoom == 1 and page_id %}
             </a>
         {% endif %}
     </picture>
