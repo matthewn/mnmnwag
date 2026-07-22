@@ -1,0 +1,18 @@
+/* Wagtail admin tweaks */
+
+/* make 'float' and 'zoom' appears side-by-side in ImageBlocks */
+.struct-block:has(.imgblock-col) {
+    align-items: flex-start;
+    column-gap: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+/* every field spans the full row by default... */
+.struct-block:has(.imgblock-col) > * {
+    flex: 1 1 100%;
+}
+/* ...except the two contentpath wrappers holding a marked field, which share one row */
+.struct-block:has(.imgblock-col) > [data-contentpath]:has(.imgblock-col) {
+    flex: 1 1 0;
+    min-width: 12rem;
+}

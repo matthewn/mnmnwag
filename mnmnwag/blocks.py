@@ -44,10 +44,12 @@ class ImageBlock(StructBlock):
         blank=False,
         choices=FloatChoices.choices,
         default=FloatChoices.NONE,
+        form_classname='imgblock-col',
     )
     zoom = ChoiceBlock(
         choices=ZoomChoices.choices,
         default=ZoomChoices.ON,
+        form_classname='imgblock-col',
     )
     max_width = CharBlock(
         required=False,

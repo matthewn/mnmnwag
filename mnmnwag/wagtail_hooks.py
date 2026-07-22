@@ -1,3 +1,5 @@
+from django.templatetags.static import static
+from django.utils.html import format_html
 from taggit.models import Tag
 from wagtail import hooks
 from wagtail.admin.menu import MenuItem
@@ -5,6 +7,14 @@ from wagtail.admin.rich_text.converters.html_to_contentstate import InlineStyleE
 from wagtail.snippets.models import register_snippet
 from wagtail.snippets.views.snippets import SnippetViewSet
 import wagtail.admin.rich_text.editors.draftail.features as draftail_features
+
+
+@hooks.register('insert_global_admin_css')
+def global_admin_css():
+    return format_html(
+        '<link rel="stylesheet" href="{}">',
+        static('css/admin.css'),
+    )
 
 
 @hooks.register('register_admin_menu_item')
