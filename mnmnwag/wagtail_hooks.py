@@ -17,6 +17,20 @@ def global_admin_css():
     )
 
 
+@hooks.register('construct_page_chooser_queryset')
+def strip_vote_extras_for_page_chooser(pages, request):
+    """
+    django-secretballot's VotableManager (enabled for wagtailcore.Page) adds
+    .extra(select={total_upvotes, total_downvotes}) to every Page queryset.
+    The page chooser ORs two such querysets together, which Django rejects when
+    both carry extra(select=...). The chooser doesn't need vote counts, so hose
+    'em here.
+    """
+    pages = pages.all()
+    pages.query.extra = {}
+    return pages
+
+
 @hooks.register('register_admin_menu_item')
 def register_add_subpage_menu_item():
     return MenuItem(
