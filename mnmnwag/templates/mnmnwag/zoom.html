@@ -1,32 +1,20 @@
 {% extends "mnmnwag/base.html" %}
 
-{% load wagtailimages_tags %}
+{# Used by LegacyPosts only. ImageBlock zooms moved to the lightbox #}
+{# (mnmnwag/lightbox.html); these are flat files from the blosxom import, #}
+{# with no Image record behind them. #}
 
-{% block title %}{% if img %}{{ img.filename }}{% endif %}{% if old_img %}{{ old_img.filename }}{% endif %}{% endblock %}
+{% block title %}{{ old_img.filename }}{% endblock %}
 
 {% block content_class %}content-zoom{% endblock %}
 
 {% block content %}
 
-    {% if img %}
-
-        {% image img original as zoom_img %}
-        <div class="zoom">
-            <figure>
-                <div class="parent-link"><a href="{{ parent_link }}">&larr; back to post</a></div>
-                <img src="{{ zoom_img.url }}">
-            </figure>
-        </div>
-
-    {% elif old_img %}
-
-        <div class="zoom old">
-            <figure>
-                <img src="{{ old_img.url }}">
-                <figcaption class="caption">{{ old_img.caption }}</figcaption>
-            </figure>
-        </div>
-
-    {% endif %}
+    <div class="zoom old">
+        <figure>
+            <img src="{{ old_img.url }}">
+            <figcaption class="caption">{{ old_img.caption }}</figcaption>
+        </figure>
+    </div>
 
 {% endblock %}

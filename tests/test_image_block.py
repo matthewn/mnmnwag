@@ -144,8 +144,14 @@ def test_max_width_pixels(test_image):
 
 
 def test_max_width_coexists_with_float(test_image):
+    # an absolute max-width also earns px-width, which a percentage one does not
     html = render_block(test_image, float_=FloatChoices.LEFT.value, max_width="20rem")
-    assert '<figure class="float left" style="--max-width: 20rem;">' in html
+    assert '<figure class="float left px-width" style="--max-width: 20rem;">' in html
+
+
+def test_percentage_max_width_is_not_px_width(test_image):
+    html = render_block(test_image, float_=FloatChoices.LEFT.value, max_width="30%")
+    assert '<figure class="float left" style="--max-width: 30%;">' in html
 
 
 def test_no_max_width_leaves_figure_unstyled(test_image):

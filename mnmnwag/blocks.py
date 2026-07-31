@@ -60,6 +60,25 @@ class ImageBlock(StructBlock):
         ),
     )
 
+    def get_context(self, value, parent_context=None):
+        """
+        Assemble the <figure> class list here rather than in the template.
+        """
+        context = super().get_context(value, parent_context)
+
+        classes = []
+        if value['float'] == FloatChoices.LEFT:
+            classes.append('float left')
+        elif value['float'] == FloatChoices.RIGHT:
+            classes.append('float right')
+        # a max-width in absolute units is constrained differently from a
+        # percentage one (see .px-width in streamfield.css)
+        if value['max_width'] and '%' not in value['max_width']:
+            classes.append('px-width')
+
+        context['figure_class'] = ' '.join(classes)
+        return context
+
     class Meta:
         icon = 'image'
         template = 'mnmnwag/blocks/image_block.html'

@@ -72,7 +72,7 @@
     margin-top: 2rem;
   }
 
-  .slide-homebrew {
+  .slide {
     img {
       max-width: 49%;  /* fix for mobile; make 2 cols happen at 360px, etc. */
     }

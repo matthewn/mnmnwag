@@ -1,24 +1,12 @@
-// DEPENDENCIES: ./cookies.js, ./theme_picker.js, ../vendor/unpoly.js
+// DEPENDENCIES: ./cookies.js, ./theme_picker.js, ./vendor/unpoly.js
 
 document.addEventListener('DOMContentLoaded', function() {
-    // let the stylesheet know we've got js
-    document.body.classList.remove('nojs');
-
     // console splash
     console.log('\nwe were talking\nabout the love that’s grown so cold\nand the people who gain the world and lose their soul\nthey don’t know\nthey can’t see\nare you one of them?\n\n— George Harrison\n\n');
 
     // fix firefox android edge case (theme missing on initial page load)
     if (getCookie('themeClass').length > 0) setTheme(getCookie('themeClass'));
 });
-
-// hook up swipe events, courtesy of swiped-events.js
-document.addEventListener('swiped-left', function() {
-    document.querySelector('#go-next').click();
-});
-document.addEventListener('swiped-right', function() {
-    document.querySelector('#go-prev').click();
-});
-
 
 //
 // UNPOLY

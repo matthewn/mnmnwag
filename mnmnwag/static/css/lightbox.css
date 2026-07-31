@@ -1,0 +1,472 @@
+/* The slide lightbox. One markup serves two presentations: the lightbox proper,
+   and -- under body.nojs, at the foot of this file -- a plain captioned image
+   with prev/next links. Everything here is scoped to .lightbox or to
+   up-modal.lightbox, so the sidebar's subscribe modal keeps its own styling. */
+
+:root {
+  /* How dark the page behind the photo goes. Unpoly's own backdrop is .4, which
+     is too light here. */
+  --lightbox-backdrop-alpha: 85%;
+
+  /* Dialed down by a dismissal drag, so the tint lifts as the photo leaves. Set
+     by lightbox.js on whichever element the backdrop below inherits from. */
+  --lightbox-fade: 1;
+  --lightbox-fade-ms: 0ms;
+}
+
+/* The lightbox owns every gesture over it. Without this a downward dismissal
+   swipe chains out to the document, where Firefox Mobile reads it as
+   pull-to-refresh. Not while nojs, where the page scrolls normally. */
+html:has(body:not(.nojs) .lightbox) {
+  overscroll-behavior-y: none;
+}
+
+/* The tint itself: the lightbox's own background on the root layer, the modal's
+   backdrop inside an overlay. Written out at both use sites rather than shared
+   through a variable, because a var() nested inside a custom property is
+   substituted where that property is declared -- which would freeze the fade. */
+.lightbox,
+up-modal.lightbox up-modal-backdrop {
+  background: rgb(0 0 0 / calc(var(--lightbox-backdrop-alpha) * var(--lightbox-fade)));
+  transition: background-color var(--lightbox-fade-ms);
+}
+
+.lightbox {
+  inset: 0;
+  overflow: hidden;
+  position: fixed;
+  z-index: 100;
+
+  --lightbox-chrome: #ccc;
+  --lightbox-chrome-hover: #fff;
+  --lightbox-bar-height: 3rem;
+}
+
+/* inside an overlay the backdrop below does the tinting instead */
+up-modal .lightbox {
+  background: none;
+}
+
+/* Shown while a slide loads, in an overlay Unpoly opens the moment the
+   thumbnail is clicked. */
+.lightbox-loading {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.lightbox-spinner {
+  animation: lightbox-spin 900ms linear infinite;
+  border: 3px solid rgb(255 255 255 / 20%);
+  border-radius: 50%;
+  border-top-color: var(--lightbox-chrome-hover);
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+@keyframes lightbox-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox-spinner {
+    animation: none;
+    border-top-color: var(--lightbox-chrome);
+    opacity: 1;
+  }
+}
+
+/* The same spinner over a panel whose image has not arrived. The delay keeps it
+   off the screen entirely on a connection quick enough not to need it. */
+.lightbox-panel .lightbox-spinner {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  translate: -50% -50%;
+}
+
+.lightbox-panel.is-loading .lightbox-spinner {
+  animation: lightbox-spin 900ms linear infinite, lightbox-appear 150ms 250ms forwards;
+  opacity: 0;
+}
+
+@keyframes lightbox-appear {
+  to { opacity: 1; }
+}
+
+/* the track is the swipe: one snap panel per slide, each exactly a viewport wide */
+.lightbox-track {
+  display: flex;
+  height: 100%;
+  overflow: auto hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  width: 100%;
+
+  &::-webkit-scrollbar { display: none; }
+}
+
+.lightbox-panel {
+  align-items: center;
+  container-type: size;  /* the photo below sizes itself against this panel */
+  display: flex;
+  flex: 0 0 100%;
+  height: 100%;
+  justify-content: center;
+  position: relative;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;  /* never fly past a slide in one flick */
+
+  img {
+    aspect-ratio: var(--w) / var(--h);
+    cursor: grab;  /* the photo can be dragged; see the pointer handlers in lightbox.js */
+    height: auto;
+    object-fit: contain;
+    position: relative;
+
+    /* Whichever of the panel's two axes runs out first, and never past the photo's
+       own pixels -- which the view writes out as --w/--h, since an intrinsic size
+       cannot be relied on here: srcset divides it by whichever density was picked
+       for the current sizes, so it goes stale the moment the phone is rotated and
+       leaves the photo small in the middle of the new viewport. Hence computing the
+       width rather than leaving it to max-width/max-height. */
+    width: min(100cqw, calc(100cqh * var(--w) / var(--h)), calc(var(--w) * 1px));
+    z-index: 1;
+  }
+
+  figcaption {
+    bottom: 0;
+    color: #fff;
+    font-family: var(--serif-stack);
+    font-size: 1.2rem;
+    left: 0;
+    line-height: 1.4;
+    padding: 0 2rem 1rem;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    text-shadow: 0 0 6px #000;
+    text-wrap: balance;
+    z-index: 2;
+
+    /* One scrim hugging the text. The balanced wrap above is what leaves it anything to
+       hug; lightbox.js then pins the width to the longest line, which CSS cannot derive
+       (see fitScrim). box-sizing keeps that pinned width clear of the padding. */
+    > * {
+      background: rgb(0 0 0 / 70%);
+      border-radius: .25rem;
+      box-sizing: content-box;
+      display: inline-block;
+      margin: 0;
+      max-width: 55rem;
+      padding: .5rem 1rem;
+      /* The scrim takes clicks so its links work and so clicking the caption is
+         not read as clicking the backdrop, which closes. The padding around it
+         keeps pointer-events: none, and so keeps closing. */
+      pointer-events: auto;
+    }
+
+    /* a phone either way up: narrow in portrait, short in landscape */
+    @media (width <= 700px), (height <= 500px) {
+      font-size: 1rem;
+      padding: 0 1rem .75rem;
+      > * {
+        /* lines when there is height to spare, a share of the viewport when not */
+        max-height: min(5.25lh, 23dvh);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+      }
+    }
+  }
+}
+
+/* while a drag is under way the pointer keeps the grabbing cursor wherever it
+   strays, and the track stops snapping so it can be panned to any offset */
+.lightbox.is-grabbing,
+.lightbox.is-grabbing img {
+  cursor: grabbing;
+}
+
+.lightbox-track.is-unsnapped {
+  scroll-snap-type: none;
+}
+
+#content.content-lightbox .lightbox .lightbox-panel figcaption > * {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.lightbox-bar {
+  align-items: center;
+  background: linear-gradient(to bottom, rgb(0 0 0 / 65%), transparent);
+  display: flex;
+  gap: .25rem;
+  height: var(--lightbox-bar-height);
+  justify-content: flex-end;
+  left: 0;
+  padding: 0 .5rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 10;
+}
+
+.lightbox-counter {
+  color: var(--lightbox-chrome);
+  font-family: var(--sans-stack);
+  font-size: .95rem;
+  margin-right: auto;
+  padding-left: .75rem;
+  text-shadow: 0 0 6px #000;
+}
+
+/* What the bar buttons and the prev/next arrows have in common. They sit over a
+   black backdrop whatever the site theme is, so they keep their own colors --
+   and since some of them are anchors, which the themes color at
+   `body.theme-x a:link`, the anchor-qualified half of each selector list has to
+   outweigh that (three classes to its two) rather than merely repeat it. The
+   plain half is for the ones that are <button>, which no theme rule reaches. */
+.lightbox {
+  .lightbox-button,
+  .lightbox-nav,
+  a:is(.lightbox-button, .lightbox-nav):is(:link, :visited) {
+    color: var(--lightbox-chrome);
+  }
+
+  .lightbox-button:hover,
+  .lightbox-nav:hover,
+  a:is(.lightbox-button, .lightbox-nav):hover {
+    color: var(--lightbox-chrome-hover);
+  }
+
+  /* only the paint is shared; the two sets of icons are sized with their own rules */
+  :is(.lightbox-button, .lightbox-nav) svg {
+    fill: currentcolor;
+    filter: drop-shadow(0 0 3px #000);
+  }
+}
+
+.lightbox-button {
+  align-items: center;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  height: 2.75rem;
+  justify-content: center;
+  padding: 0;
+  width: 2.75rem;
+
+  svg {
+    height: 1.75rem;
+    width: 1.75rem;
+  }
+
+  /* line-art icons, for shapes the solid 24px set renders too heavily */
+  svg.icon-stroke {
+    fill: none;
+    stroke: currentcolor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.6;
+  }
+
+  /* each toggle draws both states; the class picks one (see setToggle) */
+  .icon-on { display: none; }
+  &.is-on {
+    .icon-off { display: none; }
+    .icon-on { display: unset; }
+  }
+}
+
+.lightbox-nav {
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  padding: 0 .5rem;
+  position: absolute;
+  top: 0;
+  width: 4.5rem;
+  z-index: 5;
+
+  &:hover { text-decoration: none; }
+
+  svg {
+    height: 2.75rem;
+    width: 2.75rem;
+  }
+
+  @media (width <= 700px) {
+    width: 3rem;
+    svg {
+      height: 2rem;
+      width: 2rem;
+    }
+  }
+}
+
+.lightbox-prev {
+  justify-content: flex-start;
+  left: 0;
+}
+
+.lightbox-next {
+  justify-content: flex-end;
+  right: 0;
+}
+
+.lightbox-parent-link { display: none; }
+
+/* In an overlay, strip the modal's own box so the lightbox can fill the
+   viewport. Scoped to the lightbox layer (up-class), never plain up-modal. */
+up-modal.lightbox {
+  up-modal-viewport {
+    overflow: hidden;
+    padding: 0;
+  }
+  up-modal-box {
+    background: none;
+    box-shadow: none;
+    padding: 0;
+  }
+  up-modal-content {
+    overflow: visible;
+    padding: 0;
+  }
+  up-modal-dismiss { display: none; }  /* the bar has its own close button */
+}
+
+
+body.nojs {
+  /* Four lines: the back link, then chevron-image-chevron, then the caption.
+     order arranges them, since the markup has the chevrons last. The track and
+     the panel are display: contents, so the image and the caption are items of
+     this flex container too, and the chevrons center on the image alone. */
+  .lightbox {
+    align-items: center;
+    background: none;  /* nothing to tint: this is an ordinary page again */
+    display: flex;
+    flex-wrap: wrap;
+    inset: auto;
+    justify-content: center;
+    overflow: visible;
+    position: static;
+
+    --lightbox-nav-width: 4.5rem;
+    @media (width <= 700px) {
+      --lightbox-nav-width: 2.25rem;
+    }
+  }
+
+  /* the first and last slides are short a chevron; stand in for it so the image
+     stays centered */
+  .lightbox:not(:has(.lightbox-prev))::before,
+  .lightbox:not(:has(.lightbox-next))::after {
+    content: '';
+    flex: 0 0 var(--lightbox-nav-width);
+  }
+
+  .lightbox:not(:has(.lightbox-prev))::before {
+    margin-right: auto;
+    order: 2;
+  }
+
+  .lightbox:not(:has(.lightbox-next))::after {
+    margin-left: auto;
+    order: 4;
+  }
+
+  .lightbox-parent-link {
+    display: block;
+    flex: 0 0 100%;
+    margin-bottom: .5rem;
+    order: 1;
+  }
+
+  .lightbox-track,
+  .lightbox-panel { display: contents; }
+
+  .lightbox-panel:not(.is-current) { display: none; }
+
+  .lightbox-panel {
+    img {
+      cursor: auto;  /* nothing here to drag */
+      flex: 0 1 auto;
+      height: auto;  /* here the image sizes itself; see the lightbox rule above */
+      max-height: calc(100dvh - 8rem);
+
+      /* Room for both chevrons. This also caps the size flex uses to decide
+         whether the row fits, so a wide image shrinks instead of wrapping. */
+      max-width: calc(100% - 9.5rem);
+      min-width: 0;
+      order: 3;
+      width: auto;
+
+      @media (width <= 700px) {
+        max-width: calc(100% - 5rem);  /* narrower chevrons down here */
+      }
+    }
+
+    figcaption {
+      color: inherit;
+      flex: 0 0 100%;  /* its own line, below the row the chevrons center on */
+      font-size: 1rem;
+      margin-top: .5rem;
+      order: 5;
+      padding: 0;
+      position: static;
+      text-shadow: none;
+
+      /* no js means no fitScrim, so drop the scrim rather than leave it ragged */
+      > * {
+        background: none;
+        color: inherit;
+        padding: 0;
+      }
+    }
+  }
+
+  .lightbox-bar { display: none; }
+
+  .lightbox-nav {
+    bottom: auto;
+    display: flex;
+    flex: 0 0 auto;
+    position: static;
+    top: auto;
+    width: auto;
+
+    svg {
+      height: 3.5rem;
+      width: 3.5rem;
+    }
+
+    @media (width <= 700px) {
+      padding: 0;
+      svg {
+        height: 2.25rem;
+        width: 2.25rem;
+      }
+    }
+  }
+
+  /* the auto margins take up the slack, holding the chevrons out at the edges
+     with the image centered between them */
+  .lightbox-prev {
+    margin-right: auto;
+    order: 2;
+  }
+
+  .lightbox-next {
+    margin-left: auto;
+    order: 4;
+  }
+
+  /* Only nojs has anything here to lay out: with js the lightbox is fixed to the
+     viewport, so the page it was rendered into never shows through. */
+  #content.content-lightbox > .constrainer > main {
+    padding: 2rem 0 4rem;
+    text-align: center;
+  }
+}

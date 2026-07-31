@@ -25,58 +25,8 @@
   img {
     max-height: calc(100dvh - 3rem);
   }
-  .parent-link {
-    margin-bottom: 5px;
-  }
 }
 
-.zoom.slide {
-  a:hover { text-decoration: none; }
-  figure {
-    position: relative;
-  }
-  figcaption {
-    background-color: rgb(0 0 0 / 0.5);
-    bottom: 5px;  /* applies to fullpage version */
-    margin: 0 !important;
-    padding: .35rem 1rem;
-    position: absolute;
-    text-align: center;
-    text-wrap: balance;
-    width: 100%;
-    p {
-      color: var(--white);
-      font-size: 1rem !important;
-      margin: 0 !important;
-      overflow-y: auto;
-    }
-  }
-  .next, .prev {
-    bottom: -17px;
-    font-style: italic;
-    line-height: 1rem;
-    position: absolute;
-    span {
-      font-style: normal;
-    }
-  }
-  .next {
-    right: 0;
-  }
-  .prev {
-    left: 0;
-  }
-}
-up-modal-content {
-  .zoom.slide {
-    figcaption {
-      bottom: 0; /* applies to modal version */
-    }
-  }
-  .parent-link {
-    display: none;
-  }
-}
 up-modal-viewport {
   align-items: center;
   display: flex;

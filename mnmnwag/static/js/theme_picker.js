@@ -1,4 +1,4 @@
-// DEPENDENCIES: ./cookies.js, ../vendor/unpoly.js
+// DEPENDENCIES: ./cookies.js, ./vendor/unpoly.js
 
 const links = '#theme-picker a';
 const prefix = 'theme-';
