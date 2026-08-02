@@ -166,7 +166,8 @@ def _lightbox_context(panels, current_index, total, parent_link, url_template=''
 
 def zoom_image(request, page_id, image_id):
     """
-    "Zoom" a single image from an ImageBlock, given an ID.
+    "Zoom" a single image from an ImageBlock, given a page_id to offer
+    navigation back to and an image_id to render.
 
     Renders the same lightbox a slide gets, with a window of exactly one panel:
     no neighbors to swipe to, so the template drops the counter, the slideshow
