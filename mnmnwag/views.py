@@ -120,14 +120,10 @@ def _lightbox_panel(image, caption, alt_text, url, pos):
     }
 
 
-def _image_block_for(page, image_id):
+def _alt_text_for(page, image_id):
     """
-    Find the ImageBlock on a page that shows a given image.
-
-    Only for its alt text, so the zoomed image is described the same way the
-    thumbnail is. The block's caption belongs to the post, where it is already
-    shown beneath the thumbnail -- unlike a slide's caption, which has nowhere to
-    live but the lightbox.
+    How the ImageBlock showing a given image describes it, so the zoom is
+    described the same way the thumbnail is.
 
     The zoom URL identifies the image but not the block holding it, and the alt
     text lives on the block; rather than change a URL that is already out in the
@@ -139,8 +135,30 @@ def _image_block_for(page, image_id):
         if block.block_type != 'image':
             continue
         if block.value['image'] and block.value['image'].id == image_id:
-            return block.value
-    return None
+            return block.value['alt_text']
+    return ''
+
+
+def _lightbox_context(panels, current_index, total, parent_link, url_template=''):
+    """
+    What lightbox.html wants, for a window of one panel or of three.
+
+    The neighbors are whatever sits either side of the current panel in the
+    window, so a window of one has none and the template drops the arrows.
+    """
+    current = panels[current_index]
+    return {
+        'panels': panels,
+        'current': current,
+        'current_index': current_index,
+        'prev': panels[current_index - 1] if current_index > 0 else None,
+        'next': panels[current_index + 1] if current_index + 1 < len(panels) else None,
+        'pos': current['pos'],
+        'counter': current['pos'] + 1,
+        'total': total,
+        'url_template': url_template,
+        'parent_link': parent_link,
+    }
 
 
 def zoom_image(request, page_id, image_id):
@@ -155,28 +173,23 @@ def zoom_image(request, page_id, image_id):
         raise Http404
     page = get_object_or_404(Page, id=page_id).specific  # see zoom_slide
     img = get_object_or_404(CustomImage, id=image_id)
-    block = _image_block_for(page, image_id)
 
     panel = _lightbox_panel(
         image=img,
-        caption='',  # the post shows it; see _image_block_for
-        alt_text=block['alt_text'] if block else '',
+        # unlike a slide's, this caption has somewhere else to live: the post
+        # already shows it beneath the thumbnail
+        caption='',
+        alt_text=_alt_text_for(page, image_id),
         url=request.path,
         pos=0,
     )
 
-    return TemplateResponse(request, 'mnmnwag/lightbox.html', {
-        'panels': [panel],
-        'current': panel,
-        'current_index': 0,
-        'prev': None,
-        'next': None,
-        'counter': 1,
-        'total': 1,
-        'pos': 0,
-        'url_template': '',
-        'parent_link': page.get_url(request=request),  # relative; see zoom_slide
-    })
+    return TemplateResponse(request, 'mnmnwag/lightbox.html', _lightbox_context(
+        panels=[panel],
+        current_index=0,
+        total=1,
+        parent_link=page.get_url(request=request),  # relative; see zoom_slide
+    ))
 
 
 def _slide_panel(slides, pos, page_id, block_id):
@@ -240,23 +253,16 @@ def zoom_slide(request, page_id, block_id, pos):
         'pos': _POS_SENTINEL,
     }).replace(str(_POS_SENTINEL), '{pos}')
 
-    return TemplateResponse(request, 'mnmnwag/lightbox.html', {  # see zoom_image
-        'panels': panels,
-        'current': panels[current_index],
-        'current_index': current_index,
-        'prev': panels[0] if prev_pos is not None else None,
-        'next': panels[-1] if next_pos is not None else None,
-        'counter': pos + 1,
-        'total': len(slides),
-        'pos': pos,
-        'url_template': url_template,
+    return TemplateResponse(request, 'mnmnwag/lightbox.html', _lightbox_context(
+        panels=panels,
+        current_index=current_index,
+        total=len(slides),
         # get_url over .url: with more than one Site in the database, .url cannot
         # tell which one is being browsed and answers with an absolute URL, which
         # would send the close button to production from anywhere
-        'parent_link': page.get_url(request=request),
-        'page_id': page_id,
-        'block_id': block_id,
-    })
+        parent_link=page.get_url(request=request),
+        url_template=url_template,
+    ))
 
 
 def zoom_old(request, image_path):
