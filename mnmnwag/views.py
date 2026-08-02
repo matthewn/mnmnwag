@@ -86,33 +86,36 @@ def _lightbox_panel(image, caption, alt_text, url, pos):
     (see lightbox.js), so it costs three images, and on a photo here that is
     three times several megabytes.
     """
-    original = image.get_rendition('original')
+    # The widest we ever serve, and the source of every dimension below. Wagtail
+    # will not upscale, so on a smaller photo this comes back at its own width --
+    # and auto-oriented, which image.width/height are not, so an EXIF-rotated
+    # photo would be sized landscape if we read those instead.
+    large = image.get_rendition(f'width-{SLIDE_LARGE_WIDTH}')
 
     # Two rungs, neither of them the original: past the small one the only
     # candidate left would be a multi-megabyte file, which is what a phone in
     # landscape would end up fetching. The download button still links it whole.
-    # Wagtail will not upscale, so the large rung stops at the original's own
-    # width, and the small one is dropped once it is no longer a real saving --
-    # otherwise both would name one file, one of them under a lying descriptor.
-    large = min(original.width, SLIDE_LARGE_WIDTH)
-    widths = [SLIDE_SMALL_WIDTH, large] if SLIDE_SMALL_WIDTH * 1.2 < large else [large]
-    renditions = [image.get_rendition(f'width-{w}') for w in widths]
+    # The small rung is dropped once it is no longer a real saving -- otherwise
+    # both would name one file, one of them under a lying descriptor.
+    renditions = [large]
+    if SLIDE_SMALL_WIDTH * 1.2 < large.width:
+        renditions.insert(0, image.get_rendition(f'width-{SLIDE_SMALL_WIDTH}'))
 
     # What the CSS actually paints: the panel is the viewport, and the photo fits
     # whichever of its axes runs out first (see lightbox.css). Saying 100vw here
     # would overstate the need on a height-limited photo and buy a rung too many.
-    sizes = f'min(100vw, {round(original.width / original.height * 100)}vh)'
+    sizes = f'min(100vw, {round(large.width / large.height * 100)}vh)'
 
     return {
         'pos': pos,
         'url': url,
-        'src': renditions[-1].url,
+        'src': large.url,
         'srcset': ', '.join(f'{r.url} {r.width}w' for r in renditions),
         'sizes': sizes,
-        # the lightbox sizes the photo from its panel, and caps it here so it is
-        # never blown up past its own pixels
-        'width': original.width,
-        'height': original.height,
+        # the lightbox sizes the photo from its panel, and caps it here at the
+        # pixels we actually serve, so it is never stretched past them
+        'width': large.width,
+        'height': large.height,
         'download': image.file.url,
         'filename': os.path.basename(image.file.name),
         'caption': caption,
