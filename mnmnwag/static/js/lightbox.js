@@ -96,17 +96,53 @@ function setToggle(button, on, labels) {
     button.setAttribute('aria-label', text);  // icon-only buttons need a name
 }
 
+// Hand the neighbors their sources -- they ship inert so a nojs visitor, who is
+// shown a plain image instead, never pays for them -- and mark any panel whose
+// image has yet to arrive so it can show a spinner. The neighbors get one too, so
+// a swipe onto one that has not arrived scrolls a spinner into view rather than a
+// black panel. Returns nothing; wiring the load handlers is left to the caller.
+function loadPanel(panel, listen) {
+    const img = panel.querySelector('img');
+    if (img.dataset.src) {
+        img.srcset = img.dataset.srcset;
+        img.src = img.dataset.src;
+    }
+    if (img.complete) return;
 
-///////////////////////////////////////////
-// up.compiler function from here to EOF //
-///////////////////////////////////////////
+    const spinner = panel.querySelector('.lightbox-spinner');
+    panel.classList.add('is-loading');
+    spinner.hidden = false;
+    const done = () => {
+        panel.classList.remove('is-loading');
+        spinner.hidden = true;
+    };
+    listen(img, 'load', done);
+    listen(img, 'error', done);
+}
 
+
+// up.compiler from here to EOF; contents:
+//
+//   VARS       -- what the markup gave us, and the state that tracks it
+//   TRACK      -- geometry: where the panels are and how we scroll to one
+//   CHROME     -- pushing current state out into the controls
+//   NAVIGATION -- settling, stepping, and jumps that outlive a swap
+//   SLIDESHOW  -- the timed walk from one slide to the next
+//   DISMISSAL  -- closing, and the drags that lead to it
+//   CAPTIONS   -- scrim fitting, and the resize that invalidates it
+//   WIRING     -- every addEventListener, grouped by input device
+//   STARTUP    -- everything this fragment does the moment it appears
+//   DESTRUCTOR
+//
 up.compiler('[up-lightbox]', (lightbox) => {
+
+    // *** VARS ***********************************************************
+    // Elements and numbers from the markup, then the per-slide state. (The
+    // slideshow and jump state is module-level: it has to survive the swap.)
+
     const track = lightbox.querySelector('[up-lightbox-track]');
     const panels = [...lightbox.querySelectorAll('.lightbox-panel')];
-    const index = Number(lightbox.dataset.currentIndex);
-    const pos = Number(lightbox.dataset.pos);
-    const total = Number(lightbox.dataset.total);
+    const captions = [...lightbox.querySelectorAll('.lightbox-panel figcaption')];
     const counter = lightbox.querySelector('[up-lightbox-counter]');
     const download = lightbox.querySelector('[up-lightbox-download]');
     const closeButton = lightbox.querySelector('.lightbox-close');
@@ -115,6 +151,10 @@ up.compiler('[up-lightbox]', (lightbox) => {
     const prevLink = lightbox.querySelector('[up-lightbox-prev]');
     const nextLink = lightbox.querySelector('[up-lightbox-next]');
     const jumpLink = lightbox.querySelector('.lightbox-jump');
+
+    const index = Number(lightbox.dataset.currentIndex);  // which panel of the three
+    const pos = Number(lightbox.dataset.pos);  // where that is in the whole block
+    const total = Number(lightbox.dataset.total);
     const urlTemplate = lightbox.dataset.urlTemplate;
 
     let timer = null;  // the slideshow's wait on this slide
@@ -126,139 +166,18 @@ up.compiler('[up-lightbox]', (lightbox) => {
     let grabbed = false;  // one just ended, so the click it produced is not a click
     let closing = false;  // the lightbox is on its way out; the track no longer votes
 
-    // Every listener files its own removal as it is registered, so the teardown
-    // below cannot drift out of step with what was actually bound.
-    const cleanups = [];
-    const listen = (target, type, handler, options) => {
-        target.addEventListener(type, handler, options);
-        // capture is the only option removeEventListener matches on, so it is the
-        // only one that has to be repeated here
-        cleanups.push(() => target.removeEventListener(type, handler, options));
-    };
 
-    // The neighbors ship inert so a nojs visitor, who is shown a plain image
-    // instead, never pays for them. Hand them their sources now, and mark any
-    // panel whose image has yet to arrive so it can show a spinner.
-    panels.forEach((panel) => {
-        const img = panel.querySelector('img');
-        if (img.dataset.src) {
-            img.srcset = img.dataset.srcset;
-            img.src = img.dataset.src;
-        }
-        // neighbors too, so a swipe onto one that has not arrived scrolls a
-        // spinner into view rather than a black panel
-        if (img.complete) return;
-        const spinner = panel.querySelector('.lightbox-spinner');
-        panel.classList.add('is-loading');
-        spinner.hidden = false;
-        const done = () => {
-            panel.classList.remove('is-loading');
-            spinner.hidden = true;
-        };
-        listen(img, 'load', done);
-        listen(img, 'error', done);
-    });
+    // *** TRACK **********************************************************
+    // Where the panels sit, and the one way anything moves between them.
+    // Arrows, keys and the slideshow all scroll the track instead of following
+    // their link, so every route between slides runs through the same snap --
+    // and gets the same animation -- as a swipe does.
 
-    // Center on the current slide. Assigning scrollLeft skips any smooth
-    // behavior, and settling back onto the panel we are already on is a no-op
-    // below, so this cannot be mistaken for a swipe.
+    // Assigning scrollLeft skips any smooth behavior, and settling back onto the
+    // panel we are already on is a no-op in settled(), so re-centering cannot be
+    // mistaken for a swipe.
+
     const recenter = () => { track.scrollLeft = panels[index].offsetLeft; };
-    recenter();
-
-    // A slide reached by its own URL has no overlay to dismiss, so leaving means
-    // a full load; replace() so we don't create a history entry.
-    const closeLightbox = () => {
-        closing = true;
-        if (up.layer.isRoot()) window.location.replace(closeButton.href);
-        else up.layer.dismiss();
-    };
-
-    // The tint is the lightbox's own background on the root layer and the modal's
-    // backdrop in an overlay; either way it reads --lightbox-fade off this element.
-    const backdrop = up.layer.isRoot() ? lightbox : up.layer.element;
-
-    const fadeBackdrop = (fade, ms) => {
-        backdrop.style.setProperty('--lightbox-fade', fade);
-        backdrop.style.setProperty('--lightbox-fade-ms', `${ms}ms`);
-    };
-
-    // The photo tracks a dismissal drag, shrinking and fading as it travels, so a
-    // half-hearted swipe shows what it was about to do before springing back. The
-    // tint lifts with it, letting the page underneath show through.
-    const dragPanel = (panel, dy) => {
-        const progress = Math.min(Math.abs(dy) / DRAG_FULL_PX, 1);
-        panel.style.transition = '';
-        panel.style.transform = `translateY(${dy}px) scale(${1 - progress * 0.25})`;
-        panel.style.opacity = 1 - progress * 0.5;
-        fadeBackdrop(1 - progress * 0.7, 0);  // no transition: it is tracking a finger
-    };
-
-    const releasePanel = (panel) => {
-        panel.style.transition = REDUCED_MOTION.matches ? '' : 'transform 200ms, opacity 200ms';
-        panel.style.transform = '';
-        panel.style.opacity = '';
-        fadeBackdrop(1, REDUCED_MOTION.matches ? 0 : 200);
-    };
-
-    // A drag that passed the threshold keeps moving the way it was going, off the
-    // edge it was headed for..
-    const flingPanel = (panel, direction) => {
-        if (REDUCED_MOTION.matches) return closeLightbox();
-        closing = true;  // before the animation, not after it
-        lightbox.style.pointerEvents = 'none';  // nothing to do but watch it leave
-
-        // The neighbors have no part in a dismissal. Left in place they are still
-        // subject to the track being relaid out and re-snapped as the panel
-        // transforms and the overlay dismisses, which is what flashes a sliver of
-        // one along an edge.
-        panels.forEach((other) => { if (other !== panel) other.style.visibility = 'hidden'; });
-        track.classList.add('is-unsnapped');
-
-        fadeBackdrop(0, FLING_MS);
-        panel.style.transition = `transform ${FLING_MS}ms ease-in, opacity ${FLING_MS}ms ease-in`;
-        panel.style.transform = `translateY(${direction * window.innerHeight}px) scale(.5)`;
-        panel.style.opacity = 0;
-        setTimeout(closeLightbox, FLING_MS);
-    };
-
-    // Where every dismissal drag ends up, by touch or by mouse: far enough and the
-    // photo leaves the way it was headed, short of it and it springs back.
-    const endVerticalDrag = (panel, traveled) => {
-        if (Math.abs(traveled) >= CLOSE_SWIPE_PX) flingPanel(panel, Math.sign(traveled));
-        else releasePanel(panel);
-    };
-
-    // Every panel carries its own caption, so each one needs its scrim fitted --
-    // dragging brings a neighbor's caption in with it. fitScrim measures and
-    // remeasures, so keep it off the scroll path.
-    const captions = [...lightbox.querySelectorAll('.lightbox-panel figcaption')];
-    const fitAll = () => {
-        // callers outlive the destructor -- a frame, a resize frame, or however
-        // long the fonts take -- so none of them is the destructor's to cancel
-        if (!lightbox.isConnected) return;
-        captions.forEach(fitScrim);
-    };
-    requestAnimationFrame(fitAll);
-    // a late webfont rewraps the text under the scrim we just measured
-    document.fonts.ready.then(fitAll);
-
-    // A resize moves every panel, so re-center or the track is left nearest a
-    // neighbor and settled() reads that as a swipe. Again after the frame,
-    // because a rotating phone lays out more than once.
-    //
-    // fitScrim forces a layout per candidate width, so it waits for the frame
-    // rather than running on every event of a resize drag.
-    let framePending = false;
-    const onResize = () => {
-        recenter();
-        if (framePending) return;
-        framePending = true;
-        requestAnimationFrame(() => {
-            framePending = false;
-            recenter();
-            fitAll();
-        });
-    };
 
     const nearest = () => {
         const gaps = panels.map((panel) => Math.abs(panel.offsetLeft - track.scrollLeft));
@@ -266,6 +185,21 @@ up.compiler('[up-lightbox]', (lightbox) => {
     };
 
     const moving = () => Math.abs(track.scrollLeft - panels[index].offsetLeft) > 1;
+
+    const goTo = (target) => {
+        if (target < 0 || target >= panels.length) return false;
+        track.scrollTo({
+            left: panels[target].offsetLeft,
+            behavior: REDUCED_MOTION.matches ? 'auto' : 'smooth',
+        });
+        return true;
+    };
+
+
+    // *** CHROME *********************************************************
+    // Pushing current state out into the controls: the counter and the download
+    // link, which name whichever slide the viewer is looking at -- or,
+    // mid-keypress, the one they are heading for -- and the fullscreen toggle.
 
     // Chrome follows the drag rather than waiting for the slide to land, so the
     // count and the download target belong to whatever is on screen.
@@ -285,6 +219,20 @@ up.compiler('[up-lightbox]', (lightbox) => {
         if (panel) download.href = panel.dataset.download;
     };
 
+    // Fullscreen is owned by the document rather than by any one lightbox, so the
+    // button is caught up to it on arrival as well as on every change.
+    const syncFullscreen = () => {
+        setToggle(fullscreenButton, Boolean(document.fullscreenElement), FULLSCREEN_LABELS);
+    };
+
+
+    // *** NAVIGATION *****************************************************
+    // Two routes out of this fragment. A neighbor is reached by scrolling: the
+    // track settles on it and settled() follows the corresponding link. Anywhere
+    // further is outside the three-up window, so it is banked as a jump and
+    // followed by URL -- and a jump, unlike a scroll, has to survive the swap it
+    // causes, which is why its state lives at module scope.
+
     const settled = () => {
         // A dismissal owns the gesture outright. Firefox Mobile axis-locks loosely,
         // so a swipe meant as "close this" can drift the track far enough to look
@@ -295,23 +243,11 @@ up.compiler('[up-lightbox]', (lightbox) => {
         track.classList.remove('is-unsnapped');  // which it had turned snapping off for
         if (jumpTimer || jumping) return;  // a jump owns the navigation
         const landed = nearest();
-        if (landed === index) return;  // includes the centering above
+        if (landed === index) return;  // includes the centering at startup
         const link = landed < index ? prevLink : nextLink;
         if (!link) return;
         clearTimeout(advanceFallback);  // the scroll landed; no rescue needed
         up.follow(link);
-    };
-
-    // Arrows, keys and the slideshow all scroll the track instead of following
-    // their link, so every route between slides runs through the same snap --
-    // and gets the same animation -- as a swipe does.
-    const goTo = (target) => {
-        if (target < 0 || target >= panels.length) return false;
-        track.scrollTo({
-            left: panels[target].offsetLeft,
-            behavior: REDUCED_MOTION.matches ? 'auto' : 'smooth',
-        });
-        return true;
     };
 
     // Drop any destination banked from earlier presses, along with the timer that
@@ -325,7 +261,7 @@ up.compiler('[up-lightbox]', (lightbox) => {
     const runJump = () => {
         jumpTimer = null;
         // declining leaves jumpTo banked on purpose: a scroll already under way
-        // can still carry us off, and the resume below is what brings us back
+        // can still carry us off, and the resume at startup is what brings us back
         if (jumpTo === null || jumpTo === pos || !jumpLink || !urlTemplate) return;
         if (!lightbox.isConnected) return;  // a later fragment owns the jump now
         jumping = true;
@@ -357,6 +293,13 @@ up.compiler('[up-lightbox]', (lightbox) => {
 
     const step = (direction) => goToPos(banked() + direction);
 
+
+    // *** SLIDESHOW ******************************************************
+    // Each slide schedules only its own advance. Landing on the next slide
+    // replaces this fragment and runs the compiler again, which schedules the
+    // one after -- so the show walks the block a slide at a time, and simply
+    // stops when it reaches a slide with nowhere further to go.
+
     const stopSlideshow = () => {
         clearTimeout(timer);
         clearTimeout(advanceFallback);
@@ -382,38 +325,127 @@ up.compiler('[up-lightbox]', (lightbox) => {
         advanceFallback = setTimeout(() => up.follow(nextLink), ADVANCE_MS);
     };
 
-    // Each slide schedules only its own advance. Landing on the next slide
-    // replaces this fragment and runs the compiler again, which schedules the
-    // one after -- so the show walks the block a slide at a time, and simply
-    // stops when it reaches a slide with nowhere further to go.
     const scheduleAdvance = () => {
         clearTimeout(timer);
         if (!nextLink) return stopSlideshow();
         timer = setTimeout(advance, SLIDESHOW_MS);
     };
 
-    setToggle(slideshowButton, slideshowOn, SLIDESHOW_LABELS);
-    if (slideshowOn) scheduleAdvance();
 
-    // A jump survives the swap it caused: arriving clears it, and landing short
-    // of it -- which happens when the track settled first -- sends us on again.
-    // A lightbox that cannot navigate discards any jump left over from one that
-    // could, rather than carrying a destination it has no way of reaching.
-    jumping = false;
-    if (jumpTo === pos || !urlTemplate) jumpTo = null;
-    else if (jumpTo !== null) jumpTimer = setTimeout(runJump, JUMP_MS);
+    // *** DISMISSAL ******************************************************
+    // Closing, and the drag that leads to it. The photo tracks the drag,
+    // shrinking and fading as it travels, so a half-hearted swipe shows what it
+    // was about to do before springing back; past the threshold it keeps going
+    // and leaves by the edge it was headed for. Touch and mouse both end up in
+    // endVerticalDrag().
 
-    // Show which slide we are on without leaving a trail. Nothing here carries
-    // history -- modals are configured without it (main.js), the nav links opt
-    // out -- so the lightbox commandeers the entry it was opened on and rewrites
-    // it slide by slide. Back leaves the post outright rather than retracing it.
-    up.history.replace(lightbox.dataset.url);
+    // A slide reached by its own URL has no overlay to dismiss, so leaving means
+    // a full load; replace() so we don't create a history entry.
+    const closeLightbox = () => {
+        closing = true;
+        if (up.layer.isRoot()) window.location.replace(closeButton.href);
+        else up.layer.dismiss();
+    };
 
-    // Unpoly marks its box role="dialog" but leaves it unnamed.
-    if (!up.layer.isRoot()) {
-        up.layer.element.querySelector('up-modal-box')?.setAttribute('aria-label', 'Lightbox');
-    }
+    // The tint is the lightbox's own background on the root layer and the modal's
+    // backdrop in an overlay; either way it reads --lightbox-fade off this element.
+    const backdrop = up.layer.isRoot() ? lightbox : up.layer.element;
 
+    const fadeBackdrop = (fade, ms) => {
+        backdrop.style.setProperty('--lightbox-fade', fade);
+        backdrop.style.setProperty('--lightbox-fade-ms', `${ms}ms`);
+    };
+
+    // The tint lifts with the photo, letting the page underneath show through.
+    const dragPanel = (panel, dy) => {
+        const progress = Math.min(Math.abs(dy) / DRAG_FULL_PX, 1);
+        panel.style.transition = '';
+        panel.style.transform = `translateY(${dy}px) scale(${1 - progress * 0.25})`;
+        panel.style.opacity = 1 - progress * 0.5;
+        fadeBackdrop(1 - progress * 0.7, 0);  // no transition: it is tracking a finger
+    };
+
+    const releasePanel = (panel) => {
+        panel.style.transition = REDUCED_MOTION.matches ? '' : 'transform 200ms, opacity 200ms';
+        panel.style.transform = '';
+        panel.style.opacity = '';
+        fadeBackdrop(1, REDUCED_MOTION.matches ? 0 : 200);
+    };
+
+    const flingPanel = (panel, direction) => {
+        if (REDUCED_MOTION.matches) return closeLightbox();
+        closing = true;  // before the animation, not after it
+        lightbox.style.pointerEvents = 'none';  // nothing to do but watch it leave
+
+        // The neighbors have no part in a dismissal. Left in place they are still
+        // subject to the track being relaid out and re-snapped as the panel
+        // transforms and the overlay dismisses, which is what flashes a sliver of
+        // one along an edge.
+        panels.forEach((other) => { if (other !== panel) other.style.visibility = 'hidden'; });
+        track.classList.add('is-unsnapped');
+
+        fadeBackdrop(0, FLING_MS);
+        panel.style.transition = `transform ${FLING_MS}ms ease-in, opacity ${FLING_MS}ms ease-in`;
+        panel.style.transform = `translateY(${direction * window.innerHeight}px) scale(.5)`;
+        panel.style.opacity = 0;
+        setTimeout(closeLightbox, FLING_MS);
+    };
+
+    // Where every dismissal drag ends up, by touch or by mouse: far enough and the
+    // photo leaves the way it was headed, short of it and it springs back.
+    const endVerticalDrag = (panel, traveled) => {
+        if (Math.abs(traveled) >= CLOSE_SWIPE_PX) flingPanel(panel, Math.sign(traveled));
+        else releasePanel(panel);
+    };
+
+
+    // *** CAPTIONS *******************************************************
+    // Every panel carries its own caption, so each one needs its scrim fitted --
+    // dragging brings a neighbor's caption in with it. fitScrim measures and
+    // remeasures, so keep it off the scroll path.
+
+    const fitAll = () => {
+        // callers outlive the destructor -- a frame, a resize frame, or however
+        // long the fonts take -- so none of them is the destructor's to cancel
+        if (!lightbox.isConnected) return;
+        captions.forEach(fitScrim);
+    };
+
+    // A resize moves every panel, so re-center or the track is left nearest a
+    // neighbor and settled() reads that as a swipe. Again after the frame,
+    // because a rotating phone lays out more than once.
+    //
+    // fitScrim forces a layout per candidate width, so it waits for the frame
+    // rather than running on every event of a resize drag.
+    let framePending = false;
+    const onResize = () => {
+        recenter();
+        if (framePending) return;
+        framePending = true;
+        requestAnimationFrame(() => {
+            framePending = false;
+            recenter();
+            fitAll();
+        });
+    };
+
+
+    // *** WIRING *********************************************************
+    // Nothing below decides anything; each handler routes an input to one of the
+    // operations above. Grouped by where the input comes from: the layer, the
+    // track (scroll, then mouse drag, then touch), the window, and the controls.
+
+    // Every listener files its own removal as it is registered, so the teardown
+    // in the destructor cannot drift out of step with what was actually bound.
+    const cleanups = [];
+    const listen = (target, type, handler, options) => {
+        target.addEventListener(type, handler, options);
+        // capture is the only option removeEventListener matches on, so it is the
+        // only one that has to be repeated here
+        cleanups.push(() => target.removeEventListener(type, handler, options));
+    };
+
+    // *** Layer ***
     // Closing for good, which the destructor cannot tell from a slide change --
     // and the shared state has to survive one but not the other, or the next
     // lightbox opened resumes a slideshow or walks off to a stale slide.
@@ -426,6 +458,7 @@ up.compiler('[up-lightbox]', (lightbox) => {
         stopSlideshow();
     });
 
+    // *** Track: scrolling ***
     listen(track, 'scroll', syncChrome, { passive: true });
 
     // 'scrollend' is the honest signal; debounce where it is not available.
@@ -447,10 +480,11 @@ up.compiler('[up-lightbox]', (lightbox) => {
         if (slideshowOn) stopSlideshow();
     });
 
-    // The desktop swipe: the photo is grabbable, and a drag off it either pans the
-    // track sideways or peels the photo away, whichever axis the pointer commits
-    // to first. Mouse only -- touch has the browser's own panning, which carries
-    // momentum and snaps on the compositor, and is not worth replacing.
+    // *** Track: the desktop swipe ***
+    // The photo is grabbable, and a drag off it either pans the track sideways or
+    // peels the photo away, whichever axis the pointer commits to first. Mouse
+    // only -- touch has the browser's own panning, which carries momentum and
+    // snaps on the compositor, and is not worth replacing.
     listen(track, 'dragstart', (event) => event.preventDefault());  // no ghost image
 
     listen(track, 'pointerdown', (event) => {
@@ -509,9 +543,7 @@ up.compiler('[up-lightbox]', (lightbox) => {
     listen(track, 'pointerup', endGrab);
     listen(track, 'pointercancel', endGrab);
 
-    listen(window, 'resize', onResize);
-
-    // Swipe up or down to close, the same as pressing the X.
+    // *** Touch: swipe up or down to close, the same as pressing the X ***
     listen(lightbox, 'touchstart', (event) => {
         // a caption long enough to scroll keeps its own vertical gestures, and
         // a two-finger touch is a pinch rather than a swipe
@@ -555,6 +587,10 @@ up.compiler('[up-lightbox]', (lightbox) => {
         endVerticalDrag(start.panel, event.changedTouches[0].clientY - start.y);
     }, { passive: true });
 
+    // *** Window ***
+    listen(window, 'resize', onResize);
+
+    // *** Controls: closing ***
     // Clicking anywhere but the photo or a control closes.
     listen(lightbox, 'click', (event) => {
         if (grabbed) return;  // the tail end of a drag, not a click on the backdrop
@@ -569,6 +605,7 @@ up.compiler('[up-lightbox]', (lightbox) => {
         closeLightbox();
     });
 
+    // *** Controls: the arrows ***
     const onNavClick = (event) => {
         if (!step(event.currentTarget === prevLink ? -1 : 1)) return;  // let the link do its job
         event.preventDefault();
@@ -577,15 +614,12 @@ up.compiler('[up-lightbox]', (lightbox) => {
     if (prevLink) listen(prevLink, 'click', onNavClick);
     if (nextLink) listen(nextLink, 'click', onNavClick);
 
+    // *** Controls: fullscreen ***
+    listen(document, 'fullscreenchange', syncFullscreen);
+
     // Fullscreen is requested on documentElement, not on the lightbox: the
     // lightbox is replaced on every slide change, which would drop us out of
     // fullscreen mid-slideshow.
-    const syncFullscreen = () => {
-        setToggle(fullscreenButton, Boolean(document.fullscreenElement), FULLSCREEN_LABELS);
-    };
-    syncFullscreen();
-    listen(document, 'fullscreenchange', syncFullscreen);
-
     if (fullscreenButton) {
         listen(fullscreenButton, 'click', () => {
             const done = document.fullscreenElement
@@ -595,6 +629,7 @@ up.compiler('[up-lightbox]', (lightbox) => {
         });
     }
 
+    // *** Controls: the slideshow toggle ***
     if (slideshowButton) {
         listen(slideshowButton, 'click', () => {
             if (slideshowOn) return stopSlideshow();
@@ -605,6 +640,7 @@ up.compiler('[up-lightbox]', (lightbox) => {
         });
     }
 
+    // *** Keyboard ***
     listen(document, 'keydown', (event) => {
         if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey) return;
         let handled = false;
@@ -623,6 +659,43 @@ up.compiler('[up-lightbox]', (lightbox) => {
         event.preventDefault();
         if (slideshowOn) stopSlideshow();
     });
+
+
+    // *** STARTUP ********************************************************
+    // Everything this fragment does the moment it appears. A fragment arriving
+    // mid-slideshow or mid-jump also has to pick up what the one before it was
+    // in the middle of, which is the second half of this section.
+
+    panels.forEach((panel) => loadPanel(panel, listen));
+    recenter();
+    requestAnimationFrame(fitAll);
+    document.fonts.ready.then(fitAll);  // a late webfont rewraps the text under the scrim
+    syncFullscreen();
+
+    // Show which slide we are on without leaving a trail. Nothing here carries
+    // history -- modals are configured without it (main.js), the nav links opt
+    // out -- so the lightbox commandeers the entry it was opened on and rewrites
+    // it slide by slide. Back leaves the post outright rather than retracing it.
+    up.history.replace(lightbox.dataset.url);
+
+    // Unpoly marks its box role="dialog" but leaves it unnamed.
+    if (!up.layer.isRoot()) {
+        up.layer.element.querySelector('up-modal-box')?.setAttribute('aria-label', 'Lightbox');
+    }
+
+    setToggle(slideshowButton, slideshowOn, SLIDESHOW_LABELS);
+    if (slideshowOn) scheduleAdvance();
+
+    // A jump survives the swap it caused: arriving clears it, and landing short
+    // of it -- which happens when the track settled first -- sends us on again.
+    // A lightbox that cannot navigate discards any jump left over from one that
+    // could, rather than carrying a destination it has no way of reaching.
+    jumping = false;
+    if (jumpTo === pos || !urlTemplate) jumpTo = null;
+    else if (jumpTo !== null) jumpTimer = setTimeout(runJump, JUMP_MS);
+
+
+    // *** DESTRUCTOR *****************************************************
 
     return () => {
         clearTimeout(timer);
