@@ -233,6 +233,44 @@ def test_counter_counts_from_one(client, gallery):
 
 
 # ---------------------------------------------------------------------------
+# addresses that name nothing: these URLs are public and crawled, so every part
+# of one that can fail to resolve has to 404 rather than raise
+# ---------------------------------------------------------------------------
+
+def test_unknown_page_is_404(client, gallery):
+    assert client.get(f'/slide/{gallery.id + 999}/{BLOCK_ID[:7]}/0').status_code == 404
+
+
+def test_unknown_block_is_404(client, gallery):
+    assert client.get(f'/slide/{gallery.id}/9999999/0').status_code == 404
+
+
+def test_page_without_a_body_is_404(client, db):
+    index = BlogIndex(title='blog', slug='blog', page_message='<p>the blog</p>')
+    Site.objects.get(is_default_site=True).root_page.add_child(instance=index)
+    assert client.get(f'/slide/{index.id}/{BLOCK_ID[:7]}/0').status_code == 404
+
+
+def test_block_id_naming_a_non_slides_block_is_404(client, blog_post_with_image):
+    """
+    Seven characters of a uuid, matched against every block on the page -- so the
+    block found may be one that has no slides to index into.
+    """
+    post, image = blog_post_with_image
+    assert client.get(f'/slide/{post.id}/ccccccc/0').status_code == 404
+
+
+def test_zoom_of_an_unknown_page_is_404(client, post_with_image):
+    page, image = post_with_image
+    assert client.get(f'/zoom/img/{page.id + 999}/{image.id}').status_code == 404
+
+
+def test_zoom_of_an_unknown_image_is_404(client, post_with_image):
+    page, image = post_with_image
+    assert client.get(f'/zoom/img/{page.id}/{image.id + 999}').status_code == 404
+
+
+# ---------------------------------------------------------------------------
 # the rendered lightbox
 # ---------------------------------------------------------------------------
 
@@ -439,6 +477,8 @@ def blog_post_with_image(db):
         first_published_at=dt.datetime(2026, 5, 4, tzinfo=dt.timezone.utc),
         body=json.dumps([
             {
+                # the prefix this shares with no slides block is what
+                # test_block_id_naming_a_non_slides_block_is_404 addresses
                 'type': 'image',
                 'id': 'ccccccc1-2345-6789-abcd-ef0123456789',
                 'value': {

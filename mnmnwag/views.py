@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.safestring import mark_safe
@@ -153,8 +153,8 @@ def zoom_image(request, page_id, image_id):
     """
     if 'mahnamahna' not in request.get_host():
         raise Http404
-    page = Page.objects.get(id=page_id).specific  # see zoom_slide
-    img = CustomImage.objects.get(id=image_id)
+    page = get_object_or_404(Page, id=page_id).specific  # see zoom_slide
+    img = get_object_or_404(CustomImage, id=image_id)
     block = _image_block_for(page, image_id)
 
     panel = _lightbox_panel(
@@ -212,11 +212,16 @@ def zoom_slide(request, page_id, block_id, pos):
     """
     if 'mahnamahna' not in request.get_host():
         raise Http404
-    page = Page.objects.get(id=page_id).specific
-    body = page.body
-    block = [b for b in body if b.id[0:7] == block_id][0]
-    slides = block.value['slides']
+    page = get_object_or_404(Page, id=page_id).specific
+    body = getattr(page, 'body', None) or []
+    block = next(
+        (b for b in body if b.id[:7] == block_id and b.block_type == 'slides'),
+        None,
+    )
+    if block is None:
+        raise Http404
 
+    slides = block.value['slides']
     if not 0 <= pos < len(slides):
         raise Http404
 
