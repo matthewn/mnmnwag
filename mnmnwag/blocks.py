@@ -1,5 +1,6 @@
 from django.db import models
 from django.forms.utils import flatatt
+from django.urls import reverse
 from django.utils.html import format_html, format_html_join
 
 from wagtail.blocks import (
@@ -62,9 +63,23 @@ class ImageBlock(StructBlock):
 
     def get_context(self, value, parent_context=None):
         """
-        Assemble the <figure> class list here rather than in the template.
+        Work out the <figure> class list and where the image links, if anywhere,
+        rather than branching on all of it in the template.
         """
         context = super().get_context(value, parent_context)
+
+        # One link at most, and an explicit one wins over a zoom. A zoom is only
+        # addressable from a page whose id was handed down to the block, which is
+        # what link_zooms tells the template it is decorating rather than the
+        # attributes themselves.
+        if value['link']:
+            context['link_url'] = value['link']
+        elif value['zoom'] == ZoomChoices.ON and context.get('page_id'):
+            context['link_url'] = reverse('zoom_image', kwargs={
+                'page_id': context['page_id'],
+                'image_id': value['image'].id,
+            })
+            context['link_zooms'] = True
 
         classes = []
         if value['float'] == FloatChoices.LEFT:
