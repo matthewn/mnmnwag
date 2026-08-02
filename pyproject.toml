@@ -46,10 +46,13 @@ dev = [
     "pytest",
     "pytest-cov>=7.1.0",
     "pytest-django",
+    "pytest-playwright>=0.8.0",
 ]
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "config.settings.local"
+markers = ["browser: drives a real browser; slow, so deselected by default"]
+addopts = '-m "not browser"'
 
 [tool.uv]
 
