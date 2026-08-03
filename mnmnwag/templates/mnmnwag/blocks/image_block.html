@@ -5,16 +5,20 @@
 
 <figure{% if figure_class %} class="{{ figure_class }}"{% endif %}{% if value.max_width %} style="--max-width: {{ value.max_width }};"{% endif %}>
     <picture>
-        {% image value.image width-800 as small_image %}
+        {# floated images are displayed small, so a narrow rendition suffices #}
+        {% if 'float' in figure_class %}
+            {% image value.image width-800 as img %}
+        {% else %}
+            {% image value.image width-2800 as img %}
+        {% endif %}
 
-        {# where this links, if anywhere, is worked out in ImageBlock.get_context #}
         {% if link_url %}
             <a href="{{ link_url }}"{% if link_zooms %}
                up-layer="new modal" up-class="lightbox" up-animation="fade-in"
                up-placeholder="#lightbox-placeholder"{% endif %}>
         {% endif %}
 
-        <img src="{{ small_image.file.url }}" alt="{{ value.alt_text|default:value.image.description }}">
+        <img src="{{ img.file.url }}" alt="{{ value.alt_text|default:value.image.description }}">
 
         {% if link_url %}
             </a>
