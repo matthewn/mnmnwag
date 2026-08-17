@@ -19,6 +19,17 @@
         </title>
         {# <meta name="description" content=""> #}
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        {# OpenGraph tags, for link cards on Mastodon and elsewhere. No og:title #}
+        {# here: Mastodon falls back to the <title> above when it's absent, and #}
+        {# Django won't render the title block a second time. #}
+        <meta property="og:type" content="website">
+        <meta property="og:description" content="Matthew Newton's personal website">
+        <meta property="og:url" content="{{ request.build_absolute_uri }}">
+        <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'img/favs/android-chrome-512x512.png' %}">
+        <meta property="og:image:width" content="512">
+        <meta property="og:image:height" content="512">
+
         <link rel="alternate" type="application/atom+xml" title="feed for mahnamahna.net/blog" href="{% url 'feed' %}">
 
         <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favs/apple-touch-icon.png' %}">
