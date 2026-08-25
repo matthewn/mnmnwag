@@ -71,10 +71,17 @@ def test_choice_fields_deserialize_to_integers():
 # image rendition
 # ---------------------------------------------------------------------------
 
-def test_image_rendered_at_width_800(test_image):
+def test_unfloated_image_rendered_at_width_2800(test_image):
     html = render_block(test_image)
     assert "<img " in html
-    assert "width-800" in html  # the rendition spec from {% image ... width-800 %}
+    assert "width-2800" in html  # the rendition spec from {% image ... width-2800 %}
+
+
+def test_floated_image_rendered_at_width_800(test_image):
+    """Floated images are displayed small, so the template picks a narrow rendition."""
+    html = render_block(test_image, float_=FloatChoices.LEFT.value)
+    assert "<img " in html
+    assert "width-800" in html
 
 
 # ---------------------------------------------------------------------------
