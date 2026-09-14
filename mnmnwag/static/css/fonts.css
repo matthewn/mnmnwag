@@ -54,6 +54,7 @@ textarea {
   /* Raleway does not have the asterism, so we force Alegreya
      to prevent a fallback to system fonts */
   font-family: var(--serif-stack);
+  font-size: inherit !important;
   position: relative;
   top: 2px;
 }
