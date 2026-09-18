@@ -14,27 +14,19 @@
                     <i>Subscribe to receive email notifications for new blog posts on this site. Your address will never be sold or spammed.</i>
                 </p>
                 {% if error %}<p style="color: red;">{{ error }}</p>{% endif %}
-                <form class="subs" action="{% url 'sub_create' %}" method="POST" up-target="#content" up-transition="cross-fade">
+                {% for error in form.non_field_errors %}<p style="color: red;">{{ error }}</p>{% endfor %}
+                {% for error in form.email.errors %}<p style="color: red;">{{ error }}</p>{% endfor %}
+                <form class="subs" action="{% url 'sub_create' %}" method="POST" up-target="#content" up-fail-target="#content" up-transition="cross-fade">
                     {% csrf_token %}
-                    <label class="h3">
-                        your email address:
+                    <input type="hidden" name="timestamp" value="{{ form.timestamp_value }}">
+                    <div style="display: none;">{{ form.honeypot }}</div>
+                    <label class="h3" for="{{ form.email.id_for_label }}">
+                        {{ form.email.label }}
                         <br><br>
-                        <input type="email" name="email" placeholder="reader@example.org">
+                        {{ form.email }}
                         <br><br>
                     </label>
-                    <p class="h3" style="line-height: 1.2; margin-bottom: 1.5rem;">
-                        and (sorry about this) please prove you are not a bot...
-                    </p>
-                    <label>
-                        do not check this box:&nbsp;
-                        <input type="checkbox" name="nope">
-                    </label>
-                    &nbsp;&nbsp; &nbsp;&nbsp;
-                    <label>
-                        check this box:&nbsp;
-                        <input type="checkbox" name="yep">
-                    </label>
-                    <br><br><br>
+                    <br>
                     <input type="submit" value="subscribe" style-as-button>
                 </form>
             </div>

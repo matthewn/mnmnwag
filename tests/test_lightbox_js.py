@@ -26,7 +26,6 @@ import re
 os.environ['DJANGO_ALLOW_ASYNC_UNSAFE'] = 'true'
 
 import pytest
-from django.db import connections
 from playwright.sync_api import expect
 from urllib.parse import urlparse
 from wagtail.images import get_image_model
@@ -38,7 +37,7 @@ from mnmnwag.models import ComplexPage, GalleryPage
 # Every test here starts a browser and a live server, which costs a couple of
 # minutes. pyproject.toml deselects the mark by default, so a plain `pytest`
 # skips the lot; `pytest -m browser` is what runs them.
-pytestmark = pytest.mark.browser
+pytestmark = [pytest.mark.browser, pytest.mark.usefixtures('restorable_baseline')]
 
 BLOCK_ID = 'abcdefg1-2345-6789-abcd-ef0123456789'
 SLIDES = 4
@@ -55,51 +54,15 @@ QUIET_MS = 600
 # ---------------------------------------------------------------------------
 
 @pytest.fixture(scope='session')
-def browser_type_launch_args(browser_type_launch_args):
-    """
-    Both zoom views 404 unless the host looks like the real site, and the live
-    server answers on localhost. Resolve the real hostname to it in the browser
-    rather than reaching for the view's own idea of who it serves.
-    """
-    return {
-        **browser_type_launch_args,
-        'args': [
-            *browser_type_launch_args.get('args', []),
-            '--host-resolver-rules=MAP mahnamahna.test 127.0.0.1',
-        ],
-    }
-
-
-@pytest.fixture(scope='session')
 def base_url(live_server):
     """
     Overrides pytest-base-url's fixture, so page.goto() takes a path.
+
+    Module-local on purpose: pytest-base-url autouses a session fixture that
+    requests base_url for every test, so an override in conftest.py would pull
+    live_server -- and a test database -- into the whole suite.
     """
     return f'http://mahnamahna.test:{urlparse(live_server.url).port}'
-
-
-@pytest.fixture(scope='session', autouse=True)
-def _restorable_baseline(django_db_setup, django_db_blocker):
-    """
-    Every test here needs live_server, which pytest-django answers by making the
-    test transactional -- and a transactional test truncates every table on the
-    way out, taking Wagtail's root page, default Site and root Collection with
-    it. Django restores that baseline afterwards from a snapshot it stashes on
-    the connection during test-database setup, but the connection object this
-    thread holds is not the one carrying the snapshot: Playwright runs us on a
-    greenlet, greenlets get their own contextvars, and the connection handler
-    keeps its connections in one. The restore then quietly does not happen and
-    every test after the first one builds its pages on an empty database.
-
-    So take the snapshot here, where it can be read, and hang it on the
-    connection *class* -- where every wrapper in every context and thread will
-    find it, and Django's own machinery does the rest.
-    """
-    with django_db_blocker.unblock():
-        contents = connections['default'].creation.serialize_db_to_string()
-    type(connections['default'])._test_serialized_contents = contents
-    yield
-    del type(connections['default'])._test_serialized_contents
 
 
 @pytest.fixture(autouse=True)

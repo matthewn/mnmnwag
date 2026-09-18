@@ -1,6 +1,6 @@
 import pytest
 from django.conf import settings as django_settings
-from django.db import connection
+from django.db import connection, connections
 from django.test import Client
 
 # The real (non-test) name of the default database, captured at import time --
@@ -64,3 +64,53 @@ def madprops_client(read_only_db):
     from wagtail.models import Site
     hostname = Site.objects.get(hostname__icontains='madprops').hostname
     return Client(SERVER_NAME=hostname)
+
+
+# ---------------------------------------------------------------------------
+# Shared harness for the browser tests (pytest -m browser)
+# ---------------------------------------------------------------------------
+
+@pytest.fixture(scope='session')
+def browser_type_launch_args(browser_type_launch_args):
+    """
+    Several views 404 unless the host looks like the real site, and the live
+    server answers on localhost. Resolve the real hostname to it in the browser
+    rather than reaching for the view's own idea of who it serves.
+    """
+    return {
+        **browser_type_launch_args,
+        'args': [
+            *browser_type_launch_args.get('args', []),
+            '--host-resolver-rules=MAP mahnamahna.test 127.0.0.1',
+        ],
+    }
+
+
+# base_url belongs to the browser modules themselves, not here -- see the note
+# on their copies of it.
+
+@pytest.fixture(scope='session')
+def restorable_baseline(django_db_setup, django_db_blocker):
+    """
+    Every browser test needs live_server, which pytest-django answers by making
+    the test transactional -- and a transactional test truncates every table on
+    the way out, taking Wagtail's root page, default Site and root Collection
+    with it. Django restores that baseline afterwards from a snapshot it stashes
+    on the connection during test-database setup, but the connection object that
+    thread holds is not the one carrying the snapshot: Playwright runs on a
+    greenlet, greenlets get their own contextvars, and the connection handler
+    keeps its connections in one. The restore then quietly does not happen and
+    every test after the first one builds its pages on an empty database.
+
+    So take the snapshot here, where it can be read, and hang it on the
+    connection *class* -- where every wrapper in every context and thread will
+    find it, and Django's own machinery does the rest.
+
+    Not autouse: it pulls in django_db_setup, which the non-browser tests in
+    this directory must not trigger (see read_only_db above).
+    """
+    with django_db_blocker.unblock():
+        contents = connections['default'].creation.serialize_db_to_string()
+    type(connections['default'])._test_serialized_contents = contents
+    yield
+    del type(connections['default'])._test_serialized_contents
