@@ -88,7 +88,7 @@ MIDDLEWARE = [
     'django_browser_reload.middleware.BrowserReloadMiddleware',
     'crequest.middleware.CrequestMiddleware',
     'extlinks.middleware.RewriteExternalLinksMiddleware',
-    'likes.middleware.SecretBallotUserIpUseragentMiddleware',
+    'mnmnwag.middleware.SecretBallotClientIpUseragentMiddleware',
     'mnmnwag.middleware.LikesGuardMiddleware',
 ]
 
