@@ -29,7 +29,7 @@ def register_yes_feature(features):
             'span[class="yes"]': InlineStyleElementHandler(type_)
         },
         'to_database_format': {
-            'style_map': {type_: 'span class="yes"'}
+            'style_map': {type_: {'element': 'span', 'props': {'class': 'yes'}}}
         },
     }
     features.register_converter_rule(
@@ -65,7 +65,7 @@ def register_no_feature(features):
             'span[class="no"]': InlineStyleElementHandler(type_)
         },
         'to_database_format': {
-            'style_map': {type_: 'span class="no"'}
+            'style_map': {type_: {'element': 'span', 'props': {'class': 'no'}}}
         },
     }
     features.register_converter_rule(
