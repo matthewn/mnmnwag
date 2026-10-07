@@ -1,7 +1,6 @@
 {% load wagtailimages_tags %}
 {% load wagtailcore_tags %}
 {% load static %}
-{% load typefixes %}
 
 <figure{% if figure_class %} class="{{ figure_class }}"{% endif %}{% if value.max_width %} style="--max-width: {{ value.max_width }};"{% endif %}>
     <picture>
@@ -25,6 +24,6 @@
         {% endif %}
     </picture>
     {% if value.caption %}
-        <figcaption class="caption">{{ value.caption|richtext|typefixes }}</figcaption>
+        <figcaption class="caption">{{ value.caption|richtext }}</figcaption>
     {% endif %}
 </figure>
