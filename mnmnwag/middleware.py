@@ -50,7 +50,7 @@ class ThemeClassCacheMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        theme = request.COOKIES.get('themeClass', 'theme-light')
+        theme = request.COOKIES.get('themeClass', 'theme-system')
         request.META['HTTP_X_THEME_CLASS'] = theme
 
         response = self.get_response(request)

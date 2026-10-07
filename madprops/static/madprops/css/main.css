@@ -30,14 +30,6 @@ body {
     --bg-color: #2e2525;  /* raisin black */
     --link-color: #87cefa;  /* light sky blue */
     --visited-link-color: #be79ac;  /* opera mauve */
-    #theme-picker {
-      .light { display: block; }
-    }
-  }
-  &.theme-light {
-    #theme-picker {
-      .dark { display: block; }
-    }
   }
   background-color: var(--bg-color);
   color: var(--fg-color);
@@ -86,10 +78,6 @@ h1, .h1 { font-size: 3rem; }
 h2, .h2 { font-size: 1.65rem; }
 h3, .h3 { font-size: 1.5rem; }
 h4, .h4 { font-size: 1.25rem; }
-
-#theme-picker {
-  .dark, .light { display: none; }
-}
 
 #content {
   flex: 1;  /* makes sticky footer happen */

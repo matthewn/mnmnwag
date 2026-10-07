@@ -57,11 +57,11 @@ def test_middleware_sets_header_from_retro_cookie():
     assert request.META['HTTP_X_THEME_CLASS'] == 'theme-retro'
 
 
-def test_middleware_defaults_to_theme_light_when_no_cookie():
+def test_middleware_defaults_to_theme_system_when_no_cookie():
     middleware = make_middleware()
     request = make_request()
     middleware(request)
-    assert request.META['HTTP_X_THEME_CLASS'] == 'theme-light'
+    assert request.META['HTTP_X_THEME_CLASS'] == 'theme-system'
 
 
 # ---------------------------------------------------------------------------
@@ -121,13 +121,18 @@ def test_tag_falls_back_to_cookie_when_no_meta_header():
     assert get_theme_class(context) == 'theme-retro'
 
 
-def test_tag_defaults_to_theme_light_when_nothing_set():
+def test_tag_defaults_to_theme_system_when_nothing_set():
     context = make_context()
-    assert get_theme_class(context) == 'theme-light'
+    assert get_theme_class(context) == 'theme-system theme-light'
 
 
-def test_tag_defaults_to_theme_light_on_missing_request():
-    assert get_theme_class({}) == 'theme-light'
+def test_tag_defaults_to_theme_system_on_missing_request():
+    assert get_theme_class({}) == 'theme-system theme-light'
+
+
+def test_tag_adds_light_fallback_to_system_cookie():
+    context = make_context(cookies={'themeClass': 'theme-system'})
+    assert get_theme_class(context) == 'theme-system theme-light'
 
 
 # ---------------------------------------------------------------------------
@@ -156,6 +161,11 @@ def test_picker_sets_light_cookie():
 def test_picker_sets_dark_cookie():
     response = theme_picker(picker_request('dark'), 'dark')
     assert response.cookies['themeClass'].value == 'theme-dark'
+
+
+def test_picker_sets_system_cookie():
+    response = theme_picker(picker_request('system'), 'system')
+    assert response.cookies['themeClass'].value == 'theme-system'
 
 
 def test_picker_sets_retro_cookie():

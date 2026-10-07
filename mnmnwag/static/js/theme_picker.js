@@ -2,6 +2,7 @@
 
 const links = '#theme-picker a';
 const prefix = 'theme-';
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
 
 // on return to page via back button, enable cookied theme (if it exists)
@@ -18,34 +19,23 @@ up.compiler(links, function(link) {
 });
 
 
-const getTheme = function() {
-    for (let className of document.body.classList.values()) {
-        if (className.startsWith(prefix))
-            return className.replace(prefix, '');
-    }
-};
-
-
 const changeTheme = function(event) {
     event.preventDefault();
-    let className = prefix + this.getAttribute('data-theme');
-    setTheme(className);
+    setTheme(prefix + this.getAttribute('data-theme'));
     up.cache.expire();
 };
 
 
+// the system theme also applies the light or dark class it resolves to
 const setTheme = function(className) {
-    const current = getTheme();
-    if (current) document.body.classList.remove(prefix + current);
-    document.body.classList.add(className);
+    const classes = document.body.classList;
+    classes.remove(...[...classes].filter(c => c.startsWith(prefix)));
+    classes.add(className);
+    if (className === 'theme-system') classes.add(prefersDark.matches ? 'theme-dark' : 'theme-light');
     setCookie('themeClass', className);
 };
 
 
-// on page load, if no theme cookie, switch to dark mode if preferred
-document.addEventListener('DOMContentLoaded', function() {
-    if (getCookie('themeClass') === '') {
-        const prefersDarkTheme = window.matchMedia('(prefers-color-scheme: dark)');
-        if (prefersDarkTheme.matches) { setTheme('theme-dark'); }
-    }
+prefersDark.addEventListener('change', function() {
+    if (document.body.classList.contains('theme-system')) setTheme('theme-system');
 });

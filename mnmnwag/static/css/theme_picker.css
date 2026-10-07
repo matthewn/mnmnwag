@@ -1,21 +1,8 @@
-#theme-picker {
-  height: 20px;
-  position: relative;
-  top: -3px;
-}
+#theme-picker > div { display: none; }
 
-body.theme-light {
-  #theme-picker {
-    .light, .retro { display: none; }
-  }
-}
-body.theme-dark {
-  #theme-picker {
-    .light, .dark { display: none; }
-  }
-}
-body.theme-retro {
-  #theme-picker {
-    .dark, .retro { display: none; }
-  }
+body.theme-system #theme-picker .system,
+body.theme-light:not(.theme-system) #theme-picker .light,
+body.theme-dark:not(.theme-system) #theme-picker .dark,
+body.theme-retro #theme-picker .retro {
+  display: block;
 }
