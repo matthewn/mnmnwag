@@ -220,7 +220,7 @@ COMPRESS_ENABLED = True
 
 # django-dbbackup
 DBBACKUP_CLEANUP_KEEP = 15
-DBBACKUP_FILENAME_TEMPLATE = 'mnmnwag-{datetime}.sql'
+DBBACKUP_FILENAME_TEMPLATE = 'mnmnwag-{databasename}-{datetime}.sql'
 
 
 # django-debug-toolbar
