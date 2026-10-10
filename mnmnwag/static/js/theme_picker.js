@@ -23,6 +23,7 @@ const changeTheme = function(event) {
     event.preventDefault();
     setTheme(prefix + this.getAttribute('data-theme'));
     up.cache.expire();
+    document.body.classList.add('theme-picked');  // generates the toast msg for moble (see theme_picker.css)
 };
 
 

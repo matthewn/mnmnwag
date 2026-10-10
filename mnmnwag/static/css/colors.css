@@ -1,7 +1,8 @@
 body.theme-light {
+  --bg-color: var(--white);
   --fg-color: var(--jet);
   --link-color: var(--star-command-blue);
-  background-color: var(--white);
+  background-color: var(--bg-color);
   color: var(--jet);
   a, a:link, a:visited { color: var(--star-command-blue); }
   > header {
@@ -68,9 +69,10 @@ body.theme-light {
 }
 
 body.theme-dark {
+  --bg-color: var(--black);
   --fg-color: var(--platinum);
   --link-color: var(--blizzard-blue);
-  background-color: var(--black);
+  background-color: var(--bg-color);
   color: var(--platinum);
   a, a:link, a:visited { color: var(--blizzard-blue); }
   > header {
@@ -141,9 +143,10 @@ body.theme-dark {
 }
 
 body.theme-retro {
+  --bg-color: var(--black);
   --fg-color: var(--green);
   --link-color: var(--aqua);
-  background-color: var(--black);
+  background-color: var(--bg-color);
   color: var(--green);
   a, a:link, a:visited { color: var(--aqua); }
   a:hover { color: var(--sheen-green); }

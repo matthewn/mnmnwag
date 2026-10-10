@@ -6,3 +6,30 @@ body.theme-dark:not(.theme-system) #theme-picker .dark,
 body.theme-retro #theme-picker .retro {
   display: block;
 }
+
+/* toast msg for mobile when theme picker is tapped */
+/* (theme-picked is added by theme_picker.js; showing the new icon restarts the animation) */
+@media (hover: none) {
+  body.theme-picked #theme-picker a::after {
+    animation: theme-toast 1.8s ease-out;
+    background: var(--fg-color);
+    border-radius: 6px;
+    bottom: 2rem;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 40%);
+    color: var(--bg-color);
+    content: attr(title);
+    left: 50%;
+    opacity: 0;
+    padding: 0.5em 1em;
+    pointer-events: none;
+    position: fixed;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    z-index: 1000;
+  }
+}
+
+@keyframes theme-toast {
+  0%, 70% { opacity: 1; }
+  100% { opacity: 0; }
+}
