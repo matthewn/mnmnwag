@@ -17,6 +17,7 @@ import json
 import re
 
 import pytest
+from django.contrib.contenttypes.models import ContentType
 from django.test import Client
 from wagtail.images import get_image_model
 from wagtail.images.tests.utils import get_test_image_file
@@ -29,16 +30,19 @@ BLOCK_ID = 'abcdefg1-2345-6789-abcd-ef0123456789'
 
 
 @pytest.fixture(autouse=True)
-def clear_site_root_paths():
+def clear_process_wide_caches():
     """
-    Building pages here fills Wagtail's site-root-path cache from the test
-    database. That cache is process-wide, so leaving it populated makes the
-    read_only_db tests -- which run against the real database -- resolve their
-    page URLs against roots that do not exist there.
+    Building pages here fills Wagtail's site-root-path cache and Django's
+    ContentType cache from the test database. Both are process-wide, so leaving
+    them populated makes the read_only_db tests -- which run against the real
+    database -- resolve page URLs against roots that do not exist there, and
+    map content type ids to the wrong models.
     """
     Site.clear_site_root_paths_cache()
+    ContentType.objects.clear_cache()
     yield
     Site.clear_site_root_paths_cache()
+    ContentType.objects.clear_cache()
 
 
 def make_image(**kwargs):

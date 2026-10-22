@@ -1,5 +1,3 @@
-from unittest.mock import MagicMock
-
 from django.http import HttpResponse
 from django.test import RequestFactory
 
@@ -18,16 +16,17 @@ def make_middleware(response=None):
     return ThemeClassCacheMiddleware(get_response=lambda r: response)
 
 
+rf = RequestFactory()
+
+
 def make_request(cookies=None):
-    request = MagicMock()
+    request = rf.get('/')
     request.COOKIES = cookies or {}
-    request.META = {}
     return request
 
 
 def make_context(meta=None, cookies=None):
-    request = MagicMock()
-    request.META = meta or {}
+    request = rf.get('/', **(meta or {}))
     request.COOKIES = cookies or {}
     return {'request': request}
 
@@ -40,28 +39,28 @@ def test_middleware_sets_header_from_light_cookie():
     middleware = make_middleware()
     request = make_request({'themeClass': 'theme-light'})
     middleware(request)
-    assert request.META['HTTP_X_THEME_CLASS'] == 'theme-light'
+    assert request.headers['x-theme-class'] == 'theme-light'
 
 
 def test_middleware_sets_header_from_dark_cookie():
     middleware = make_middleware()
     request = make_request({'themeClass': 'theme-dark'})
     middleware(request)
-    assert request.META['HTTP_X_THEME_CLASS'] == 'theme-dark'
+    assert request.headers['x-theme-class'] == 'theme-dark'
 
 
 def test_middleware_sets_header_from_retro_cookie():
     middleware = make_middleware()
     request = make_request({'themeClass': 'theme-retro'})
     middleware(request)
-    assert request.META['HTTP_X_THEME_CLASS'] == 'theme-retro'
+    assert request.headers['x-theme-class'] == 'theme-retro'
 
 
 def test_middleware_defaults_to_theme_system_when_no_cookie():
     middleware = make_middleware()
     request = make_request()
     middleware(request)
-    assert request.META['HTTP_X_THEME_CLASS'] == 'theme-system'
+    assert request.headers['x-theme-class'] == 'theme-system'
 
 
 # ---------------------------------------------------------------------------
@@ -138,9 +137,6 @@ def test_tag_adds_light_fallback_to_system_cookie():
 # ---------------------------------------------------------------------------
 # theme_picker view
 # ---------------------------------------------------------------------------
-
-rf = RequestFactory()
-
 
 def picker_request(theme, referer='http://testserver/blog/'):
     request = rf.get(f'/theme/{theme}', HTTP_REFERER=referer)

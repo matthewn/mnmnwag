@@ -13,7 +13,7 @@ def get_theme_class(context):
     try:
         request = context['request']
         theme = (
-            request.META.get('HTTP_X_THEME_CLASS')
+            request.headers.get('x-theme-class')
             or request.COOKIES.get('themeClass')
             or 'theme-system'
         )

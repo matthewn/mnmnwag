@@ -47,9 +47,10 @@ INSTALLED_APPS = [
     'config.apps.MnmnwagAdminConfig',  # replaces 'django.contrib.admin'
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.messages',
+    'django.contrib.postgres',  # req'd by Wagtail search since 8.0
     'django.contrib.sessions',
     'django.contrib.sites',
-    'django.contrib.messages',
     'django.contrib.staticfiles',
 
     'antispam',

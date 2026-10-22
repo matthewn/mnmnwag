@@ -5,7 +5,7 @@ description = ""
 authors = [{ name = "Matthew Newton", email = "matthewn@mahnamahna.net" }]
 requires-python = ">=3.13, <4"
 dependencies = [
-    "django>=5,<6",
+    "django>=6,<7",
     "wagtail",
     "django-antispam",
     "django-browser-reload",
@@ -22,22 +22,23 @@ dependencies = [
     "django-libsass",
     "django-likes",
     "django-markdown2",
-    "typogrify",
+    "django-upgrade>=1.33.0",
     "gunicorn",
+    "jinja2>=3.1.6",
     "mastodon-py",
     "num2words",
     "psycopg",
     "pyexiv2",
     "pywatchman",
+    "redis",
     "seevooplay",
     "setproctitle",
+    "typogrify",
+    "wagtail-cache>=3.0.0",
     "wagtail-footnotes",
     "wagtailmedia",
     "wand",
     "werkzeug",
-    "jinja2>=3.1.6",
-    "redis",
-    "wagtail-cache>=3.0.0",
 ]
 
 [dependency-groups]
@@ -58,3 +59,4 @@ addopts = '-m "not browser"'
 
 [tool.uv.sources]
 django-likes = { git = "https://github.com/matthewn/django-likes", branch = "django5" }
+wagtail-cache = { git = "https://github.com/mlanser/wagtail-cache", branch = "django-6.1-wagtail-8" }
