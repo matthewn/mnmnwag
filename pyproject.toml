@@ -39,6 +39,7 @@ dependencies = [
     "wagtailmedia",
     "wand",
     "werkzeug",
+    "django-stubs>=6.1.2",
 ]
 
 [dependency-groups]
@@ -59,4 +60,3 @@ addopts = '-m "not browser"'
 
 [tool.uv.sources]
 django-likes = { git = "https://github.com/matthewn/django-likes", branch = "django5" }
-wagtail-cache = { git = "https://github.com/mlanser/wagtail-cache", branch = "django-6.1-wagtail-8" }
