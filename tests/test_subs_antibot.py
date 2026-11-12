@@ -37,7 +37,7 @@ def post_data(email='reader@example.org', age=MIN_FORM_AGE + 1, **overrides):
     An override of None drops the field entirely, to simulate a bot that built
     the POST body itself rather than fetching our form.
     """
-    data = {'email': email, 'timestamp': old_timestamp(age), HONEYPOT: ''}
+    data = {'email': email, 'timestamp': old_timestamp(age), HONEYPOT: '', 'yep': 'on'}
     data.update(overrides)
     return {k: v for k, v in data.items() if v is not None}
 
@@ -225,6 +225,8 @@ def test_invalid_email_reports_error_and_creates_nothing(sub_client):
         pytest.param({HONEYPOT: 'spam'}, id='honeypot-filled'),
         pytest.param({'timestamp': None}, id='timestamp-omitted'),
         pytest.param({'age': 0}, id='submitted-instantly'),
+        pytest.param({'yep': None}, id='captcha-yep-unchecked'),
+        pytest.param({'nope': 'on'}, id='captcha-nope-checked'),
     ],
 )
 def test_bot_post_creates_nothing(sub_client, overrides):

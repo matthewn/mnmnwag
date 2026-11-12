@@ -78,6 +78,7 @@ def submit(page, email=EMAIL):
     elements.
     """
     page.fill('input[name=email]', email)
+    page.check('input[name=yep]')
     with page.expect_response(lambda r: r.request.method == 'POST') as info:
         page.get_by_role('button', name='subscribe').click()
     page.wait_for_selector('.up-destroying', state='detached')

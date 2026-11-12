@@ -48,8 +48,9 @@ def unsign_timestamp(value):
 
 class SubscriptionForm(forms.Form):
     """
-    Subscription signup, guarded by three cheap anti-bot checks: a honeypot
-    field, a minimum/maximum time-to-submit, and (in the view) rate limiting.
+    Subscription signup, guarded by four cheap anti-bot checks: a checkbox
+    captcha, a honeypot field, a minimum/maximum time-to-submit, and (in the
+    view) rate limiting.
 
     Every failure mode raises the same generic error, so a bot learns nothing
     about which check caught it.
@@ -64,6 +65,9 @@ class SubscriptionForm(forms.Form):
         widget=forms.EmailInput(attrs={'placeholder': 'reader@example.org'}),
     )
     timestamp = forms.CharField(max_length=100, widget=forms.HiddenInput, required=False)
+    # Homegrown checkbox captcha: a human checks "yep" and leaves "nope" alone.
+    nope = forms.BooleanField(label='do not check this box:', required=False)
+    yep = forms.BooleanField(label='check this box:', required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -104,9 +108,17 @@ class SubscriptionForm(forms.Form):
 
     def clean(self):
         cleaned_data = super().clean()
+        self.check_captcha(cleaned_data)
         self.check_honeypot(cleaned_data)
         self.check_timestamp(cleaned_data)
         return cleaned_data
+
+    def check_captcha(self, cleaned_data):
+        """
+        Reject the form unless "yep" is checked and "nope" is not.
+        """
+        if cleaned_data.get('nope') or not cleaned_data.get('yep'):
+            raise forms.ValidationError(REJECTION_MESSAGE, code='captcha')
 
     def check_honeypot(self, cleaned_data):
         """

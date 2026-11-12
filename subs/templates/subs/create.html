@@ -26,7 +26,19 @@
                         {{ form.email }}
                         <br><br>
                     </label>
-                    <br>
+                    <p class="h3" style="line-height: 1.2; margin-bottom: 1.5rem;">
+                        and (sorry about this) please prove you are not a bot...
+                    </p>
+                    <label for="{{ form.nope.id_for_label }}">
+                        {{ form.nope.label }}&nbsp;
+                        {{ form.nope }}
+                    </label>
+                    &nbsp;&nbsp; &nbsp;&nbsp;
+                    <label for="{{ form.yep.id_for_label }}">
+                        {{ form.yep.label }}&nbsp;
+                        {{ form.yep }}
+                    </label>
+                    <br><br><br>
                     <input type="submit" value="subscribe" style-as-button>
                 </form>
             </div>
