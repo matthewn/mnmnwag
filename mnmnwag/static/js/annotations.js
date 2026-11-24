@@ -34,6 +34,12 @@ function processFootnotes(el) {
         let paragraphs = li.querySelectorAll('p');
 
         links.forEach((link) => {
+            // keep the marker from wrapping away from the preceding word
+            let prev = link.previousSibling;
+            if (prev && prev.nodeType === Node.TEXT_NODE && / $/.test(prev.data)) {
+                prev.data = prev.data.replace(/ $/, '\u00a0'); // non-breaking space
+            }
+
             let annotation = document.createElement('span');
             annotation.className = 'annotation';
 
