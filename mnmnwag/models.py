@@ -19,6 +19,7 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import Tag, TaggedItemBase
 from zoneinfo import ZoneInfo
 
+from wagtail import hooks
 from wagtail.admin.panels import (
     FieldPanel,
     FieldRowPanel,
@@ -667,8 +668,19 @@ class BlogIndex(BlogPageMixin, RoutablePageMixin, BasePage, BlogSidebar):
     @route(r'^(?P<year>20\d\d)/(?P<month>0[1-9]|1[0-2])/(?P<slug>[-\w]+)/$')
     def post_by_date_and_slug(self, request, year, month, slug, *args, **kwargs):
         # serve a post from its canonical, date-prefixed URL
-        post = get_object_or_404(self.get_children().live(), slug=slug)
-        return post.specific.serve(request)
+        post = get_object_or_404(self.get_children().live(), slug=slug).specific
+
+        # mirror wagtail.views.serve: on_serve_page hooks enforce view restrictions
+        def chain(page, request, args, kwargs):
+            return page.serve(request, *args, **kwargs)
+
+        for fn in reversed(hooks.get_hooks('on_serve_page')):
+            chain = fn(chain)
+        for fn in hooks.get_hooks('before_serve_page'):
+            result = fn(post, request, args, kwargs)
+            if result:
+                return result
+        return chain(post, request, args, kwargs)
 
 
 # ···························································
